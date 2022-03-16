@@ -9,6 +9,7 @@
 <?import javafx.scene.control.Spinner?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.control.ToggleButton?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
@@ -17,7 +18,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="640.0" prefWidth="689.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="640.0" prefWidth="689.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="phillockett65.CardCreate2.MainController">
    <bottom>
       <VBox BorderPane.alignment="CENTER">
          <children>
@@ -196,8 +197,8 @@
                         <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
                      </padding>
                      <children>
-                        <TextField fx:id="outputjTextField" onAction="#outputjTextFieldActionPerformed" />
-                        <Button fx:id="outputjToggleButton" mnemonicParsing="false" onAction="#outputjToggleButtonActionPerformed" text="Manual" />
+                        <TextField fx:id="outputjTextField" editable="false" onAction="#outputjTextFieldActionPerformed" />
+                        <ToggleButton fx:id="outputjToggleButton" mnemonicParsing="false" onAction="#outputjToggleButtonActionPerformed" text="Manual" />
                      </children>
                   </HBox>
               </content>
