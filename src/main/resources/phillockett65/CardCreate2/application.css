@@ -7,11 +7,18 @@
     -fx-text-fill: #e8e8e8;
 }
 
+.check-box{
+    -fx-text-fill: #e8e8e8;
+}
+
+.radio-button{
+    -fx-text-fill: #e8e8e8;
+}
+
 .text-field{
     -fx-text-fill: #e8e8e8;
     -fx-font-weight: bold;
     -fx-background-color: #808080;
-    -fx-background-radius: 12;
 }
 .text-area{
     -fx-text-fill: white;
@@ -25,23 +32,8 @@
 .spinner{
     -fx-background-color: #383838;
 }
-.tab {
-    -fx-background-color: #808080;
-}
-.tab:selected {
-    -fx-background-color: #383838;
-    -fx-border-color: #383838;
-}
 
-.tab-content-area {
-    -fx-background-color: #383838;
-    -fx-border-color: #383838;
-}
-
-.tab *.tab-label {
-    -fx-text-fill: white;
-}
-.choice-box, .button{
+.choice-box, .button, .toggle-button{
     -fx-background-color: #AB4642;
     -fx-text-fill: white;
     -fx-font-weight: bold;
