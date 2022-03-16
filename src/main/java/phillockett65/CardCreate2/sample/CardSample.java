@@ -1,26 +1,26 @@
-/*  PTDesigner - a simple application to design a periodic table.
+/*  CardCreate2 - a JavaFX based playing card image generator.
  *
- *  Copyright 2020 Philip Lockett.
+ *  Copyright 2022 Philip Lockett.
  *
- *  This file is part of PTDesigner.
+ *  This file is part of CardCreate2.
  *
- *  PTDesigner is free software: you can redistribute it and/or modify
+ *  CardCreate2 is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation, either version 3 of the License, or
  *  (at your option) any later version.
  *
- *  PTDesigner is distributed in the hope that it will be useful,
+ *  CardCreate2 is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
  *  You should have received a copy of the GNU General Public License
- *  along with PTDesigner.  If not, see <https://www.gnu.org/licenses/>.
+ *  along with CardCreate2.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 /*
- * PTable is a class that is responsible for creating the Stage, drawing and 
- * redrawing the grid that represents the Periodic Table.
+ * CardSample is a class that is responsible for creating the Stage, drawing 
+ * and refreshing the card.
  */
 package phillockett65.CardCreate2.sample;
 
@@ -31,7 +31,6 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import phillockett65.CardCreate2.ChangeChecker;
 import phillockett65.CardCreate2.MainController;
 
 public class CardSample extends Stage {
@@ -60,7 +59,7 @@ public class CardSample extends Stage {
 		main = mainController;
 		group = new Group();
 
-		initTable();
+		initCardSample();
 
 		scene = new Scene(group, main.getWidth(), main.getHeight());
 		setScene(scene);
@@ -71,7 +70,7 @@ public class CardSample extends Stage {
 	 * Calls the grid constructor, initializes some globals and adds the nodes 
 	 * of the cells to the model. 
 	 */
-	private void initTable() {
+	private void initCardSample() {
 
 
 	}
