@@ -38,12 +38,12 @@ public class Model {
 
 	public int getWidth() {
 		// TODO Auto-generated method stub
-		return 0;
+		return 600;
 	}
 
 	public int getHeight() {
 		// TODO Auto-generated method stub
-		return 0;
+		return 800;
 	}
 
 }
