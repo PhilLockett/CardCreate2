@@ -32,10 +32,13 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import phillockett65.CardCreate2.MainController;
+import phillockett65.CardCreate2.Model;
 
 public class CardSample extends Stage {
 	
 	private MainController main;
+	private Model model;
+
 	private Group group;
 	private Scene scene;
 
@@ -48,7 +51,7 @@ public class CardSample extends Stage {
 	 * @param mainController	- used to call the centralized controller.
 	 * @param title				- string displayed as the heading of the Stage.
 	 */
-	public CardSample(MainController mainController, String title) {
+	public CardSample(MainController mainController, Model mainModel, String title) {
 //		System.out.println("PTable constructed: " + title);
 
 		this.title = title;
@@ -57,12 +60,15 @@ public class CardSample extends Stage {
 		setOnCloseRequest(e -> Platform.exit());
 
 		main = mainController;
+		model = mainModel;
 		group = new Group();
 
 		initCardSample();
 
-		scene = new Scene(group, main.getWidth(), main.getHeight());
+		scene = new Scene(group, model.getWidth(), model.getHeight());
 		setScene(scene);
+		this.setX(0);
+		this.setY(0);
 		show();
 	}
 

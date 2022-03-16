@@ -341,14 +341,6 @@ public class MainController {
     }
 
 
-	public int getWidth() {
-		return model.getWidth();
-	}
-
-	public int getHeight() {
-		return model.getHeight();
-	}
-
 
 
 	// Main
@@ -364,7 +356,7 @@ public class MainController {
 	@FXML public void initialize() {
 //		System.out.println("MainController initialized.");
 
-		sample = new CardSample(this, "Periodic Table");
+		sample = new CardSample(this, model, "Periodic Table");
 	}
 
 
