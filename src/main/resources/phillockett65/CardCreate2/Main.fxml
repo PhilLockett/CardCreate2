@@ -18,13 +18,13 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="640.0" prefWidth="689.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="phillockett65.CardCreate2.MainController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="640.0" prefWidth="689.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="phillockett65.CardCreate2.MainController">
    <bottom>
       <VBox BorderPane.alignment="CENTER">
          <children>
             <HBox prefHeight="171.0" prefWidth="773.0" spacing="8.0">
                <children>
-                  <TitledPane collapsible="false" prefHeight="155.0" prefWidth="169.0" text="Display Card Items">
+                  <TitledPane collapsible="false" prefHeight="155.0" prefWidth="181.0" text="Display Card Items">
                      <content>
                         <VBox prefHeight="129.0" prefWidth="177.0" spacing="4.0">
                            <children>
@@ -37,7 +37,7 @@
                         </VBox>
                      </content>
                   </TitledPane>
-                  <TitledPane collapsible="false" layoutX="10.0" layoutY="10.0" prefHeight="155.0" prefWidth="171.0" text="Select Card Item">
+                  <TitledPane collapsible="false" layoutX="10.0" layoutY="10.0" prefHeight="155.0" prefWidth="184.0" text="Select Card Item">
                      <content>
                         <VBox prefHeight="174.0" prefWidth="177.0" spacing="4.0">
                            <children>
@@ -50,7 +50,7 @@
                         </VBox>
                      </content>
                   </TitledPane>
-                  <TitledPane collapsible="false" layoutX="10.0" layoutY="10.0" prefHeight="155.0" prefWidth="271.0" text="Modify Card Item (‰ - per mille)">
+                  <TitledPane collapsible="false" layoutX="10.0" layoutY="10.0" prefHeight="155.0" prefWidth="287.0" text="Modify Selected Card Item (‰ - per mille)">
                      <content>
                         <VBox prefHeight="143.0" prefWidth="284.0" spacing="8.0">
                            <children>
@@ -106,14 +106,14 @@
    <top>
       <HBox prefHeight="145.0" spacing="8.0" BorderPane.alignment="CENTER">
          <children>
-            <TitledPane animated="false" collapsible="false" prefHeight="101.0" prefWidth="517.0" text="Input Directories">
+            <TitledPane animated="false" collapsible="false" prefHeight="112.0" prefWidth="557.0" text="Input Directories">
                <content>
                   <VBox prefHeight="200.0" prefWidth="100.0">
                      <children>
                         <HBox prefHeight="100.0" prefWidth="200.0" spacing="4.0">
                            <children>
                               <Label fx:id="baseDirectoryjLabel" text="Base:" />
-                              <ComboBox fx:id="baseDirectoryjComboBox" onAction="#baseDirectoryjComboBoxActionPerformed" prefHeight="25.0" prefWidth="391.0" />
+                              <ComboBox fx:id="baseDirectoryjComboBox" onAction="#baseDirectoryjComboBoxActionPerformed" prefHeight="25.0" prefWidth="410.0" />
                               <Button fx:id="baseDirectoryjButton" mnemonicParsing="false" onAction="#baseDirectoryjButtonActionPerformed" text="Browse..." />
                            </children>
                            <padding>
@@ -123,11 +123,11 @@
                         <HBox prefHeight="100.0" prefWidth="200.0" spacing="4.0">
                            <children>
                               <Label fx:id="facejLabel" text="Face:" />
-                              <ComboBox fx:id="facejComboBox" onAction="#facejComboBoxActionPerformed" prefWidth="130.0" />
+                              <ComboBox fx:id="facejComboBox" onAction="#facejComboBoxActionPerformed" prefWidth="140.0" />
                               <Label fx:id="indexjLabel" text="Index:" />
-                              <ComboBox fx:id="indexjComboBox" onAction="#indexjComboBoxActionPerformed" prefWidth="130.0" />
+                              <ComboBox fx:id="indexjComboBox" onAction="#indexjComboBoxActionPerformed" prefWidth="140.0" />
                               <Label fx:id="pipjLabel" text="Pip:" />
-                              <ComboBox fx:id="pipjComboBox" onAction="#pipjComboBoxActionPerformed" prefWidth="130.0" />
+                              <ComboBox fx:id="pipjComboBox" onAction="#pipjComboBoxActionPerformed" prefWidth="140.0" />
                            </children>
                            <padding>
                               <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
@@ -138,9 +138,9 @@
                </content>
             </TitledPane>
             <Region HBox.hgrow="ALWAYS" />
-            <TitledPane collapsible="false" prefHeight="123.0" prefWidth="141.0" text="Generate">
+            <TitledPane collapsible="false" prefHeight="123.0" prefWidth="115.0" text="Generate">
                <content>
-                  <VBox prefHeight="200.0" prefWidth="100.0">
+                  <VBox alignment="CENTER" prefHeight="97.0" prefWidth="119.0">
                      <children>
                         <Button fx:id="generatejButton" mnemonicParsing="false" onAction="#generatejButtonActionPerformed" text="Gen" />
                      </children>
@@ -188,7 +188,7 @@
       </VBox>
    </right>
    <left>
-      <VBox prefHeight="279.0" prefWidth="395.0" spacing="8.0" BorderPane.alignment="CENTER">
+      <VBox prefHeight="279.0" prefWidth="395.0" spacing="16.0" BorderPane.alignment="CENTER">
          <children>
             <TitledPane animated="false" collapsible="false" text="Output Directory">
               <content>
@@ -227,9 +227,9 @@
                            <children>
                               <Label fx:id="widthjLabel" text="Card width (pixels):" GridPane.halignment="RIGHT" />
                               <Label fx:id="heightjLabel" text="Card height (pixels):" GridPane.halignment="RIGHT" GridPane.rowIndex="1" />
-                              <Button fx:id="widthjButton" mnemonicParsing="false" onAction="#widthjButtonActionPerformed" text="Reset" GridPane.columnIndex="2" />
+                              <Button fx:id="widthjButton" disable="true" mnemonicParsing="false" onAction="#widthjButtonActionPerformed" text="Reset" GridPane.columnIndex="2" />
                               <Button fx:id="heightjButton" mnemonicParsing="false" onAction="#heightjButtonActionPerformed" text="Reset" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-                              <Spinner fx:id="widthjSpinner" GridPane.columnIndex="1" />
+                              <Spinner fx:id="widthjSpinner" disable="true" GridPane.columnIndex="1" />
                               <Spinner fx:id="heightjSpinner" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                            </children>
                         </GridPane>
@@ -240,7 +240,7 @@
                   </HBox>
                </content>
             </TitledPane>
-            <TitledPane collapsible="false" prefHeight="75.0" prefWidth="223.0" text="Background Colour">
+            <TitledPane collapsible="false" text="Background Colour">
                <content>
                   <HBox spacing="8.0">
                      <children>
