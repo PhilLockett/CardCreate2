@@ -18,7 +18,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="640.0" prefWidth="689.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="phillockett65.CardCreate2.MainController">
+<BorderPane fx:id="userGUI" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="640.0" prefWidth="689.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="phillockett65.CardCreate2.MainController">
    <bottom>
       <VBox BorderPane.alignment="CENTER">
          <children>
@@ -113,7 +113,7 @@
                         <HBox prefHeight="100.0" prefWidth="200.0" spacing="4.0">
                            <children>
                               <Label fx:id="baseDirectoryjLabel" text="Base:" />
-                              <ComboBox fx:id="baseDirectoryjComboBox" onAction="#baseDirectoryjComboBoxActionPerformed" prefHeight="25.0" prefWidth="410.0" />
+                              <ComboBox fx:id="baseDirectoryjComboBox" disable="true" onAction="#baseDirectoryjComboBoxActionPerformed" prefHeight="25.0" prefWidth="410.0" />
                               <Button fx:id="baseDirectoryjButton" mnemonicParsing="false" onAction="#baseDirectoryjButtonActionPerformed" text="Browse..." />
                            </children>
                            <padding>
@@ -123,11 +123,11 @@
                         <HBox prefHeight="100.0" prefWidth="200.0" spacing="4.0">
                            <children>
                               <Label fx:id="facejLabel" text="Face:" />
-                              <ComboBox fx:id="facejComboBox" onAction="#facejComboBoxActionPerformed" prefWidth="140.0" />
+                              <ComboBox fx:id="facejComboBox" disable="true" onAction="#facejComboBoxActionPerformed" prefWidth="140.0" />
                               <Label fx:id="indexjLabel" text="Index:" />
-                              <ComboBox fx:id="indexjComboBox" onAction="#indexjComboBoxActionPerformed" prefWidth="140.0" />
+                              <ComboBox fx:id="indexjComboBox" disable="true" onAction="#indexjComboBoxActionPerformed" prefWidth="140.0" />
                               <Label fx:id="pipjLabel" text="Pip:" />
-                              <ComboBox fx:id="pipjComboBox" onAction="#pipjComboBoxActionPerformed" prefWidth="140.0" />
+                              <ComboBox fx:id="pipjComboBox" disable="true" onAction="#pipjComboBoxActionPerformed" prefWidth="140.0" />
                            </children>
                            <padding>
                               <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
@@ -142,7 +142,7 @@
                <content>
                   <VBox alignment="CENTER" prefHeight="97.0" prefWidth="119.0">
                      <children>
-                        <Button fx:id="generatejButton" mnemonicParsing="false" onAction="#generatejButtonActionPerformed" text="Gen" />
+                        <Button fx:id="generatejButton" disable="true" mnemonicParsing="false" onAction="#generatejButtonActionPerformed" text="Gen" />
                      </children>
                      <padding>
                         <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
@@ -197,8 +197,8 @@
                         <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
                      </padding>
                      <children>
-                        <TextField fx:id="outputjTextField" editable="false" onAction="#outputjTextFieldActionPerformed" />
-                        <ToggleButton fx:id="outputjToggleButton" mnemonicParsing="false" onAction="#outputjToggleButtonActionPerformed" text="Manual" />
+                        <TextField fx:id="outputjTextField" disable="true" editable="false" onAction="#outputjTextFieldActionPerformed" />
+                        <ToggleButton fx:id="outputjToggleButton" disable="true" mnemonicParsing="false" onAction="#outputjToggleButtonActionPerformed" text="Manual" />
                      </children>
                   </HBox>
               </content>

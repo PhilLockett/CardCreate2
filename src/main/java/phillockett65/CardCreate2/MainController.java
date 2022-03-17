@@ -24,6 +24,9 @@
  */
 package phillockett65.CardCreate2;
 
+import java.io.File;
+import java.util.ArrayList;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -37,6 +40,9 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.BorderPane;
+import javafx.stage.DirectoryChooser;
+import javafx.stage.Stage;
 import phillockett65.CardCreate2.Model;
 import phillockett65.CardCreate2.sample.CardSample;
 
@@ -179,6 +185,9 @@ public class MainController {
     private RadioButton standardPipjRadioButton;
 
     @FXML
+    private BorderPane userGUI;
+
+    @FXML
     private Button widthjButton;
 
     @FXML
@@ -188,9 +197,149 @@ public class MainController {
     private Spinner<Integer> widthjSpinner;
     private SpinnerValueFactory<Integer> widthSVF;
 
+/**
+ * Support code for "Input Directories" panel. 
+ */
+    private String baseDirectory = ".";
+    private boolean validBaseDirectory = false;
+    private String faceDirectory;
+    private String indexDirectory;
+    private String pipDirectory;
+    private String outputName = "";
+
+    private boolean setjComboBoxModelFromArrayList(ComboBox<String> comboBox, ArrayList<String> list) {
+        if (list.isEmpty())
+            return false;
+
+        for (String s : list)
+            comboBox.getItems().add(s);
+
+        return true;
+    }
+
+    private boolean selectValidBaseDirectory() {
+
+        selectBaseDirectory();
+//        do {
+//            int n = JOptionPane.showConfirmDialog(this,
+//                "You need to select a valid directory which contains\n"
+//                + "'faces', 'indices' and 'pips' directories.\n"
+//                + "Continue by selecting a valid directory?",
+//                "Do you wish to continue?",
+//                JOptionPane.OK_CANCEL_OPTION);
+//
+//            if (n != JOptionPane.OK_OPTION)
+//                return false;
+//
+//            selectBaseDirectory();
+//        } while (validBaseDirectory == false);
+
+        return true;
+    }
+
+    private boolean filljComboBox(ComboBox<String> comboBox, String directoryName) {
+        final File style = new File(directoryName);
+        ArrayList<String> styleList = new ArrayList<String>();
+        for (final File styleEntry : style.listFiles()) {
+            if (styleEntry.isDirectory()) {
+//                System.out.println(directoryName + "\\" + styleEntry.getName());
+                styleList.add(styleEntry.getName());
+            }
+        }
+        if (!styleList.isEmpty()) {
+            if (setjComboBoxModelFromArrayList(comboBox, styleList))
+            	comboBox.setValue(styleList.get(0));
+
+            return true;
+        }
+
+        return false;
+    }
+
+    private boolean setBaseDirectory(File directory) {
+        if (!directory.isDirectory()) {
+            return false;
+        }
+
+        boolean faces = false;
+        boolean indices = false;
+        boolean pips = false;
+
+        for (final File fileEntry : directory.listFiles()) {
+            if (fileEntry.isDirectory()) {
+                String directoryName = directory.getPath() + "\\" + fileEntry.getName();
+//                System.out.println(directoryName);
+                switch (fileEntry.getName()) {
+                    case "faces":
+                        faces = filljComboBox(facejComboBox, directoryName);
+                        break;
+                    case "indices":
+                        indices = filljComboBox(indexjComboBox, directoryName);
+                        break;
+                    case "pips":
+                        pips = filljComboBox(pipjComboBox, directoryName);
+                        break;
+                }
+            }
+        }
+
+        validBaseDirectory = (faces && indices && pips);
+        setGenerationEnabled(directory);
+
+        return validBaseDirectory;
+    }
+
+    // Control widgets until a valid base directory is provided.
+    private boolean setGenerationEnabled(File directory) {
+
+        if (validBaseDirectory) {
+            baseDirectory = directory.getPath() + "\\";
+            baseDirectoryjComboBox.getItems().add(directory.getPath());	// TEMP!
+            baseDirectoryjComboBox.setValue(directory.getPath());
+//            baseDirectoryjComboBoxAdd(baseDirectory);
+            outputjTextField.setText("");
+        }
+
+        baseDirectoryjComboBox.setDisable(!validBaseDirectory);
+        generatejButton.setDisable(!validBaseDirectory);
+        outputjToggleButton.setDisable(!validBaseDirectory);
+        facejComboBox.setDisable(!validBaseDirectory);
+        indexjComboBox.setDisable(!validBaseDirectory);
+        pipjComboBox.setDisable(!validBaseDirectory);
+
+        return validBaseDirectory;
+    }
+
+    private boolean selectBaseDirectory() {
+    	DirectoryChooser choice = new DirectoryChooser();
+        choice.setInitialDirectory(new File(baseDirectory));
+        choice.setTitle("Select Base Directory");
+    	Stage stage = (Stage) userGUI.getScene().getWindow();
+        File directory = choice.showDialog(stage);
+
+        if (directory != null) {
+//        	System.out.println("Selected: " + directory.getAbsolutePath());
+            setBaseDirectory(directory);
+
+            if (validBaseDirectory) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     @FXML
     void baseDirectoryjButtonActionPerformed(ActionEvent event) {
-
+//    	System.out.println("baseDirectoryjButtonActionPerformed()");
+        selectBaseDirectory();
+        if (!validBaseDirectory) {
+            if (!selectValidBaseDirectory()) {
+                // Put original base directory back.
+                File directory = new File(baseDirectory);
+                setBaseDirectory(directory);
+            }
+        }
     }
 
     @FXML
