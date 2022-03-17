@@ -32,8 +32,11 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.Spinner;
+import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleButton;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import phillockett65.CardCreate2.Model;
 import phillockett65.CardCreate2.sample.CardSample;
 
@@ -43,7 +46,7 @@ public class MainController {
     private Button baseDirectoryjButton;
 
     @FXML
-    private ComboBox<?> baseDirectoryjComboBox;
+    private ComboBox<String> baseDirectoryjComboBox;
 
     @FXML
     private Label baseDirectoryjLabel;
@@ -73,7 +76,7 @@ public class MainController {
     private CheckBox facejCheckBox;
 
     @FXML
-    private ComboBox<?> facejComboBox;
+    private ComboBox<String> facejComboBox;
 
     @FXML
     private Label facejLabel;
@@ -94,10 +97,11 @@ public class MainController {
     private Label heightjLabel;
 
     @FXML
-    private Spinner<?> heightjSpinner;
+    private Spinner<Integer> heightjSpinner;
+    private SpinnerValueFactory<Integer> heightSVF;
 
     @FXML
-    private ComboBox<?> indexjComboBox;
+    private ComboBox<String> indexjComboBox;
 
     @FXML
     private Label indexjLabel;
@@ -115,7 +119,8 @@ public class MainController {
     private Label itemCentreXjLabel;
 
     @FXML
-    private Spinner<?> itemCentreXjSpinner;
+    private Spinner<Integer> itemCentreXjSpinner;
+    private SpinnerValueFactory<Integer> itemCentreXSVF;
 
     @FXML
     private Button itemCentreYjButton;
@@ -124,7 +129,8 @@ public class MainController {
     private Label itemCentreYjLabel;
 
     @FXML
-    private Spinner<?> itemCentreYjSpinner;
+    private Spinner<Integer> itemCentreYjSpinner;
+    private SpinnerValueFactory<Integer> itemCentreYSVF;
 
     @FXML
     private Button itemHeightjButton;
@@ -133,7 +139,8 @@ public class MainController {
     private Label itemHeightjLabel;
 
     @FXML
-    private Spinner<?> itemHeightjSpinner;
+    private Spinner<Integer> itemHeightjSpinner;
+    private SpinnerValueFactory<Integer> itemHeightSVF;
 
     @FXML
     private CheckBox keepAspectRatiojCheckBox;
@@ -151,7 +158,7 @@ public class MainController {
     private ToggleButton outputjToggleButton;
 
     @FXML
-    private ComboBox<?> pipjComboBox;
+    private ComboBox<String> pipjComboBox;
 
     @FXML
     private Label pipjLabel;
@@ -178,7 +185,8 @@ public class MainController {
     private Label widthjLabel;
 
     @FXML
-    private Spinner<?> widthjSpinner;
+    private Spinner<Integer> widthjSpinner;
+    private SpinnerValueFactory<Integer> widthSVF;
 
     @FXML
     void baseDirectoryjButtonActionPerformed(ActionEvent event) {
@@ -247,7 +255,7 @@ public class MainController {
 
     @FXML
     void heightjButtonActionPerformed(ActionEvent event) {
-
+        heightSVF.setValue(532);
     }
 
     @FXML
@@ -267,17 +275,19 @@ public class MainController {
 
     @FXML
     void itemCentreXjButtonActionPerformed(ActionEvent event) {
-
+        itemCentreXSVF.setValue(10);
+//        itemCentreXSVF.setValue(Math.round(currentItem.getX() * 10));
     }
 
     @FXML
     void itemCentreYjButtonActionPerformed(ActionEvent event) {
-
+//        itemCentreYSVF.setValue(Math.round(currentItem.getY() * 10));
     }
 
     @FXML
     void itemHeightjButtonActionPerformed(ActionEvent event) {
-
+        itemHeightSVF.setValue(10);
+//        itemHeightSVF.setValue(Math.round(currentItem.getH() * 10));
     }
 
     @FXML
@@ -337,7 +347,7 @@ public class MainController {
 
     @FXML
     void widthjButtonActionPerformed(ActionEvent event) {
-
+        widthSVF.setValue(380);
     }
 
 
@@ -348,6 +358,14 @@ public class MainController {
 	private Model model;
 	private CardSample sample;
 
+	private void setUpImageButton(Button button, String imageFileName)
+	{
+		Image image = new Image(getClass().getResourceAsStream(imageFileName));
+		ImageView view = new ImageView(image);
+		
+		button.setGraphic(view);
+		button.setText(null);
+	}
 	/**
 	 * Called by the FXML mechanism to initialize the controller. Creates a 
 	 * callback link for all the tab controllers, creates the PTable window and
@@ -355,6 +373,27 @@ public class MainController {
 	 */
 	@FXML public void initialize() {
 //		System.out.println("MainController initialized.");
+
+		setUpImageButton(generatejButton, "icon-play.png");
+		setUpImageButton(previousSuitjButton, "icon-up.png");
+		setUpImageButton(previousCardjButton, "icon-left.png");
+		setUpImageButton(nextCardjButton, "icon-right.png");
+		setUpImageButton(nextSuitjButton, "icon-down.png");
+
+	    widthSVF = new SpinnerValueFactory.IntegerSpinnerValueFactory(38, 3800, 380);
+	    widthjSpinner.setValueFactory(widthSVF);
+
+	    heightSVF = new SpinnerValueFactory.IntegerSpinnerValueFactory(53, 5320, 532);
+	    heightjSpinner.setValueFactory(heightSVF);
+
+	    itemHeightSVF = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 1000, 10);
+	    itemHeightjSpinner.setValueFactory(itemHeightSVF);
+
+	    itemCentreXSVF = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 1000, 10);
+	    itemCentreXjSpinner.setValueFactory(itemCentreXSVF);
+
+	    itemCentreYSVF = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 1000, 10);
+	    itemCentreYjSpinner.setValueFactory(itemCentreYSVF);
 
 		sample = new CardSample(this, model, "Periodic Table");
 	}
@@ -368,6 +407,7 @@ public class MainController {
 	public MainController() {
 //		System.out.println("MainController constructed.");
 		model = new Model();
+		
 	}
 
 }
