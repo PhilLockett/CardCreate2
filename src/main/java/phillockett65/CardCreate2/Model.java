@@ -215,6 +215,49 @@ public class Model {
 	public Model() {
 //		System.out.println("Model constructed.");
 
+		/**
+		 * Initialize "Playing Card Generator" panel.
+		 */
+
+		/**
+		 * Initialize "Input Directories" panel.
+		 */
+
+		baseDirectoryjComboBoxInit();
+
+		/**
+		 * Initialize"Generate" panel.
+		 */
+
+		/**
+		 * Initialize"Output Directory" panel.
+		 */
+
+		/**
+		 * Initialize "Sample Navigation" panel.
+		 */
+
+		/**
+		 * Initialize "Card Size" panel.
+		 */
+
+		/**
+		 * Initialize "Background Colour" panel.
+		 */
+
+		/**
+		 * Initialize "Display Card Items" panel.
+		 */
+
+		/**
+		 * Initialize "Select Card Item" panel.
+		 */
+
+		/**
+		 * Initialize "Modify Selected Card Item" panel.
+		 */
+
+
 	}
 
 }
