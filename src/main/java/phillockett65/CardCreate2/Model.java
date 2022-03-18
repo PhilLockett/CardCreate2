@@ -78,6 +78,60 @@ public class Model {
 		this.baseDirectory = baseDirectory;
 	}
 
+	public boolean baseDirectoryjComboBoxInit() {
+//      System.out.println("baseDirectoryjComboBoxInit()");
+
+		// Check if PATHSFILE exists.
+		File file = new File(PATHSFILE);
+		if (!file.exists()) {
+			file = new File(".");
+//          samplejPanel.setIndexDirectory(file.getPath());
+			return false;
+		}
+
+		// Read path list file into array.
+		ArrayList<String> pathList = new ArrayList<String>();
+		try (FileReader reader = new FileReader(PATHSFILE); BufferedReader br = new BufferedReader(reader)) {
+
+			String line;
+			while ((line = br.readLine()) != null) {
+				pathList.add(line);
+//              System.out.println(line);
+			}
+			br.close();
+		} catch (IOException e) {
+//          e.printStackTrace();
+		}
+
+		// If array is not empty use it to fill in baseDirectoryjComboBox.
+		if (!pathList.isEmpty()) {
+//          setjComboBoxModelFromArrayList(baseDirectoryjComboBox, pathList);
+			baseList = pathList;
+			baseDirectory = pathList.get(0);
+			File directory = new File(baseDirectory);
+			setBaseDirectory(directory);
+
+			if (validBaseDirectory)
+				return true;
+		}
+
+		return false;
+	}
+
+	public boolean baseDirectoryjComboBoxSave() {
+
+		try (FileWriter writer = new FileWriter(PATHSFILE); BufferedWriter bw = new BufferedWriter(writer)) {
+			for (final String directory : baseList) {
+				final String item = directory + System.lineSeparator();
+				bw.write(item);
+			}
+			bw.close();
+		} catch (IOException e) {
+//          e.printStackTrace();
+		}
+
+		return true;
+	}
 
 	private boolean fillDirectoryList(ArrayList<String> styleList, String directoryName) {
 		final File style = new File(directoryName);
