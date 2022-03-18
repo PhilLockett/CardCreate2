@@ -59,6 +59,9 @@ public class MainController {
     @FXML
     private BorderPane userGUI;
 
+    @FXML
+    private Label statusjLabel;
+
 
     /**
      * Support code for "Input Directories" panel. 
