@@ -35,6 +35,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
@@ -79,30 +80,30 @@ public class MainController {
     private Label facejLabel;
 
     @FXML
-    private ComboBox<String> facejComboBox;
-
-    @FXML
     private Label indexjLabel;
-
-    @FXML
-    private ComboBox<String> indexjComboBox;
 
     @FXML
     private Label pipjLabel;
 
     @FXML
-    private ComboBox<String> pipjComboBox;
+    private ChoiceBox<String> facejComboBox;
+
+    @FXML
+    private ChoiceBox<String> indexjComboBox;
+
+    @FXML
+    private ChoiceBox<String> pipjComboBox;
 
 
-    private boolean setjComboBoxModelFromArrayList(ComboBox<String> comboBox, ArrayList<String> list) {
+    private boolean setjComboBoxModelFromArrayList(ChoiceBox<String> choiceBox, ArrayList<String> list) {
         if (list.isEmpty())
             return false;
 
-        comboBox.getItems().clear();
+        choiceBox.getItems().clear();
         for (String s : list)
-            comboBox.getItems().add(s);
+            choiceBox.getItems().add(s);
 
-    	comboBox.setValue(list.get(0));
+    	choiceBox.setValue(list.get(0));
 
         return true;
     }
@@ -126,10 +127,10 @@ public class MainController {
         return true;
     }
 
-    private boolean filljComboBox(ComboBox<String> comboBox, ArrayList<String> styleList) {
+    private boolean filljComboBox(ChoiceBox<String> choiceBox, ArrayList<String> styleList) {
 
     	if (!styleList.isEmpty()) {
-            setjComboBoxModelFromArrayList(comboBox, styleList);
+            setjComboBoxModelFromArrayList(choiceBox, styleList);
 
             return true;
         }
