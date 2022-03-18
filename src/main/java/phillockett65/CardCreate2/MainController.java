@@ -128,14 +128,7 @@ public class MainController {
     }
 
     private boolean filljComboBox(ChoiceBox<String> choiceBox, ArrayList<String> styleList) {
-
-    	if (!styleList.isEmpty()) {
-            setjComboBoxModelFromArrayList(choiceBox, styleList);
-
-            return true;
-        }
-
-        return false;
+        return setjComboBoxModelFromArrayList(choiceBox, styleList);
     }
 
     private boolean setBaseDirectory(File directory) {
