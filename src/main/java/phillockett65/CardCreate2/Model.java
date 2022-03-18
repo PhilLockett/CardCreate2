@@ -24,7 +24,12 @@
  */
 package phillockett65.CardCreate2;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import javafx.scene.control.ComboBox;
@@ -32,24 +37,28 @@ import phillockett65.CardCreate2.sample.Default;
 
 public class Model {
 
-    /**
-     * Support code for "Playing Card Generator" panel. 
-     */
+	/**
+	 * Support code for "Playing Card Generator" panel.
+	 */
+	private final String PATHSFILE = "Files.txt";
 
-
-    /**
-     * Support code for "Input Directories" panel. 
-     */
+	/**
+	 * Support code for "Input Directories" panel.
+	 */
 
 	private String baseDirectory = ".";
 	private boolean validBaseDirectory = false;
 
-    ArrayList<String> facesList = new ArrayList<String>();
+	ArrayList<String> baseList = new ArrayList<String>();
+	ArrayList<String> facesList = new ArrayList<String>();
 	ArrayList<String> indexList = new ArrayList<String>();
-    ArrayList<String> pipList = new ArrayList<String>();
+	ArrayList<String> pipList = new ArrayList<String>();
 
+	public ArrayList<String> getBaseList() {
+		return baseList;
+	}
 
-    public ArrayList<String> getFacesList() {
+	public ArrayList<String> getFacesList() {
 		return facesList;
 	}
 
@@ -69,54 +78,55 @@ public class Model {
 		this.baseDirectory = baseDirectory;
 	}
 
-    private boolean fillComboBox(ArrayList<String> styleList, String directoryName) {
-        final File style = new File(directoryName);
 
-        for (final File styleEntry : style.listFiles()) {
-            if (styleEntry.isDirectory()) {
+	private boolean fillDirectoryList(ArrayList<String> styleList, String directoryName) {
+		final File style = new File(directoryName);
+
+		for (final File styleEntry : style.listFiles()) {
+			if (styleEntry.isDirectory()) {
 //                System.out.println(directoryName + "\\" + styleEntry.getName());
-                styleList.add(styleEntry.getName());
-            }
-        }
+				styleList.add(styleEntry.getName());
+			}
+		}
 
-        return !styleList.isEmpty();
-    }
+		return !styleList.isEmpty();
+	}
 
 	public boolean setBaseDirectory(File directory) {
-        if (!directory.isDirectory()) {
-            return false;
-        }
+		if (!directory.isDirectory()) {
+			return false;
+		}
 
-        boolean faces = false;
-        boolean indices = false;
-        boolean pips = false;
+		boolean faces = false;
+		boolean indices = false;
+		boolean pips = false;
 
-        facesList.clear();
-    	indexList.clear();
-        pipList.clear();
+		facesList.clear();
+		indexList.clear();
+		pipList.clear();
 
-        for (final File fileEntry : directory.listFiles()) {
-            if (fileEntry.isDirectory()) {
-                String directoryName = directory.getPath() + "\\" + fileEntry.getName();
+		for (final File fileEntry : directory.listFiles()) {
+			if (fileEntry.isDirectory()) {
+				String directoryName = directory.getPath() + "\\" + fileEntry.getName();
 //                System.out.println(directoryName);
-                switch (fileEntry.getName()) {
-                    case "faces":
-                        faces = fillComboBox(facesList, directoryName);
-                        break;
-                    case "indices":
-                        indices = fillComboBox(indexList, directoryName);
-                        break;
-                    case "pips":
-                        pips = fillComboBox(pipList, directoryName);
-                        break;
-                }
-            }
-        }
+				switch (fileEntry.getName()) {
+				case "faces":
+					faces = fillDirectoryList(facesList, directoryName);
+					break;
+				case "indices":
+					indices = fillDirectoryList(indexList, directoryName);
+					break;
+				case "pips":
+					pips = fillDirectoryList(pipList, directoryName);
+					break;
+				}
+			}
+		}
 
-        validBaseDirectory = (faces && indices && pips);
+		validBaseDirectory = (faces && indices && pips);
 
-        return validBaseDirectory;
-    }
+		return validBaseDirectory;
+	}
 
 	public boolean isValidBaseDirectory() {
 		return validBaseDirectory;
@@ -138,7 +148,6 @@ public class Model {
 		return baseDirectory + "pip";
 	}
 
-
 	public String getOutputName() {
 		return outputName;
 	}
@@ -147,27 +156,23 @@ public class Model {
 		this.outputName = outputName;
 	}
 
-    /**
-     * Support code for "Generate" panel. 
-     */
+	/**
+	 * Support code for "Generate" panel.
+	 */
 
+	/**
+	 * Support code for "Output Directory" panel.
+	 */
 
-    /**
-     * Support code for "Output Directory" panel. 
-     */
+	private String outputName = "";
 
-    private String outputName = "";
+	/**
+	 * Support code for "Sample Navigation" panel.
+	 */
 
-
-
-    /**
-     * Support code for "Sample Navigation" panel. 
-     */
-
-
-    /**
-     * Support code for "Card Size" panel. 
-     */
+	/**
+	 * Support code for "Card Size" panel.
+	 */
 
 	private int width = Default.WIDTH.intr();
 	private int height = Default.HEIGHT.intr();
@@ -176,7 +181,7 @@ public class Model {
 		return width;
 	}
 
-    public void setWidth(int width) {
+	public void setWidth(int width) {
 		this.width = width;
 	}
 
@@ -188,26 +193,21 @@ public class Model {
 		this.height = height;
 	}
 
+	/**
+	 * Support code for "Background Colour" panel.
+	 */
 
-    /**
-     * Support code for "Background Colour" panel. 
-     */
+	/**
+	 * Support code for "Display Card Items" panel.
+	 */
 
+	/**
+	 * Support code for "Select Card Item" panel.
+	 */
 
-    /**
-     * Support code for "Display Card Items" panel. 
-     */
-
-
-    /**
-     * Support code for "Select Card Item" panel. 
-     */
-
-
-    /**
-     * Support code for "Modify Selected Card Item" panel. 
-     */
-
+	/**
+	 * Support code for "Modify Selected Card Item" panel.
+	 */
 
 	/**
 	 * Default Constructor.
