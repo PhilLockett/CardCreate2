@@ -57,11 +57,66 @@ public class MainController {
      * Support code for "Playing Card Generator" panel. 
      */
 
+	private Model model;
+	private CardSample sample;
+
     @FXML
     private BorderPane userGUI;
 
     @FXML
     private Label statusjLabel;
+
+
+	/**
+	 * Constructor.
+	 * 
+	 * Responsible for creating the Model.
+	 */
+	public MainController() {
+//		System.out.println("MainController constructed.");
+		model = new Model();
+		
+	}
+
+	private void setUpImageButton(Button button, String imageFileName)
+	{
+		Image image = new Image(getClass().getResourceAsStream(imageFileName));
+		ImageView view = new ImageView(image);
+		
+		button.setGraphic(view);
+		button.setText(null);
+	}
+	/**
+	 * Called by the FXML mechanism to initialize the controller. Creates a 
+	 * callback link for all the tab controllers, creates the PTable window and
+	 * update the Status tab display.
+	 */
+	@FXML public void initialize() {
+//		System.out.println("MainController initialized.");
+
+		setUpImageButton(generatejButton, "icon-play.png");
+		setUpImageButton(previousSuitjButton, "icon-up.png");
+		setUpImageButton(previousCardjButton, "icon-left.png");
+		setUpImageButton(nextCardjButton, "icon-right.png");
+		setUpImageButton(nextSuitjButton, "icon-down.png");
+
+	    widthSVF = new SpinnerValueFactory.IntegerSpinnerValueFactory(38, 3800, 380);
+	    widthjSpinner.setValueFactory(widthSVF);
+
+	    heightSVF = new SpinnerValueFactory.IntegerSpinnerValueFactory(53, 5320, 532);
+	    heightjSpinner.setValueFactory(heightSVF);
+
+	    itemHeightSVF = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 1000, 10);
+	    itemHeightjSpinner.setValueFactory(itemHeightSVF);
+
+	    itemCentreXSVF = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 1000, 10);
+	    itemCentreXjSpinner.setValueFactory(itemCentreXSVF);
+
+	    itemCentreYSVF = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 1000, 10);
+	    itemCentreYjSpinner.setValueFactory(itemCentreYSVF);
+
+		sample = new CardSample(this, model, "Sample");
+	}
 
 
     /**
@@ -521,71 +576,5 @@ public class MainController {
     void keepAspectRatiojCheckBoxActionPerformed(ActionEvent event) {
 
     }
-
-
-
-
-
-
-
-
-    /**
-     * Main
-     */
-
-	private Model model;
-	private CardSample sample;
-
-	private void setUpImageButton(Button button, String imageFileName)
-	{
-		Image image = new Image(getClass().getResourceAsStream(imageFileName));
-		ImageView view = new ImageView(image);
-		
-		button.setGraphic(view);
-		button.setText(null);
-	}
-	/**
-	 * Called by the FXML mechanism to initialize the controller. Creates a 
-	 * callback link for all the tab controllers, creates the PTable window and
-	 * update the Status tab display.
-	 */
-	@FXML public void initialize() {
-//		System.out.println("MainController initialized.");
-
-		setUpImageButton(generatejButton, "icon-play.png");
-		setUpImageButton(previousSuitjButton, "icon-up.png");
-		setUpImageButton(previousCardjButton, "icon-left.png");
-		setUpImageButton(nextCardjButton, "icon-right.png");
-		setUpImageButton(nextSuitjButton, "icon-down.png");
-
-	    widthSVF = new SpinnerValueFactory.IntegerSpinnerValueFactory(38, 3800, 380);
-	    widthjSpinner.setValueFactory(widthSVF);
-
-	    heightSVF = new SpinnerValueFactory.IntegerSpinnerValueFactory(53, 5320, 532);
-	    heightjSpinner.setValueFactory(heightSVF);
-
-	    itemHeightSVF = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 1000, 10);
-	    itemHeightjSpinner.setValueFactory(itemHeightSVF);
-
-	    itemCentreXSVF = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 1000, 10);
-	    itemCentreXjSpinner.setValueFactory(itemCentreXSVF);
-
-	    itemCentreYSVF = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 1000, 10);
-	    itemCentreYjSpinner.setValueFactory(itemCentreYSVF);
-
-		sample = new CardSample(this, model, "Periodic Table");
-	}
-
-
-	/**
-	 * Constructor.
-	 * 
-	 * Responsible for creating the Model.
-	 */
-	public MainController() {
-//		System.out.println("MainController constructed.");
-		model = new Model();
-		
-	}
 
 }
