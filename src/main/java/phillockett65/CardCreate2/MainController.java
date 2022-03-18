@@ -26,10 +26,14 @@ package phillockett65.CardCreate2;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Optional;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
@@ -102,20 +106,19 @@ public class MainController {
 
     private boolean selectValidBaseDirectory() {
 
-        selectBaseDirectory();
-//        do {
-//            int n = JOptionPane.showConfirmDialog(this,
-//                "You need to select a valid directory which contains\n"
-//                + "'faces', 'indices' and 'pips' directories.\n"
-//                + "Continue by selecting a valid directory?",
-//                "Do you wish to continue?",
-//                JOptionPane.OK_CANCEL_OPTION);
-//
-//            if (n != JOptionPane.OK_OPTION)
-//                return false;
-//
-//            selectBaseDirectory();
-//        } while (validBaseDirectory == false);
+        do {
+        	Alert alert = new Alert(AlertType.CONFIRMATION);
+        	alert.setTitle("Do you wish to continue?");
+        	alert.setHeaderText("Continue by selecting a valid directory?");
+        	alert.setContentText("You need to select a valid directory that contains 'faces',\n'indices' and 'pips' directories.");
+
+        	Optional<ButtonType> result = alert.showAndWait();
+
+        	if (!result.isPresent() || result.get() != ButtonType.OK)
+        		return false;
+
+            selectBaseDirectory();
+        } while (model.isValidBaseDirectory() == false);
 
         return true;
     }
