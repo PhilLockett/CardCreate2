@@ -48,171 +48,54 @@ import phillockett65.CardCreate2.sample.CardSample;
 
 public class MainController {
 
+    /**
+     * Support code for "Playing Card Generator" panel. 
+     */
+
     @FXML
-    private Button baseDirectoryjButton;
+    private BorderPane userGUI;
+
+
+    /**
+     * Support code for "Input Directories" panel. 
+     */
+    @FXML
+    private Label baseDirectoryjLabel;
 
     @FXML
     private ComboBox<String> baseDirectoryjComboBox;
 
     @FXML
-    private Label baseDirectoryjLabel;
-
-    @FXML
-    private RadioButton bridgejRadioButton;
-
-    @FXML
-    private Button colourjButton;
-
-    @FXML
-    private TextField colourjTextField;
-
-    @FXML
-    private CheckBox cornerPipjCheckBox;
-
-    @FXML
-    private RadioButton cornerPipjRadioButton;
-
-    @FXML
-    private CheckBox facePipjCheckBox;
-
-    @FXML
-    private RadioButton facePipjRadioButton;
-
-    @FXML
-    private CheckBox facejCheckBox;
-
-    @FXML
-    private ComboBox<String> facejComboBox;
+    private Button baseDirectoryjButton;
 
     @FXML
     private Label facejLabel;
 
     @FXML
-    private RadioButton facejRadioButton;
-
-    @FXML
-    private RadioButton freejRadioButton;
-
-    @FXML
-    private Button generatejButton;
-
-    @FXML
-    private Button heightjButton;
-
-    @FXML
-    private Label heightjLabel;
-
-    @FXML
-    private Spinner<Integer> heightjSpinner;
-    private SpinnerValueFactory<Integer> heightSVF;
-
-    @FXML
-    private ComboBox<String> indexjComboBox;
+    private ComboBox<String> facejComboBox;
 
     @FXML
     private Label indexjLabel;
 
     @FXML
-    private CheckBox indicesjCheckBox;
-
-    @FXML
-    private RadioButton indicesjRadioButton;
-
-    @FXML
-    private Button itemCentreXjButton;
-
-    @FXML
-    private Label itemCentreXjLabel;
-
-    @FXML
-    private Spinner<Integer> itemCentreXjSpinner;
-    private SpinnerValueFactory<Integer> itemCentreXSVF;
-
-    @FXML
-    private Button itemCentreYjButton;
-
-    @FXML
-    private Label itemCentreYjLabel;
-
-    @FXML
-    private Spinner<Integer> itemCentreYjSpinner;
-    private SpinnerValueFactory<Integer> itemCentreYSVF;
-
-    @FXML
-    private Button itemHeightjButton;
-
-    @FXML
-    private Label itemHeightjLabel;
-
-    @FXML
-    private Spinner<Integer> itemHeightjSpinner;
-    private SpinnerValueFactory<Integer> itemHeightSVF;
-
-    @FXML
-    private CheckBox keepAspectRatiojCheckBox;
-
-    @FXML
-    private Button nextCardjButton;
-
-    @FXML
-    private Button nextSuitjButton;
-
-    @FXML
-    private TextField outputjTextField;
-
-    @FXML
-    private ToggleButton outputjToggleButton;
-
-    @FXML
-    private ComboBox<String> pipjComboBox;
+    private ComboBox<String> indexjComboBox;
 
     @FXML
     private Label pipjLabel;
 
     @FXML
-    private RadioButton pokerjRadioButton;
+    private ComboBox<String> pipjComboBox;
 
-    @FXML
-    private Button previousCardjButton;
-
-    @FXML
-    private Button previousSuitjButton;
-
-    @FXML
-    private CheckBox standardPipjCheckBox;
-
-    @FXML
-    private RadioButton standardPipjRadioButton;
-
-    @FXML
-    private BorderPane userGUI;
-
-    @FXML
-    private Button widthjButton;
-
-    @FXML
-    private Label widthjLabel;
-
-    @FXML
-    private Spinner<Integer> widthjSpinner;
-    private SpinnerValueFactory<Integer> widthSVF;
-
-/**
- * Support code for "Input Directories" panel. 
- */
-    private String baseDirectory = ".";
-    private boolean validBaseDirectory = false;
-    private String faceDirectory;
-    private String indexDirectory;
-    private String pipDirectory;
-    private String outputName = "";
 
     private boolean setjComboBoxModelFromArrayList(ComboBox<String> comboBox, ArrayList<String> list) {
         if (list.isEmpty())
             return false;
 
+        comboBox.getItems().clear();
         for (String s : list)
             comboBox.getItems().add(s);
+
+    	comboBox.setValue(list.get(0));
 
         return true;
     }
@@ -237,18 +120,10 @@ public class MainController {
         return true;
     }
 
-    private boolean filljComboBox(ComboBox<String> comboBox, String directoryName) {
-        final File style = new File(directoryName);
-        ArrayList<String> styleList = new ArrayList<String>();
-        for (final File styleEntry : style.listFiles()) {
-            if (styleEntry.isDirectory()) {
-//                System.out.println(directoryName + "\\" + styleEntry.getName());
-                styleList.add(styleEntry.getName());
-            }
-        }
-        if (!styleList.isEmpty()) {
-            if (setjComboBoxModelFromArrayList(comboBox, styleList))
-            	comboBox.setValue(styleList.get(0));
+    private boolean filljComboBox(ComboBox<String> comboBox, ArrayList<String> styleList) {
+
+    	if (!styleList.isEmpty()) {
+            setjComboBoxModelFromArrayList(comboBox, styleList);
 
             return true;
         }
@@ -257,49 +132,30 @@ public class MainController {
     }
 
     private boolean setBaseDirectory(File directory) {
-        if (!directory.isDirectory()) {
-            return false;
-        }
 
-        boolean faces = false;
-        boolean indices = false;
-        boolean pips = false;
+    	model.setBaseDirectory(directory);
 
-        for (final File fileEntry : directory.listFiles()) {
-            if (fileEntry.isDirectory()) {
-                String directoryName = directory.getPath() + "\\" + fileEntry.getName();
-//                System.out.println(directoryName);
-                switch (fileEntry.getName()) {
-                    case "faces":
-                        faces = filljComboBox(facejComboBox, directoryName);
-                        break;
-                    case "indices":
-                        indices = filljComboBox(indexjComboBox, directoryName);
-                        break;
-                    case "pips":
-                        pips = filljComboBox(pipjComboBox, directoryName);
-                        break;
-                }
-            }
-        }
+    	setjComboBoxModelFromArrayList(facejComboBox, model.getFacesList());
+    	setjComboBoxModelFromArrayList(indexjComboBox, model.getIndexList());
+    	setjComboBoxModelFromArrayList(pipjComboBox, model.getPipList());
 
-        validBaseDirectory = (faces && indices && pips);
-        setGenerationEnabled(directory);
+    	setGenerationEnabled(directory);
 
-        return validBaseDirectory;
+        return model.isValidBaseDirectory();
     }
 
     // Control widgets until a valid base directory is provided.
     private boolean setGenerationEnabled(File directory) {
 
-        if (validBaseDirectory) {
-            baseDirectory = directory.getPath() + "\\";
+        if (model.isValidBaseDirectory()) {
+        	model.setBaseDirectory(directory.getPath() + "\\");
             baseDirectoryjComboBox.getItems().add(directory.getPath());	// TEMP!
-            baseDirectoryjComboBox.setValue(directory.getPath());
+            baseDirectoryjComboBox.setValue(directory.getPath()); // TEMP
 //            baseDirectoryjComboBoxAdd(baseDirectory);
             outputjTextField.setText("");
         }
 
+        final boolean validBaseDirectory = model.isValidBaseDirectory();
         baseDirectoryjComboBox.setDisable(!validBaseDirectory);
         generatejButton.setDisable(!validBaseDirectory);
         outputjToggleButton.setDisable(!validBaseDirectory);
@@ -312,7 +168,7 @@ public class MainController {
 
     private boolean selectBaseDirectory() {
     	DirectoryChooser choice = new DirectoryChooser();
-        choice.setInitialDirectory(new File(baseDirectory));
+        choice.setInitialDirectory(new File(model.getBaseDirectory()));
         choice.setTitle("Select Base Directory");
     	Stage stage = (Stage) userGUI.getScene().getWindow();
         File directory = choice.showDialog(stage);
@@ -321,7 +177,7 @@ public class MainController {
 //        	System.out.println("Selected: " + directory.getAbsolutePath());
             setBaseDirectory(directory);
 
-            if (validBaseDirectory) {
+            if (model.isValidBaseDirectory()) {
                 return true;
             }
         }
@@ -333,10 +189,10 @@ public class MainController {
     void baseDirectoryjButtonActionPerformed(ActionEvent event) {
 //    	System.out.println("baseDirectoryjButtonActionPerformed()");
         selectBaseDirectory();
-        if (!validBaseDirectory) {
+        if (!model.isValidBaseDirectory()) {
             if (!selectValidBaseDirectory()) {
                 // Put original base directory back.
-                File directory = new File(baseDirectory);
+                File directory = new File(model.getBaseDirectory());
                 setBaseDirectory(directory);
             }
         }
@@ -348,47 +204,136 @@ public class MainController {
     }
 
     @FXML
-    void bridgejRadioButtonActionPerformed(ActionEvent event) {
-
-    }
-
-    @FXML
-    void colourjButtonActionPerformed(ActionEvent event) {
-
-    }
-
-    @FXML
-    void cornerPipjCheckBoxActionPerformed(ActionEvent event) {
-
-    }
-
-    @FXML
-    void cornerPipjRadioButtonActionPerformed(ActionEvent event) {
-
-    }
-
-    @FXML
-    void facePipjCheckBoxActionPerformed(ActionEvent event) {
-
-    }
-
-    @FXML
-    void facePipjRadioButtonActionPerformed(ActionEvent event) {
-
-    }
-
-    @FXML
-    void facejCheckBoxActionPerformed(ActionEvent event) {
-
-    }
-
-    @FXML
     void facejComboBoxActionPerformed(ActionEvent event) {
 
     }
 
     @FXML
-    void facejRadioButtonActionPerformed(ActionEvent event) {
+    void indexjComboBoxActionPerformed(ActionEvent event) {
+
+    }
+
+    @FXML
+    void pipjComboBoxActionPerformed(ActionEvent event) {
+
+    }
+
+
+
+    /**
+     * Support code for "Generate" panel. 
+     */
+
+    @FXML
+    private Button generatejButton;
+
+    @FXML
+    void generatejButtonActionPerformed(ActionEvent event) {
+
+    }
+
+
+
+    /**
+     * Support code for "Output Directory" panel. 
+     */
+
+    @FXML
+    private TextField outputjTextField;
+
+    @FXML
+    private ToggleButton outputjToggleButton;
+
+    @FXML
+    void outputjTextFieldActionPerformed(ActionEvent event) {
+
+    }
+
+    @FXML
+    void outputjToggleButtonActionPerformed(ActionEvent event) {
+
+    }
+
+
+
+    /**
+     * Support code for "Sample Navigation" panel. 
+     */
+
+    @FXML
+    private Button previousCardjButton;
+
+    @FXML
+    private Button previousSuitjButton;
+
+    @FXML
+    private Button nextCardjButton;
+
+    @FXML
+    private Button nextSuitjButton;
+
+    @FXML
+    void previousCardjButtonActionPerformed(ActionEvent event) {
+
+    }
+
+    @FXML
+    void previousSuitjButtonActionPerformed(ActionEvent event) {
+
+    }
+
+    @FXML
+    void nextCardjButtonActionPerformed(ActionEvent event) {
+
+    }
+
+    @FXML
+    void nextSuitjButtonActionPerformed(ActionEvent event) {
+
+    }
+
+
+
+    /**
+     * Support code for "Card Size" panel. 
+     */
+
+    @FXML
+    private RadioButton pokerjRadioButton;
+
+    @FXML
+    private RadioButton bridgejRadioButton;
+
+    @FXML
+    private RadioButton freejRadioButton;
+
+    @FXML
+    private Label widthjLabel;
+
+    @FXML
+    private Label heightjLabel;
+
+    @FXML
+    private Spinner<Integer> widthjSpinner;
+    private SpinnerValueFactory<Integer> widthSVF;
+
+    @FXML
+    private Spinner<Integer> heightjSpinner;
+    private SpinnerValueFactory<Integer> heightSVF;
+
+    @FXML
+    private Button widthjButton;
+
+    @FXML
+    private Button heightjButton;
+
+    @FXML
+    void pokerjRadioButtonActionPerformed(ActionEvent event) {
+
+    }
+
+    @FXML
+    void bridgejRadioButtonActionPerformed(ActionEvent event) {
 
     }
 
@@ -398,8 +343,8 @@ public class MainController {
     }
 
     @FXML
-    void generatejButtonActionPerformed(ActionEvent event) {
-
+    void widthjButtonActionPerformed(ActionEvent event) {
+        widthSVF.setValue(380);
     }
 
     @FXML
@@ -407,10 +352,43 @@ public class MainController {
         heightSVF.setValue(532);
     }
 
+
+
+    /**
+     * Support code for "Background Colour" panel. 
+     */
+
     @FXML
-    void indexjComboBoxActionPerformed(ActionEvent event) {
+    private TextField colourjTextField;
+
+    @FXML
+    private Button colourjButton;
+
+    @FXML
+    void colourjButtonActionPerformed(ActionEvent event) {
 
     }
+
+
+
+    /**
+     * Support code for "Display Card Items" panel. 
+     */
+
+    @FXML
+    private CheckBox indicesjCheckBox;
+
+    @FXML
+    private CheckBox cornerPipjCheckBox;
+
+    @FXML
+    private CheckBox standardPipjCheckBox;
+
+    @FXML
+    private CheckBox facejCheckBox;
+
+    @FXML
+    private CheckBox facePipjCheckBox;
 
     @FXML
     void indicesjCheckBoxActionPerformed(ActionEvent event) {
@@ -418,8 +396,114 @@ public class MainController {
     }
 
     @FXML
+    void cornerPipjCheckBoxActionPerformed(ActionEvent event) {
+
+    }
+
+    @FXML
+    void standardPipjCheckBoxActionPerformed(ActionEvent event) {
+
+    }
+
+    @FXML
+    void facejCheckBoxActionPerformed(ActionEvent event) {
+
+    }
+
+    @FXML
+    void facePipjCheckBoxActionPerformed(ActionEvent event) {
+
+    }
+
+
+
+    /**
+     * Support code for "Select Card Item" panel. 
+     */
+
+    @FXML
+    private RadioButton indicesjRadioButton;
+
+    @FXML
+    private RadioButton cornerPipjRadioButton;
+
+    @FXML
+    private RadioButton standardPipjRadioButton;
+
+    @FXML
+    private RadioButton facejRadioButton;
+
+    @FXML
+    private RadioButton facePipjRadioButton;
+
+    @FXML
     void indicesjRadioButtonActionPerformed(ActionEvent event) {
 
+    }
+
+    @FXML
+    void cornerPipjRadioButtonActionPerformed(ActionEvent event) {
+
+    }
+
+    @FXML
+    void standardPipjRadioButtonActionPerformed(ActionEvent event) {
+
+    }
+
+    @FXML
+    void facejRadioButtonActionPerformed(ActionEvent event) {
+
+    }
+
+    @FXML
+    void facePipjRadioButtonActionPerformed(ActionEvent event) {
+
+    }
+
+
+
+    /**
+     * Support code for "Modify Selected Card Item" panel. 
+     */
+
+    @FXML
+    private Label itemHeightjLabel;
+
+    @FXML
+    private Label itemCentreXjLabel;
+
+    @FXML
+    private Label itemCentreYjLabel;
+
+    @FXML
+    private Spinner<Integer> itemHeightjSpinner;
+    private SpinnerValueFactory<Integer> itemHeightSVF;
+
+    @FXML
+    private Spinner<Integer> itemCentreXjSpinner;
+    private SpinnerValueFactory<Integer> itemCentreXSVF;
+
+    @FXML
+    private Spinner<Integer> itemCentreYjSpinner;
+    private SpinnerValueFactory<Integer> itemCentreYSVF;
+
+    @FXML
+    private Button itemHeightjButton;
+
+    @FXML
+    private Button itemCentreXjButton;
+
+    @FXML
+    private Button itemCentreYjButton;
+
+    @FXML
+    private CheckBox keepAspectRatiojCheckBox;
+
+    @FXML
+    void itemHeightjButtonActionPerformed(ActionEvent event) {
+        itemHeightSVF.setValue(10);
+//        itemHeightSVF.setValue(Math.round(currentItem.getH() * 10));
     }
 
     @FXML
@@ -434,75 +518,20 @@ public class MainController {
     }
 
     @FXML
-    void itemHeightjButtonActionPerformed(ActionEvent event) {
-        itemHeightSVF.setValue(10);
-//        itemHeightSVF.setValue(Math.round(currentItem.getH() * 10));
-    }
-
-    @FXML
     void keepAspectRatiojCheckBoxActionPerformed(ActionEvent event) {
 
     }
 
-    @FXML
-    void nextCardjButtonActionPerformed(ActionEvent event) {
-
-    }
-
-    @FXML
-    void nextSuitjButtonActionPerformed(ActionEvent event) {
-
-    }
-
-    @FXML
-    void outputjTextFieldActionPerformed(ActionEvent event) {
-
-    }
-
-    @FXML
-    void outputjToggleButtonActionPerformed(ActionEvent event) {
-
-    }
-
-    @FXML
-    void pipjComboBoxActionPerformed(ActionEvent event) {
-
-    }
-
-    @FXML
-    void pokerjRadioButtonActionPerformed(ActionEvent event) {
-
-    }
-
-    @FXML
-    void previousCardjButtonActionPerformed(ActionEvent event) {
-
-    }
-
-    @FXML
-    void previousSuitjButtonActionPerformed(ActionEvent event) {
-
-    }
-
-    @FXML
-    void standardPipjCheckBoxActionPerformed(ActionEvent event) {
-
-    }
-
-    @FXML
-    void standardPipjRadioButtonActionPerformed(ActionEvent event) {
-
-    }
-
-    @FXML
-    void widthjButtonActionPerformed(ActionEvent event) {
-        widthSVF.setValue(380);
-    }
 
 
 
 
-	// Main
+
+
+
+    /**
+     * Main
+     */
 
 	private Model model;
 	private CardSample sample;
