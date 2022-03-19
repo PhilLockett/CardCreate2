@@ -75,11 +75,16 @@ public class Model {
 		return baseDirectory;
 	}
 
-	public void setBaseDirectory(String baseDirectory) {
-		this.baseDirectory = baseDirectory;
-	}
 
-	public boolean baseDirectoryjComboBoxInit() {
+	/**
+	 * Formerly baseDirectoryjComboBoxInit()
+	 * 
+	 * Read base directory file paths from disc and set up Base, Face, Index 
+	 * and Pip pull-down lists.
+	 * 
+	 * @return
+	 */
+	public boolean readBaseDirectoryFilePathsFromDisc() {
 //      System.out.println("baseDirectoryjComboBoxInit()");
 
 		// Check if PATHSFILE exists.
@@ -106,14 +111,13 @@ public class Model {
 
 		// If array is not empty use it to fill in baseDirectoryjComboBox.
 		if (!pathList.isEmpty()) {
-//          setjComboBoxModelFromArrayList(baseDirectoryjComboBox, pathList);
-			baseList = pathList;
-			baseDirectory = pathList.get(0);
-			File directory = new File(baseDirectory);
-			setBaseDirectory(directory);
+			setBaseDirectory(pathList.get(0));
 
-			if (validBaseDirectory)
+			if (validBaseDirectory) {
+				baseList = pathList;
+
 				return true;
+			}
 		}
 
 		return false;
@@ -134,6 +138,35 @@ public class Model {
 		return true;
 	}
 
+	/**
+	 * Formerly baseDirectoryjComboBoxAdd()
+	 * 
+	 * Re-order base directory list so that baseDirectory is first.
+	 * 
+	 * @return
+	 */
+	public boolean reorderBaseDirectoryComboBox() {
+
+        // Build array with path as first item.
+        ArrayList<String> pathList = new ArrayList<String>();
+        pathList.add(baseDirectory);
+
+        // Add baseDirectoryjComboBox items to array, except for "path".
+        for (final String item : baseList) {
+            if (!baseDirectory.equals(item)) {
+                pathList.add(item);
+            }
+        }
+
+        // Use array to fill in baseDirectoryjComboBox.
+		baseList = pathList;
+
+        baseDirectoryjComboBoxSave();
+
+        return true;
+    }
+
+
 	private boolean fillDirectoryList(ArrayList<String> styleList, String directoryName) {
 		final File style = new File(directoryName);
 
@@ -147,10 +180,15 @@ public class Model {
 		return !styleList.isEmpty();
 	}
 
-	public boolean setBaseDirectory(File directory) {
+	public boolean setBaseDirectory(String base) {
+
+		File directory = new File(base);
+
 		if (!directory.isDirectory()) {
 			return false;
 		}
+
+		baseDirectory = base;
 
 		boolean faces = false;
 		boolean indices = false;
@@ -307,7 +345,7 @@ public class Model {
 		 * Initialize "Input Directories" panel.
 		 */
 
-		baseDirectoryjComboBoxInit();
+		readBaseDirectoryFilePathsFromDisc();
 
 		/**
 		 * Initialize"Generate" panel.

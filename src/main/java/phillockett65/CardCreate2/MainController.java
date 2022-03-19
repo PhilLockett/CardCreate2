@@ -118,8 +118,12 @@ public class MainController {
 	public void init(Stage stage) {
         this.stage = stage;
 
-        if (!model.isValidBaseDirectory()) {
-            if (selectValidBaseDirectory() == false) {
+		if (model.readBaseDirectoryFilePathsFromDisc()) {
+    		setBaseDirectory(model.getBaseDirectory());
+		} else {
+            if (selectValidBaseDirectory()) {
+        		setBaseDirectory(model.getBaseDirectory());
+            } else {
                 stage.close();
                 sample.close();
             }
@@ -159,7 +163,7 @@ public class MainController {
     private ChoiceBox<String> pipjComboBox;
 
 
-    private boolean setjComboBoxModelFromArrayList(ChoiceBox<String> choiceBox, ArrayList<String> list) {
+    private boolean setChoiceBoxModelFromArrayList(ChoiceBox<String> choiceBox, ArrayList<String> list) {
         if (list.isEmpty())
             return false;
 
@@ -191,39 +195,48 @@ public class MainController {
         return true;
     }
 
-    private boolean filljComboBox(ChoiceBox<String> choiceBox, ArrayList<String> styleList) {
-        return setjComboBoxModelFromArrayList(choiceBox, styleList);
+    private boolean setComboBoxModelFromArrayList(ComboBox<String> comboBox, ArrayList<String> list) {
+        if (list.isEmpty())
+            return false;
+
+        comboBox.getItems().clear();
+        for (String s : list)
+            comboBox.getItems().add(s);
+
+    	comboBox.setValue(list.get(0));
+
+        return true;
     }
 
     private boolean setBaseDirectory(File directory) {
 
-    	model.setBaseDirectory(directory);
+    	if (!model.setBaseDirectory(directory.getPath()))
+    		return false;
 
-    	setjComboBoxModelFromArrayList(facejComboBox, model.getFacesList());
-    	setjComboBoxModelFromArrayList(indexjComboBox, model.getIndexList());
-    	setjComboBoxModelFromArrayList(pipjComboBox, model.getPipList());
+    	setComboBoxModelFromArrayList(baseDirectoryjComboBox, model.getBaseList());
+    	setChoiceBoxModelFromArrayList(facejComboBox, model.getFacesList());
+    	setChoiceBoxModelFromArrayList(indexjComboBox, model.getIndexList());
+    	setChoiceBoxModelFromArrayList(pipjComboBox, model.getPipList());
 
-    	setGenerationEnabled(directory);
+        model.reorderBaseDirectoryComboBox();
+        outputjTextField.setText("");
 
-        return model.isValidBaseDirectory();
+        userGUI.setDisable(false);
+
+        return true;
     }
 
-    // Control widgets until a valid base directory is provided.
-    private boolean setGenerationEnabled(File directory) {
+	private boolean setBaseDirectory(String base) {
 
-        if (model.isValidBaseDirectory()) {
-        	model.setBaseDirectory(directory.getPath() + "\\");
-            baseDirectoryjComboBox.getItems().add(directory.getPath());	// TEMP!
-            baseDirectoryjComboBox.setValue(directory.getPath()); // TEMP
-//            baseDirectoryjComboBoxAdd(baseDirectory);
-            outputjTextField.setText("");
-        }
+		File directory = new File(base);
 
-        final boolean validBaseDirectory = model.isValidBaseDirectory();
-        userGUI.setDisable(!validBaseDirectory);
+		if (!directory.isDirectory())
+			return false;
 
-        return validBaseDirectory;
-    }
+		setBaseDirectory(directory);
+
+		return true;
+	}
 
     private boolean selectBaseDirectory() {
     	DirectoryChooser choice = new DirectoryChooser();
@@ -233,9 +246,8 @@ public class MainController {
 
         if (directory != null) {
 //        	System.out.println("Selected: " + directory.getAbsolutePath());
-            setBaseDirectory(directory);
 
-            if (model.isValidBaseDirectory()) {
+            if (setBaseDirectory(directory)) {
                 return true;
             }
         }
@@ -243,11 +255,12 @@ public class MainController {
         return false;
     }
 
+
     @FXML
     void baseDirectoryjButtonActionPerformed(ActionEvent event) {
 //    	System.out.println("baseDirectoryjButtonActionPerformed()");
-        selectBaseDirectory();
-        if (!model.isValidBaseDirectory()) {
+
+        if (!selectBaseDirectory()) {
             if (!selectValidBaseDirectory()) {
                 // Put original base directory back.
                 File directory = new File(model.getBaseDirectory());
