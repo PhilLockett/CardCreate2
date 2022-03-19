@@ -37,19 +37,20 @@ import java.io.IOException;
  */
 public class App extends Application {
 
-	private static Scene scene;
-
 	@Override
 	public void start(Stage stage) throws IOException {
 		FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("Main.fxml"));
 		Parent root = fxmlLoader.load();
-		scene = new Scene(root);
+		Scene scene = new Scene(root);
 		scene.getStylesheets().add(App.class.getResource("application.css").toExternalForm());
 		stage.setTitle("Playing Card Generator 2.0");
 		stage.setOnCloseRequest(e -> Platform.exit());
 		stage.resizableProperty().setValue(false);
 		stage.setScene(scene);
+		MainController controller = fxmlLoader.getController();
+		controller.setStage(stage);
 		stage.show();
+		controller.init();
 	}
 
 	public static void main(String[] args) {

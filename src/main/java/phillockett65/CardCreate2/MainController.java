@@ -57,6 +57,7 @@ public class MainController {
      * Support code for "Playing Card Generator" panel. 
      */
 
+	private Stage stage;
 	private Model model;
 	private CardSample sample;
 
@@ -66,6 +67,9 @@ public class MainController {
     @FXML
     private Label statusjLabel;
 
+    public void setStage(Stage stage) {
+    	this.stage = stage;
+    }
 
 	/**
 	 * Constructor.
@@ -116,6 +120,15 @@ public class MainController {
 	    itemCentreYjSpinner.setValueFactory(itemCentreYSVF);
 
 		sample = new CardSample(this, model, "Sample");
+	}
+
+	public void init() {
+        if (!model.isValidBaseDirectory()) {
+            if (selectValidBaseDirectory() == false) {
+                stage.close();
+                sample.close();
+            }
+        }
 	}
 
 
