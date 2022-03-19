@@ -50,6 +50,7 @@ import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
 import phillockett65.CardCreate2.Model;
 import phillockett65.CardCreate2.sample.CardSample;
+import phillockett65.CardCreate2.sample.Default;
 
 public class MainController {
 
@@ -101,20 +102,15 @@ public class MainController {
 		setUpImageButton(nextCardjButton, "icon-right.png");
 		setUpImageButton(nextSuitjButton, "icon-down.png");
 
-	    widthSVF = new SpinnerValueFactory.IntegerSpinnerValueFactory(38, 3800, 380);
-	    widthjSpinner.setValueFactory(widthSVF);
+	    widthjSpinner.setValueFactory(model.getWidthSVF());
 
-	    heightSVF = new SpinnerValueFactory.IntegerSpinnerValueFactory(53, 5320, 532);
-	    heightjSpinner.setValueFactory(heightSVF);
+	    heightjSpinner.setValueFactory(model.getHeightSVF());
 
-	    itemHeightSVF = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 1000, 10);
-	    itemHeightjSpinner.setValueFactory(itemHeightSVF);
+	    itemHeightjSpinner.setValueFactory(model.getItemHeightSVF());
 
-	    itemCentreXSVF = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 1000, 10);
-	    itemCentreXjSpinner.setValueFactory(itemCentreXSVF);
+	    itemCentreXjSpinner.setValueFactory(model.getItemCentreXSVF());
 
-	    itemCentreYSVF = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 1000, 10);
-	    itemCentreYjSpinner.setValueFactory(itemCentreYSVF);
+	    itemCentreYjSpinner.setValueFactory(model.getItemCentreYSVF());
 
 		sample = new CardSample(this, model, "Sample");
 	}
@@ -377,11 +373,9 @@ public class MainController {
 
     @FXML
     private Spinner<Integer> widthjSpinner;
-    private SpinnerValueFactory<Integer> widthSVF;
 
     @FXML
     private Spinner<Integer> heightjSpinner;
-    private SpinnerValueFactory<Integer> heightSVF;
 
     @FXML
     private Button widthjButton;
@@ -406,12 +400,12 @@ public class MainController {
 
     @FXML
     void widthjButtonActionPerformed(ActionEvent event) {
-        widthSVF.setValue(380);
+    	model.getWidthSVF().setValue(Default.WIDTH.intr());
     }
 
     @FXML
     void heightjButtonActionPerformed(ActionEvent event) {
-        heightSVF.setValue(532);
+    	model.getHeightSVF().setValue(Default.HEIGHT.intr());
     }
 
 
@@ -540,15 +534,12 @@ public class MainController {
 
     @FXML
     private Spinner<Integer> itemHeightjSpinner;
-    private SpinnerValueFactory<Integer> itemHeightSVF;
 
     @FXML
     private Spinner<Integer> itemCentreXjSpinner;
-    private SpinnerValueFactory<Integer> itemCentreXSVF;
 
     @FXML
     private Spinner<Integer> itemCentreYjSpinner;
-    private SpinnerValueFactory<Integer> itemCentreYSVF;
 
     @FXML
     private Button itemHeightjButton;
@@ -564,18 +555,19 @@ public class MainController {
 
     @FXML
     void itemHeightjButtonActionPerformed(ActionEvent event) {
-        itemHeightSVF.setValue(10);
+    	model.getItemHeightSVF().setValue(10);
 //        itemHeightSVF.setValue(Math.round(currentItem.getH() * 10));
     }
 
     @FXML
     void itemCentreXjButtonActionPerformed(ActionEvent event) {
-        itemCentreXSVF.setValue(10);
+    	model.getItemCentreXSVF().setValue(10);
 //        itemCentreXSVF.setValue(Math.round(currentItem.getX() * 10));
     }
 
     @FXML
     void itemCentreYjButtonActionPerformed(ActionEvent event) {
+    	model.getItemCentreYSVF().setValue(10);
 //        itemCentreYSVF.setValue(Math.round(currentItem.getY() * 10));
     }
 

@@ -33,6 +33,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.SpinnerValueFactory;
 import phillockett65.CardCreate2.sample.Default;
 
 public class Model {
@@ -231,6 +232,9 @@ public class Model {
 	private int width = Default.WIDTH.intr();
 	private int height = Default.HEIGHT.intr();
 
+	private SpinnerValueFactory<Integer> widthSVF;
+    private SpinnerValueFactory<Integer> heightSVF;
+
 	public int getWidth() {
 		return width;
 	}
@@ -247,6 +251,7 @@ public class Model {
 		this.height = height;
 	}
 
+	
 	/**
 	 * Support code for "Background Colour" panel.
 	 */
@@ -259,9 +264,34 @@ public class Model {
 	 * Support code for "Select Card Item" panel.
 	 */
 
+	public SpinnerValueFactory<Integer> getWidthSVF() {
+		return widthSVF;
+	}
+
+	public SpinnerValueFactory<Integer> getHeightSVF() {
+		return heightSVF;
+	}
+
 	/**
 	 * Support code for "Modify Selected Card Item" panel.
 	 */
+
+    private SpinnerValueFactory<Integer> itemHeightSVF;
+    private SpinnerValueFactory<Integer> itemCentreXSVF;
+    private SpinnerValueFactory<Integer> itemCentreYSVF;
+
+
+	public SpinnerValueFactory<Integer> getItemHeightSVF() {
+		return itemHeightSVF;
+	}
+
+	public SpinnerValueFactory<Integer> getItemCentreXSVF() {
+		return itemCentreXSVF;
+	}
+
+	public SpinnerValueFactory<Integer> getItemCentreYSVF() {
+		return itemCentreYSVF;
+	}
 
 	/**
 	 * Default Constructor.
@@ -295,6 +325,11 @@ public class Model {
 		 * Initialize "Card Size" panel.
 		 */
 
+		final int WIDTH = Default.WIDTH.intr();
+		final int HEIGHT = Default.HEIGHT.intr();
+		widthSVF = new SpinnerValueFactory.IntegerSpinnerValueFactory(WIDTH/10, WIDTH*10, WIDTH);
+	    heightSVF = new SpinnerValueFactory.IntegerSpinnerValueFactory(HEIGHT/10, HEIGHT*10, HEIGHT);
+
 		/**
 		 * Initialize "Background Colour" panel.
 		 */
@@ -311,6 +346,9 @@ public class Model {
 		 * Initialize "Modify Selected Card Item" panel.
 		 */
 
+	    itemHeightSVF = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 1000, 10);
+	    itemCentreXSVF = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 1000, 10);
+	    itemCentreYSVF = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 1000, 10);
 
 	}
 
