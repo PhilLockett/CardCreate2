@@ -19,11 +19,11 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane fx:id="userGUI" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="640.0" prefWidth="689.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="phillockett65.CardCreate2.MainController">
+<BorderPane fx:id="userGUI" disable="true" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="640.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="phillockett65.CardCreate2.MainController">
    <bottom>
       <VBox BorderPane.alignment="CENTER">
          <children>
-            <HBox prefHeight="171.0" prefWidth="773.0" spacing="8.0">
+            <HBox prefHeight="171.0" prefWidth="773.0" spacing="14.0">
                <children>
                   <TitledPane collapsible="false" prefHeight="155.0" prefWidth="181.0" text="Display Card Items">
                      <content>
@@ -107,14 +107,14 @@
    <top>
       <HBox prefHeight="145.0" spacing="8.0" BorderPane.alignment="CENTER">
          <children>
-            <TitledPane animated="false" collapsible="false" prefHeight="112.0" prefWidth="557.0" text="Input Directories">
+            <TitledPane animated="false" collapsible="false" prefHeight="112.0" prefWidth="565.0" text="Input Directories">
                <content>
                   <VBox prefHeight="200.0" prefWidth="100.0">
                      <children>
                         <HBox prefHeight="100.0" prefWidth="200.0" spacing="4.0">
                            <children>
                               <Label fx:id="baseDirectoryjLabel" text="Base:" />
-                              <ComboBox fx:id="baseDirectoryjComboBox" disable="true" editable="true" onAction="#baseDirectoryjComboBoxActionPerformed" prefHeight="25.0" prefWidth="410.0" />
+                              <ComboBox fx:id="baseDirectoryjComboBox" editable="true" onAction="#baseDirectoryjComboBoxActionPerformed" prefHeight="25.0" prefWidth="410.0" />
                               <Button fx:id="baseDirectoryjButton" mnemonicParsing="false" onAction="#baseDirectoryjButtonActionPerformed" text="Browse..." />
                            </children>
                            <padding>
@@ -143,7 +143,7 @@
                <content>
                   <VBox alignment="CENTER" prefHeight="97.0" prefWidth="119.0">
                      <children>
-                        <Button fx:id="generatejButton" disable="true" mnemonicParsing="false" onAction="#generatejButtonActionPerformed" styleClass="imagejButton" text="Gen" />
+                        <Button fx:id="generatejButton" mnemonicParsing="false" onAction="#generatejButtonActionPerformed" styleClass="imagejButton" text="Gen" />
                      </children>
                   </VBox>
                </content>
@@ -195,8 +195,8 @@
                         <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
                      </padding>
                      <children>
-                        <TextField fx:id="outputjTextField" disable="true" editable="false" onAction="#outputjTextFieldActionPerformed" />
-                        <ToggleButton fx:id="outputjToggleButton" disable="true" mnemonicParsing="false" onAction="#outputjToggleButtonActionPerformed" text="Manual" />
+                        <TextField fx:id="outputjTextField" editable="false" onAction="#outputjTextFieldActionPerformed" />
+                        <ToggleButton fx:id="outputjToggleButton" mnemonicParsing="false" onAction="#outputjToggleButtonActionPerformed" text="Manual" />
                      </children>
                   </HBox>
               </content>

@@ -224,12 +224,7 @@ public class MainController {
         }
 
         final boolean validBaseDirectory = model.isValidBaseDirectory();
-        baseDirectoryjComboBox.setDisable(!validBaseDirectory);
-        generatejButton.setDisable(!validBaseDirectory);
-        outputjToggleButton.setDisable(!validBaseDirectory);
-        facejComboBox.setDisable(!validBaseDirectory);
-        indexjComboBox.setDisable(!validBaseDirectory);
-        pipjComboBox.setDisable(!validBaseDirectory);
+        userGUI.setDisable(!validBaseDirectory);
 
         return validBaseDirectory;
     }
