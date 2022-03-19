@@ -67,9 +67,6 @@ public class MainController {
     @FXML
     private Label statusjLabel;
 
-    public void setStage(Stage stage) {
-    	this.stage = stage;
-    }
 
 	/**
 	 * Constructor.
@@ -122,7 +119,9 @@ public class MainController {
 		sample = new CardSample(this, model, "Sample");
 	}
 
-	public void init() {
+	public void init(Stage stage) {
+        this.stage = stage;
+
         if (!model.isValidBaseDirectory()) {
             if (selectValidBaseDirectory() == false) {
                 stage.close();
@@ -135,7 +134,8 @@ public class MainController {
     /**
      * Support code for "Input Directories" panel. 
      */
-    @FXML
+
+	@FXML
     private Label baseDirectoryjLabel;
 
     @FXML
@@ -238,7 +238,6 @@ public class MainController {
     	DirectoryChooser choice = new DirectoryChooser();
         choice.setInitialDirectory(new File(model.getBaseDirectory()));
         choice.setTitle("Select Base Directory");
-    	Stage stage = (Stage) userGUI.getScene().getWindow();
         File directory = choice.showDialog(stage);
 
         if (directory != null) {

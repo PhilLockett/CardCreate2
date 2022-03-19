@@ -48,9 +48,8 @@ public class App extends Application {
 		stage.resizableProperty().setValue(false);
 		stage.setScene(scene);
 		MainController controller = fxmlLoader.getController();
-		controller.setStage(stage);
 		stage.show();
-		controller.init();
+		controller.init(stage);
 	}
 
 	public static void main(String[] args) {
