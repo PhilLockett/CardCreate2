@@ -45,14 +45,6 @@
 .increment-arrow, .decrement-arrow{
     -fx-background-color: white;
 }
-.button-red{
-    -fx-background-color: #d00000;
-    -fx-text-fill: #000000;
-    -fx-background-radius: 50;
-}
-#bold-label{
-    -fx-font-weight: bold;
-}
 .choice-box{
     -fx-background-color: #AB4642;
     -fx-text-fill: #FFFFFF;
@@ -61,3 +53,9 @@
     -fx-background-color: #AB4642;
     -fx-text-fill: #FFFFFF;
 }
+
+.imagejButton{
+    -fx-background-color: #383838;
+    -fx-text-fill: #000000;
+}
+

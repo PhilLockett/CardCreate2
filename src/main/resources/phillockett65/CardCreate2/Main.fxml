@@ -143,7 +143,7 @@
                <content>
                   <VBox alignment="CENTER" prefHeight="97.0" prefWidth="119.0">
                      <children>
-                        <Button fx:id="generatejButton" disable="true" mnemonicParsing="false" onAction="#generatejButtonActionPerformed" text="Gen" />
+                        <Button fx:id="generatejButton" disable="true" mnemonicParsing="false" onAction="#generatejButtonActionPerformed" styleClass="imagejButton" text="Gen" />
                      </children>
                      <padding>
                         <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
@@ -174,10 +174,10 @@
                       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                      <children>
-                        <Button fx:id="previousCardjButton" mnemonicParsing="false" onAction="#previousCardjButtonActionPerformed" text="Left" GridPane.rowIndex="1" />
-                        <Button fx:id="nextCardjButton" mnemonicParsing="false" onAction="#nextCardjButtonActionPerformed" text="Right" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-                        <Button fx:id="previousSuitjButton" mnemonicParsing="false" onAction="#previousSuitjButtonActionPerformed" text="Up" GridPane.columnIndex="1" />
-                        <Button fx:id="nextSuitjButton" mnemonicParsing="false" onAction="#nextSuitjButtonActionPerformed" text="Down" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                        <Button fx:id="previousCardjButton" mnemonicParsing="false" onAction="#previousCardjButtonActionPerformed" styleClass="imagejButton" text="Left" GridPane.rowIndex="1" />
+                        <Button fx:id="nextCardjButton" mnemonicParsing="false" onAction="#nextCardjButtonActionPerformed" styleClass="imagejButton" text="Right" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                        <Button fx:id="previousSuitjButton" mnemonicParsing="false" onAction="#previousSuitjButtonActionPerformed" styleClass="imagejButton" text="Up" GridPane.columnIndex="1" />
+                        <Button fx:id="nextSuitjButton" mnemonicParsing="false" onAction="#nextSuitjButtonActionPerformed" styleClass="imagejButton" text="Down" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                      </children>
                   </GridPane>
                </content>
