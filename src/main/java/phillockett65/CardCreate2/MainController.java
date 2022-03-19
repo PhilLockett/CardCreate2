@@ -176,25 +176,6 @@ public class MainController {
         return true;
     }
 
-    private boolean selectValidBaseDirectory() {
-
-        do {
-        	Alert alert = new Alert(AlertType.CONFIRMATION);
-        	alert.setTitle("Do you wish to continue?");
-        	alert.setHeaderText("Continue by selecting a valid directory?");
-        	alert.setContentText("You need to select a valid directory that contains 'faces',\n'indices' and 'pips' directories.");
-
-        	Optional<ButtonType> result = alert.showAndWait();
-
-        	if (!result.isPresent() || result.get() != ButtonType.OK)
-        		return false;
-
-            selectBaseDirectory();
-        } while (model.isValidBaseDirectory() == false);
-
-        return true;
-    }
-
     private boolean setComboBoxModelFromArrayList(ComboBox<String> comboBox, ArrayList<String> list) {
         if (list.isEmpty())
             return false;
@@ -253,6 +234,25 @@ public class MainController {
         }
 
         return false;
+    }
+
+    private boolean selectValidBaseDirectory() {
+
+        do {
+        	Alert alert = new Alert(AlertType.CONFIRMATION);
+        	alert.setTitle("Do you wish to continue?");
+        	alert.setHeaderText("Continue by selecting a valid directory?");
+        	alert.setContentText("You need to select a valid directory that contains 'faces',\n'indices' and 'pips' directories.");
+
+        	Optional<ButtonType> result = alert.showAndWait();
+
+        	if (!result.isPresent() || result.get() != ButtonType.OK)
+        		return false;
+
+            selectBaseDirectory();
+        } while (model.isValidBaseDirectory() == false);
+
+        return true;
     }
 
 
