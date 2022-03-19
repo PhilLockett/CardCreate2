@@ -75,19 +75,19 @@ public class MainController {
 	public MainController() {
 //		System.out.println("MainController constructed.");
 		model = new Model();
-		
 	}
 
 	private void setUpImageButton(Button button, String imageFileName)
 	{
 		Image image = new Image(getClass().getResourceAsStream(imageFileName));
 		ImageView view = new ImageView(image);
-		
+
 		button.setGraphic(view);
 		button.setText(null);
 	}
+
 	/**
-	 * Called by the FXML mechanism to initialize the controller. Creates a 
+	 * Called by the FXML mechanism to initialize the controller. Creates a
 	 * callback link for all the tab controllers, creates the PTable window and
 	 * update the Status tab display.
 	 */
