@@ -41,22 +41,15 @@ public class App extends Application {
 
 	@Override
 	public void start(Stage stage) throws IOException {
-		scene = new Scene(loadFXML("Main"));
+		FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("Main.fxml"));
+		Parent root = fxmlLoader.load();
+		scene = new Scene(root);
 		scene.getStylesheets().add(App.class.getResource("application.css").toExternalForm());
 		stage.setTitle("Playing Card Generator 2.0");
 		stage.setOnCloseRequest(e -> Platform.exit());
 		stage.resizableProperty().setValue(false);
 		stage.setScene(scene);
 		stage.show();
-	}
-
-	static void setRoot(String fxml) throws IOException {
-		scene.setRoot(loadFXML(fxml));
-	}
-
-	private static Parent loadFXML(String fxml) throws IOException {
-		FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource(fxml + ".fxml"));
-		return fxmlLoader.load();
 	}
 
 	public static void main(String[] args) {
