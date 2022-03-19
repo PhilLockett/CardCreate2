@@ -145,9 +145,6 @@
                      <children>
                         <Button fx:id="generatejButton" disable="true" mnemonicParsing="false" onAction="#generatejButtonActionPerformed" styleClass="imagejButton" text="Gen" />
                      </children>
-                     <padding>
-                        <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
-                     </padding>
                   </VBox>
                </content>
             </TitledPane>
@@ -158,7 +155,7 @@
       </HBox>
    </top>
    <right>
-      <VBox spacing="8.0" BorderPane.alignment="CENTER">
+      <VBox prefHeight="295.0" prefWidth="200.0" spacing="8.0" BorderPane.alignment="CENTER">
          <children>
             <TitledPane animated="false" collapsible="false" text="Sample Navigation">
                <content>
@@ -174,10 +171,10 @@
                       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                      <children>
-                        <Button fx:id="previousCardjButton" mnemonicParsing="false" onAction="#previousCardjButtonActionPerformed" styleClass="imagejButton" text="Left" GridPane.rowIndex="1" />
-                        <Button fx:id="nextCardjButton" mnemonicParsing="false" onAction="#nextCardjButtonActionPerformed" styleClass="imagejButton" text="Right" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-                        <Button fx:id="previousSuitjButton" mnemonicParsing="false" onAction="#previousSuitjButtonActionPerformed" styleClass="imagejButton" text="Up" GridPane.columnIndex="1" />
-                        <Button fx:id="nextSuitjButton" mnemonicParsing="false" onAction="#nextSuitjButtonActionPerformed" styleClass="imagejButton" text="Down" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                        <Button fx:id="previousCardjButton" mnemonicParsing="false" onAction="#previousCardjButtonActionPerformed" styleClass="imagejButton" text="Left" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+                        <Button fx:id="nextCardjButton" mnemonicParsing="false" onAction="#nextCardjButtonActionPerformed" styleClass="imagejButton" text="Right" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+                        <Button fx:id="previousSuitjButton" mnemonicParsing="false" onAction="#previousSuitjButtonActionPerformed" styleClass="imagejButton" text="Up" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+                        <Button fx:id="nextSuitjButton" mnemonicParsing="false" onAction="#nextSuitjButtonActionPerformed" styleClass="imagejButton" text="Down" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
                      </children>
                   </GridPane>
                </content>
