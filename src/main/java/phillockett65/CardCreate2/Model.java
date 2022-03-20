@@ -272,13 +272,6 @@ public class Model {
 		manualOutputName = outputName;
 	}
 
-//	public void setOutputName(String outputName) {
-//		if (manual)
-//			manualOutputName = outputName;
-//		else
-//			autoOutputName = outputName;
-//	}
-
 
 	/**
 	 * Support code for "Sample Navigation" panel.
