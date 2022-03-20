@@ -109,14 +109,14 @@ public class MainController {
 	    itemCentreYjSpinner.setValueFactory(model.getItemCentreYSVF());
 
 	    facejComboBox.getSelectionModel().selectedItemProperty().addListener( (v, oldValue, newValue) -> {
-	    	model.setAutoOutputName(newValue);
+	    	model.setFaceStyle(newValue);
 	    	outputjTextField.setText(model.getOutputName());
 	    });
 	    indexjComboBox.getSelectionModel().selectedItemProperty().addListener( (v, oldValue, newValue) -> {
-	    	System.out.println(newValue);
+	    	model.setIndexStyle(newValue);
 	    });
 	    pipjComboBox.getSelectionModel().selectedItemProperty().addListener( (v, oldValue, newValue) -> {
-	    	System.out.println(newValue);
+	    	model.setPipStyle(newValue);
 	    });
 
 	    sample = new CardSample(this, model, "Sample");
@@ -314,7 +314,7 @@ public class MainController {
     @FXML
     void outputTextFieldKeyTyped(KeyEvent event) {
 //    	System.out.println("outputjTextFieldKeyTyped()" + event.toString());
-    	model.setManualOutputName(outputjTextField.getText());
+    	model.setOutputName(outputjTextField.getText());
     }
 
     @FXML

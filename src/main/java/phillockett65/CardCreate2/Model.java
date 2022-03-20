@@ -46,11 +46,14 @@ public class Model {
 	 * Support code for "Input Directories" panel.
 	 */
 
-	private String baseDirectory = ".";
 	private boolean validBaseDirectory = false;
+	private String baseDirectory = ".";
+	private String faceStyle;
+	private String indexStyle;
+	private String pipStyle;
 
 	ArrayList<String> baseList = new ArrayList<String>();
-	ArrayList<String> facesList = new ArrayList<String>();
+	ArrayList<String> faceList = new ArrayList<String>();
 	ArrayList<String> indexList = new ArrayList<String>();
 	ArrayList<String> pipList = new ArrayList<String>();
 
@@ -59,7 +62,7 @@ public class Model {
 	}
 
 	public ArrayList<String> getFacesList() {
-		return facesList;
+		return faceList;
 	}
 
 	public ArrayList<String> getIndexList() {
@@ -70,8 +73,40 @@ public class Model {
 		return pipList;
 	}
 
+	public boolean isValidBaseDirectory() {
+		return validBaseDirectory;
+	}
+
+	public void setBaseDirectoryValidity(boolean validity) {
+		validBaseDirectory = validity;
+	}
+
 	public String getBaseDirectory() {
 		return baseDirectory;
+	}
+
+	public String getFaceDirectory() {
+		return baseDirectory + "\\face\\" + faceStyle;
+	}
+
+	public String getIndexDirectory() {
+		return baseDirectory + "\\index\\" + indexStyle;
+	}
+
+	public String getPipDirectory() {
+		return baseDirectory + "\\pip\\" + pipStyle;
+	}
+
+	public void setFaceStyle(String style) {
+		faceStyle = style;
+	}
+
+	public void setIndexStyle(String style) {
+		indexStyle = style;
+	}
+
+	public void setPipStyle(String style) {
+		pipStyle = style;
 	}
 
 
@@ -166,8 +201,10 @@ public class Model {
     }
 
 
-	private boolean fillDirectoryList(ArrayList<String> styleList, String directoryName) {
-		final File style = new File(directoryName);
+	private boolean fillDirectoryList(ArrayList<String> styleList, String directory, String item) {
+
+		String directoryName = directory + "\\" + item;
+		final File style= new File(directoryName);
 
 		for (final File styleEntry : style.listFiles()) {
 			if (styleEntry.isDirectory()) {
@@ -193,54 +230,32 @@ public class Model {
 		boolean indices = false;
 		boolean pips = false;
 
-		facesList.clear();
+		faceList.clear();
 		indexList.clear();
 		pipList.clear();
 
 		for (final File fileEntry : directory.listFiles()) {
 			if (fileEntry.isDirectory()) {
-				String directoryName = directory.getPath() + "\\" + fileEntry.getName();
+				final String directoryName = directory.getPath();
+				final String item = fileEntry.getName();
 //                System.out.println(directoryName);
 				switch (fileEntry.getName()) {
 				case "faces":
-					faces = fillDirectoryList(facesList, directoryName);
+					faces = fillDirectoryList(faceList, directoryName, item);
 					break;
 				case "indices":
-					indices = fillDirectoryList(indexList, directoryName);
+					indices = fillDirectoryList(indexList, directoryName, item);
 					break;
 				case "pips":
-					pips = fillDirectoryList(pipList, directoryName);
+					pips = fillDirectoryList(pipList, directoryName, item);
 					break;
 				}
 			}
 		}
 
-		if (faces)
-			autoOutputName = facesList.get(0);
-
 		validBaseDirectory = (faces && indices && pips);
 
 		return validBaseDirectory;
-	}
-
-	public boolean isValidBaseDirectory() {
-		return validBaseDirectory;
-	}
-
-	public void setValidBaseDirectory(boolean validBaseDirectory) {
-		this.validBaseDirectory = validBaseDirectory;
-	}
-
-	public String getFaceDirectory() {
-		return baseDirectory + "face";
-	}
-
-	public String getIndexDirectory() {
-		return baseDirectory + "index";
-	}
-
-	public String getPipDirectory() {
-		return baseDirectory + "pip";
 	}
 
 
@@ -248,29 +263,30 @@ public class Model {
 	 * Support code for "Generate" panel.
 	 */
 
+
 	/**
 	 * Support code for "Output Directory" panel.
 	 */
 
 	private boolean manual = false;
-	private String autoOutputName = "";
-	private String manualOutputName = "";
+	private String outputName = "";
 
 	public void setOutputNameManually(boolean state) {
 		manual = state;
 	}
 
 	public String getOutputName() {
-		return manual ? manualOutputName : autoOutputName;
+		return manual ? outputName : faceStyle;
 	}
 
-	public void setAutoOutputName(String outputName) {
-		autoOutputName = outputName;
+	public void setOutputName(String name) {
+		outputName = name;
 	}
 
-	public void setManualOutputName(String outputName) {
-		manualOutputName = outputName;
+	public String getOutputDirectory() {
+		return baseDirectory + "\\cards\\" + getOutputName();
 	}
+
 
 
 	/**
