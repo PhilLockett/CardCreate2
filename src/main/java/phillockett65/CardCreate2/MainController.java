@@ -182,15 +182,16 @@ public class MainController {
         return true;
     }
 
-    private boolean setComboBoxModelFromArrayList(ComboBox<String> comboBox, ArrayList<String> list) {
-        if (list.isEmpty())
+    private boolean setbaseDirectoryComboBoxModel() {
+    	final ArrayList<String> list = model.getBaseList();
+    	if (list.isEmpty())
             return false;
 
-        comboBox.getItems().clear();
+        baseDirectoryjComboBox.getItems().clear();
         for (String s : list)
-            comboBox.getItems().add(s);
+        	baseDirectoryjComboBox.getItems().add(s);
 
-    	comboBox.setValue(list.get(0));
+    	baseDirectoryjComboBox.setValue(list.get(0));
 
         return true;
     }
@@ -200,7 +201,7 @@ public class MainController {
     	if (!model.setBaseDirectory(directory.getPath()))
     		return false;
 
-    	setComboBoxModelFromArrayList(baseDirectoryjComboBox, model.getBaseList());
+    	setbaseDirectoryComboBoxModel();
     	setChoiceBoxModelFromArrayList(facejComboBox, model.getFacesList());
     	setChoiceBoxModelFromArrayList(indexjComboBox, model.getIndexList());
     	setChoiceBoxModelFromArrayList(pipjComboBox, model.getPipList());
