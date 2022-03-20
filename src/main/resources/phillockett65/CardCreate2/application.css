@@ -15,10 +15,15 @@
     -fx-text-fill: #e8e8e8;
 }
 
-.text-field{
+.text-field:readonly{
     -fx-text-fill: #e8e8e8;
     -fx-font-weight: bold;
     -fx-background-color: #808080;
+}
+.text-field{
+    -fx-text-fill: #808080;
+    -fx-font-weight: bold;
+    -fx-background-color: #e8e8e8;
 }
 .text-area{
     -fx-text-fill: white;
@@ -33,12 +38,19 @@
     -fx-background-color: #383838;
 }
 
-.choice-box, .button, .toggle-button{
+.choice-box, .button, .toggle-button:selected{
     -fx-background-color: #AB4642;
     -fx-text-fill: white;
     -fx-font-weight: bold;
     -fx-background-radius: 12;
 }
+.toggle-button{
+    -fx-background-color: #808080;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-background-radius: 12;
+}
+
 .increment-arrow-button, .decrement-arrow-button{
     -fx-background-color: #AB4642;
 }
