@@ -216,6 +216,9 @@ public class Model {
 			}
 		}
 
+		if (faces)
+			outputName = facesList.get(0);
+
 		validBaseDirectory = (faces && indices && pips);
 
 		return validBaseDirectory;
