@@ -45,6 +45,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
@@ -103,16 +105,23 @@ public class MainController {
 		setUpImageButton(nextSuitjButton, "icon-down.png");
 
 	    widthjSpinner.setValueFactory(model.getWidthSVF());
-
 	    heightjSpinner.setValueFactory(model.getHeightSVF());
-
 	    itemHeightjSpinner.setValueFactory(model.getItemHeightSVF());
-
 	    itemCentreXjSpinner.setValueFactory(model.getItemCentreXSVF());
-
 	    itemCentreYjSpinner.setValueFactory(model.getItemCentreYSVF());
 
-		sample = new CardSample(this, model, "Sample");
+	    facejComboBox.getSelectionModel().selectedItemProperty().addListener( (v, oldValue, newValue) -> {
+	    	model.setOutputName(newValue);
+	    	outputjTextField.setText(newValue);
+	    });
+	    indexjComboBox.getSelectionModel().selectedItemProperty().addListener( (v, oldValue, newValue) -> {
+	    	System.out.println(newValue);
+	    });
+	    pipjComboBox.getSelectionModel().selectedItemProperty().addListener( (v, oldValue, newValue) -> {
+	    	System.out.println(newValue);
+	    });
+
+	    sample = new CardSample(this, model, "Sample");
 	}
 
 	public void init(Stage stage) {
@@ -273,23 +282,9 @@ public class MainController {
 
     @FXML
     void baseDirectoryjComboBoxActionPerformed(ActionEvent event) {
-
+    	System.out.println("baseDirectoryjComboBoxActionPerformed()" + event.toString());
     }
 
-    @FXML
-    void facejComboBoxActionPerformed(ActionEvent event) {
-
-    }
-
-    @FXML
-    void indexjComboBoxActionPerformed(ActionEvent event) {
-
-    }
-
-    @FXML
-    void pipjComboBoxActionPerformed(ActionEvent event) {
-
-    }
 
 
 
