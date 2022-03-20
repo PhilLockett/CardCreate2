@@ -317,8 +317,10 @@ public class MainController {
     @FXML
     private ToggleButton outputjToggleButton;
 
+
     @FXML
-    void outputjTextFieldActionPerformed(ActionEvent event) {
+    void outputjTextFieldKeyTyped(KeyEvent event) {
+    	System.out.println("outputjTextFieldKeyTyped()" + event.toString());
 
     }
 
