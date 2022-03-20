@@ -32,7 +32,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import javafx.scene.control.ComboBox;
 import javafx.scene.control.SpinnerValueFactory;
 import phillockett65.CardCreate2.sample.Default;
 
@@ -217,7 +216,7 @@ public class Model {
 		}
 
 		if (faces)
-			outputName = facesList.get(0);
+			autoOutputName = facesList.get(0);
 
 		validBaseDirectory = (faces && indices && pips);
 
@@ -253,15 +252,32 @@ public class Model {
 	 * Support code for "Output Directory" panel.
 	 */
 
-	private String outputName = "";
+	private boolean manual = false;
+	private String autoOutputName = "";
+	private String manualOutputName = "";
+
+	public void setOutputNameManually(boolean state) {
+		manual = state;
+	}
 
 	public String getOutputName() {
-		return outputName;
+		return manual ? manualOutputName : autoOutputName;
 	}
 
-	public void setOutputName(String outputName) {
-		this.outputName = outputName;
+	public void setAutoOutputName(String outputName) {
+		autoOutputName = outputName;
 	}
+
+	public void setManualOutputName(String outputName) {
+		manualOutputName = outputName;
+	}
+
+//	public void setOutputName(String outputName) {
+//		if (manual)
+//			manualOutputName = outputName;
+//		else
+//			autoOutputName = outputName;
+//	}
 
 
 	/**

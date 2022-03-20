@@ -40,13 +40,11 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.Spinner;
-import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
@@ -111,8 +109,8 @@ public class MainController {
 	    itemCentreYjSpinner.setValueFactory(model.getItemCentreYSVF());
 
 	    facejComboBox.getSelectionModel().selectedItemProperty().addListener( (v, oldValue, newValue) -> {
-	    	model.setOutputName(newValue);
-	    	outputjTextField.setText(newValue);
+	    	model.setAutoOutputName(newValue);
+	    	outputjTextField.setText(model.getOutputName());
 	    });
 	    indexjComboBox.getSelectionModel().selectedItemProperty().addListener( (v, oldValue, newValue) -> {
 	    	System.out.println(newValue);
@@ -314,14 +312,20 @@ public class MainController {
 
 
     @FXML
-    void outputjTextFieldKeyTyped(KeyEvent event) {
-    	System.out.println("outputjTextFieldKeyTyped()" + event.toString());
-
+    void outputTextFieldKeyTyped(KeyEvent event) {
+//    	System.out.println("outputjTextFieldKeyTyped()" + event.toString());
+    	model.setManualOutputName(outputjTextField.getText());
     }
 
     @FXML
-    void outputjToggleButtonActionPerformed(ActionEvent event) {
+    void outputToggleButtonActionPerformed(ActionEvent event) {
+//    	System.out.println("outputjToggleButtonActionPerformed()" + event.toString());
 
+    	final boolean manual = outputjToggleButton.isSelected(); 
+
+    	outputjTextField.setEditable(manual);
+    	model.setOutputNameManually(manual);
+        outputjTextField.setText(model.getOutputName());
     }
 
 
