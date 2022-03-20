@@ -127,16 +127,13 @@ public class MainController {
 
         userGUI.setDisable(true);
 
-		if (model.readBaseDirectoryFilePathsFromDisc()) {
-    		setBaseDirectory(model.getBaseDirectory());
-		} else {
-            if (selectValidBaseDirectory()) {
-        		setBaseDirectory(model.getBaseDirectory());
-            } else {
-                stage.close();
-                sample.close();
-            }
+		if ((!model.readBaseDirectoryFilePathsFromDisc()) &&
+            (!selectValidBaseDirectory())) {
+            stage.close();
+            sample.close();
         }
+		setBaseDirectory(model.getBaseDirectory());
+//		baseDirectoryjComboBox.setValue(model.getBaseDirectory());
 	}
 
 
