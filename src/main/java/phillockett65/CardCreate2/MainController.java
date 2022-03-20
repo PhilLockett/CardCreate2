@@ -118,6 +118,8 @@ public class MainController {
 	public void init(Stage stage) {
         this.stage = stage;
 
+        userGUI.setDisable(true);
+
 		if (model.readBaseDirectoryFilePathsFromDisc()) {
     		setBaseDirectory(model.getBaseDirectory());
 		} else {
