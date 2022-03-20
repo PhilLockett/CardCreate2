@@ -202,7 +202,7 @@ public class MainController {
     	setChoiceBoxModelFromArrayList(pipjComboBox, model.getPipList());
 
         model.reorderBaseDirectoryComboBox();
-        outputjTextField.setText("");
+        outputjTextField.setText(model.getOutputName());
 
         userGUI.setDisable(false);
 
