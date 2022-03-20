@@ -241,13 +241,6 @@ public class Model {
 		return baseDirectory + "pip";
 	}
 
-	public String getOutputName() {
-		return outputName;
-	}
-
-	public void setOutputName(String outputName) {
-		this.outputName = outputName;
-	}
 
 	/**
 	 * Support code for "Generate" panel.
@@ -258,6 +251,15 @@ public class Model {
 	 */
 
 	private String outputName = "";
+
+	public String getOutputName() {
+		return outputName;
+	}
+
+	public void setOutputName(String outputName) {
+		this.outputName = outputName;
+	}
+
 
 	/**
 	 * Support code for "Sample Navigation" panel.
