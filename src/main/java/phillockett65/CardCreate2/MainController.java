@@ -25,9 +25,9 @@
 package phillockett65.CardCreate2;
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.Optional;
 
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -48,6 +48,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
+
 import phillockett65.CardCreate2.Model;
 import phillockett65.CardCreate2.sample.CardSample;
 import phillockett65.CardCreate2.sample.Default;
@@ -132,8 +133,7 @@ public class MainController {
             stage.close();
             sample.close();
         }
-		setBaseDirectory(model.getBaseDirectory());
-//		baseDirectoryjComboBox.setValue(model.getBaseDirectory());
+		setInitialBaseDirectory();
 	}
 
 
@@ -168,45 +168,21 @@ public class MainController {
     @FXML
     private ChoiceBox<String> pipjComboBox;
 
+	private boolean setInitialBaseDirectory() {
+//		System.out.println("setInitialBaseDirectory(" + model.getBaseDirectory() + ")");
 
-    private boolean setChoiceBoxModelFromArrayList(ChoiceBox<String> choiceBox, ArrayList<String> list) {
-        if (list.isEmpty())
-            return false;
+		baseDirectoryjComboBox.setItems(model.getBaseList());
+		baseDirectoryjComboBox.setValue(model.getBaseDirectory());
 
-        choiceBox.getItems().clear();
-        for (String s : list)
-            choiceBox.getItems().add(s);
+		facejComboBox.setItems(model.getFaceList());
+		facejComboBox.setValue(model.getFaceStyle());
 
-    	choiceBox.setValue(list.get(0));
+		indexjComboBox.setItems(model.getIndexList());
+		indexjComboBox.setValue(model.getIndexStyle());
 
-        return true;
-    }
+		pipjComboBox.setItems(model.getPipList());
+        pipjComboBox.setValue(model.getPipStyle());
 
-    private boolean setbaseDirectoryComboBoxModel() {
-    	final ArrayList<String> list = model.getBaseList();
-    	if (list.isEmpty())
-            return false;
-
-        baseDirectoryjComboBox.getItems().clear();
-        for (String s : list)
-        	baseDirectoryjComboBox.getItems().add(s);
-
-    	baseDirectoryjComboBox.setValue(list.get(0));
-
-        return true;
-    }
-
-    private boolean setBaseDirectory(File directory) {
-
-    	if (!model.setBaseDirectory(directory.getPath()))
-    		return false;
-
-    	setbaseDirectoryComboBoxModel();
-    	setChoiceBoxModelFromArrayList(facejComboBox, model.getFacesList());
-    	setChoiceBoxModelFromArrayList(indexjComboBox, model.getIndexList());
-    	setChoiceBoxModelFromArrayList(pipjComboBox, model.getPipList());
-
-        model.reorderBaseDirectoryComboBox();
         outputjTextField.setText(model.getOutputName());
 
         userGUI.setDisable(false);
@@ -214,17 +190,22 @@ public class MainController {
         return true;
     }
 
+
 	private boolean setBaseDirectory(String base) {
+//		System.out.println("setBaseDirectory(" + base + ")");
 
-		File directory = new File(base);
+    	if (!model.setBaseDirectory(base))
+    		return false;
 
-		if (!directory.isDirectory())
-			return false;
+		baseDirectoryjComboBox.setValue(model.getBaseDirectory());
+    	facejComboBox.setValue(model.getFaceStyle());
+    	indexjComboBox.setValue(model.getIndexStyle());
+    	pipjComboBox.setValue(model.getPipStyle());
 
-		setBaseDirectory(directory);
+        outputjTextField.setText(model.getOutputName());
 
-		return true;
-	}
+        return true;
+    }
 
     private boolean selectBaseDirectory() {
     	DirectoryChooser choice = new DirectoryChooser();
@@ -235,7 +216,8 @@ public class MainController {
         if (directory != null) {
 //        	System.out.println("Selected: " + directory.getAbsolutePath());
 
-            if (setBaseDirectory(directory)) {
+            if (setBaseDirectory(directory.getPath())) {
+
                 return true;
             }
         }
@@ -270,15 +252,23 @@ public class MainController {
         if (!selectBaseDirectory()) {
             if (!selectValidBaseDirectory()) {
                 // Put original base directory back.
-                File directory = new File(model.getBaseDirectory());
-                setBaseDirectory(directory);
+                setBaseDirectory(model.getBaseDirectory());
             }
         }
     }
 
     @FXML
     void baseDirectoryjComboBoxActionPerformed(ActionEvent event) {
-    	System.out.println("baseDirectoryjComboBoxActionPerformed()" + event.toString());
+//    	System.out.println("baseDirectoryjComboBoxActionPerformed()" + event.toString());
+
+    	if (!model.setBaseDirectory(baseDirectoryjComboBox.getValue()))
+    		return;
+
+    	facejComboBox.setValue(model.getFaceStyle());
+    	indexjComboBox.setValue(model.getIndexStyle());
+    	pipjComboBox.setValue(model.getPipStyle());
+
+        outputjTextField.setText(model.getOutputName());
     }
 
 
@@ -293,7 +283,10 @@ public class MainController {
 
     @FXML
     void generatejButtonActionPerformed(ActionEvent event) {
-
+    	System.out.println(model.getFaceDirectory());
+    	System.out.println(model.getIndexDirectory());
+    	System.out.println(model.getPipDirectory());
+    	System.out.println(model.getOutputDirectory());
     }
 
 

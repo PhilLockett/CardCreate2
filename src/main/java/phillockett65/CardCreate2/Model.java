@@ -30,9 +30,11 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.scene.control.SpinnerValueFactory;
+
 import phillockett65.CardCreate2.sample.Default;
 
 public class Model {
@@ -52,25 +54,42 @@ public class Model {
 	private String indexStyle;
 	private String pipStyle;
 
-	ArrayList<String> baseList = new ArrayList<String>();
-	ArrayList<String> faceList = new ArrayList<String>();
-	ArrayList<String> indexList = new ArrayList<String>();
-	ArrayList<String> pipList = new ArrayList<String>();
+	ObservableList<String> baseList = FXCollections.observableArrayList();
+	ObservableList<String> faceList = FXCollections.observableArrayList();
+	ObservableList<String> indexList = FXCollections.observableArrayList();
+	ObservableList<String> pipList = FXCollections.observableArrayList();
 
-	public ArrayList<String> getBaseList() {
+	public ObservableList<String> getBaseList() {
 		return baseList;
 	}
 
-	public ArrayList<String> getFacesList() {
+	public ObservableList<String> getFaceList() {
 		return faceList;
 	}
 
-	public ArrayList<String> getIndexList() {
+	public ObservableList<String> getIndexList() {
 		return indexList;
 	}
 
-	public ArrayList<String> getPipList() {
+	public ObservableList<String> getPipList() {
 		return pipList;
+	}
+
+	
+	public void setBaseList(ObservableList<String> baseList) {
+		this.baseList = baseList;
+	}
+
+	public void setFaceList(ObservableList<String> faceList) {
+		this.faceList = faceList;
+	}
+
+	public void setIndexList(ObservableList<String> indexList) {
+		this.indexList = indexList;
+	}
+
+	public void setPipList(ObservableList<String> pipList) {
+		this.pipList = pipList;
 	}
 
 	public boolean isValidBaseDirectory() {
@@ -95,6 +114,18 @@ public class Model {
 
 	public String getPipDirectory() {
 		return baseDirectory + "\\pip\\" + pipStyle;
+	}
+
+	public String getFaceStyle() {
+		return faceStyle;
+	}
+
+	public String getIndexStyle() {
+		return indexStyle;
+	}
+
+	public String getPipStyle() {
+		return pipStyle;
 	}
 
 	public void setFaceStyle(String style) {
@@ -130,7 +161,7 @@ public class Model {
 		}
 
 		// Read path list file into array.
-		ArrayList<String> pathList = new ArrayList<String>();
+		ObservableList<String> pathList = FXCollections.observableArrayList();
 		try (FileReader reader = new FileReader(PATHSFILE); BufferedReader br = new BufferedReader(reader)) {
 
 			String line;
@@ -157,12 +188,20 @@ public class Model {
 		return false;
 	}
 
+	/**
+	 * Wrie the list of base directories to disc with current baseDirectory
+	 * first.
+	 * 
+	 * @return
+	 */
 	public boolean baseDirectoryjComboBoxSave() {
 
 		try (FileWriter writer = new FileWriter(PATHSFILE); BufferedWriter bw = new BufferedWriter(writer)) {
+			bw.write(baseDirectory);
 			for (final String directory : baseList) {
 				final String item = directory + System.lineSeparator();
-				bw.write(item);
+	            if (!baseDirectory.equals(item))
+	            	bw.write(item);
 			}
 			bw.close();
 		} catch (IOException e) {
@@ -172,40 +211,13 @@ public class Model {
 		return true;
 	}
 
-	/**
-	 * Formerly baseDirectoryjComboBoxAdd()
-	 * 
-	 * Re-order base directory list so that baseDirectory is first.
-	 * 
-	 * @return
-	 */
-	public boolean reorderBaseDirectoryComboBox() {
 
-        // Build array with path as first item.
-        ArrayList<String> pathList = new ArrayList<String>();
-        pathList.add(baseDirectory);
-
-        // Add baseDirectoryjComboBox items to array, except for "path".
-        for (final String item : baseList) {
-            if (!baseDirectory.equals(item)) {
-                pathList.add(item);
-            }
-        }
-
-        // Use array to fill in baseDirectoryjComboBox.
-		baseList = pathList;
-
-        baseDirectoryjComboBoxSave();
-
-        return true;
-    }
-
-
-	private boolean fillDirectoryList(ArrayList<String> styleList, String directory, String item) {
+	private boolean fillDirectoryList(ObservableList<String> styleList, String directory, String item) {
 
 		String directoryName = directory + "\\" + item;
 		final File style= new File(directoryName);
 
+		styleList.clear();
 		for (final File styleEntry : style.listFiles()) {
 			if (styleEntry.isDirectory()) {
 //                System.out.println(directoryName + "\\" + styleEntry.getName());
@@ -218,21 +230,19 @@ public class Model {
 
 	public boolean setBaseDirectory(String base) {
 
+		if (base.equals(""))
+			return false;
+
 		File directory = new File(base);
 
-		if (!directory.isDirectory()) {
+		if (!directory.isDirectory())
 			return false;
-		}
 
 		baseDirectory = base;
 
 		boolean faces = false;
 		boolean indices = false;
 		boolean pips = false;
-
-		faceList.clear();
-		indexList.clear();
-		pipList.clear();
 
 		for (final File fileEntry : directory.listFiles()) {
 			if (fileEntry.isDirectory()) {
@@ -254,6 +264,13 @@ public class Model {
 		}
 
 		validBaseDirectory = (faces && indices && pips);
+		if (validBaseDirectory) {
+			if (!baseList.contains(baseDirectory))
+				baseList.add(baseDirectory);
+			faceStyle = faceList.get(0);
+			indexStyle = indexList.get(0);
+			pipStyle = pipList.get(0);
+		}
 
 		return validBaseDirectory;
 	}
@@ -276,7 +293,10 @@ public class Model {
 	}
 
 	public String getOutputName() {
-		return manual ? outputName : faceStyle;
+		if (manual)
+			return outputName.equals("") ? "anon" : outputName;
+
+		return faceStyle;
 	}
 
 	public void setOutputName(String name) {
