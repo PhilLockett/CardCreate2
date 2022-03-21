@@ -113,9 +113,9 @@
                      <children>
                         <HBox prefHeight="100.0" prefWidth="200.0" spacing="4.0">
                            <children>
-                              <Label fx:id="baseDirectoryjLabel" text="Base:" />
-                              <ComboBox fx:id="baseDirectoryjComboBox" onAction="#baseDirectoryjComboBoxActionPerformed" prefHeight="25.0" prefWidth="410.0" />
-                              <Button fx:id="baseDirectoryjButton" mnemonicParsing="false" onAction="#baseDirectoryjButtonActionPerformed" text="Browse..." />
+                              <Label fx:id="baseDirectoryLabel" text="Base:" />
+                              <ComboBox fx:id="baseDirectoryComboBox" onAction="#baseDirectoryjComboBoxActionPerformed" prefHeight="25.0" prefWidth="410.0" />
+                              <Button fx:id="baseDirectoryButton" mnemonicParsing="false" onAction="#baseDirectoryjButtonActionPerformed" text="Browse..." />
                            </children>
                            <padding>
                               <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
@@ -123,12 +123,12 @@
                         </HBox>
                         <HBox prefHeight="100.0" prefWidth="200.0" spacing="4.0">
                            <children>
-                              <Label fx:id="facejLabel" text="Face:" />
-                              <ChoiceBox fx:id="facejComboBox" prefWidth="140.0" />
-                              <Label fx:id="indexjLabel" text="Index:" />
-                              <ChoiceBox fx:id="indexjComboBox" prefWidth="140.0" />
-                              <Label fx:id="pipjLabel" text="Pip:" />
-                              <ChoiceBox fx:id="pipjComboBox" prefWidth="140.0" />
+                              <Label fx:id="faceLabel" text="Face:" />
+                              <ChoiceBox fx:id="faceChoiceBox" prefWidth="140.0" />
+                              <Label fx:id="indexLabel" text="Index:" />
+                              <ChoiceBox fx:id="indexChoiceBox" prefWidth="140.0" />
+                              <Label fx:id="pipLabel" text="Pip:" />
+                              <ChoiceBox fx:id="pipChoiceBox" prefWidth="140.0" />
                            </children>
                            <padding>
                               <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
@@ -195,8 +195,8 @@
                         <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
                      </padding>
                      <children>
-                        <TextField fx:id="outputjTextField" editable="false" onKeyTyped="#outputTextFieldKeyTyped" />
-                        <ToggleButton fx:id="outputjToggleButton" mnemonicParsing="false" onAction="#outputToggleButtonActionPerformed" text="Manual" />
+                        <TextField fx:id="outputTextField" editable="false" onKeyTyped="#outputTextFieldKeyTyped" />
+                        <ToggleButton fx:id="outputToggleButton" mnemonicParsing="false" onAction="#outputToggleButtonActionPerformed" text="Manual" />
                      </children>
                   </HBox>
               </content>

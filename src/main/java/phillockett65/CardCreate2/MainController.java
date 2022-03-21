@@ -109,14 +109,14 @@ public class MainController {
 	    itemCentreXjSpinner.setValueFactory(model.getItemCentreXSVF());
 	    itemCentreYjSpinner.setValueFactory(model.getItemCentreYSVF());
 
-	    facejComboBox.getSelectionModel().selectedItemProperty().addListener( (v, oldValue, newValue) -> {
+	    faceChoiceBox.getSelectionModel().selectedItemProperty().addListener( (v, oldValue, newValue) -> {
 	    	model.setFaceStyle(newValue);
-	    	outputjTextField.setText(model.getOutputName());
+	    	outputTextField.setText(model.getOutputName());
 	    });
-	    indexjComboBox.getSelectionModel().selectedItemProperty().addListener( (v, oldValue, newValue) -> {
+	    indexChoiceBox.getSelectionModel().selectedItemProperty().addListener( (v, oldValue, newValue) -> {
 	    	model.setIndexStyle(newValue);
 	    });
-	    pipjComboBox.getSelectionModel().selectedItemProperty().addListener( (v, oldValue, newValue) -> {
+	    pipChoiceBox.getSelectionModel().selectedItemProperty().addListener( (v, oldValue, newValue) -> {
 	    	model.setPipStyle(newValue);
 	    });
 
@@ -142,48 +142,48 @@ public class MainController {
      */
 
 	@FXML
-    private Label baseDirectoryjLabel;
+    private Label baseDirectoryLabel;
 
     @FXML
-    private ComboBox<String> baseDirectoryjComboBox;
+    private ComboBox<String> baseDirectoryComboBox;
 
     @FXML
-    private Button baseDirectoryjButton;
+    private Button baseDirectoryButton;
 
     @FXML
-    private Label facejLabel;
+    private Label faceLabel;
 
     @FXML
-    private Label indexjLabel;
+    private Label indexLabel;
 
     @FXML
-    private Label pipjLabel;
+    private Label pipLabel;
 
     @FXML
-    private ChoiceBox<String> facejComboBox;
+    private ChoiceBox<String> faceChoiceBox;
 
     @FXML
-    private ChoiceBox<String> indexjComboBox;
+    private ChoiceBox<String> indexChoiceBox;
 
     @FXML
-    private ChoiceBox<String> pipjComboBox;
+    private ChoiceBox<String> pipChoiceBox;
 
 	private boolean setInitialBaseDirectory() {
 //		System.out.println("setInitialBaseDirectory(" + model.getBaseDirectory() + ")");
 
-		baseDirectoryjComboBox.setItems(model.getBaseList());
-		baseDirectoryjComboBox.setValue(model.getBaseDirectory());
+		baseDirectoryComboBox.setItems(model.getBaseList());
+		baseDirectoryComboBox.setValue(model.getBaseDirectory());
 
-		facejComboBox.setItems(model.getFaceList());
-		facejComboBox.setValue(model.getFaceStyle());
+		faceChoiceBox.setItems(model.getFaceList());
+		faceChoiceBox.setValue(model.getFaceStyle());
 
-		indexjComboBox.setItems(model.getIndexList());
-		indexjComboBox.setValue(model.getIndexStyle());
+		indexChoiceBox.setItems(model.getIndexList());
+		indexChoiceBox.setValue(model.getIndexStyle());
 
-		pipjComboBox.setItems(model.getPipList());
-        pipjComboBox.setValue(model.getPipStyle());
+		pipChoiceBox.setItems(model.getPipList());
+        pipChoiceBox.setValue(model.getPipStyle());
 
-        outputjTextField.setText(model.getOutputName());
+        outputTextField.setText(model.getOutputName());
 
         userGUI.setDisable(false);
 
@@ -197,12 +197,12 @@ public class MainController {
     	if (!model.setBaseDirectory(base))
     		return false;
 
-		baseDirectoryjComboBox.setValue(model.getBaseDirectory());
-    	facejComboBox.setValue(model.getFaceStyle());
-    	indexjComboBox.setValue(model.getIndexStyle());
-    	pipjComboBox.setValue(model.getPipStyle());
+		baseDirectoryComboBox.setValue(model.getBaseDirectory());
+    	faceChoiceBox.setValue(model.getFaceStyle());
+    	indexChoiceBox.setValue(model.getIndexStyle());
+    	pipChoiceBox.setValue(model.getPipStyle());
 
-        outputjTextField.setText(model.getOutputName());
+        outputTextField.setText(model.getOutputName());
 
         return true;
     }
@@ -259,14 +259,14 @@ public class MainController {
     void baseDirectoryjComboBoxActionPerformed(ActionEvent event) {
 //    	System.out.println("baseDirectoryjComboBoxActionPerformed()" + event.toString());
 
-    	if (!model.setBaseDirectory(baseDirectoryjComboBox.getValue()))
+    	if (!model.setBaseDirectory(baseDirectoryComboBox.getValue()))
     		return;
 
-    	facejComboBox.setValue(model.getFaceStyle());
-    	indexjComboBox.setValue(model.getIndexStyle());
-    	pipjComboBox.setValue(model.getPipStyle());
+    	faceChoiceBox.setValue(model.getFaceStyle());
+    	indexChoiceBox.setValue(model.getIndexStyle());
+    	pipChoiceBox.setValue(model.getPipStyle());
 
-        outputjTextField.setText(model.getOutputName());
+        outputTextField.setText(model.getOutputName());
     }
 
 
@@ -294,27 +294,27 @@ public class MainController {
      */
 
     @FXML
-    private TextField outputjTextField;
+    private TextField outputTextField;
 
     @FXML
-    private ToggleButton outputjToggleButton;
+    private ToggleButton outputToggleButton;
 
 
     @FXML
     void outputTextFieldKeyTyped(KeyEvent event) {
 //    	System.out.println("outputjTextFieldKeyTyped()" + event.toString());
-    	model.setOutputName(outputjTextField.getText());
+    	model.setOutputName(outputTextField.getText());
     }
 
     @FXML
     void outputToggleButtonActionPerformed(ActionEvent event) {
 //    	System.out.println("outputjToggleButtonActionPerformed()" + event.toString());
 
-    	final boolean manual = outputjToggleButton.isSelected(); 
+    	final boolean manual = outputToggleButton.isSelected(); 
 
-    	outputjTextField.setEditable(manual);
+    	outputTextField.setEditable(manual);
     	model.setOutputNameManually(manual);
-        outputjTextField.setText(model.getOutputName());
+        outputTextField.setText(model.getOutputName());
     }
 
 
