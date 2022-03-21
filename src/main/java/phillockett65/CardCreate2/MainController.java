@@ -67,7 +67,7 @@ public class MainController {
     private BorderPane userGUI;
 
     @FXML
-    private Label statusjLabel;
+    private Label statusLabel;
 
 
 	/**
@@ -97,7 +97,7 @@ public class MainController {
 	@FXML public void initialize() {
 //		System.out.println("MainController initialized.");
 
-		setUpImageButton(generatejButton, "icon-play.png");
+		setUpImageButton(generateButton, "icon-play.png");
 		setUpImageButton(previousSuitjButton, "icon-up.png");
 		setUpImageButton(previousCardjButton, "icon-left.png");
 		setUpImageButton(nextCardjButton, "icon-right.png");
@@ -277,14 +277,16 @@ public class MainController {
      */
 
     @FXML
-    private Button generatejButton;
+    private Button generateButton;
 
     @FXML
-    void generatejButtonActionPerformed(ActionEvent event) {
+    void generateButtonActionPerformed(ActionEvent event) {
     	System.out.println(model.getFaceDirectory());
     	System.out.println(model.getIndexDirectory());
     	System.out.println(model.getPipDirectory());
     	System.out.println(model.getOutputDirectory());
+
+    	statusLabel.setText("Output sent to: " + model.getOutputDirectory());
     }
 
 
