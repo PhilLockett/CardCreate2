@@ -142,15 +142,13 @@ public class Model {
 
 
 	/**
-	 * Formerly baseDirectoryjComboBoxInit()
-	 * 
 	 * Read base directory file paths from disc and set up Base, Face, Index 
 	 * and Pip pull-down lists.
 	 * 
 	 * @return
 	 */
-	public boolean readBaseDirectoryFilePathsFromDisc() {
-//      System.out.println("baseDirectoryjComboBoxInit()");
+	private boolean readBaseDirectoryFilePathsFromDisc() {
+//      System.out.println("readBaseDirectoryFilePathsFromDisc()");
 
 		// Check if PATHSFILE exists.
 		File file = new File(PATHSFILE);
@@ -161,12 +159,11 @@ public class Model {
 		}
 
 		// Read path list file into array.
-		ObservableList<String> pathList = FXCollections.observableArrayList();
 		try (FileReader reader = new FileReader(PATHSFILE); BufferedReader br = new BufferedReader(reader)) {
 
 			String line;
 			while ((line = br.readLine()) != null) {
-				pathList.add(line);
+				baseList.add(line);
 //              System.out.println(line);
 			}
 			br.close();
@@ -175,32 +172,30 @@ public class Model {
 		}
 
 		// If array is not empty use it to fill in baseDirectoryjComboBox.
-		if (!pathList.isEmpty()) {
-			setBaseDirectory(pathList.get(0));
+		if (!baseList.isEmpty()) {
+			setBaseDirectory(baseList.get(0));
 
-			if (validBaseDirectory) {
-				baseList = pathList;
-
+			if (validBaseDirectory)
 				return true;
-			}
 		}
 
 		return false;
 	}
 
 	/**
-	 * Wrie the list of base directories to disc with current baseDirectory
+	 * Write the list of base directories to disc with current baseDirectory
 	 * first.
 	 * 
 	 * @return
 	 */
-	public boolean baseDirectoryjComboBoxSave() {
+	private boolean writeBaseDirectoryFilePathsToDisc() {
+//		System.out.println("writeBaseDirectoryFilePathsToDisc()");
 
 		try (FileWriter writer = new FileWriter(PATHSFILE); BufferedWriter bw = new BufferedWriter(writer)) {
-			bw.write(baseDirectory);
+			bw.write(baseDirectory + System.lineSeparator());
 			for (final String directory : baseList) {
 				final String item = directory + System.lineSeparator();
-	            if (!baseDirectory.equals(item))
+	            if (!baseDirectory.equals(directory))
 	            	bw.write(item);
 			}
 			bw.close();
@@ -229,6 +224,7 @@ public class Model {
 	}
 
 	public boolean setBaseDirectory(String base) {
+//		System.out.println("model.setBaseDirectory(" + base + ")");
 
 		if (base.equals(""))
 			return false;
@@ -267,6 +263,7 @@ public class Model {
 		if (validBaseDirectory) {
 			if (!baseList.contains(baseDirectory))
 				baseList.add(baseDirectory);
+			writeBaseDirectoryFilePathsToDisc();
 			faceStyle = faceList.get(0);
 			indexStyle = indexList.get(0);
 			pipStyle = pipList.get(0);

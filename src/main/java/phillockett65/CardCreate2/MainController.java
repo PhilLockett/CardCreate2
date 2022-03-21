@@ -128,7 +128,7 @@ public class MainController {
 
         userGUI.setDisable(true);
 
-		if ((!model.readBaseDirectoryFilePathsFromDisc()) &&
+		if ((!model.isValidBaseDirectory()) &&
             (!selectValidBaseDirectory())) {
             stage.close();
             sample.close();
@@ -216,10 +216,8 @@ public class MainController {
         if (directory != null) {
 //        	System.out.println("Selected: " + directory.getAbsolutePath());
 
-            if (setBaseDirectory(directory.getPath())) {
-
+            if (setBaseDirectory(directory.getPath()))
                 return true;
-            }
         }
 
         return false;
