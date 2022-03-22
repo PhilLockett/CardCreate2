@@ -395,8 +395,8 @@ public class Model {
 	
 	private CardSize cardSize = CardSize.POKER;
 
-	private int width = Default.WIDTH.intr();
-	private int height = Default.HEIGHT.intr();
+	private int cardWidthPX = Default.WIDTH.intr();
+	private int cardHeightPX = Default.HEIGHT.intr();
 
 	private SpinnerValueFactory<Integer> widthSVF;
 	private SpinnerValueFactory<Integer> heightSVF;
@@ -414,19 +414,19 @@ public class Model {
 	}
 
 	public int getWidth() {
-		return width;
+		return cardWidthPX;
 	}
 
 	public void setWidth(int width) {
-		this.width = width;
+		this.cardWidthPX = width;
 	}
 
 	public int getHeight() {
-		return height;
+		return cardHeightPX;
 	}
 
 	public void setHeight(int height) {
-		this.height = height;
+		this.cardHeightPX = height;
 	}
 
 	public SpinnerValueFactory<Integer> getWidthSVF() {
