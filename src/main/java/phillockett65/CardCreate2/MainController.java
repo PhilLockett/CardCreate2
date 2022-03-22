@@ -42,6 +42,7 @@ import javafx.scene.control.RadioButton;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleButton;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
@@ -51,7 +52,6 @@ import javafx.stage.Stage;
 
 import phillockett65.CardCreate2.Model;
 import phillockett65.CardCreate2.sample.CardSample;
-import phillockett65.CardCreate2.sample.Default;
 
 public class MainController {
 
@@ -394,13 +394,16 @@ public class MainController {
      */
 
     @FXML
-    private RadioButton pokerjRadioButton;
+    private ToggleGroup cardSize;
 
     @FXML
-    private RadioButton bridgejRadioButton;
+    private RadioButton pokerRadioButton;
 
     @FXML
-    private RadioButton freejRadioButton;
+    private RadioButton bridgeRadioButton;
+
+    @FXML
+    private RadioButton freeRadioButton;
 
     @FXML
     private Label widthjLabel;
@@ -421,28 +424,29 @@ public class MainController {
     private Button heightjButton;
 
     @FXML
-    void pokerjRadioButtonActionPerformed(ActionEvent event) {
+    void cardSizeRadioButtonActionPerformed(ActionEvent event) {
+    	if (pokerRadioButton.isSelected())
+    		model.setCardSize(Model.CardSize.POKER);
+    	else
+    	if (bridgeRadioButton.isSelected())
+    		model.setCardSize(Model.CardSize.BRIDGE);
+    	else
+    	if (freeRadioButton.isSelected())
+    		model.setCardSize(Model.CardSize.FREE);
 
-    }
-
-    @FXML
-    void bridgejRadioButtonActionPerformed(ActionEvent event) {
-
-    }
-
-    @FXML
-    void freejRadioButtonActionPerformed(ActionEvent event) {
-
+    	final boolean autoWidth = model.isAutoCardWidth();
+    	widthjSpinner.setDisable(autoWidth);
+    	widthjButton.setDisable(autoWidth);
     }
 
     @FXML
     void widthjButtonActionPerformed(ActionEvent event) {
-    	model.getWidthSVF().setValue(Default.WIDTH.intr());
+    	model.defaultWidthSVF();
     }
 
     @FXML
     void heightjButtonActionPerformed(ActionEvent event) {
-    	model.getHeightSVF().setValue(Default.HEIGHT.intr());
+    	model.defaultHeightSVF();
     }
 
 	/**
@@ -485,43 +489,43 @@ public class MainController {
      */
 
     @FXML
-    private CheckBox indicesjCheckBox;
+    private CheckBox indicesCheckBox;
 
     @FXML
-    private CheckBox cornerPipjCheckBox;
+    private CheckBox cornerPipCheckBox;
 
     @FXML
-    private CheckBox standardPipjCheckBox;
+    private CheckBox standardPipCheckBox;
 
     @FXML
-    private CheckBox facejCheckBox;
+    private CheckBox faceCheckBox;
 
     @FXML
-    private CheckBox facePipjCheckBox;
+    private CheckBox facePipCheckBox;
 
     @FXML
     void indicesjCheckBoxActionPerformed(ActionEvent event) {
-
+    	model.setDisplayIndex(indicesCheckBox.isSelected());
     }
 
     @FXML
     void cornerPipjCheckBoxActionPerformed(ActionEvent event) {
-
+    	model.setDisplayCornerPip(cornerPipCheckBox.isSelected());
     }
 
     @FXML
     void standardPipjCheckBoxActionPerformed(ActionEvent event) {
-
+    	model.setDisplayStandardPip(standardPipCheckBox.isSelected());
     }
 
     @FXML
     void facejCheckBoxActionPerformed(ActionEvent event) {
-
+    	model.setDisplayFaceImage(faceCheckBox.isSelected());
     }
 
     @FXML
     void facePipjCheckBoxActionPerformed(ActionEvent event) {
-
+    	model.setDisplayFacePip(facePipCheckBox.isSelected());
     }
 
     /**
@@ -537,43 +541,39 @@ public class MainController {
      */
 
     @FXML
-    private RadioButton indicesjRadioButton;
+    private ToggleGroup cardItem;
 
     @FXML
-    private RadioButton cornerPipjRadioButton;
+    private RadioButton indicesRadioButton;
 
     @FXML
-    private RadioButton standardPipjRadioButton;
+    private RadioButton cornerPipRadioButton;
 
     @FXML
-    private RadioButton facejRadioButton;
+    private RadioButton standardPipRadioButton;
 
     @FXML
-    private RadioButton facePipjRadioButton;
+    private RadioButton faceRadioButton;
 
     @FXML
-    void indicesjRadioButtonActionPerformed(ActionEvent event) {
-
-    }
+    private RadioButton facePipRadioButton;
 
     @FXML
-    void cornerPipjRadioButtonActionPerformed(ActionEvent event) {
-
-    }
-
-    @FXML
-    void standardPipjRadioButtonActionPerformed(ActionEvent event) {
-
-    }
-
-    @FXML
-    void facejRadioButtonActionPerformed(ActionEvent event) {
-
-    }
-
-    @FXML
-    void facePipjRadioButtonActionPerformed(ActionEvent event) {
-
+    void cardItemRadioButtonActionPerformed(ActionEvent event) {
+    	if (indicesRadioButton.isSelected())
+    		model.setCardItem(Model.CardItem.INDEX);
+    	else
+    	if (cornerPipRadioButton.isSelected())
+    		model.setCardItem(Model.CardItem.CORNER_PIP);
+    	else
+    	if (standardPipRadioButton.isSelected())
+    		model.setCardItem(Model.CardItem.STANDARD_PIP);
+    	else
+    	if (faceRadioButton.isSelected())
+    		model.setCardItem(Model.CardItem.FACE_IMAGE);
+    	else
+    	if (facePipRadioButton.isSelected())
+    		model.setCardItem(Model.CardItem.FACE_PIP);
     }
 
     /**
@@ -616,7 +616,7 @@ public class MainController {
     private Button itemCentreYjButton;
 
     @FXML
-    private CheckBox keepAspectRatiojCheckBox;
+    private CheckBox keepAspectRatioCheckBox;
 
     @FXML
     void itemHeightjButtonActionPerformed(ActionEvent event) {
@@ -638,7 +638,7 @@ public class MainController {
 
     @FXML
     void keepAspectRatiojCheckBoxActionPerformed(ActionEvent event) {
-
+    	model.setkeepImageAspectRatio(keepAspectRatioCheckBox.isSelected());
     }
 
     /**

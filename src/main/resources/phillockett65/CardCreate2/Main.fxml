@@ -12,6 +12,7 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.TitledPane?>
 <?import javafx.scene.control.ToggleButton?>
+<?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
@@ -21,7 +22,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane fx:id="userGUI" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="640.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="phillockett65.CardCreate2.MainController">
+<BorderPane fx:id="userGUI" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="540.0" prefWidth="730.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="phillockett65.CardCreate2.MainController">
    <bottom>
       <VBox BorderPane.alignment="CENTER">
          <children>
@@ -31,11 +32,11 @@
                      <content>
                         <VBox prefHeight="129.0" prefWidth="177.0" spacing="4.0">
                            <children>
-                              <CheckBox fx:id="indicesjCheckBox" mnemonicParsing="false" onAction="#indicesjCheckBoxActionPerformed" selected="true" text="Display Indices" />
-                              <CheckBox fx:id="cornerPipjCheckBox" layoutX="21.0" layoutY="21.0" mnemonicParsing="false" onAction="#cornerPipjCheckBoxActionPerformed" selected="true" text="Display Corner Pip" />
-                              <CheckBox fx:id="standardPipjCheckBox" layoutX="21.0" layoutY="46.0" mnemonicParsing="false" onAction="#standardPipjCheckBoxActionPerformed" selected="true" text="Display Standard Pip" />
-                              <CheckBox fx:id="facejCheckBox" layoutX="21.0" layoutY="71.0" mnemonicParsing="false" onAction="#facejCheckBoxActionPerformed" selected="true" text="Display Face Image" />
-                              <CheckBox fx:id="facePipjCheckBox" layoutX="21.0" layoutY="97.0" mnemonicParsing="false" onAction="#facePipjCheckBoxActionPerformed" selected="true" text="Display Face Pip" />
+                              <CheckBox fx:id="indicesCheckBox" mnemonicParsing="false" onAction="#indicesjCheckBoxActionPerformed" selected="true" text="Display Indices" />
+                              <CheckBox fx:id="cornerPipCheckBox" layoutX="21.0" layoutY="21.0" mnemonicParsing="false" onAction="#cornerPipjCheckBoxActionPerformed" selected="true" text="Display Corner Pip" />
+                              <CheckBox fx:id="standardPipCheckBox" layoutX="21.0" layoutY="46.0" mnemonicParsing="false" onAction="#standardPipjCheckBoxActionPerformed" selected="true" text="Display Standard Pip" />
+                              <CheckBox fx:id="faceCheckBox" layoutX="21.0" layoutY="71.0" mnemonicParsing="false" onAction="#facejCheckBoxActionPerformed" selected="true" text="Display Face Image" />
+                              <CheckBox fx:id="facePipCheckBox" layoutX="21.0" layoutY="97.0" mnemonicParsing="false" onAction="#facePipjCheckBoxActionPerformed" selected="true" text="Display Face Pip" />
                            </children>
                         </VBox>
                      </content>
@@ -44,11 +45,14 @@
                      <content>
                         <VBox prefHeight="174.0" prefWidth="177.0" spacing="4.0">
                            <children>
-                              <RadioButton fx:id="indicesjRadioButton" mnemonicParsing="false" onAction="#indicesjRadioButtonActionPerformed" selected="true" text="Change Indices" />
-                              <RadioButton fx:id="cornerPipjRadioButton" layoutX="19.0" layoutY="19.0" mnemonicParsing="false" onAction="#cornerPipjRadioButtonActionPerformed" text="Change Corner Pip" />
-                              <RadioButton fx:id="standardPipjRadioButton" layoutX="19.0" layoutY="37.0" mnemonicParsing="false" onAction="#standardPipjRadioButtonActionPerformed" text="Change Standard Pip" />
-                              <RadioButton fx:id="facejRadioButton" disable="true" layoutX="19.0" layoutY="54.0" mnemonicParsing="false" onAction="#facejRadioButtonActionPerformed" text="Change Face Boarder" />
-                              <RadioButton fx:id="facePipjRadioButton" disable="true" layoutX="19.0" layoutY="71.0" mnemonicParsing="false" onAction="#facePipjRadioButtonActionPerformed" text="Change Face Pip" />
+                              <RadioButton fx:id="indicesRadioButton" mnemonicParsing="false" onAction="#cardItemRadioButtonActionPerformed" selected="true" text="Change Indices">
+                                 <toggleGroup>
+                                    <ToggleGroup fx:id="cardItem" />
+                                 </toggleGroup></RadioButton>
+                              <RadioButton fx:id="cornerPipRadioButton" layoutX="19.0" layoutY="19.0" mnemonicParsing="false" onAction="#cardItemRadioButtonActionPerformed" text="Change Corner Pip" toggleGroup="$cardItem" />
+                              <RadioButton fx:id="standardPipRadioButton" layoutX="19.0" layoutY="37.0" mnemonicParsing="false" onAction="#cardItemRadioButtonActionPerformed" text="Change Standard Pip" toggleGroup="$cardItem" />
+                              <RadioButton fx:id="faceRadioButton" disable="true" layoutX="19.0" layoutY="54.0" mnemonicParsing="false" onAction="#cardItemRadioButtonActionPerformed" text="Change Face Boarder" toggleGroup="$cardItem" />
+                              <RadioButton fx:id="facePipRadioButton" disable="true" layoutX="19.0" layoutY="71.0" mnemonicParsing="false" onAction="#cardItemRadioButtonActionPerformed" text="Change Face Pip" toggleGroup="$cardItem" />
                            </children>
                         </VBox>
                      </content>
@@ -82,7 +86,7 @@
                               </GridPane>
                               <HBox>
                                  <children>
-                                    <CheckBox fx:id="keepAspectRatiojCheckBox" mnemonicParsing="false" onAction="#keepAspectRatiojCheckBoxActionPerformed" selected="true" text="Keep Image Aspect Ratio" />
+                                    <CheckBox fx:id="keepAspectRatioCheckBox" mnemonicParsing="false" onAction="#keepAspectRatiojCheckBoxActionPerformed" selected="true" text="Keep Image Aspect Ratio" />
                                  </children>
                               </HBox>
                            </children>
@@ -186,35 +190,55 @@
             </TitledPane>
          </children>
          <padding>
-            <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+            <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
          </padding>
       </VBox>
    </right>
    <left>
-      <VBox prefHeight="279.0" prefWidth="395.0" spacing="16.0" BorderPane.alignment="CENTER">
+      <VBox prefHeight="214.0" prefWidth="540.0" spacing="8.0" BorderPane.alignment="CENTER">
          <children>
-            <TitledPane animated="false" collapsible="false" text="Output Directory">
-              <content>
-                  <HBox spacing="8.0">
-                     <padding>
-                        <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
-                     </padding>
-                     <children>
-                        <TextField fx:id="outputTextField" editable="false" onKeyTyped="#outputTextFieldKeyTyped" />
-                        <ToggleButton fx:id="outputToggleButton" mnemonicParsing="false" onAction="#outputToggleButtonActionPerformed" text="Manual" />
-                     </children>
-                  </HBox>
-              </content>
-            </TitledPane>
+            <HBox spacing="4.0">
+               <children>
+                  <TitledPane animated="false" collapsible="false" text="Output Directory">
+                    <content>
+                        <HBox spacing="8.0">
+                           <padding>
+                              <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+                           </padding>
+                           <children>
+                              <TextField fx:id="outputTextField" editable="false" onKeyTyped="#outputTextFieldKeyTyped" />
+                              <ToggleButton fx:id="outputToggleButton" mnemonicParsing="false" onAction="#outputToggleButtonActionPerformed" text="Manual" />
+                           </children>
+                        </HBox>
+                    </content>
+                  </TitledPane>
+                  <TitledPane collapsible="false" text="Background Colour">
+                     <content>
+                        <HBox spacing="8.0">
+                           <children>
+                              <TextField fx:id="colourTextField" editable="false" prefHeight="25.0" prefWidth="120.0" />
+                              <ColorPicker fx:id="colourPicker" onAction="#colourPickerActionPerformed" />
+                           </children>
+                           <padding>
+                              <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+                           </padding>
+                        </HBox>
+                     </content>
+                  </TitledPane>
+               </children>
+            </HBox>
             <TitledPane animated="false" collapsible="false" prefHeight="104.0" prefWidth="121.0" text="Card Size">
                <content>
                   <HBox prefHeight="100.0" prefWidth="200.0" spacing="8.0">
                      <children>
                         <VBox prefHeight="200.0" prefWidth="100.0" spacing="4.0">
                            <children>
-                              <RadioButton fx:id="pokerjRadioButton" mnemonicParsing="false" onAction="#pokerjRadioButtonActionPerformed" selected="true" text="Poker" />
-                              <RadioButton fx:id="bridgejRadioButton" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#bridgejRadioButtonActionPerformed" text="Bridge" />
-                              <RadioButton fx:id="freejRadioButton" layoutX="10.0" layoutY="27.0" mnemonicParsing="false" onAction="#freejRadioButtonActionPerformed" text="Free" />
+                              <RadioButton fx:id="pokerRadioButton" mnemonicParsing="false" onAction="#cardSizeRadioButtonActionPerformed" selected="true" text="Poker">
+                                 <toggleGroup>
+                                    <ToggleGroup fx:id="cardSize" />
+                                 </toggleGroup></RadioButton>
+                              <RadioButton fx:id="bridgeRadioButton" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#cardSizeRadioButtonActionPerformed" text="Bridge" toggleGroup="$cardSize" />
+                              <RadioButton fx:id="freeRadioButton" layoutX="10.0" layoutY="27.0" mnemonicParsing="false" onAction="#cardSizeRadioButtonActionPerformed" text="Free" toggleGroup="$cardSize" />
                            </children>
                         </VBox>
                         <GridPane hgap="4.0" vgap="4.0">
@@ -236,19 +260,6 @@
                               <Spinner fx:id="heightjSpinner" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                            </children>
                         </GridPane>
-                     </children>
-                     <padding>
-                        <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
-                     </padding>
-                  </HBox>
-               </content>
-            </TitledPane>
-            <TitledPane collapsible="false" text="Background Colour">
-               <content>
-                  <HBox spacing="8.0">
-                     <children>
-                        <TextField fx:id="colourTextField" editable="false" />
-                        <ColorPicker fx:id="colourPicker" onAction="#colourPickerActionPerformed" />
                      </children>
                      <padding>
                         <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />

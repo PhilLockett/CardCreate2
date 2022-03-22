@@ -346,11 +346,27 @@ public class Model {
 	 * Support code for "Card Size" panel.
 	 */
 
+	public enum CardSize { POKER, BRIDGE, FREE };
+	
+	private CardSize cardSize = CardSize.POKER;
+
 	private int width = Default.WIDTH.intr();
 	private int height = Default.HEIGHT.intr();
 
 	private SpinnerValueFactory<Integer> widthSVF;
-    private SpinnerValueFactory<Integer> heightSVF;
+	private SpinnerValueFactory<Integer> heightSVF;
+
+	public CardSize getCardSize() {
+		return cardSize;
+	}
+
+	public void setCardSize(CardSize cardSize) {
+		this.cardSize = cardSize;
+	}
+
+	public boolean isAutoCardWidth() {
+		return cardSize != CardSize.FREE;
+	}
 
 	public int getWidth() {
 		return width;
@@ -366,6 +382,22 @@ public class Model {
 
 	public void setHeight(int height) {
 		this.height = height;
+	}
+
+	public SpinnerValueFactory<Integer> getWidthSVF() {
+		return widthSVF;
+	}
+
+	public SpinnerValueFactory<Integer> getHeightSVF() {
+		return heightSVF;
+	}
+
+	public void defaultWidthSVF() {
+		widthSVF.setValue(Default.WIDTH.intr());
+	}
+
+	public void defaultHeightSVF() {
+		heightSVF.setValue(Default.HEIGHT.intr());
 	}
 
 	/**
@@ -416,7 +448,53 @@ public class Model {
 	 * Support code for "Display Card Items" panel.
 	 */
 
-    /**
+	private boolean displayIndex = true;
+	private boolean displayCornerPip = true;
+	private boolean displayStandardPip = true;
+	private boolean displayFaceImage = true;
+	private boolean displayFacePip = true;
+
+	public boolean isDisplayIndex() {
+		return displayIndex;
+	}
+
+	public void setDisplayIndex(boolean state) {
+		displayIndex = state;
+	}
+
+	public boolean isDisplayCornerPip() {
+		return displayCornerPip;
+	}
+
+	public void setDisplayCornerPip(boolean state) {
+		displayCornerPip = state;
+	}
+
+	public boolean isDisplayStandardPip() {
+		return displayStandardPip;
+	}
+
+	public void setDisplayStandardPip(boolean state) {
+		displayStandardPip = state;
+	}
+
+	public boolean isDisplayFaceImage() {
+		return displayFaceImage;
+	}
+
+	public void setDisplayFaceImage(boolean state) {
+		displayFaceImage = state;
+	}
+
+	public boolean isDisplayFacePip() {
+		return displayFacePip;
+	}
+
+	public void setDisplayFacePip(boolean state) {
+		displayFacePip = state;
+	}
+
+	/**
 	 * Initialize "Display Card Items" panel.
 	 */
 	private void initializeDisplayCardItems() {
@@ -428,12 +506,16 @@ public class Model {
 	 * Support code for "Select Card Item" panel.
 	 */
 
-	public SpinnerValueFactory<Integer> getWidthSVF() {
-		return widthSVF;
+	public enum CardItem { INDEX, CORNER_PIP, STANDARD_PIP, FACE_IMAGE, FACE_PIP };
+	
+	private CardItem cardItem = CardItem.INDEX;
+
+	public CardItem getCardItem() {
+		return cardItem;
 	}
 
-	public SpinnerValueFactory<Integer> getHeightSVF() {
-		return heightSVF;
+	public void setCardItem(CardItem cardItem) {
+		this.cardItem = cardItem;
 	}
 
     /**
@@ -468,6 +550,18 @@ public class Model {
     /**
 	 * Initialize "Modify Selected Card Item" panel.
 	 */
+
+	private boolean keepImageAspectRatio = true;
+
+	public boolean iskeepImageAspectRatio() {
+		return keepImageAspectRatio;
+	}
+
+	public void setkeepImageAspectRatio(boolean state) {
+		keepImageAspectRatio = state;
+	}
+
+
 	private void initializeModifySelectedCardItem() {
 	    itemHeightSVF = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 1000, 10);
 	    itemCentreXSVF = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 1000, 10);
