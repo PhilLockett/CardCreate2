@@ -37,6 +37,7 @@ import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.paint.Color;
 
 import phillockett65.CardCreate2.sample.Default;
+import phillockett65.CardCreate2.sample.Item;
 
 public class Model {
 
@@ -550,17 +551,27 @@ public class Model {
 	 * Support code for "Select Card Item" panel.
 	 */
 
-	public enum CardItem { INDEX, CORNER_PIP, STANDARD_PIP, FACE_IMAGE, FACE_PIP };
-	
-	private CardItem cardItem = CardItem.INDEX;
+    private Item currentItem = Item.INDEX;
 
-	public CardItem getCardItem() {
-		return cardItem;
+	public Item getCardItem() {
+		return currentItem;
 	}
 
-	public void setCardItem(CardItem cardItem) {
-		this.cardItem = cardItem;
+	public void setCardItem(Item cardItem) {
+		currentItem = cardItem;
 	}
+
+//	public enum CardItem { INDEX, CORNER_PIP, STANDARD_PIP, FACE, FACE_PIP };
+//	
+//	private CardItem cardItem = CardItem.INDEX;
+//
+//	public CardItem getCardItem() {
+//		return cardItem;
+//	}
+//
+//	public void setCardItem(CardItem cardItem) {
+//		this.cardItem = cardItem;
+//	}
 
     /**
 	 * Initialize "Select Card Item" panel.
@@ -620,13 +631,13 @@ public class Model {
     	System.out.println(getOutputDirectory());
     	System.out.println();
 
-    	if (cardSize == Model.CardSize.POKER)
+    	if (cardSize == CardSize.POKER)
         	System.out.println("Poker size");
     	else
-    	if (cardSize == Model.CardSize.BRIDGE)
+    	if (cardSize == CardSize.BRIDGE)
         	System.out.println("Bridge size");
     	else
-    	if (cardSize == Model.CardSize.FREE)
+    	if (cardSize == CardSize.FREE)
         	System.out.println("Free size");
     	System.out.println();
 
@@ -637,20 +648,35 @@ public class Model {
     	System.out.println("Face pip " + (displayFacePip ? "displayed" : "NOT displayed"));
     	System.out.println();
 
-    	if (cardItem == Model.CardItem.INDEX)
-        	System.out.println("Change Index");
+    	if (currentItem == Item.INDEX)
+        	System.out.println("Change Index " + currentItem.getH());
     	else
-    	if (cardItem == Model.CardItem.CORNER_PIP)
-        	System.out.println("Change Corner pip");
+    	if (currentItem == Item.CORNER_PIP)
+        	System.out.println("Change Corner pip " + currentItem.getH());
     	else
-    	if (cardItem == Model.CardItem.STANDARD_PIP)
-        	System.out.println("Change Standard pip");
+    	if (currentItem == Item.STANDARD_PIP)
+        	System.out.println("Change Standard pip " + currentItem.getH());
     	else
-    	if (cardItem == Model.CardItem.FACE_IMAGE)
-        	System.out.println("Change Face image");
+    	if (currentItem == Item.FACE)
+        	System.out.println("Change Face image " + currentItem.getH());
     	else
-    	if (cardItem == Model.CardItem.FACE_PIP)
-        	System.out.println("Change Face pip");
+    	if (currentItem == Item.FACE_PIP)
+        	System.out.println("Change Face pip " + currentItem.getH());
+
+//    	if (cardItem == CardItem.INDEX)
+//        	System.out.println("Change Index");
+//    	else
+//    	if (cardItem == CardItem.CORNER_PIP)
+//        	System.out.println("Change Corner pip");
+//    	else
+//    	if (cardItem == CardItem.STANDARD_PIP)
+//        	System.out.println("Change Standard pip");
+//    	else
+//    	if (cardItem == CardItem.FACE)
+//        	System.out.println("Change Face image");
+//    	else
+//    	if (cardItem == CardItem.FACE_PIP)
+//        	System.out.println("Change Face pip");
 
     	System.out.println((keepAspectRatio ? "Keeping" : "NOT keeping") + " image aspect ratio");
 

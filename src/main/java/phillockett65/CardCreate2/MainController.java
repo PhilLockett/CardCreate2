@@ -52,6 +52,7 @@ import javafx.stage.Stage;
 
 import phillockett65.CardCreate2.Model;
 import phillockett65.CardCreate2.sample.CardSample;
+import phillockett65.CardCreate2.sample.Item;
 
 public class MainController {
 
@@ -561,19 +562,34 @@ public class MainController {
     @FXML
     void cardItemRadioButtonActionPerformed(ActionEvent event) {
     	if (indicesRadioButton.isSelected())
-    		model.setCardItem(Model.CardItem.INDEX);
+    		model.setCardItem(Item.INDEX);
     	else
     	if (cornerPipRadioButton.isSelected())
-    		model.setCardItem(Model.CardItem.CORNER_PIP);
+    		model.setCardItem(Item.CORNER_PIP);
     	else
     	if (standardPipRadioButton.isSelected())
-    		model.setCardItem(Model.CardItem.STANDARD_PIP);
+    		model.setCardItem(Item.STANDARD_PIP);
     	else
     	if (faceRadioButton.isSelected())
-    		model.setCardItem(Model.CardItem.FACE_IMAGE);
+    		model.setCardItem(Item.FACE);
     	else
     	if (facePipRadioButton.isSelected())
-    		model.setCardItem(Model.CardItem.FACE_PIP);
+    		model.setCardItem(Item.FACE_PIP);
+
+//    	if (indicesRadioButton.isSelected())
+//    		model.setCardItem(Model.CardItem.INDEX);
+//    	else
+//    	if (cornerPipRadioButton.isSelected())
+//    		model.setCardItem(Model.CardItem.CORNER_PIP);
+//    	else
+//    	if (standardPipRadioButton.isSelected())
+//    		model.setCardItem(Model.CardItem.STANDARD_PIP);
+//    	else
+//    	if (faceRadioButton.isSelected())
+//    		model.setCardItem(Model.CardItem.FACE);
+//    	else
+//    	if (facePipRadioButton.isSelected())
+//    		model.setCardItem(Model.CardItem.FACE_PIP);
     }
 
     /**
