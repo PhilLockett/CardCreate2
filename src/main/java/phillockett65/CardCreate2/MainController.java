@@ -27,7 +27,6 @@ package phillockett65.CardCreate2;
 import java.io.File;
 import java.util.Optional;
 
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -36,6 +35,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.ColorPicker;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
@@ -97,30 +97,27 @@ public class MainController {
 	@FXML public void initialize() {
 //		System.out.println("MainController initialized.");
 
+		/**
+		 * Initialize "Playing Card Generator" panel.
+		 */
+
+	    sample = new CardSample(this, model, "Sample");
+
 		setUpImageButton(generateButton, "icon-play.png");
 		setUpImageButton(previousSuitjButton, "icon-up.png");
 		setUpImageButton(previousCardjButton, "icon-left.png");
 		setUpImageButton(nextCardjButton, "icon-right.png");
 		setUpImageButton(nextSuitjButton, "icon-down.png");
 
-	    widthjSpinner.setValueFactory(model.getWidthSVF());
-	    heightjSpinner.setValueFactory(model.getHeightSVF());
-	    itemHeightjSpinner.setValueFactory(model.getItemHeightSVF());
-	    itemCentreXjSpinner.setValueFactory(model.getItemCentreXSVF());
-	    itemCentreYjSpinner.setValueFactory(model.getItemCentreYSVF());
-
-	    faceChoiceBox.getSelectionModel().selectedItemProperty().addListener( (v, oldValue, newValue) -> {
-	    	model.setFaceStyle(newValue);
-	    	outputTextField.setText(model.getOutputName());
-	    });
-	    indexChoiceBox.getSelectionModel().selectedItemProperty().addListener( (v, oldValue, newValue) -> {
-	    	model.setIndexStyle(newValue);
-	    });
-	    pipChoiceBox.getSelectionModel().selectedItemProperty().addListener( (v, oldValue, newValue) -> {
-	    	model.setPipStyle(newValue);
-	    });
-
-	    sample = new CardSample(this, model, "Sample");
+		initializeInputDirectories();
+		initializeGenerate();
+		initializeOutputDirectory();
+		initializeSampleNavigation();
+		initializeCardSize();
+		initializeBackgroundColour();
+		initializeDisplayCardItems();
+		initializeSelectCardItem();
+		initializeModifySelectedCardItem();
 	}
 
 	public void init(Stage stage) {
@@ -269,6 +266,21 @@ public class MainController {
         outputTextField.setText(model.getOutputName());
     }
 
+	/**
+	 * Initialize "Input Directories" panel.
+	 */
+	private void initializeInputDirectories() {
+	    faceChoiceBox.getSelectionModel().selectedItemProperty().addListener( (v, oldValue, newValue) -> {
+	    	model.setFaceStyle(newValue);
+	    	outputTextField.setText(model.getOutputName());
+	    });
+	    indexChoiceBox.getSelectionModel().selectedItemProperty().addListener( (v, oldValue, newValue) -> {
+	    	model.setIndexStyle(newValue);
+	    });
+	    pipChoiceBox.getSelectionModel().selectedItemProperty().addListener( (v, oldValue, newValue) -> {
+	    	model.setPipStyle(newValue);
+	    });
+	}
 
 
 
@@ -288,6 +300,12 @@ public class MainController {
 
     	statusLabel.setText("Output sent to: " + model.getOutputDirectory());
     }
+
+	/**
+	 * Initialize"Generate" panel.
+	 */
+	private void initializeGenerate() {
+	}
 
 
 
@@ -318,6 +336,12 @@ public class MainController {
     	model.setOutputNameManually(manual);
         outputTextField.setText(model.getOutputName());
     }
+
+	/**
+	 * Initialize"Output Directory" panel.
+	 */
+	private void initializeOutputDirectory() {
+	}
 
 
 
@@ -356,6 +380,12 @@ public class MainController {
     void nextSuitjButtonActionPerformed(ActionEvent event) {
 
     }
+
+	/**
+	 * Initialize "Sample Navigation" panel.
+	 */
+	private void initializeSampleNavigation() {
+	}
 
 
 
@@ -415,6 +445,14 @@ public class MainController {
     	model.getHeightSVF().setValue(Default.HEIGHT.intr());
     }
 
+	/**
+	 * Initialize "Card Size" panel.
+	 */
+	private void initializeCardSize() {
+	    widthjSpinner.setValueFactory(model.getWidthSVF());
+	    heightjSpinner.setValueFactory(model.getHeightSVF());
+	}
+
 
 
     /**
@@ -422,14 +460,22 @@ public class MainController {
      */
 
     @FXML
-    private TextField colourjTextField;
+    private TextField colourTextField;
 
     @FXML
-    private Button colourjButton;
+    private ColorPicker colourPicker;
 
     @FXML
-    void colourjButtonActionPerformed(ActionEvent event) {
+    void colourPickerActionPerformed(ActionEvent event) {
+    	model.setBackgroundColour(colourPicker.getValue());
+		colourTextField.setText(model.getBackgroundColourString());
+    }
 
+	/**
+	 * Initialize "Background Colour" panel.
+	 */
+	private void initializeBackgroundColour() {
+		colourTextField.setText(model.getBackgroundColourString());
     }
 
 
@@ -478,9 +524,15 @@ public class MainController {
 
     }
 
-
-
     /**
+	 * Initialize "Display Card Items" panel.
+	 */
+	private void initializeDisplayCardItems() {
+    }
+
+
+
+	/**
      * Support code for "Select Card Item" panel. 
      */
 
@@ -522,6 +574,12 @@ public class MainController {
     @FXML
     void facePipjRadioButtonActionPerformed(ActionEvent event) {
 
+    }
+
+    /**
+	 * Initialize "Select Card Item" panel.
+	 */
+	private void initializeSelectCardItem() {
     }
 
 
@@ -582,5 +640,16 @@ public class MainController {
     void keepAspectRatiojCheckBoxActionPerformed(ActionEvent event) {
 
     }
+
+    /**
+	 * Initialize "Modify Selected Card Item" panel.
+	 */
+	private void initializeModifySelectedCardItem() {
+	    itemHeightjSpinner.setValueFactory(model.getItemHeightSVF());
+	    itemCentreXjSpinner.setValueFactory(model.getItemCentreXSVF());
+	    itemCentreYjSpinner.setValueFactory(model.getItemCentreYSVF());
+
+	}
+
 
 }

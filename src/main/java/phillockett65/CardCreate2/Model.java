@@ -34,6 +34,7 @@ import java.io.IOException;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.SpinnerValueFactory;
+import javafx.scene.paint.Color;
 
 import phillockett65.CardCreate2.sample.Default;
 
@@ -43,6 +44,8 @@ public class Model {
 	 * Support code for "Playing Card Generator" panel.
 	 */
 	private final String PATHSFILE = "Files.txt";
+
+
 
 	/**
 	 * Support code for "Input Directories" panel.
@@ -272,10 +275,25 @@ public class Model {
 		return validBaseDirectory;
 	}
 
+	/**
+	 * Initialize "Input Directories" panel.
+	 */
+	private void initializeInputDirectories() {
+		readBaseDirectoryFilePathsFromDisc();
+	}
+
+
 
 	/**
 	 * Support code for "Generate" panel.
 	 */
+
+	/**
+	 * Initialize"Generate" panel.
+	 */
+	private void initializeGenerate() {
+	}
+
 
 
 	/**
@@ -304,11 +322,25 @@ public class Model {
 		return baseDirectory + "\\cards\\" + getOutputName();
 	}
 
+	/**
+	 * Initialize"Output Directory" panel.
+	 */
+	private void initializeOutputDirectory() {
+	}
+
 
 
 	/**
 	 * Support code for "Sample Navigation" panel.
 	 */
+
+	/**
+	 * Initialize "Sample Navigation" panel.
+	 */
+	private void initializeSampleNavigation() {
+	}
+
+
 
 	/**
 	 * Support code for "Card Size" panel.
@@ -336,14 +368,61 @@ public class Model {
 		this.height = height;
 	}
 
-	
+	/**
+	 * Initialize "Card Size" panel.
+	 */
+	private void initializeCardSize() {
+		final int WIDTH = Default.WIDTH.intr();
+		final int HEIGHT = Default.HEIGHT.intr();
+		widthSVF = new SpinnerValueFactory.IntegerSpinnerValueFactory(WIDTH/10, WIDTH*10, WIDTH);
+	    heightSVF = new SpinnerValueFactory.IntegerSpinnerValueFactory(HEIGHT/10, HEIGHT*10, HEIGHT);
+	}
+
+
+
 	/**
 	 * Support code for "Background Colour" panel.
 	 */
 
+	private Color backgroundColour = Color.WHITE;
+
+	public Color getBackgroundColour() {
+        return backgroundColour;
+    }
+
+	private int colourRealToInt(double comp) {
+		return (int)(comp * 256);
+	}
+	public String getBackgroundColourString() {
+        return String.format("rgb(%d, %d, %d)",
+        		colourRealToInt(backgroundColour.getRed()),
+        		colourRealToInt(backgroundColour.getGreen()),
+        		colourRealToInt(backgroundColour.getBlue()));
+    }
+
+	public void setBackgroundColour(Color colour) {
+		backgroundColour = colour;
+	}
+
+	/**
+	 * Initialize "Background Colour" panel.
+	 */
+	private void initializeBackgroundColour() {
+    }
+
+
+
 	/**
 	 * Support code for "Display Card Items" panel.
 	 */
+
+    /**
+	 * Initialize "Display Card Items" panel.
+	 */
+	private void initializeDisplayCardItems() {
+    }
+
+
 
 	/**
 	 * Support code for "Select Card Item" panel.
@@ -356,6 +435,14 @@ public class Model {
 	public SpinnerValueFactory<Integer> getHeightSVF() {
 		return heightSVF;
 	}
+
+    /**
+	 * Initialize "Select Card Item" panel.
+	 */
+	private void initializeSelectCardItem() {
+    }
+
+
 
 	/**
 	 * Support code for "Modify Selected Card Item" panel.
@@ -378,6 +465,17 @@ public class Model {
 		return itemCentreYSVF;
 	}
 
+    /**
+	 * Initialize "Modify Selected Card Item" panel.
+	 */
+	private void initializeModifySelectedCardItem() {
+	    itemHeightSVF = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 1000, 10);
+	    itemCentreXSVF = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 1000, 10);
+	    itemCentreYSVF = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 1000, 10);
+	}
+
+
+
 	/**
 	 * Default Constructor.
 	 */
@@ -388,53 +486,15 @@ public class Model {
 		 * Initialize "Playing Card Generator" panel.
 		 */
 
-		/**
-		 * Initialize "Input Directories" panel.
-		 */
-
-		readBaseDirectoryFilePathsFromDisc();
-
-		/**
-		 * Initialize"Generate" panel.
-		 */
-
-		/**
-		 * Initialize"Output Directory" panel.
-		 */
-
-		/**
-		 * Initialize "Sample Navigation" panel.
-		 */
-
-		/**
-		 * Initialize "Card Size" panel.
-		 */
-
-		final int WIDTH = Default.WIDTH.intr();
-		final int HEIGHT = Default.HEIGHT.intr();
-		widthSVF = new SpinnerValueFactory.IntegerSpinnerValueFactory(WIDTH/10, WIDTH*10, WIDTH);
-	    heightSVF = new SpinnerValueFactory.IntegerSpinnerValueFactory(HEIGHT/10, HEIGHT*10, HEIGHT);
-
-		/**
-		 * Initialize "Background Colour" panel.
-		 */
-
-		/**
-		 * Initialize "Display Card Items" panel.
-		 */
-
-		/**
-		 * Initialize "Select Card Item" panel.
-		 */
-
-		/**
-		 * Initialize "Modify Selected Card Item" panel.
-		 */
-
-	    itemHeightSVF = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 1000, 10);
-	    itemCentreXSVF = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 1000, 10);
-	    itemCentreYSVF = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 1000, 10);
-
+		initializeInputDirectories();
+		initializeGenerate();
+		initializeOutputDirectory();
+		initializeSampleNavigation();
+		initializeCardSize();
+		initializeBackgroundColour();
+		initializeDisplayCardItems();
+		initializeSelectCardItem();
+		initializeModifySelectedCardItem();
 	}
 
 }
