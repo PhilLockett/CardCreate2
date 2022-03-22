@@ -551,14 +551,14 @@ public class Model {
 	 * Initialize "Modify Selected Card Item" panel.
 	 */
 
-	private boolean keepImageAspectRatio = true;
+	private boolean keepAspectRatio = true;
 
 	public boolean iskeepImageAspectRatio() {
-		return keepImageAspectRatio;
+		return keepAspectRatio;
 	}
 
 	public void setkeepImageAspectRatio(boolean state) {
-		keepImageAspectRatio = state;
+		keepAspectRatio = state;
 	}
 
 
@@ -608,9 +608,11 @@ public class Model {
     	if (cardItem == Model.CardItem.FACE_PIP)
         	System.out.println("Change Face pip");
 
-    	System.out.println((keepImageAspectRatio ? "Keeping" : "NOT keeping") + " image aspect ratio");
+    	System.out.println((keepAspectRatio ? "Keeping" : "NOT keeping") + " image aspect ratio");
 	}
 
+
+	
 	/**
 	 * Default Constructor.
 	 */
