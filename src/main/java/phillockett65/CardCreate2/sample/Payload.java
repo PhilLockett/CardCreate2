@@ -143,7 +143,7 @@ public class Payload {
     private final Real spriteWidth;
     private float spriteScale = 1.0F;
 
-    Payload(String path, int w, int h, int p, Item it) {
+    public Payload(String path, int w, int h, int p, Item it) {
 
         pattern = p;
         item = it;
@@ -158,7 +158,7 @@ public class Payload {
         spriteWidth = new Real(false);
         spriteHeight = new Real(true);
 
-        // Set up default perentages.
+        // Set up default pecentages.
         spriteHeight.setPercent(item.getH());
         centreX.setPercent(item.getX());
         centreY.setPercent(item.getY());

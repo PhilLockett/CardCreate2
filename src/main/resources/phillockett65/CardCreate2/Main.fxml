@@ -51,8 +51,8 @@
                                  </toggleGroup></RadioButton>
                               <RadioButton fx:id="cornerPipRadioButton" layoutX="19.0" layoutY="19.0" mnemonicParsing="false" onAction="#cardItemRadioButtonActionPerformed" text="Change Corner Pip" toggleGroup="$cardItem" />
                               <RadioButton fx:id="standardPipRadioButton" layoutX="19.0" layoutY="37.0" mnemonicParsing="false" onAction="#cardItemRadioButtonActionPerformed" text="Change Standard Pip" toggleGroup="$cardItem" />
-                              <RadioButton fx:id="faceRadioButton" disable="true" layoutX="19.0" layoutY="54.0" mnemonicParsing="false" onAction="#cardItemRadioButtonActionPerformed" text="Change Face Boarder" toggleGroup="$cardItem" />
-                              <RadioButton fx:id="facePipRadioButton" disable="true" layoutX="19.0" layoutY="71.0" mnemonicParsing="false" onAction="#cardItemRadioButtonActionPerformed" text="Change Face Pip" toggleGroup="$cardItem" />
+                              <RadioButton fx:id="faceRadioButton" layoutX="19.0" layoutY="54.0" mnemonicParsing="false" onAction="#cardItemRadioButtonActionPerformed" text="Change Face Boarder" toggleGroup="$cardItem" />
+                              <RadioButton fx:id="facePipRadioButton" layoutX="19.0" layoutY="71.0" mnemonicParsing="false" onAction="#cardItemRadioButtonActionPerformed" text="Change Face Pip" toggleGroup="$cardItem" />
                            </children>
                         </VBox>
                      </content>
@@ -73,9 +73,9 @@
                                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                 </rowConstraints>
                                  <children>
-                                    <Button fx:id="itemHeightjButton" mnemonicParsing="false" onAction="#itemHeightjButtonActionPerformed" text="Reset" GridPane.columnIndex="2" />
-                                    <Button fx:id="itemCentreXjButton" mnemonicParsing="false" onAction="#itemCentreXjButtonActionPerformed" text="Reset" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-                                    <Button fx:id="itemCentreYjButton" mnemonicParsing="false" onAction="#itemCentreYjButtonActionPerformed" text="Reset" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                                    <Button fx:id="itemHeightjButton" mnemonicParsing="false" onAction="#itemHeightButtonActionPerformed" text="Reset" GridPane.columnIndex="2" />
+                                    <Button fx:id="itemCentreXjButton" mnemonicParsing="false" onAction="#itemCentreXButtonActionPerformed" text="Reset" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                                    <Button fx:id="itemCentreYjButton" mnemonicParsing="false" onAction="#itemCentreYButtonActionPerformed" text="Reset" GridPane.columnIndex="2" GridPane.rowIndex="2" />
                                     <Spinner fx:id="itemHeightjSpinner" GridPane.columnIndex="1" />
                                     <Spinner fx:id="itemCentreXjSpinner" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                                     <Spinner fx:id="itemCentreYjSpinner" GridPane.columnIndex="1" GridPane.rowIndex="2" />
@@ -86,7 +86,7 @@
                               </GridPane>
                               <HBox>
                                  <children>
-                                    <CheckBox fx:id="keepAspectRatioCheckBox" mnemonicParsing="false" onAction="#keepAspectRatiojCheckBoxActionPerformed" selected="true" text="Keep Image Aspect Ratio" />
+                                    <CheckBox fx:id="keepAspectRatioCheckBox" mnemonicParsing="false" onAction="#keepAspectRatioCheckBoxActionPerformed" selected="true" text="Keep Image Aspect Ratio" />
                                  </children>
                               </HBox>
                            </children>

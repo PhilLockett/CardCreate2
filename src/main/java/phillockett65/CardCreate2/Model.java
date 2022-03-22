@@ -37,7 +37,9 @@ import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.paint.Color;
 
 import phillockett65.CardCreate2.sample.Default;
+import phillockett65.CardCreate2.sample.Handle;
 import phillockett65.CardCreate2.sample.Item;
+import phillockett65.CardCreate2.sample.Payload;
 
 public class Model {
 
@@ -559,6 +561,19 @@ public class Model {
 
 	public void setCardItem(Item cardItem) {
 		currentItem = cardItem;
+
+		if (currentItem == Item.INDEX) {
+			setCurrentCardItemAndUpdateControls(index);
+		} else if (currentItem == Item.CORNER_PIP) {
+			setCurrentCardItemAndUpdateControls(cornerPip);
+		} else if (currentItem == Item.STANDARD_PIP) {
+			setCurrentCardItemAndUpdateControls(standardPip);
+		} else if (currentItem == Item.FACE) {
+			setCurrentCardItemAndUpdateControls(face);
+		} else if (currentItem == Item.FACE_PIP) {
+			setCurrentCardItemAndUpdateControls(facePip);
+		}
+
 	}
 
 //	public enum CardItem { INDEX, CORNER_PIP, STANDARD_PIP, FACE, FACE_PIP };
@@ -585,6 +600,13 @@ public class Model {
 	 * Support code for "Modify Selected Card Item" panel.
 	 */
 
+    private Payload index = null;
+    private Payload cornerPip = null;
+    private Payload standardPip = null;
+    private Payload face = null;
+    private Payload facePip = null;
+    private Payload current = null;
+    
     private SpinnerValueFactory<Integer> itemHeightSVF;
     private SpinnerValueFactory<Integer> itemCentreXSVF;
     private SpinnerValueFactory<Integer> itemCentreYSVF;
@@ -602,10 +624,6 @@ public class Model {
 		return itemCentreYSVF;
 	}
 
-    /**
-	 * Initialize "Modify Selected Card Item" panel.
-	 */
-
 	private boolean keepAspectRatio = true;
 
 	public boolean iskeepImageAspectRatio() {
@@ -617,11 +635,86 @@ public class Model {
 	}
 
 
+	public int getCurrentDefaultH() {
+		return (int)current.getItem().getH();
+	}
+
+	public int getCurrentDefaultX() {
+		return (int)current.getItem().getX();
+	}
+
+	public int getCurrentDefaultY() {
+		return (int)current.getItem().getY();
+	}
+
+	public int getCurrentH() {
+		return Math.round(current.getSpriteH() * 10);
+	}
+
+	public int getCurrentX() {
+		return Math.round(current.getSpriteX() * 10);
+	}
+
+	public int getCurrentY() {
+		return Math.round(current.getSpriteY() * 10);
+	}
+
+	public void setCurrentDefaultH() {
+		itemHeightSVF.setValue(Math.round(current.getItem().getH() * 10));
+	}
+
+	public void setCurrentDefaultX() {
+		itemCentreXSVF.setValue(Math.round(current.getItem().getX() * 10));
+	}
+
+	public void setCurrentDefaultY() {
+		itemCentreYSVF.setValue(Math.round(current.getItem().getY() * 10));
+	}
+
+	public void setCurrentH(int v) {
+        float value = (float)v / 10;
+        current.setSize(value);
+	}
+
+	public void setCurrentX(int v) {
+        float value = (float)v / 10;
+        current.setX(value);
+	}
+
+	public void setCurrentY(int v) {
+        float value = (float)v / 10;
+        current.setY(value);
+	}
+
+
+    /**
+     * Update the "Modify Card Item" controls.
+     */
+	private void setCurrentCardItemAndUpdateControls(Payload item) {
+        current = item;
+	    itemHeightSVF.setValue(getCurrentH());
+	    itemCentreXSVF.setValue(getCurrentX());
+	    itemCentreYSVF.setValue(getCurrentY());
+	}
+
+	/**
+	 * Initialize "Modify Selected Card Item" panel.
+	 */
 	private void initializeModifySelectedCardItem() {
-	    itemHeightSVF = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 1000, 10);
+
+        index = new Payload("", cardWidthPX, cardHeightPX, 0, Item.INDEX);
+        cornerPip = new Payload("", cardWidthPX, cardHeightPX, 0, Item.CORNER_PIP);
+        standardPip = new Payload("", cardWidthPX, cardHeightPX, card, Item.STANDARD_PIP);
+        face = new Payload("", cardWidthPX, cardHeightPX, Payload.PAINT_FILE, Item.FACE);
+        facePip = new Payload("", cardWidthPX, cardHeightPX, 0, Item.FACE_PIP);
+
+        itemHeightSVF = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 1000, 10);
 	    itemCentreXSVF = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 1000, 10);
 	    itemCentreYSVF = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 1000, 10);
-	}
+	    setCurrentCardItemAndUpdateControls(index);
+}
+
+
 
 
 	public void displayDiags() {

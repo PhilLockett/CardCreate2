@@ -635,25 +635,22 @@ public class MainController {
     private CheckBox keepAspectRatioCheckBox;
 
     @FXML
-    void itemHeightjButtonActionPerformed(ActionEvent event) {
-    	model.getItemHeightSVF().setValue(10);
-//        itemHeightSVF.setValue(Math.round(currentItem.getH() * 10));
+    void itemHeightButtonActionPerformed(ActionEvent event) {
+    	model.setCurrentDefaultH();
     }
 
     @FXML
-    void itemCentreXjButtonActionPerformed(ActionEvent event) {
-    	model.getItemCentreXSVF().setValue(10);
-//        itemCentreXSVF.setValue(Math.round(currentItem.getX() * 10));
+    void itemCentreXButtonActionPerformed(ActionEvent event) {
+    	model.setCurrentDefaultX();
     }
 
     @FXML
-    void itemCentreYjButtonActionPerformed(ActionEvent event) {
-    	model.getItemCentreYSVF().setValue(10);
-//        itemCentreYSVF.setValue(Math.round(currentItem.getY() * 10));
+    void itemCentreYButtonActionPerformed(ActionEvent event) {
+    	model.setCurrentDefaultY();
     }
 
     @FXML
-    void keepAspectRatiojCheckBoxActionPerformed(ActionEvent event) {
+    void keepAspectRatioCheckBoxActionPerformed(ActionEvent event) {
     	model.setkeepImageAspectRatio(keepAspectRatioCheckBox.isSelected());
     }
 
