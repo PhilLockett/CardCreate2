@@ -569,6 +569,47 @@ public class Model {
 	}
 
 
+	public void displayDiags() {
+    	System.out.println(getFaceDirectory());
+    	System.out.println(getIndexDirectory());
+    	System.out.println(getPipDirectory());
+    	System.out.println(getOutputDirectory());
+    	System.out.println();
+
+    	if (cardSize == Model.CardSize.POKER)
+        	System.out.println("Poker size");
+    	else
+    	if (cardSize == Model.CardSize.BRIDGE)
+        	System.out.println("Bridge size");
+    	else
+    	if (cardSize == Model.CardSize.FREE)
+        	System.out.println("Free size");
+    	System.out.println();
+
+    	System.out.println("Index " + (displayIndex ? "displayed" : "NOT displayed"));
+    	System.out.println("Corner pip " + (displayCornerPip ? "displayed" : "NOT displayed"));
+    	System.out.println("Standard pip " + (displayStandardPip ? "displayed" : "NOT displayed"));
+    	System.out.println("Face image " + (displayFaceImage ? "displayed" : "NOT displayed"));
+    	System.out.println("Face pip " + (displayFacePip ? "displayed" : "NOT displayed"));
+    	System.out.println();
+
+    	if (cardItem == Model.CardItem.INDEX)
+        	System.out.println("Change Index");
+    	else
+    	if (cardItem == Model.CardItem.CORNER_PIP)
+        	System.out.println("Change Corner pip");
+    	else
+    	if (cardItem == Model.CardItem.STANDARD_PIP)
+        	System.out.println("Change Standard pip");
+    	else
+    	if (cardItem == Model.CardItem.FACE_IMAGE)
+        	System.out.println("Change Face image");
+    	else
+    	if (cardItem == Model.CardItem.FACE_PIP)
+        	System.out.println("Change Face pip");
+
+    	System.out.println((keepImageAspectRatio ? "Keeping" : "NOT keeping") + " image aspect ratio");
+	}
 
 	/**
 	 * Default Constructor.

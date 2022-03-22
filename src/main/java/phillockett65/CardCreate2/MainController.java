@@ -69,8 +69,12 @@ public class MainController {
     @FXML
     private Label statusLabel;
 
+    private void setStatusMessage(String Message) {
+        statusLabel.setText(Message);
+    }
 
-	/**
+
+    /**
 	 * Constructor.
 	 * 
 	 * Responsible for creating the Model.
@@ -293,12 +297,8 @@ public class MainController {
 
     @FXML
     void generateButtonActionPerformed(ActionEvent event) {
-    	System.out.println(model.getFaceDirectory());
-    	System.out.println(model.getIndexDirectory());
-    	System.out.println(model.getPipDirectory());
-    	System.out.println(model.getOutputDirectory());
-
-    	statusLabel.setText("Output sent to: " + model.getOutputDirectory());
+    	model.displayDiags();
+    	setStatusMessage("Output sent to: " + model.getOutputDirectory());
     }
 
 	/**
