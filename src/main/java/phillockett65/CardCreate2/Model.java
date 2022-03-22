@@ -46,7 +46,6 @@ public class Model {
 	private final String PATHSFILE = "Files.txt";
 
 
-
 	/**
 	 * Support code for "Input Directories" panel.
 	 */
@@ -334,6 +333,51 @@ public class Model {
 	 * Support code for "Sample Navigation" panel.
 	 */
 
+    private int suit = 0;
+    private int card = 10;
+
+    private final String[] suits = { "C", "D", "H", "S" };
+    private final String[] alts  = { "S", "H", "D", "C" };
+    private final String[] cards = { "Joker", "A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K" };
+
+    
+
+	public int getSuit() {
+		return suit;
+	}
+
+	public int getCard() {
+		return card;
+	}
+
+	public int nextSuit() {
+		if (++suit >= suits.length)
+			suit = 0;
+
+		return suit;
+	}
+
+	public int nextCard() {
+		if (++card >= cards.length)
+			card = 1;
+
+		return card;
+	}
+
+	public int prevSuit() {
+		if (--suit < 0)
+			suit = suits.length - 1;
+
+		return suit;
+	}
+
+	public int prevCard() {
+		if (--card <= 0)
+			card = cards.length - 1;
+
+		return card;
+	}
+
 	/**
 	 * Initialize "Sample Navigation" panel.
 	 */
@@ -609,6 +653,8 @@ public class Model {
         	System.out.println("Change Face pip");
 
     	System.out.println((keepAspectRatio ? "Keeping" : "NOT keeping") + " image aspect ratio");
+
+    	System.out.println("Current card: " + suits[suit] + cards[card]);
 	}
 
 
