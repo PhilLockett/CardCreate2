@@ -108,10 +108,10 @@ public class MainController {
 	    sample = new CardSample(this, model, "Sample");
 
 		setUpImageButton(generateButton, "icon-play.png");
-		setUpImageButton(previousSuitjButton, "icon-up.png");
-		setUpImageButton(previousCardjButton, "icon-left.png");
-		setUpImageButton(nextCardjButton, "icon-right.png");
-		setUpImageButton(nextSuitjButton, "icon-down.png");
+		setUpImageButton(previousSuitButton, "icon-up.png");
+		setUpImageButton(previousCardButton, "icon-left.png");
+		setUpImageButton(nextCardButton, "icon-right.png");
+		setUpImageButton(nextSuitButton, "icon-down.png");
 
 		initializeInputDirectories();
 		initializeGenerate();
@@ -350,35 +350,35 @@ public class MainController {
      */
 
     @FXML
-    private Button previousCardjButton;
+    private Button previousCardButton;
 
     @FXML
-    private Button previousSuitjButton;
+    private Button previousSuitButton;
 
     @FXML
-    private Button nextCardjButton;
+    private Button nextCardButton;
 
     @FXML
-    private Button nextSuitjButton;
+    private Button nextSuitButton;
 
     @FXML
-    void previousCardjButtonActionPerformed(ActionEvent event) {
-
+    void previousCardButtonActionPerformed(ActionEvent event) {
+    	model.prevCard();
     }
 
     @FXML
-    void previousSuitjButtonActionPerformed(ActionEvent event) {
-
+    void previousSuitButtonActionPerformed(ActionEvent event) {
+    	model.prevSuit();
     }
 
     @FXML
-    void nextCardjButtonActionPerformed(ActionEvent event) {
-
+    void nextCardButtonActionPerformed(ActionEvent event) {
+    	model.nextCard();
     }
 
     @FXML
-    void nextSuitjButtonActionPerformed(ActionEvent event) {
-
+    void nextSuitButtonActionPerformed(ActionEvent event) {
+    	model.nextSuit();
     }
 
 	/**

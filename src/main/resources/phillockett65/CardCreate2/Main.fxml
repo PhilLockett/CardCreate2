@@ -180,10 +180,10 @@
                       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                      <children>
-                        <Button fx:id="previousCardjButton" mnemonicParsing="false" onAction="#previousCardjButtonActionPerformed" styleClass="imagejButton" text="Left" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
-                        <Button fx:id="nextCardjButton" mnemonicParsing="false" onAction="#nextCardjButtonActionPerformed" styleClass="imagejButton" text="Right" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
-                        <Button fx:id="previousSuitjButton" mnemonicParsing="false" onAction="#previousSuitjButtonActionPerformed" styleClass="imagejButton" text="Up" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
-                        <Button fx:id="nextSuitjButton" mnemonicParsing="false" onAction="#nextSuitjButtonActionPerformed" styleClass="imagejButton" text="Down" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
+                        <Button fx:id="previousCardButton" mnemonicParsing="false" onAction="#previousCardButtonActionPerformed" styleClass="imagejButton" text="Left" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+                        <Button fx:id="nextCardButton" mnemonicParsing="false" onAction="#nextCardButtonActionPerformed" styleClass="imagejButton" text="Right" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+                        <Button fx:id="previousSuitButton" mnemonicParsing="false" onAction="#previousSuitButtonActionPerformed" styleClass="imagejButton" text="Up" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+                        <Button fx:id="nextSuitButton" mnemonicParsing="false" onAction="#nextSuitButtonActionPerformed" styleClass="imagejButton" text="Down" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
                      </children>
                   </GridPane>
                </content>
