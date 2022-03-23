@@ -36,7 +36,7 @@ import phillockett65.CardCreate2.Model;
 
 public class CardSample extends Stage {
 	
-	private Controller main;
+	private Controller controller;
 	private Model model;
 
 	private Group group;
@@ -48,10 +48,11 @@ public class CardSample extends Stage {
 	/**
 	 * Constructor.
 	 * 
-	 * @param controller	- used to call the centralized controller.
-	 * @param title			- string displayed as the heading of the Stage.
+	 * @param mainController	- used to call the centralized controller.
+	 * @param mainModel			- used to call the centralized data model.
+	 * @param title				- string displayed as the heading of the Stage.
 	 */
-	public CardSample(Controller controller, Model mainModel, String title) {
+	public CardSample(Controller mainController, Model mainModel, String title) {
 //		System.out.println("PTable constructed: " + title);
 
 		this.title = title;
@@ -59,7 +60,7 @@ public class CardSample extends Stage {
 		resizableProperty().setValue(false);
 		setOnCloseRequest(e -> Platform.exit());
 
-		main = controller;
+		controller = mainController;
 		model = mainModel;
 		group = new Group();
 
