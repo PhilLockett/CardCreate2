@@ -19,7 +19,7 @@
  */
 
 /*
- * MainController is a class that is responsible for centralizing control. It
+ * Controller is a class that is responsible for centralizing control. It
  * creates the Model and CardSample window and provides a callback mechanism.
  */
 package phillockett65.CardCreate2;
@@ -27,8 +27,6 @@ package phillockett65.CardCreate2;
 import java.io.File;
 import java.util.Optional;
 
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -56,7 +54,7 @@ import phillockett65.CardCreate2.Model;
 import phillockett65.CardCreate2.sample.CardSample;
 import phillockett65.CardCreate2.sample.Item;
 
-public class MainController {
+public class Controller {
 
     /**
      * Support code for "Playing Card Generator" panel. 
@@ -82,8 +80,8 @@ public class MainController {
 	 * 
 	 * Responsible for creating the Model.
 	 */
-	public MainController() {
-//		System.out.println("MainController constructed.");
+	public Controller() {
+//		System.out.println("Controller constructed.");
 		model = new Model();
 	}
 
@@ -102,7 +100,7 @@ public class MainController {
 	 * update the Status tab display.
 	 */
 	@FXML public void initialize() {
-//		System.out.println("MainController initialized.");
+//		System.out.println("Controller initialized.");
 
 		/**
 		 * Initialize "Playing Card Generator" panel.
@@ -574,6 +572,8 @@ public class MainController {
 
     @FXML
     void cardItemRadioButtonActionPerformed(ActionEvent event) {
+//    	System.out.println("cardItemRadioButtonActionPerformed()");
+
     	if (indicesRadioButton.isSelected())
     		model.setCardItem(Item.INDEX);
     	else
@@ -603,7 +603,11 @@ public class MainController {
 //    	else
 //    	if (facePipRadioButton.isSelected())
 //    		model.setCardItem(Model.CardItem.FACE_PIP);
+
+    	setSelectCardItemPrompts();
     }
+
+
 
     /**
 	 * Initialize "Select Card Item" panel.
@@ -646,6 +650,34 @@ public class MainController {
 
     @FXML
     private CheckBox keepAspectRatioCheckBox;
+
+    /**
+     * Sets the Payload and fixes the "Modify Card Item" controls.
+     */
+    private void setSelectCardItemPrompts() {
+//    	System.out.println("setSelectCardItemPrompts()");
+
+//        samplejPanel.setPayload(item);
+//        currentItem = item;
+//        updateModifyCardItemControls();
+    	final boolean centre = !model.isCurrentCentred();
+    	itemHeightButton.setDisable(centre);
+    	itemHeightSpinner.setDisable(centre);
+    	itemHeightLabel.setDisable(centre);
+
+    	itemHeightButton.setTooltip(model.getCurrentHButtonTip());
+        itemCentreXButton.setTooltip(model.getCurrentXButtonTip());
+        itemCentreYButton.setTooltip(model.getCurrentYButtonTip());
+
+        itemHeightLabel.setTooltip(model.getCurrentHToolTip());
+        itemHeightLabel.setText(model.getCurrentHLabel());
+
+        itemCentreXLabel.setTooltip(model.getCurrentXToolTip());
+        itemCentreXLabel.setText(model.getCurrentXLabel());
+
+        itemCentreYLabel.setTooltip(model.getCurrentYToolTip());
+        itemCentreYLabel.setText(model.getCurrentYLabel());
+    }
 
     @FXML
     void itemHeightButtonActionPerformed(ActionEvent event) {

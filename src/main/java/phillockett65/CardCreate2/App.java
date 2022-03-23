@@ -47,7 +47,7 @@ public class App extends Application {
 		stage.setOnCloseRequest(e -> Platform.exit());
 		stage.resizableProperty().setValue(false);
 		stage.setScene(scene);
-		MainController controller = fxmlLoader.getController();
+		Controller controller = fxmlLoader.getController();
 		stage.show();
 		controller.init(stage);
 	}
