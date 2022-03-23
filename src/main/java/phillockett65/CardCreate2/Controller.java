@@ -43,6 +43,7 @@ import javafx.scene.control.Spinner;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
@@ -170,7 +171,12 @@ public class Controller {
     @FXML
     private ChoiceBox<String> pipChoiceBox;
 
-	private boolean setInitialBaseDirectory() {
+
+    /**
+     * Called by init() after a valid Base Directory has initially been 
+     * selected.
+     */
+    private void setInitialBaseDirectory() {
 //		System.out.println("setInitialBaseDirectory(" + model.getBaseDirectory() + ")");
 
 		baseDirectoryComboBox.setItems(model.getBaseList());
@@ -188,8 +194,6 @@ public class Controller {
         outputTextField.setText(model.getOutputName());
 
         userGUI.setDisable(false);
-
-        return true;
     }
 
 
@@ -275,7 +279,18 @@ public class Controller {
 	 * Initialize "Input Directories" panel.
 	 */
 	private void initializeInputDirectories() {
-	    faceChoiceBox.getSelectionModel().selectedItemProperty().addListener( (v, oldValue, newValue) -> {
+
+	    baseDirectoryLabel.setTooltip(new Tooltip("Working directory that contains faces, indices and pips directories"));
+	    baseDirectoryComboBox.setTooltip(new Tooltip("Select the Base Directory"));
+	    baseDirectoryButton.setTooltip(new Tooltip("Browse to the Base Directory"));
+	    faceLabel.setTooltip(new Tooltip("Subdirectory of face image files to use (default: \"1\")"));
+	    indexLabel.setTooltip(new Tooltip("Subdirectory of index image files to use (default: \"1\")"));
+	    pipLabel.setTooltip(new Tooltip("Subdirectory of pip image files to use (default: \"1\")"));
+	    faceChoiceBox.setTooltip(new Tooltip("Requires the Base Directory to be correctly set"));
+	    indexChoiceBox.setTooltip(new Tooltip("Requires the Base Directory to be correctly set"));
+	    pipChoiceBox.setTooltip(new Tooltip("Requires the Base Directory to be correctly set"));
+
+		faceChoiceBox.getSelectionModel().selectedItemProperty().addListener( (v, oldValue, newValue) -> {
 	    	model.setFaceStyle(newValue);
 	    	outputTextField.setText(model.getOutputName());
 	    });
@@ -291,7 +306,7 @@ public class Controller {
 
 
 
-    /**
+    /************************************************************************
      * Support code for "Generate" panel. 
      */
 
@@ -308,6 +323,7 @@ public class Controller {
 	 * Initialize"Generate" panel.
 	 */
 	private void initializeGenerate() {
+		generateButton.setTooltip(new Tooltip("Generate the card images to the selected output directory"));
 	}
 
 
@@ -344,6 +360,8 @@ public class Controller {
 	 * Initialize"Output Directory" panel.
 	 */
 	private void initializeOutputDirectory() {
+		outputTextField.setTooltip(new Tooltip("Preferred output directory name"));
+		outputToggleButton.setTooltip(new Tooltip("Manually enter the output directory name, otherwise use same name as selected Face"));
 	}
 
 
@@ -388,6 +406,10 @@ public class Controller {
 	 * Initialize "Sample Navigation" panel.
 	 */
 	private void initializeSampleNavigation() {
+		previousCardButton.setTooltip(new Tooltip("Display previous card as Sample"));
+		previousSuitButton.setTooltip(new Tooltip("Display previous suit as Sample"));
+		nextCardButton.setTooltip(new Tooltip("Display next card as Sample"));
+		nextSuitButton.setTooltip(new Tooltip("Display next suit as Sample"));
 	}
 
 
@@ -409,22 +431,22 @@ public class Controller {
     private RadioButton freeRadioButton;
 
     @FXML
-    private Label widthjLabel;
+    private Label widthLabel;
 
     @FXML
-    private Label heightjLabel;
+    private Label heightLabel;
 
     @FXML
-    private Spinner<Integer> widthjSpinner;
+    private Spinner<Integer> widthSpinner;
 
     @FXML
-    private Spinner<Integer> heightjSpinner;
+    private Spinner<Integer> heightSpinner;
 
     @FXML
-    private Button widthjButton;
+    private Button widthButton;
 
     @FXML
-    private Button heightjButton;
+    private Button heightButton;
 
     @FXML
     void cardSizeRadioButtonActionPerformed(ActionEvent event) {
@@ -438,8 +460,8 @@ public class Controller {
     		model.setCardSize(Model.CardSize.FREE);
 
     	final boolean autoWidth = model.isAutoCardWidth();
-    	widthjSpinner.setDisable(autoWidth);
-    	widthjButton.setDisable(autoWidth);
+    	widthSpinner.setDisable(autoWidth);
+    	widthButton.setDisable(autoWidth);
     }
 
     @FXML
@@ -456,14 +478,25 @@ public class Controller {
 	 * Initialize "Card Size" panel.
 	 */
 	private void initializeCardSize() {
-	    widthjSpinner.setValueFactory(model.getWidthSVF());
-	    heightjSpinner.setValueFactory(model.getHeightSVF());
 
-	    widthjSpinner.valueProperty().addListener( (v, oldValue, newValue) -> {
+	    pokerRadioButton.setTooltip(new Tooltip("Maintain poker card aspect ratio"));
+	    bridgeRadioButton.setTooltip(new Tooltip("Maintain bridge card aspect ratio"));
+	    freeRadioButton.setTooltip(new Tooltip("independently set card width and height"));
+	    widthLabel.setTooltip(new Tooltip("Card width in pixels (default: 380)"));
+	    heightLabel.setTooltip(new Tooltip("Card height in pixels (default: 532)"));
+	    widthSpinner.setTooltip(new Tooltip("Select card width in pixels"));
+	    heightSpinner.setTooltip(new Tooltip("Select card height in pixels"));
+	    widthButton.setTooltip(new Tooltip("Reset Card Width to default value of 380 pixels"));
+	    heightButton.setTooltip(new Tooltip("Reset Card Height to default value of 532 pixels"));
+
+		widthSpinner.setValueFactory(model.getWidthSVF());
+	    heightSpinner.setValueFactory(model.getHeightSVF());
+
+	    widthSpinner.valueProperty().addListener( (v, oldValue, newValue) -> {
 			model.setWidth(newValue);
 	    });
 
-	    heightjSpinner.valueProperty().addListener( (v, oldValue, newValue) -> {
+	    heightSpinner.valueProperty().addListener( (v, oldValue, newValue) -> {
 			model.setHeight(newValue);
 	    });
 
@@ -491,7 +524,10 @@ public class Controller {
 	 * Initialize "Background Colour" panel.
 	 */
 	private void initializeBackgroundColour() {
-		colourTextField.setText(model.getBackgroundColourString());
+		colourTextField.setTooltip(new Tooltip("Copy and paste where needed"));
+	    colourPicker.setTooltip(new Tooltip("Select the background colour for the card"));
+
+	    colourTextField.setText(model.getBackgroundColourString());
     }
 
 
@@ -544,6 +580,11 @@ public class Controller {
 	 * Initialize "Display Card Items" panel.
 	 */
 	private void initializeDisplayCardItems() {
+		indicesCheckBox.setTooltip(new Tooltip("Select to display card indices"));
+		cornerPipCheckBox.setTooltip(new Tooltip("Select to display corner pips"));
+		standardPipCheckBox.setTooltip(new Tooltip("Select to display standard pips"));
+		faceCheckBox.setTooltip(new Tooltip("Select to display face images"));
+		facePipCheckBox.setTooltip(new Tooltip("Select to display face pips"));
     }
 
 
@@ -611,6 +652,11 @@ public class Controller {
 	 * Initialize "Select Card Item" panel.
 	 */
 	private void initializeSelectCardItem() {
+		indicesRadioButton.setTooltip(new Tooltip("Select to modify card indices"));
+		cornerPipRadioButton.setTooltip(new Tooltip("Select to modify corner pips"));
+		standardPipRadioButton.setTooltip(new Tooltip("Select to modify standard pips"));
+		faceRadioButton.setTooltip(new Tooltip("Select to modify face images"));
+		facePipRadioButton.setTooltip(new Tooltip("Select to modify face pips"));
     }
 
 
@@ -701,7 +747,10 @@ public class Controller {
 	 * Initialize "Modify Selected Card Item" panel.
 	 */
 	private void initializeModifySelectedCardItem() {
-	    itemHeightSpinner.setValueFactory(model.getItemHeightSVF());
+
+		keepAspectRatioCheckBox.setTooltip(new Tooltip("Keep Aspect Ratio of image's from the faces directory"));
+
+		itemHeightSpinner.setValueFactory(model.getItemHeightSVF());
 	    itemCentreXSpinner.setValueFactory(model.getItemCentreXSVF());
 	    itemCentreYSpinner.setValueFactory(model.getItemCentreYSVF());
 

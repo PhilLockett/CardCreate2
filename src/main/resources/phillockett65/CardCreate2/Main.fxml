@@ -252,12 +252,12 @@
                             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                           </rowConstraints>
                            <children>
-                              <Label fx:id="widthjLabel" text="Card width (pixels):" GridPane.halignment="RIGHT" />
-                              <Label fx:id="heightjLabel" text="Card height (pixels):" GridPane.halignment="RIGHT" GridPane.rowIndex="1" />
-                              <Button fx:id="widthjButton" disable="true" mnemonicParsing="false" onAction="#widthjButtonActionPerformed" text="Reset" GridPane.columnIndex="2" />
-                              <Button fx:id="heightjButton" mnemonicParsing="false" onAction="#heightjButtonActionPerformed" text="Reset" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-                              <Spinner fx:id="widthjSpinner" disable="true" GridPane.columnIndex="1" />
-                              <Spinner fx:id="heightjSpinner" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                              <Label fx:id="widthLabel" text="Card width (pixels):" GridPane.halignment="RIGHT" />
+                              <Label fx:id="heightLabel" text="Card height (pixels):" GridPane.halignment="RIGHT" GridPane.rowIndex="1" />
+                              <Button fx:id="widthButton" disable="true" mnemonicParsing="false" onAction="#widthjButtonActionPerformed" text="Reset" GridPane.columnIndex="2" />
+                              <Button fx:id="heightButton" mnemonicParsing="false" onAction="#heightjButtonActionPerformed" text="Reset" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                              <Spinner fx:id="widthSpinner" disable="true" GridPane.columnIndex="1" />
+                              <Spinner fx:id="heightSpinner" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                            </children>
                         </GridPane>
                      </children>
