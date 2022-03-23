@@ -135,7 +135,7 @@ public enum Item {
      */
     public String getHLabel() {
         if (centre)
-            return "Height (\u2030):";
+            return desc + " Height (\u2030):";
 
         return "Not applicable:";
     }
@@ -145,9 +145,9 @@ public enum Item {
      */
     public String getXLabel() {
         if (centre)
-            return "X Centre (\u2030):";
+            return desc + " X Centre (\u2030):";
 
-        return "X Boarder (\u2030):";
+        return "Image X Boarder (\u2030):";
     }
 
     /**
@@ -155,8 +155,12 @@ public enum Item {
      */
     public String getYLabel() {
         if (centre)
-            return "Y Centre (\u2030):";
+            return desc + " Y Centre (\u2030):";
 
-        return "Y Boarder (\u2030):";
+        return "Image Y Boarder (\u2030):";
+    }
+
+    public boolean isCentre() {
+    	return centre;
     }
 }
