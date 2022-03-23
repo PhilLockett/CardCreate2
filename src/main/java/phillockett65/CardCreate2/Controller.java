@@ -56,7 +56,7 @@ import phillockett65.CardCreate2.sample.Item;
 
 public class Controller {
 
-    /**
+    /************************************************************************
      * Support code for "Playing Card Generator" panel. 
      */
 
@@ -139,7 +139,7 @@ public class Controller {
 	}
 
 
-    /**
+    /************************************************************************
      * Support code for "Input Directories" panel. 
      */
 
@@ -312,7 +312,7 @@ public class Controller {
 
 
 
-    /**
+    /************************************************************************
      * Support code for "Output Directory" panel. 
      */
 
@@ -348,7 +348,7 @@ public class Controller {
 
 
 
-    /**
+    /************************************************************************
      * Support code for "Sample Navigation" panel. 
      */
 
@@ -392,7 +392,7 @@ public class Controller {
 
 
 
-    /**
+    /************************************************************************
      * Support code for "Card Size" panel. 
      */
 
@@ -471,7 +471,7 @@ public class Controller {
 
 
 
-    /**
+    /************************************************************************
      * Support code for "Background Colour" panel. 
      */
 
@@ -496,7 +496,7 @@ public class Controller {
 
 
 
-    /**
+    /************************************************************************
      * Support code for "Display Card Items" panel. 
      */
 
@@ -548,7 +548,7 @@ public class Controller {
 
 
 
-	/**
+	/************************************************************************
      * Support code for "Select Card Item" panel. 
      */
 
@@ -607,8 +607,6 @@ public class Controller {
     	setSelectCardItemPrompts();
     }
 
-
-
     /**
 	 * Initialize "Select Card Item" panel.
 	 */
@@ -617,7 +615,7 @@ public class Controller {
 
 
 
-    /**
+    /************************************************************************
      * Support code for "Modify Selected Card Item" panel. 
      */
 

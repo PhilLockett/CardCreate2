@@ -43,13 +43,14 @@ import phillockett65.CardCreate2.sample.Payload;
 
 public class Model {
 
-	/**
+	/************************************************************************
 	 * Support code for "Playing Card Generator" panel.
 	 */
 	private final String PATHSFILE = "Files.txt";
 
 
-	/**
+
+	/************************************************************************
 	 * Support code for "Input Directories" panel.
 	 */
 
@@ -286,7 +287,7 @@ public class Model {
 
 
 
-	/**
+	/************************************************************************
 	 * Support code for "Generate" panel.
 	 */
 
@@ -298,7 +299,7 @@ public class Model {
 
 
 
-	/**
+	/************************************************************************
 	 * Support code for "Output Directory" panel.
 	 */
 
@@ -332,7 +333,7 @@ public class Model {
 
 
 
-	/**
+	/************************************************************************
 	 * Support code for "Sample Navigation" panel.
 	 */
 
@@ -389,7 +390,7 @@ public class Model {
 
 
 
-	/**
+	/************************************************************************
 	 * Support code for "Card Size" panel.
 	 */
 
@@ -470,7 +471,7 @@ public class Model {
 
 
 
-	/**
+	/************************************************************************
 	 * Support code for "Background Colour" panel.
 	 */
 
@@ -502,7 +503,7 @@ public class Model {
 
 
 
-	/**
+	/************************************************************************
 	 * Support code for "Display Card Items" panel.
 	 */
 
@@ -560,7 +561,7 @@ public class Model {
 
 
 
-	/**
+	/************************************************************************
 	 * Support code for "Select Card Item" panel.
 	 */
 
@@ -607,7 +608,7 @@ public class Model {
 
 
 
-	/**
+	/************************************************************************
 	 * Support code for "Modify Selected Card Item" panel.
 	 */
 
@@ -739,7 +740,8 @@ public class Model {
 	}
 
 
-    /**
+
+    /************************************************************************
      * Update the "Modify Card Item" controls.
      */
 	private void setCurrentCardItemAndUpdateControls(Payload item) {
