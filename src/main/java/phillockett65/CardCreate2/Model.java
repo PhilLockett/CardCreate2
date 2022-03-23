@@ -419,8 +419,18 @@ public class Model {
 		return cardWidthPX;
 	}
 
+	public int getCalculatedWidth() {
+		if (cardSize == CardSize.POKER)
+			return cardHeightPX * 5 / 7;
+
+		if (cardSize == CardSize.BRIDGE)
+			return cardHeightPX * 9 / 14;
+
+		return cardWidthPX;
+	}
+
 	public void setWidth(int width) {
-		this.cardWidthPX = width;
+		cardWidthPX = width;
 	}
 
 	public int getHeight() {
@@ -428,7 +438,7 @@ public class Model {
 	}
 
 	public void setHeight(int height) {
-		this.cardHeightPX = height;
+		cardHeightPX = height;
 	}
 
 	public SpinnerValueFactory<Integer> getWidthSVF() {
@@ -453,6 +463,7 @@ public class Model {
 	private void initializeCardSize() {
 		final int WIDTH = Default.WIDTH.intr();
 		final int HEIGHT = Default.HEIGHT.intr();
+
 		widthSVF = new SpinnerValueFactory.IntegerSpinnerValueFactory(WIDTH/10, WIDTH*10, WIDTH);
 	    heightSVF = new SpinnerValueFactory.IntegerSpinnerValueFactory(HEIGHT/10, HEIGHT*10, HEIGHT);
 	}
@@ -774,10 +785,13 @@ public class Model {
     	System.out.println((keepAspectRatio ? "Keeping" : "NOT keeping") + " image aspect ratio");
 
     	System.out.println("Current card: " + suits[suit] + cards[card]);
+    	System.out.println("Card Width: " + cardWidthPX + " (" + getCalculatedWidth() + ")");
+    	System.out.println("Card Height: " + cardHeightPX);
 	}
 
 
-	
+
+
 	/**
 	 * Default Constructor.
 	 */

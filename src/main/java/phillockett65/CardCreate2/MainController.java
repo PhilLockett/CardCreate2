@@ -460,6 +460,15 @@ public class MainController {
 	private void initializeCardSize() {
 	    widthjSpinner.setValueFactory(model.getWidthSVF());
 	    heightjSpinner.setValueFactory(model.getHeightSVF());
+
+	    widthjSpinner.valueProperty().addListener( (v, oldValue, newValue) -> {
+			model.setWidth(newValue);
+	    });
+
+	    heightjSpinner.valueProperty().addListener( (v, oldValue, newValue) -> {
+			model.setHeight(newValue);
+	    });
+
 	}
 
 
