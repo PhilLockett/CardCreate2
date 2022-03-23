@@ -34,10 +34,10 @@ import java.io.IOException;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.SpinnerValueFactory;
+import javafx.scene.control.Tooltip;
 import javafx.scene.paint.Color;
 
 import phillockett65.CardCreate2.sample.Default;
-import phillockett65.CardCreate2.sample.Handle;
 import phillockett65.CardCreate2.sample.Item;
 import phillockett65.CardCreate2.sample.Payload;
 
@@ -643,6 +643,47 @@ public class Model {
 
 	public void setkeepImageAspectRatio(boolean state) {
 		keepAspectRatio = state;
+	}
+
+
+	public Tooltip getCurrentHButtonTip() {
+		return new Tooltip(current.getItem().getHButtonTip());
+	}
+
+	public Tooltip getCurrentXButtonTip() {
+		return new Tooltip(current.getItem().getXButtonTip());
+	}
+
+	public Tooltip getCurrentYButtonTip() {
+		return new Tooltip(current.getItem().getYButtonTip());
+	}
+
+	public Tooltip getCurrentHToolTip() {
+		return new Tooltip(current.getItem().getHToolTip());
+	}
+
+	public Tooltip getCurrentXToolTip() {
+		return new Tooltip(current.getItem().getXToolTip());
+	}
+
+	public Tooltip getCurrentYToolTip() {
+		return new Tooltip(current.getItem().getYToolTip());
+	}
+
+	public String getCurrentHLabel() {
+		return current.getItem().getHLabel();
+	}
+
+	public String getCurrentXLabel() {
+		return current.getItem().getXLabel();
+	}
+
+	public String getCurrentYLabel() {
+		return current.getItem().getYLabel();
+	}
+
+	public boolean isCurrentCentred() {
+		return current.getItem().isCentre();
 	}
 
 
