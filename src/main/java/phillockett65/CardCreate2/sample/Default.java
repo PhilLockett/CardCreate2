@@ -51,15 +51,15 @@ public enum Default {
     WIDTH (380F),
     HEIGHT (532F);
 
-    private final int	integer;
-    private final float	real;
+    private final int	iValue;
+    private final float	rValue;
 
     Default(float val) {
-        real = val;
-        integer = Math.round(val);
+        rValue = val;
+        iValue = Math.round(val);
     }
     
-    public int intr() { return integer; }
-    public float real() { return real; }
+    public int getInt() { return iValue; }
+    public float getFloat() { return rValue; }
 
 }

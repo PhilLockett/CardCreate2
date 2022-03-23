@@ -132,8 +132,8 @@ public class Payload {
     private BufferedImage image = null;
     private int imageWidthPX = 0;
     private int imageHeightPX = 0;
-    private int cardWidthPX = Default.WIDTH.intr();
-    private int cardHeightPX = Default.HEIGHT.intr();
+    private int cardWidthPX = Default.WIDTH.getInt();
+    private int cardHeightPX = Default.HEIGHT.getInt();
 
     private boolean display;
     private boolean keepAspectRatio;

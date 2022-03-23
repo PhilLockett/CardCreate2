@@ -30,11 +30,11 @@ package phillockett65.CardCreate2.sample;
  * @author Phil
  */
 public enum Item {
-    INDEX (Default.INDEX_HEIGHT.real(), Default.INDEX_CENTRE_X.real(), Default.INDEX_CENTRE_Y.real(), true, "index"),
-    CORNER_PIP (Default.CORNER_PIPHEIGHT.real(), Default.CORNER_PIPCENTRE_X.real(), Default.CORNER_PIPCENTRE_Y.real(), true, "corner pip"),
-    STANDARD_PIP (Default.STANDARD_PIPHEIGHT.real(), Default.STANDARD_PIPCENTRE_X.real(), Default.STANDARD_PIPCENTRE_Y.real(), true, "standard pip"),
-    FACE (Default.FACE_HEIGHT.real(), Default.FACE_BOARDER_X.real(), Default.FACE_BOARDER_Y.real(), false, "face"),
-    FACE_PIP (Default.FACE_PIPHEIGHT.real(), Default.FACE_PIPCENTRE_X.real(), Default.FACE_PIPCENTRE_Y.real(), true, "face pip");
+    INDEX (Default.INDEX_HEIGHT.getFloat(), Default.INDEX_CENTRE_X.getFloat(), Default.INDEX_CENTRE_Y.getFloat(), true, "Index"),
+    CORNER_PIP (Default.CORNER_PIPHEIGHT.getFloat(), Default.CORNER_PIPCENTRE_X.getFloat(), Default.CORNER_PIPCENTRE_Y.getFloat(), true, "Corner Pip"),
+    STANDARD_PIP (Default.STANDARD_PIPHEIGHT.getFloat(), Default.STANDARD_PIPCENTRE_X.getFloat(), Default.STANDARD_PIPCENTRE_Y.getFloat(), true, "Standard Pip"),
+    FACE (Default.FACE_HEIGHT.getFloat(), Default.FACE_BOARDER_X.getFloat(), Default.FACE_BOARDER_Y.getFloat(), false, "Face"),
+    FACE_PIP (Default.FACE_PIPHEIGHT.getFloat(), Default.FACE_PIPCENTRE_X.getFloat(), Default.FACE_PIPCENTRE_Y.getFloat(), true, "Face Pip");
 
     private final float height;
     private final float centreX;
