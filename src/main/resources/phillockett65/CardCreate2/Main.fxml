@@ -73,15 +73,15 @@
                                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                 </rowConstraints>
                                  <children>
-                                    <Button fx:id="itemHeightjButton" mnemonicParsing="false" onAction="#itemHeightButtonActionPerformed" text="Reset" GridPane.columnIndex="2" />
-                                    <Button fx:id="itemCentreXjButton" mnemonicParsing="false" onAction="#itemCentreXButtonActionPerformed" text="Reset" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-                                    <Button fx:id="itemCentreYjButton" mnemonicParsing="false" onAction="#itemCentreYButtonActionPerformed" text="Reset" GridPane.columnIndex="2" GridPane.rowIndex="2" />
-                                    <Spinner fx:id="itemHeightjSpinner" GridPane.columnIndex="1" />
-                                    <Spinner fx:id="itemCentreXjSpinner" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                                    <Spinner fx:id="itemCentreYjSpinner" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                                    <Label fx:id="itemHeightjLabel" text="Item Height (‰):" GridPane.halignment="RIGHT" />
-                                    <Label fx:id="itemCentreXjLabel" text="Item Centre X (‰):" GridPane.halignment="RIGHT" GridPane.rowIndex="1" />
-                                    <Label fx:id="itemCentreYjLabel" text="Item Centre Y (‰):" GridPane.halignment="RIGHT" GridPane.rowIndex="2" />
+                                    <Button fx:id="itemHeightButton" mnemonicParsing="false" onAction="#itemHeightButtonActionPerformed" text="Reset" GridPane.columnIndex="2" />
+                                    <Button fx:id="itemCentreXButton" mnemonicParsing="false" onAction="#itemCentreXButtonActionPerformed" text="Reset" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                                    <Button fx:id="itemCentreYButton" mnemonicParsing="false" onAction="#itemCentreYButtonActionPerformed" text="Reset" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                                    <Spinner fx:id="itemHeightSpinner" GridPane.columnIndex="1" />
+                                    <Spinner fx:id="itemCentreXSpinner" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                    <Spinner fx:id="itemCentreYSpinner" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                    <Label fx:id="itemHeightLabel" text="Item Height (‰):" GridPane.halignment="RIGHT" />
+                                    <Label fx:id="itemCentreXLabel" text="Item Centre X (‰):" GridPane.halignment="RIGHT" GridPane.rowIndex="1" />
+                                    <Label fx:id="itemCentreYLabel" text="Item Centre Y (‰):" GridPane.halignment="RIGHT" GridPane.rowIndex="2" />
                                  </children>
                               </GridPane>
                               <HBox>

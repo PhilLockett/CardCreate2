@@ -27,6 +27,8 @@ package phillockett65.CardCreate2;
 import java.io.File;
 import java.util.Optional;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -279,9 +281,11 @@ public class MainController {
 	    	model.setFaceStyle(newValue);
 	    	outputTextField.setText(model.getOutputName());
 	    });
+
 	    indexChoiceBox.getSelectionModel().selectedItemProperty().addListener( (v, oldValue, newValue) -> {
 	    	model.setIndexStyle(newValue);
 	    });
+
 	    pipChoiceBox.getSelectionModel().selectedItemProperty().addListener( (v, oldValue, newValue) -> {
 	    	model.setPipStyle(newValue);
 	    });
@@ -605,31 +609,31 @@ public class MainController {
      */
 
     @FXML
-    private Label itemHeightjLabel;
+    private Label itemHeightLabel;
 
     @FXML
-    private Label itemCentreXjLabel;
+    private Label itemCentreXLabel;
 
     @FXML
-    private Label itemCentreYjLabel;
+    private Label itemCentreYLabel;
 
     @FXML
-    private Spinner<Integer> itemHeightjSpinner;
+    private Spinner<Integer> itemHeightSpinner;
 
     @FXML
-    private Spinner<Integer> itemCentreXjSpinner;
+    private Spinner<Integer> itemCentreXSpinner;
 
     @FXML
-    private Spinner<Integer> itemCentreYjSpinner;
+    private Spinner<Integer> itemCentreYSpinner;
 
     @FXML
-    private Button itemHeightjButton;
+    private Button itemHeightButton;
 
     @FXML
-    private Button itemCentreXjButton;
+    private Button itemCentreXButton;
 
     @FXML
-    private Button itemCentreYjButton;
+    private Button itemCentreYButton;
 
     @FXML
     private CheckBox keepAspectRatioCheckBox;
@@ -658,9 +662,21 @@ public class MainController {
 	 * Initialize "Modify Selected Card Item" panel.
 	 */
 	private void initializeModifySelectedCardItem() {
-	    itemHeightjSpinner.setValueFactory(model.getItemHeightSVF());
-	    itemCentreXjSpinner.setValueFactory(model.getItemCentreXSVF());
-	    itemCentreYjSpinner.setValueFactory(model.getItemCentreYSVF());
+	    itemHeightSpinner.setValueFactory(model.getItemHeightSVF());
+	    itemCentreXSpinner.setValueFactory(model.getItemCentreXSVF());
+	    itemCentreYSpinner.setValueFactory(model.getItemCentreYSVF());
+
+	    itemHeightSpinner.valueProperty().addListener( (v, oldValue, newValue) -> {
+			model.setCurrentH(newValue);
+	    });
+
+	    itemCentreXSpinner.valueProperty().addListener( (v, oldValue, newValue) -> {
+			model.setCurrentX(newValue);
+	    });
+
+	    itemCentreYSpinner.valueProperty().addListener( (v, oldValue, newValue) -> {
+			model.setCurrentY(newValue);
+	    });
 
 	}
 
