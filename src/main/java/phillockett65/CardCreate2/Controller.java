@@ -137,6 +137,7 @@ public class Controller {
             sample.close();
         }
 		setInitialBaseDirectory();
+		model.setCardItemsPayload();
 	}
 
 

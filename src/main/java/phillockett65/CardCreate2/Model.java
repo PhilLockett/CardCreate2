@@ -36,7 +36,6 @@ import javafx.collections.ObservableList;
 import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.control.Tooltip;
 import javafx.scene.paint.Color;
-
 import phillockett65.CardCreate2.sample.Default;
 import phillockett65.CardCreate2.sample.Item;
 import phillockett65.CardCreate2.sample.Payload;
@@ -624,7 +623,32 @@ public class Model {
     private SpinnerValueFactory<Integer> itemCentreYSVF;
 
 
-	public SpinnerValueFactory<Integer> getItemHeightSVF() {
+
+	public void setCardItemsPayload() {
+
+        String pathToFaceImage = getFaceDirectory() + "\\" + suits[suit] + cards[card] + ".png";
+        face = new Payload(pathToFaceImage, cardWidthPX, cardHeightPX, Payload.PAINT_FILE, Item.FACE);
+
+        String pathToIndexImage = getIndexDirectory() + "\\" + suits[suit] + cards[card] + ".png";
+        boolean indexFileExists = new File(pathToIndexImage).exists();
+        if (!indexFileExists)
+            pathToIndexImage = getIndexDirectory() + "\\" + alts[suit] + cards[card] + ".png";
+        index = new Payload(pathToIndexImage, cardWidthPX, cardHeightPX, 0, Item.INDEX);
+
+        String pathToPip = getPipDirectory() + "\\" + suits[suit] + ".png";
+        standardPip = new Payload(pathToPip, cardWidthPX, cardHeightPX, card, Item.STANDARD_PIP);
+        facePip = new Payload(pathToPip, cardWidthPX, cardHeightPX, 0, Item.FACE_PIP);
+
+        String pathToCornerPip = getPipDirectory() + "\\" + suits[suit] + "S.png";
+        boolean cornerPipFileExists = new File(pathToCornerPip).exists();
+        if (cornerPipFileExists)
+        	pathToPip = pathToCornerPip;
+        cornerPip = new Payload(pathToPip, cardWidthPX, cardHeightPX, 0, Item.CORNER_PIP);
+
+        setCurrentCardItemAndUpdateControls(index);
+    }
+
+    public SpinnerValueFactory<Integer> getItemHeightSVF() {
 		return itemHeightSVF;
 	}
 
@@ -755,17 +779,9 @@ public class Model {
 	 * Initialize "Modify Selected Card Item" panel.
 	 */
 	private void initializeModifySelectedCardItem() {
-
-        index = new Payload("", cardWidthPX, cardHeightPX, 0, Item.INDEX);
-        cornerPip = new Payload("", cardWidthPX, cardHeightPX, 0, Item.CORNER_PIP);
-        standardPip = new Payload("", cardWidthPX, cardHeightPX, card, Item.STANDARD_PIP);
-        face = new Payload("", cardWidthPX, cardHeightPX, Payload.PAINT_FILE, Item.FACE);
-        facePip = new Payload("", cardWidthPX, cardHeightPX, 0, Item.FACE_PIP);
-
         itemHeightSVF = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 1000, 10);
 	    itemCentreXSVF = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 1000, 10);
 	    itemCentreYSVF = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 1000, 10);
-	    setCurrentCardItemAndUpdateControls(index);
 }
 
 
@@ -830,6 +846,13 @@ public class Model {
     	System.out.println("Current card: " + suits[suit] + cards[card]);
     	System.out.println("Card Width: " + cardWidthPX + " (" + getCalculatedWidth() + ")");
     	System.out.println("Card Height: " + cardHeightPX);
+
+    	System.out.println("Index path: " + index.getPath());
+    	System.out.println("Corner Pip path: " + cornerPip.getPath());
+    	System.out.println("Standard Pip path: " + standardPip.getPath());
+    	System.out.println("Face path: " + face.getPath());
+    	System.out.println("FacePip path: " + facePip.getPath());
+    	System.out.println("Current path: " + current.getPath());
 	}
 
 
