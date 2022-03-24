@@ -111,15 +111,15 @@ public class Model {
 	}
 
 	public String getFaceDirectory() {
-		return baseDirectory + "\\face\\" + faceStyle;
+		return baseDirectory + "\\faces\\" + faceStyle;
 	}
 
 	public String getIndexDirectory() {
-		return baseDirectory + "\\index\\" + indexStyle;
+		return baseDirectory + "\\indices\\" + indexStyle;
 	}
 
 	public String getPipDirectory() {
-		return baseDirectory + "\\pip\\" + pipStyle;
+		return baseDirectory + "\\pips\\" + pipStyle;
 	}
 
 	public String getFaceStyle() {
