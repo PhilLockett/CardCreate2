@@ -27,9 +27,6 @@ package phillockett65.CardCreate2.sample;
 import javafx.application.Platform;
 import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import phillockett65.CardCreate2.Controller;
 import phillockett65.CardCreate2.Model;
@@ -68,8 +65,8 @@ public class CardSample extends Stage {
 
 		scene = new Scene(group, model.getWidth(), model.getHeight());
 		setScene(scene);
-		this.setX(0);
-		this.setY(0);
+		this.setX(20);
+		this.setY(20);
 		show();
 	}
 
