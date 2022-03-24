@@ -35,18 +35,13 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.control.Tooltip;
+import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import phillockett65.CardCreate2.sample.Default;
 import phillockett65.CardCreate2.sample.Item;
 import phillockett65.CardCreate2.sample.Payload;
 
 public class Model {
-
-	/************************************************************************
-	 * Support code for "Playing Card Generator" panel.
-	 */
-	private final String PATHSFILE = "Files.txt";
-
 
 
 	/************************************************************************
@@ -787,75 +782,30 @@ public class Model {
 
 
 
-	public void displayDiags() {
-    	System.out.println(getFaceDirectory());
-    	System.out.println(getIndexDirectory());
-    	System.out.println(getPipDirectory());
-    	System.out.println(getOutputDirectory());
-    	System.out.println();
+	/************************************************************************
+	 * Support code for "Sample" panel.
+	 */
 
-    	if (cardSize == CardSize.POKER)
-        	System.out.println("Poker size");
-    	else
-    	if (cardSize == CardSize.BRIDGE)
-        	System.out.println("Bridge size");
-    	else
-    	if (cardSize == CardSize.FREE)
-        	System.out.println("Free size");
-    	System.out.println();
+    private Image image;
 
-    	System.out.println("Index " + (displayIndex ? "displayed" : "NOT displayed"));
-    	System.out.println("Corner pip " + (displayCornerPip ? "displayed" : "NOT displayed"));
-    	System.out.println("Standard pip " + (displayStandardPip ? "displayed" : "NOT displayed"));
-    	System.out.println("Face image " + (displayFaceImage ? "displayed" : "NOT displayed"));
-    	System.out.println("Face pip " + (displayFacePip ? "displayed" : "NOT displayed"));
-    	System.out.println();
-
-    	if (currentItem == Item.INDEX)
-        	System.out.println("Change Index " + currentItem.getH());
-    	else
-    	if (currentItem == Item.CORNER_PIP)
-        	System.out.println("Change Corner pip " + currentItem.getH());
-    	else
-    	if (currentItem == Item.STANDARD_PIP)
-        	System.out.println("Change Standard pip " + currentItem.getH());
-    	else
-    	if (currentItem == Item.FACE)
-        	System.out.println("Change Face image " + currentItem.getH());
-    	else
-    	if (currentItem == Item.FACE_PIP)
-        	System.out.println("Change Face pip " + currentItem.getH());
-
-//    	if (cardItem == CardItem.INDEX)
-//        	System.out.println("Change Index");
-//    	else
-//    	if (cardItem == CardItem.CORNER_PIP)
-//        	System.out.println("Change Corner pip");
-//    	else
-//    	if (cardItem == CardItem.STANDARD_PIP)
-//        	System.out.println("Change Standard pip");
-//    	else
-//    	if (cardItem == CardItem.FACE)
-//        	System.out.println("Change Face image");
-//    	else
-//    	if (cardItem == CardItem.FACE_PIP)
-//        	System.out.println("Change Face pip");
-
-    	System.out.println((keepAspectRatio ? "Keeping" : "NOT keeping") + " image aspect ratio");
-
-    	System.out.println("Current card: " + suits[suit] + cards[card]);
-    	System.out.println("Card Width: " + cardWidthPX + " (" + getCalculatedWidth() + ")");
-    	System.out.println("Card Height: " + cardHeightPX);
-
-    	System.out.println("Index path: " + index.getPath());
-    	System.out.println("Corner Pip path: " + cornerPip.getPath());
-    	System.out.println("Standard Pip path: " + standardPip.getPath());
-    	System.out.println("Face path: " + face.getPath());
-    	System.out.println("FacePip path: " + facePip.getPath());
-    	System.out.println("Current path: " + current.getPath());
+	public Image getHandleImage() {
+		return image;
 	}
 
 
+    /**
+	 * Initialize "Sample" panel.
+	 */
+	private void initializeSample() {
+		image = new Image(getClass().getResourceAsStream("Handle.png"));
+    }
+
+
+
+	/************************************************************************
+	 * Support code for "Playing Card Generator" panel.
+	 */
+	private final String PATHSFILE = "Files.txt";
 
 
 	/**
@@ -877,6 +827,83 @@ public class Model {
 		initializeDisplayCardItems();
 		initializeSelectCardItem();
 		initializeModifySelectedCardItem();
+		initializeSample();
+	}
+
+
+
+
+	/************************************************************************
+	 * Debug.
+	 */
+	public void displayDiags() {
+		System.out.println(getFaceDirectory());
+		System.out.println(getIndexDirectory());
+		System.out.println(getPipDirectory());
+		System.out.println(getOutputDirectory());
+		System.out.println();
+	
+		if (cardSize == CardSize.POKER)
+	    	System.out.println("Poker size");
+		else
+		if (cardSize == CardSize.BRIDGE)
+	    	System.out.println("Bridge size");
+		else
+		if (cardSize == CardSize.FREE)
+	    	System.out.println("Free size");
+		System.out.println();
+	
+		System.out.println("Index " + (displayIndex ? "displayed" : "NOT displayed"));
+		System.out.println("Corner pip " + (displayCornerPip ? "displayed" : "NOT displayed"));
+		System.out.println("Standard pip " + (displayStandardPip ? "displayed" : "NOT displayed"));
+		System.out.println("Face image " + (displayFaceImage ? "displayed" : "NOT displayed"));
+		System.out.println("Face pip " + (displayFacePip ? "displayed" : "NOT displayed"));
+		System.out.println();
+	
+		if (currentItem == Item.INDEX)
+	    	System.out.println("Change Index " + currentItem.getH());
+		else
+		if (currentItem == Item.CORNER_PIP)
+	    	System.out.println("Change Corner pip " + currentItem.getH());
+		else
+		if (currentItem == Item.STANDARD_PIP)
+	    	System.out.println("Change Standard pip " + currentItem.getH());
+		else
+		if (currentItem == Item.FACE)
+	    	System.out.println("Change Face image " + currentItem.getH());
+		else
+		if (currentItem == Item.FACE_PIP)
+	    	System.out.println("Change Face pip " + currentItem.getH());
+	
+	//	if (cardItem == CardItem.INDEX)
+	//    	System.out.println("Change Index");
+	//	else
+	//	if (cardItem == CardItem.CORNER_PIP)
+	//    	System.out.println("Change Corner pip");
+	//	else
+	//	if (cardItem == CardItem.STANDARD_PIP)
+	//    	System.out.println("Change Standard pip");
+	//	else
+	//	if (cardItem == CardItem.FACE)
+	//    	System.out.println("Change Face image");
+	//	else
+	//	if (cardItem == CardItem.FACE_PIP)
+	//    	System.out.println("Change Face pip");
+	
+		System.out.println((keepAspectRatio ? "Keeping" : "NOT keeping") + " image aspect ratio");
+	
+		System.out.println("Current card: " + suits[suit] + cards[card]);
+		System.out.println("Card Width: " + cardWidthPX + " (" + getCalculatedWidth() + ")");
+		System.out.println("Card Height: " + cardHeightPX);
+	
+		System.out.println("Index path: " + index.getPath());
+		System.out.println("Corner Pip path: " + cornerPip.getPath());
+		System.out.println("Standard Pip path: " + standardPip.getPath());
+		System.out.println("Face path: " + face.getPath());
+		System.out.println("FacePip path: " + facePip.getPath());
+		System.out.println("Current path: " + current.getPath());
 	}
 
 }
+
+
