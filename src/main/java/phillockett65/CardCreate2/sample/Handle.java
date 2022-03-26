@@ -59,12 +59,12 @@ public class Handle {
         }
     }
 
-    public void set(int x, int y){
+    public void set(int x, int y) {
         xPos = x;
         yPos = y;
     }
 
-    public int getX(){
+    public int getXPos() {
         if (payload != null) {
             return payload.getX();
         }
@@ -72,7 +72,7 @@ public class Handle {
         return xPos;
     }
 
-    public int getY(){
+    public int getYPos() {
         if (payload != null) {
             return payload.getY();
         }
@@ -80,7 +80,7 @@ public class Handle {
         return yPos;
     }
 
-    public int getWidth(){
+    public int getWidth() {
         if (payload != null) {
             return payload.getWidthPX();
         }
@@ -88,7 +88,7 @@ public class Handle {
         return width;
     }
 
-    public int getHeight(){
+    public int getHeight() {
         if (payload != null) {
             return payload.getHeightPX();
         }
