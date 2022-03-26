@@ -734,16 +734,29 @@ public class Model {
 		return current.getSpriteY();
 	}
 
+	/**
+	 * Round a value to the nearest 0.05.
+	 * 
+	 * @param value to be rounded.
+	 * @return rounded value.
+	 */
+	private double roundPercentage(double value) {
+		long round = Math.round(value * 20);
+		value = (double)round / 20;
+
+		return value;
+	}
+
 	public void setCurrentDefaultH() {
-		itemHeightSVF.setValue((double)current.getItem().getH());
+		itemHeightSVF.setValue(roundPercentage(current.getItem().getH()));
 	}
 
 	public void setCurrentDefaultX() {
-		itemCentreXSVF.setValue((double)current.getItem().getX());
+		itemCentreXSVF.setValue(roundPercentage(current.getItem().getX()));
 	}
 
 	public void setCurrentDefaultY() {
-		itemCentreYSVF.setValue((double)current.getItem().getY());
+		itemCentreYSVF.setValue(roundPercentage(current.getItem().getY()));
 	}
 
 	public void setCurrentH(double value, boolean updateSVF) {
@@ -751,7 +764,7 @@ public class Model {
 
         current.setSize(value);
         if (updateSVF)
-        	itemHeightSVF.setValue(value);
+        	itemHeightSVF.setValue(roundPercentage(value));
 	}
 
 	public void setCurrentX(double value, boolean updateSVF) {
@@ -759,7 +772,7 @@ public class Model {
 
         current.setX(value);
         if (updateSVF)
-        	itemCentreXSVF.setValue(value);
+        	itemCentreXSVF.setValue(roundPercentage(value));
 	}
 
 	public void setCurrentY(double value, boolean updateSVF) {
@@ -767,7 +780,7 @@ public class Model {
 
         current.setY(value);
         if (updateSVF)
-        	itemCentreYSVF.setValue(value);
+        	itemCentreYSVF.setValue(roundPercentage(value));
 	}
 
 
@@ -775,13 +788,13 @@ public class Model {
     /************************************************************************
      * Update the "Modify Card Item" controls.
      */
+
 	private void setCurrentCardItemAndUpdateControls(Payload item) {
         current = item;
-	    itemHeightSVF.setValue(getCurrentH());
-	    itemCentreXSVF.setValue(getCurrentX());
-	    itemCentreYSVF.setValue(getCurrentY());
+	    itemHeightSVF.setValue(roundPercentage(getCurrentH()));
+	    itemCentreXSVF.setValue(roundPercentage(getCurrentX()));
+	    itemCentreYSVF.setValue(roundPercentage(getCurrentY()));
 	}
-
 
 	/**
 	 * Initialize "Modify Selected Card Item" panel.
