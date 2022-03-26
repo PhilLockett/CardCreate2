@@ -803,44 +803,6 @@ public class Model {
 		itemHeightSVF = new SpinnerValueFactory.DoubleSpinnerValueFactory(0, 100, 10, 0.05);
 	    itemCentreXSVF = new SpinnerValueFactory.DoubleSpinnerValueFactory(0, 100, 10, 0.05);
 	    itemCentreYSVF = new SpinnerValueFactory.DoubleSpinnerValueFactory(0, 100, 10, 0.05);
-
-	    // Original StringConverter found here: https://docs.oracle.com/javase/8/javafx/api/javafx/scene/control/SpinnerValueFactory.DoubleSpinnerValueFactory.html
-	    StringConverter<Double> stringConverter = new StringConverter<Double>() {
-		     private final DecimalFormat df = new DecimalFormat("#.#");
-
-		     @Override public String toString(Double value) {
-		         // If the specified value is null, return a zero-length String
-		         if (value == null) {
-		             return "";
-		         }
-
-		         return df.format(value);
-		     }
-
-		     @Override public Double fromString(String value) {
-		         try {
-		             // If the specified value is null or zero-length, return null
-		             if (value == null) {
-		                 return null;
-		             }
-
-		             value = value.trim();
-
-		             if (value.length() < 1) {
-		                 return null;
-		             }
-
-		             // Perform the requested parsing
-		             return df.parse(value).doubleValue();
-		         } catch (ParseException ex) {
-		             throw new RuntimeException(ex);
-		         }
-		     }
-		 };
-		
-			itemHeightSVF.setConverter(stringConverter);
-		    itemCentreXSVF.setConverter(stringConverter);
-		    itemCentreYSVF.setConverter(stringConverter);
 	}
 
 
