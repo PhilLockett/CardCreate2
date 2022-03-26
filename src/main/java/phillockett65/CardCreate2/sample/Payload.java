@@ -62,9 +62,9 @@ public class Payload {
 
     public class Real {
         private final boolean height;
-        private float decimal = 0F;
-        private float percent = 0F;
-        private float pixels = 0F;
+        private double decimal = 0;
+        private double percent = 0;
+        private double pixels = 0;
         
         public Real(boolean height) {
             this.height = height;
@@ -76,19 +76,19 @@ public class Payload {
             else
                 pixels = decimal * cardWidthPX;
         }
-        public void setPercent(float value) {
+        public void setPercent(double value) {
             percent = value;
             decimal = percent / 100;
             calcPixels();
         }
 
-        public void setReal(float value) {
+        public void setReal(double value) {
             decimal = value;
             percent = decimal * 100;
             calcPixels();
         }
 
-        public void setPixels(float value) {
+        public void setPixels(double value) {
             pixels = value;
             if (height)
                 decimal = pixels / cardHeightPX;
@@ -97,24 +97,24 @@ public class Payload {
             percent = decimal * 100;
         }
         
-        public float getPercent() {
+        public double getPercent() {
             return percent;
         }
 
-        public float getReal() {
+        public double getReal() {
             return decimal;
         }
         
-        public float getRealPixels() {
+        public double getRealPixels() {
             return pixels;
         }
 
-        public int getIntPixels() {
+        public long getIntPixels() {
             return Math.round(pixels);
         }
 
-        public float getRealOrigin() {
-            float origin;
+        public double getRealOrigin() {
+        	double origin;
             if (height)
                 origin = pixels - (spriteHeight.getRealPixels()/2);
             else
@@ -123,7 +123,7 @@ public class Payload {
             return origin;
         }
 
-        public int getOrigin() {
+        public long getOrigin() {
             return Math.round(getRealOrigin());
         }
 
@@ -135,8 +135,8 @@ public class Payload {
     private final Item item;
     private final String path;
     private Image image = null;
-    private int imageWidthPX = 0;
-    private int imageHeightPX = 0;
+    private long imageWidthPX = 0;
+    private long imageHeightPX = 0;
     private int cardWidthPX = Default.WIDTH.getInt();
     private int cardHeightPX = Default.HEIGHT.getInt();
 
@@ -146,7 +146,7 @@ public class Payload {
     private final Real centreY;
     private final Real spriteHeight;
     private final Real spriteWidth;
-    private float spriteScale = 1.0F;
+    private double spriteScale = 1;
 
     public Payload(String path, int w, int h, int p, Item it) {
     	System.out.println("Payload(" + path + ")");
@@ -176,8 +176,8 @@ public class Payload {
 
         image = loadImage(path);
         if (image != null) {
-            imageWidthPX = Math.round((float)image.getWidth());
-            imageHeightPX = Math.round((float)image.getHeight());
+            imageWidthPX = Math.round(image.getWidth());
+            imageHeightPX = Math.round(image.getHeight());
             spriteWidth.setPixels(spriteHeight.getRealPixels() * imageWidthPX / imageHeightPX);
             spriteScale = spriteHeight.getRealPixels() / imageHeightPX;
         }
@@ -213,17 +213,17 @@ public class Payload {
 
     private void paintImage(Group group, boolean generate) {
 
-        final int pX = centreX.getIntPixels();
-        final int pY = centreY.getIntPixels();
-        final float winX = (float)cardWidthPX - (2*centreX.getRealPixels());
-        final float winY = (float)cardHeightPX - (2*centreY.getRealPixels());
+        final long pX = centreX.getIntPixels();
+        final long pY = centreY.getIntPixels();
+        final double winX = (double)cardWidthPX - (2*centreX.getRealPixels());
+        final double winY = (double)cardHeightPX - (2*centreY.getRealPixels());
 
 //        System.out.printf("paintImage() pX = %d,  pY = %d generate = %s\n", pX, pY, generate ? "true" : "false");
 //        AffineTransform at = AffineTransform.getTranslateInstance(pX, pY);
 
-        float scaleX = winX / imageWidthPX;
-        float scaleY = winY / imageHeightPX;
-        float scale;
+        double scaleX = winX / imageWidthPX;
+        double scaleY = winY / imageHeightPX;
+        double scale;
         if (keepAspectRatio) {
             if (!generate) {
                 Rectangle box = new Rectangle(pX, pY, Math.round(winX), Math.round(winY));
@@ -232,12 +232,12 @@ public class Payload {
             }
             if (scaleX < scaleY) {
                 scale = scaleX;
-                int dY = Math.round((winY - (imageHeightPX * scale)) / 2);
+                long dY = Math.round((winY - (imageHeightPX * scale)) / 2);
 //                at.translate(0, dY);
             }
             else {
                 scale = scaleY;
-                int dX = Math.round((winX - (imageWidthPX * scale)) / 2);
+                long dX = Math.round((winX - (imageWidthPX * scale)) / 2);
 //                at.translate(dX, 0);
             }
 //            at.scale(scale, scale);
@@ -251,13 +251,13 @@ public class Payload {
 
     private void paintIcon(Group group, Loc location) {
 
-        final float winX = (float)cardWidthPX - (2*centreX.getRealPixels());
-        final float offX = location.getXOffset() * winX;
-        final int pX = Math.round(centreX.getRealOrigin() + offX);
+        final double winX = (double)cardWidthPX - (2*centreX.getRealPixels());
+        final double offX = location.getXOffset() * winX;
+        final long pX = Math.round(centreX.getRealOrigin() + offX);
 
-        final float winY = (float)cardHeightPX - (2*centreY.getRealPixels());
-        final float offY = location.getYOffset() * winY;
-        final int pY = Math.round(centreY.getRealOrigin() + offY);
+        final double winY = (double)cardHeightPX - (2*centreY.getRealPixels());
+        final double offY = location.getYOffset() * winY;
+        final long pY = Math.round(centreY.getRealOrigin() + offY);
 
 //        AffineTransform at = AffineTransform.getTranslateInstance(pX, pY);
 //
@@ -336,7 +336,7 @@ public class Payload {
      * Set the X co-ordinate of the centre of the sprite.
      * @param value as a percentage of the card width.
      */
-    public void setX(float value) {
+    public void setX(double value) {
         if ((value < 0f) || (value > 100f))
             return;
 
@@ -347,7 +347,7 @@ public class Payload {
      * Set the Y co-ordinate of the centre of the sprite.
      * @param value as a percentage of the card height.
      */
-    public void setY(float value) {
+    public void setY(double value) {
         if ((value < 0f) || (value > 100f))
             return;
 
@@ -358,7 +358,7 @@ public class Payload {
      * Set the size of the sprite.
      * @param size as a percentage of the card height.
      */
-    public void setSize(float size) {
+    public void setSize(double size) {
         if ((size < 0f) || (size > 100f))
             return;
 
@@ -371,8 +371,8 @@ public class Payload {
      * Increase the size of the sprite.
      * @return the new size as a percentage of the card height.
      */
-    public float incSize() {
-        float size = spriteHeight.getPercent();
+    public double incSize() {
+    	double size = spriteHeight.getPercent();
         if (size != 100f) {
             size += 0.5F;
             if (size > 100f)
@@ -388,8 +388,8 @@ public class Payload {
      * Decrease the size of the sprite.
      * @return the new size as a percentage of the card height.
      */
-    public float decSize() {
-        float size = spriteHeight.getPercent();
+    public double decSize() {
+    	double size = spriteHeight.getPercent();
         if (size != 0f) {
             size -= 0.5F;
             if (size < 0f)
@@ -401,80 +401,80 @@ public class Payload {
         return size;
     }
 
-    public void moveBy(int dx, int dy) {
+    public void moveBy(long dx, long dy) {
         centreX.setPixels((spriteWidth.getRealPixels()/2) + centreX.getOrigin() + dx);
         centreY.setPixels((spriteHeight.getRealPixels()/2) + centreY.getOrigin() + dy);
     }
 
-    public int getX() {
+    public long getX() {
         return centreX.getOrigin();
     }
 
-    public int getY() {
+    public long getY() {
         return centreY.getOrigin();
     }
 
-    public int getCentreX() {
+    public long getCentreX() {
         return centreX.getIntPixels();
     }
 
-    public int getCentreY() {
+    public long getCentreY() {
         return centreY.getIntPixels();
     }
 
     /**
      * @return the width of the image on disc.
      */
-    public int getWidthPX() {
+    public long getWidthPX() {
         return imageWidthPX;
     } 
 
     /**
      * @return the height of the image on disc.
      */
-    public int getHeightPX() {
+    public long getHeightPX() {
         return imageHeightPX;
     }
 
     /**
      * @return the centre X co-ordinate of the sprite as a percentage of the card width.
      */
-    public float getSpriteX() {
+    public double getSpriteX() {
         return centreX.getPercent();
     }
 
     /**
      * @return the centre Y co-ordinate of the sprite as a percentage of the card height.
      */
-    public float getSpriteY() {
+    public double getSpriteY() {
         return centreY.getPercent();
     }
 
     /**
      * @return the width of the sprite as a percentage of the card width.
      */
-    public float getSpriteW() {
+    public double getSpriteW() {
         return spriteWidth.getPercent();
     }
 
     /**
      * @return the height of the sprite as a percentage of the card height.
      */
-    public float getSpriteH() {
+    public double getSpriteH() {
         return spriteHeight.getPercent();
     }
 
     /**
      * @return the width of the sprite in pixels.
      */
-    public int getSpriteWidthPX() {
+    public long getSpriteWidthPX() {
         return spriteWidth.getIntPixels();
     }
 
     /**
      * @return the height of the sprite in pixels.
      */
-    public int getSpriteHeightPX() {
+    public long getSpriteHeightPX() {
         return spriteHeight.getIntPixels();
     }
 

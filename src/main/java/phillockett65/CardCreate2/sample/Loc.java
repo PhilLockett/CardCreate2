@@ -61,9 +61,9 @@ public enum Loc {
     public int getYIndex() { return yIndex; }
     public boolean getRotate() { return rotate; }
     
-    private final float[] offsets = { 0.5F, 0F, 1F, 0.25F, 0.333333F, 0.166667F };
+    private final double[] offsets = { 0.5F, 0F, 1F, 0.25F, 0.333333F, 0.166667F };
 
-    public float getXOffset() { return offsets[xIndex]; }
-    public float getYOffset() { return offsets[yIndex]; }
+    public double getXOffset() { return offsets[xIndex]; }
+    public double getYOffset() { return offsets[yIndex]; }
 
 }

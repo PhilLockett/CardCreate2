@@ -35,14 +35,14 @@ public class Handle extends ImageView {
 
 	private Image image;
 
-	private int xPos = 150;
-    private int yPos = 50;
-    private int xMouse = xPos;
-    private int yMouse = yPos;
-    private int xOff = 0;
-    private int yOff = 0;
-    private final int width = 16;
-    private final int height = 16;
+	private long xPos = 150;
+    private long yPos = 50;
+    private long xMouse = xPos;
+    private long yMouse = yPos;
+    private long xOff = 0;
+    private long yOff = 0;
+    private final long width = 16;
+    private final long height = 16;
     private Payload payload;
 
     public Handle(Image handleImage) {
@@ -80,7 +80,7 @@ public class Handle extends ImageView {
 		this.relocate(xPos, yPos);
     }
 
-    public int getXPos() {
+    public long getXPos() {
         if (payload != null) {
             return payload.getX();
         }
@@ -88,7 +88,7 @@ public class Handle extends ImageView {
         return xPos;
     }
 
-    public int getYPos() {
+    public long getYPos() {
         if (payload != null) {
             return payload.getY();
         }
@@ -96,7 +96,7 @@ public class Handle extends ImageView {
         return yPos;
     }
 
-    public int getWidth() {
+    public long getWidth() {
         if (payload != null) {
             return payload.getWidthPX();
         }
@@ -104,7 +104,7 @@ public class Handle extends ImageView {
         return width;
     }
 
-    public int getHeight() {
+    public long getHeight() {
         if (payload != null) {
             return payload.getHeightPX();
         }
@@ -112,11 +112,11 @@ public class Handle extends ImageView {
         return height;
     }
 
-    public int getXMouse() {
+    public long getXMouse() {
         return xMouse;
     }
 
-    public int getYMouse() {
+    public long getYMouse() {
         return yMouse;
     }
 
@@ -134,8 +134,8 @@ public class Handle extends ImageView {
 
     public void setRel(int x, int y) {
         if (payload != null) {
-            final int dx = x - xMouse;
-            final int dy = y - yMouse;
+            final long dx = x - xMouse;
+            final long dy = y - yMouse;
             payload.moveBy(dx, dy);
         }
 

@@ -151,7 +151,7 @@ public class Controller {
 	 * 
 	 * @param h height of the current Item as a percentage of the card height.
 	 */
-    public void resizeIcon(float h) {
+    public void resizeIcon(double h) {
     	System.out.println("resizeIcon(" + h + ")");
 		model.setCurrentH(h, true);
     }
@@ -162,7 +162,7 @@ public class Controller {
      * @param x coordinate of the centre of the current Item as a percentage of the card width.
      * @param y coordinate of the centre of the current Item as a percentage of the card height.
      */
-    public void moveIcon(float x, float y) {
+    public void moveIcon(double x, double y) {
     	System.out.println("moveIcon(" + x + ", " + y + ")");
 		model.setCurrentX(x, true);
 		model.setCurrentY(y, true);

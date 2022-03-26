@@ -749,7 +749,7 @@ public class Model {
 	public void setCurrentH(double value, boolean updateSVF) {
     	System.out.println("model.setCurrentH(" + value + ");");
 
-        current.setSize((float)value);
+        current.setSize(value);
         if (updateSVF)
         	itemHeightSVF.setValue(value);
 	}
@@ -757,7 +757,7 @@ public class Model {
 	public void setCurrentX(double value, boolean updateSVF) {
     	System.out.println("model.setCurrentX(" + value + ");");
 
-        current.setX((float)value);
+        current.setX(value);
         if (updateSVF)
         	itemCentreXSVF.setValue(value);
 	}
@@ -765,7 +765,7 @@ public class Model {
 	public void setCurrentY(double value, boolean updateSVF) {
     	System.out.println("model.setCurrentY(" + value + ");");
 
-        current.setY((float)value);
+        current.setY(value);
         if (updateSVF)
         	itemCentreYSVF.setValue(value);
 	}
