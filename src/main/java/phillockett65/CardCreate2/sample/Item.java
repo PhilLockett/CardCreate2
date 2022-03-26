@@ -75,7 +75,7 @@ public enum Item {
      */
     public String getHButtonTip() {
         if (centre)
-            return "Reset the " + desc + " Height to " + Math.round(height*10) + " \u2030 of card height";
+            return "Reset the " + desc + " Height to " + height + " % of card height";
 
         return "Not applicable";
     }
@@ -85,9 +85,9 @@ public enum Item {
      */
     public String getXButtonTip() {
         if (centre)
-            return "Reset X coordinate of the centre of the " + desc + " to " + Math.round(centreX*10) + " \u2030 of card width";
+            return "Reset X coordinate of the centre of the " + desc + " to " + Math.round(centreX*10) + " % of card width";
 
-        return "Reset X Boarder of the " + desc + " to " + Math.round(centreX*10) + " \u2030 of card width";
+        return "Reset X Boarder of the " + desc + " to " + centreX + " % of card width";
     }
 
     /**
@@ -95,9 +95,9 @@ public enum Item {
      */
     public String getYButtonTip() {
         if (centre)
-            return "Reset Y coordinate of the centre of the " + desc + " to " + Math.round(centreY*10) + " \u2030 of card height";
+            return "Reset Y coordinate of the centre of the " + desc + " to " + Math.round(centreY*10) + " % of card height";
 
-        return "Reset Y Boarder of the " + desc + " to " + Math.round(centreY*10) + " \u2030 of card height";
+        return "Reset Y Boarder of the " + desc + " to " + centreY + " % of card height";
     }
 
     /**
@@ -105,9 +105,9 @@ public enum Item {
      */
     public String getHToolTip() {
         if (centre)
-            return "Height of the " + desc + " as a \u2030 of card height";
+            return "Height of the " + desc + " as a % of card height";
 
-        return "Height of the " + desc + " as a \u2030 of card height";
+        return "Height of the " + desc + " as a % of card height";
     }
 
     /**
@@ -115,9 +115,9 @@ public enum Item {
      */
     public String getXToolTip() {
         if (centre)
-            return "X coordinate of the centre of the " + desc + " as a \u2030 of card width";
+            return "X coordinate of the centre of the " + desc + " as a % of card width";
 
-        return "X Boarder of the " + desc + " as a \u2030 of card width";
+        return "X Boarder of the " + desc + " as a % of card width";
     }
 
     /**
@@ -125,9 +125,9 @@ public enum Item {
      */
     public String getYToolTip() {
         if (centre)
-            return "Y coordinate of the centre of the " + desc + " as a \u2030 of card height";
+            return "Y coordinate of the centre of the " + desc + " as a % of card height";
 
-        return "Y Boarder of the " + desc + " as a \u2030 of card height";
+        return "Y Boarder of the " + desc + " as a % of card height";
     }
 
     /**
@@ -135,7 +135,7 @@ public enum Item {
      */
     public String getHLabel() {
         if (centre)
-            return desc + " Height (\u2030):";
+            return desc + " Height (%):";
 
         return "Not applicable:";
     }
@@ -145,9 +145,9 @@ public enum Item {
      */
     public String getXLabel() {
         if (centre)
-            return desc + " X Centre (\u2030):";
+            return desc + " X Centre (%):";
 
-        return "Image X Boarder (\u2030):";
+        return "Image X Boarder (%):";
     }
 
     /**
@@ -155,9 +155,9 @@ public enum Item {
      */
     public String getYLabel() {
         if (centre)
-            return desc + " Y Centre (\u2030):";
+            return desc + " Y Centre (%):";
 
-        return "Image Y Boarder (\u2030):";
+        return "Image Y Boarder (%):";
     }
 
     public boolean isCentre() {

@@ -153,7 +153,7 @@ public class Controller {
 	 */
     public void resizeIcon(float h) {
     	System.out.println("resizeIcon(" + h + ")");
-		model.setCurrentH(Math.round(h * 10), true);
+		model.setCurrentH(h, true);
     }
 
     /**
@@ -738,13 +738,13 @@ public class Controller {
     private Label itemCentreYLabel;
 
     @FXML
-    private Spinner<Integer> itemHeightSpinner;
+    private Spinner<Double> itemHeightSpinner;
 
     @FXML
-    private Spinner<Integer> itemCentreXSpinner;
+    private Spinner<Double> itemCentreXSpinner;
 
     @FXML
-    private Spinner<Integer> itemCentreYSpinner;
+    private Spinner<Double> itemCentreYSpinner;
 
     @FXML
     private Button itemHeightButton;

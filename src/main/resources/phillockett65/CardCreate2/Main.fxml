@@ -57,7 +57,7 @@
                         </VBox>
                      </content>
                   </TitledPane>
-                  <TitledPane collapsible="false" layoutX="10.0" layoutY="10.0" prefHeight="155.0" prefWidth="319.0" text="Modify Selected Card Item (‰ - per mille)">
+                  <TitledPane collapsible="false" layoutX="10.0" layoutY="10.0" prefHeight="155.0" prefWidth="319.0" text="Modify Selected Card Item (%)">
                      <content>
                         <VBox prefHeight="143.0" prefWidth="284.0" spacing="8.0">
                            <children>
@@ -79,9 +79,9 @@
                                     <Spinner fx:id="itemHeightSpinner" GridPane.columnIndex="1" />
                                     <Spinner fx:id="itemCentreXSpinner" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                                     <Spinner fx:id="itemCentreYSpinner" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                                    <Label fx:id="itemHeightLabel" text="Item Height (‰):" GridPane.halignment="RIGHT" />
-                                    <Label fx:id="itemCentreXLabel" text="Item Centre X (‰):" GridPane.halignment="RIGHT" GridPane.rowIndex="1" />
-                                    <Label fx:id="itemCentreYLabel" text="Item Centre Y (‰):" GridPane.halignment="RIGHT" GridPane.rowIndex="2" />
+                                    <Label fx:id="itemHeightLabel" text="Index Height (%):" GridPane.halignment="RIGHT" />
+                                    <Label fx:id="itemCentreXLabel" text="Index X Centre (%):" GridPane.halignment="RIGHT" GridPane.rowIndex="1" />
+                                    <Label fx:id="itemCentreYLabel" text="Index Y Centre (%):" GridPane.halignment="RIGHT" GridPane.rowIndex="2" />
                                  </children>
                               </GridPane>
                               <HBox>

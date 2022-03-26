@@ -30,6 +30,8 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.text.DecimalFormat;
+import java.text.ParseException;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -37,6 +39,7 @@ import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
+import javafx.util.StringConverter;
 import phillockett65.CardCreate2.sample.Default;
 import phillockett65.CardCreate2.sample.Item;
 import phillockett65.CardCreate2.sample.Payload;
@@ -613,9 +616,9 @@ public class Model {
     private Payload facePip = null;
     private Payload current = null;
     
-    private SpinnerValueFactory<Integer> itemHeightSVF;
-    private SpinnerValueFactory<Integer> itemCentreXSVF;
-    private SpinnerValueFactory<Integer> itemCentreYSVF;
+    private SpinnerValueFactory<Double> itemHeightSVF;
+    private SpinnerValueFactory<Double> itemCentreXSVF;
+    private SpinnerValueFactory<Double> itemCentreYSVF;
 
 
 
@@ -643,15 +646,15 @@ public class Model {
         setCurrentCardItemAndUpdateControls(index);
     }
 
-    public SpinnerValueFactory<Integer> getItemHeightSVF() {
+    public SpinnerValueFactory<Double> getItemHeightSVF() {
 		return itemHeightSVF;
 	}
 
-	public SpinnerValueFactory<Integer> getItemCentreXSVF() {
+	public SpinnerValueFactory<Double> getItemCentreXSVF() {
 		return itemCentreXSVF;
 	}
 
-	public SpinnerValueFactory<Integer> getItemCentreYSVF() {
+	public SpinnerValueFactory<Double> getItemCentreYSVF() {
 		return itemCentreYSVF;
 	}
 
@@ -719,52 +722,52 @@ public class Model {
 		return (int)current.getItem().getY();
 	}
 
-	public int getCurrentH() {
-		return Math.round(current.getSpriteH() * 10);
+	public double getCurrentH() {
+		return current.getSpriteH();
 	}
 
-	public int getCurrentX() {
-		return Math.round(current.getSpriteX() * 10);
+	public double getCurrentX() {
+		return current.getSpriteX();
 	}
 
-	public int getCurrentY() {
-		return Math.round(current.getSpriteY() * 10);
+	public double getCurrentY() {
+		return current.getSpriteY();
 	}
 
 	public void setCurrentDefaultH() {
-		itemHeightSVF.setValue(Math.round(current.getItem().getH() * 10));
+		itemHeightSVF.setValue((double)current.getItem().getH());
 	}
 
 	public void setCurrentDefaultX() {
-		itemCentreXSVF.setValue(Math.round(current.getItem().getX() * 10));
+		itemCentreXSVF.setValue((double)current.getItem().getX());
 	}
 
 	public void setCurrentDefaultY() {
-		itemCentreYSVF.setValue(Math.round(current.getItem().getY() * 10));
+		itemCentreYSVF.setValue((double)current.getItem().getY());
 	}
 
-	public void setCurrentH(float value, boolean updateSVF) {
+	public void setCurrentH(double value, boolean updateSVF) {
     	System.out.println("model.setCurrentH(" + value + ");");
 
-        current.setSize(value);
+        current.setSize((float)value);
         if (updateSVF)
-        	itemHeightSVF.setValue(Math.round(value * 10));
+        	itemHeightSVF.setValue(value);
 	}
 
-	public void setCurrentX(float value, boolean updateSVF) {
+	public void setCurrentX(double value, boolean updateSVF) {
     	System.out.println("model.setCurrentX(" + value + ");");
 
-        current.setX(value);
+        current.setX((float)value);
         if (updateSVF)
-        	itemCentreXSVF.setValue(Math.round(value * 10));
+        	itemCentreXSVF.setValue(value);
 	}
 
-	public void setCurrentY(float value, boolean updateSVF) {
+	public void setCurrentY(double value, boolean updateSVF) {
     	System.out.println("model.setCurrentY(" + value + ");");
 
-        current.setY(value);
+        current.setY((float)value);
         if (updateSVF)
-        	itemCentreYSVF.setValue(Math.round(value * 10));
+        	itemCentreYSVF.setValue(value);
 	}
 
 
@@ -779,14 +782,53 @@ public class Model {
 	    itemCentreYSVF.setValue(getCurrentY());
 	}
 
+
 	/**
 	 * Initialize "Modify Selected Card Item" panel.
 	 */
 	private void initializeModifySelectedCardItem() {
-        itemHeightSVF = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 1000, 10);
-	    itemCentreXSVF = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 1000, 10);
-	    itemCentreYSVF = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 1000, 10);
-}
+		itemHeightSVF = new SpinnerValueFactory.DoubleSpinnerValueFactory(0, 1000, 10, 0.1);
+	    itemCentreXSVF = new SpinnerValueFactory.DoubleSpinnerValueFactory(0, 1000, 10, 0.1);
+	    itemCentreYSVF = new SpinnerValueFactory.DoubleSpinnerValueFactory(0, 1000, 10, 0.1);
+
+	    // Original StringConverter found here: https://docs.oracle.com/javase/8/javafx/api/javafx/scene/control/SpinnerValueFactory.DoubleSpinnerValueFactory.html
+	    StringConverter<Double> stringConverter = new StringConverter<Double>() {
+		     private final DecimalFormat df = new DecimalFormat("#.#");
+
+		     @Override public String toString(Double value) {
+		         // If the specified value is null, return a zero-length String
+		         if (value == null) {
+		             return "";
+		         }
+
+		         return df.format(value);
+		     }
+
+		     @Override public Double fromString(String value) {
+		         try {
+		             // If the specified value is null or zero-length, return null
+		             if (value == null) {
+		                 return null;
+		             }
+
+		             value = value.trim();
+
+		             if (value.length() < 1) {
+		                 return null;
+		             }
+
+		             // Perform the requested parsing
+		             return df.parse(value).doubleValue();
+		         } catch (ParseException ex) {
+		             throw new RuntimeException(ex);
+		         }
+		     }
+		 };
+		
+			itemHeightSVF.setConverter(stringConverter);
+		    itemCentreXSVF.setConverter(stringConverter);
+		    itemCentreYSVF.setConverter(stringConverter);
+	}
 
 
 
