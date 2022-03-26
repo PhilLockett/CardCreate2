@@ -126,6 +126,9 @@ public class Controller {
 		initializeModifySelectedCardItem();
 	}
 
+    /**
+     * Called by Application after the stage has been set.
+     */
 	public void init(Stage stage) {
         this.stage = stage;
 
@@ -138,6 +141,7 @@ public class Controller {
         }
 		setInitialBaseDirectory();
 		model.setCardItemsPayload();
+        setSelectCardItemTooltips();
 	}
 
 
@@ -767,23 +771,28 @@ public class Controller {
 //        samplejPanel.setPayload(item);
 //        currentItem = item;
 //        updateModifyCardItemControls();
-    	final boolean centre = !model.isCurrentCentred();
-    	itemHeightButton.setDisable(centre);
-    	itemHeightSpinner.setDisable(centre);
-    	itemHeightLabel.setDisable(centre);
+        final boolean centre = !model.isCurrentCentred();
+        itemHeightButton.setDisable(centre);
+        itemHeightSpinner.setDisable(centre);
+        itemHeightLabel.setDisable(centre);
 
-    	itemHeightButton.setTooltip(model.getCurrentHButtonTip());
+        itemHeightLabel.setText(model.getCurrentHLabel());
+        itemCentreXLabel.setText(model.getCurrentXLabel());
+        itemCentreYLabel.setText(model.getCurrentYLabel());
+
+        setSelectCardItemTooltips();
+    }
+
+    private void setSelectCardItemTooltips() {
+//    	System.out.println("setSelectCardItemTooltips()");
+
+        itemHeightButton.setTooltip(model.getCurrentHButtonTip());
         itemCentreXButton.setTooltip(model.getCurrentXButtonTip());
         itemCentreYButton.setTooltip(model.getCurrentYButtonTip());
 
         itemHeightLabel.setTooltip(model.getCurrentHToolTip());
-        itemHeightLabel.setText(model.getCurrentHLabel());
-
         itemCentreXLabel.setTooltip(model.getCurrentXToolTip());
-        itemCentreXLabel.setText(model.getCurrentXLabel());
-
         itemCentreYLabel.setTooltip(model.getCurrentYToolTip());
-        itemCentreYLabel.setText(model.getCurrentYLabel());
     }
 
     @FXML
