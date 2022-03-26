@@ -25,6 +25,8 @@
  */
 package phillockett65.CardCreate2.sample;
 
+import java.text.DecimalFormat;
+
 /**
  *
  * @author Phil
@@ -49,6 +51,8 @@ public enum Item {
         centre = c;
         desc = d;
     }
+
+    private final DecimalFormat df = new DecimalFormat("#.#");
 
     /**
      * @return the default height for the item.
@@ -75,7 +79,7 @@ public enum Item {
      */
     public String getHButtonTip() {
         if (centre)
-            return "Reset the " + desc + " Height to " + height + " % of card height";
+            return "Reset the " + desc + " Height to " + df.format(height) + " % of card height";
 
         return "Not applicable";
     }
@@ -85,9 +89,9 @@ public enum Item {
      */
     public String getXButtonTip() {
         if (centre)
-            return "Reset X coordinate of the centre of the " + desc + " to " + Math.round(centreX*10) + " % of card width";
+            return "Reset X coordinate of the centre of the " + desc + " to " + df.format(centreX) + " % of card width";
 
-        return "Reset X Boarder of the " + desc + " to " + centreX + " % of card width";
+        return "Reset X Boarder of the " + desc + " to " + df.format(centreX) + " % of card width";
     }
 
     /**
@@ -95,9 +99,9 @@ public enum Item {
      */
     public String getYButtonTip() {
         if (centre)
-            return "Reset Y coordinate of the centre of the " + desc + " to " + Math.round(centreY*10) + " % of card height";
+            return "Reset Y coordinate of the centre of the " + desc + " to " + df.format(centreY) + " % of card height";
 
-        return "Reset Y Boarder of the " + desc + " to " + centreY + " % of card height";
+        return "Reset Y Boarder of the " + desc + " to " + df.format(centreY) + " % of card height";
     }
 
     /**
