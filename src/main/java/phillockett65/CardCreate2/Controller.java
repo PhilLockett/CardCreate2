@@ -141,6 +141,62 @@ public class Controller {
 	}
 
 
+
+    /************************************************************************
+     * Support code for "Sample" panel interface. 
+     */
+
+	/**
+	 * Called by Sample when the mouse changes the height of the current Item.
+	 * 
+	 * @param h height of the current Item as a percentage of the card height.
+	 */
+    public void resizeIcon(float h) {
+    	System.out.println("resizeIcon(" + h + ")");
+		model.setCurrentH(Math.round(h * 10), true);
+    }
+
+    /**
+     * Called by Sample when the mouse moves the current Item.
+     * 
+     * @param x coordinate of the centre of the current Item as a percentage of the card width.
+     * @param y coordinate of the centre of the current Item as a percentage of the card height.
+     */
+    public void moveIcon(float x, float y) {
+    	System.out.println("moveIcon(" + x + ", " + y + ")");
+		model.setCurrentX(x, true);
+		model.setCurrentY(y, true);
+    }
+
+    /**
+     * Called by Sample when the mouse changes the selected Item.
+     * 
+     * @param item now selected.
+     */
+    public void changeIcon(Item item) {
+    	System.out.println("changeIcon(" + item.getD() + ")");
+
+    	if (item == Item.INDEX) {
+    		indicesRadioButton.setSelected(true);
+    	}
+    	else if (item == Item.CORNER_PIP) {
+    		cornerPipRadioButton.setSelected(true);
+    	}
+    	else if (item == Item.STANDARD_PIP) {
+    		standardPipRadioButton.setSelected(true);
+    	}
+    	else if (item == Item.FACE) {
+    		faceRadioButton.setSelected(true);
+    	}
+    	else if (item == Item.FACE_PIP) {
+    		facePipRadioButton.setSelected(true);
+    	}
+
+    	setSelectCardItemPrompts();
+    }
+
+
+
     /************************************************************************
      * Support code for "Input Directories" panel. 
      */
