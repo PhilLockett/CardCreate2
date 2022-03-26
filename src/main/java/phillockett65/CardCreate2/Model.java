@@ -743,19 +743,28 @@ public class Model {
 		itemCentreYSVF.setValue(Math.round(current.getItem().getY() * 10));
 	}
 
-	public void setCurrentH(int v) {
-        float value = (float)v / 10;
+	public void setCurrentH(float value, boolean updateSVF) {
+    	System.out.println("model.setCurrentH(" + value + ");");
+
         current.setSize(value);
+        if (updateSVF)
+        	itemHeightSVF.setValue(Math.round(value * 10));
 	}
 
-	public void setCurrentX(int v) {
-        float value = (float)v / 10;
+	public void setCurrentX(float value, boolean updateSVF) {
+    	System.out.println("model.setCurrentX(" + value + ");");
+
         current.setX(value);
+        if (updateSVF)
+        	itemCentreXSVF.setValue(Math.round(value * 10));
 	}
 
-	public void setCurrentY(int v) {
-        float value = (float)v / 10;
+	public void setCurrentY(float value, boolean updateSVF) {
+    	System.out.println("model.setCurrentY(" + value + ");");
+
         current.setY(value);
+        if (updateSVF)
+        	itemCentreYSVF.setValue(Math.round(value * 10));
 	}
 
 
