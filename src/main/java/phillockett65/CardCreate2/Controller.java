@@ -370,7 +370,7 @@ public class Controller {
     /************************************************************************
      * Support code for "Generate" panel. 
      */
-	private int xPos = 81, yPos = 98;
+	private double xPos = 8.1, yPos = 9.8;
 
     @FXML
     private Button generateButton;
@@ -378,8 +378,8 @@ public class Controller {
     @FXML
     void generateButtonActionPerformed(ActionEvent event) {
     	model.displayDiags();
-    	xPos += 5;
-    	yPos += 7;
+    	xPos += 0.5;
+    	yPos += 0.7;
     	sample.setHandle(xPos, yPos);
 		model.setCurrentX(xPos, true);
 		model.setCurrentY(yPos, true);

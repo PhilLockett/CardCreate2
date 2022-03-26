@@ -19,8 +19,8 @@
  */
 
 /*
- * Handle is a class that is bound to a payload and is used to manipulate the 
- * image it contains.
+ * Handle is a class that is bound to a Payload and is used to manipulate the 
+ * image it contains. Handle operates in pixels.
  */
 package phillockett65.CardCreate2.sample;
 
@@ -74,9 +74,15 @@ public class Handle extends ImageView {
         }
     }
 
-    public void set(int x, int y) {
-        xPos = x;
-        yPos = y;
+    /**
+     * Position the handle.
+     * 
+     * @param x coordinate of the centre of the current Item in pixels.
+     * @param y coordinate of the centre of the current Item in pixels.
+     */
+    public void set(long x, long y) {
+        xPos = x - (width/2);
+        yPos = y - (height/2);
 		this.relocate(xPos, yPos);
     }
 

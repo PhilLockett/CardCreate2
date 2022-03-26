@@ -77,11 +77,18 @@ public class CardSample extends Stage {
 
 	/**
 	 * Temp for debug.
-	 * @param x
-	 * @param y
+     * @param x coordinate of the centre of the current Item as a percentage of the card width.
+     * @param y coordinate of the centre of the current Item as a percentage of the card height.
 	 */
-    public void setHandle(int x, int y) {
-        handle.set(x, y);
+    public void setHandle(double x, double y) {
+    	long width = model.getWidth();
+    	long height = model.getHeight();
+
+    	// Convert to pixels.
+    	long xPos = Math.round(x * width / 100); 
+    	long yPos = Math.round(y * height / 100); 
+    	
+    	handle.set(xPos, yPos);
     }
 
 	/**
