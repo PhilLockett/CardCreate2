@@ -710,16 +710,16 @@ public class Model {
 	}
 
 
-	public int getCurrentDefaultH() {
-		return (int)current.getItem().getH();
+	public double getCurrentDefaultH() {
+		return current.getItem().getH();
 	}
 
-	public int getCurrentDefaultX() {
-		return (int)current.getItem().getX();
+	public double getCurrentDefaultX() {
+		return current.getItem().getX();
 	}
 
-	public int getCurrentDefaultY() {
-		return (int)current.getItem().getY();
+	public double getCurrentDefaultY() {
+		return current.getItem().getY();
 	}
 
 	public double getCurrentH() {
