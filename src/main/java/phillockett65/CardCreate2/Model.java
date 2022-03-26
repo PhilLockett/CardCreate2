@@ -800,9 +800,9 @@ public class Model {
 	 * Initialize "Modify Selected Card Item" panel.
 	 */
 	private void initializeModifySelectedCardItem() {
-		itemHeightSVF = new SpinnerValueFactory.DoubleSpinnerValueFactory(0, 1000, 10, 0.1);
-	    itemCentreXSVF = new SpinnerValueFactory.DoubleSpinnerValueFactory(0, 1000, 10, 0.1);
-	    itemCentreYSVF = new SpinnerValueFactory.DoubleSpinnerValueFactory(0, 1000, 10, 0.1);
+		itemHeightSVF = new SpinnerValueFactory.DoubleSpinnerValueFactory(0, 100, 10, 0.05);
+	    itemCentreXSVF = new SpinnerValueFactory.DoubleSpinnerValueFactory(0, 100, 10, 0.05);
+	    itemCentreYSVF = new SpinnerValueFactory.DoubleSpinnerValueFactory(0, 100, 10, 0.05);
 
 	    // Original StringConverter found here: https://docs.oracle.com/javase/8/javafx/api/javafx/scene/control/SpinnerValueFactory.DoubleSpinnerValueFactory.html
 	    StringConverter<Double> stringConverter = new StringConverter<Double>() {
