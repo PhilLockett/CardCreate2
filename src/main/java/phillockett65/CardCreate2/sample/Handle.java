@@ -24,12 +24,18 @@
  */
 package phillockett65.CardCreate2.sample;
 
-import java.awt.Color;
-import java.awt.Graphics2D;
+import javafx.scene.Group;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Line;
+import javafx.scene.shape.Rectangle;
 
-public class Handle {
+public class Handle extends ImageView {
 
-    private int xPos = 150;
+	private Image image;
+
+	private int xPos = 150;
     private int yPos = 50;
     private int xMouse = xPos;
     private int yMouse = yPos;
@@ -38,6 +44,15 @@ public class Handle {
     private final int width = 16;
     private final int height = 16;
     private Payload payload;
+
+    public Handle(Image handleImage) {
+		image = handleImage;
+		this.setImage(image);
+//		width = Math.round((float)image.getWidth());
+//		height = Math.round((float)image.getHeight());
+		this.resize(width, height);
+//		this.relocate(20, 10);
+    }
 
     public Payload getPayload() {
         return payload;
@@ -62,6 +77,7 @@ public class Handle {
     public void set(int x, int y) {
         xPos = x;
         yPos = y;
+		this.relocate(xPos, yPos);
     }
 
     public int getXPos() {
@@ -149,17 +165,30 @@ public class Handle {
         return true;
     }
 
-    public void paint(Graphics2D g2d) {
+    public void paint(Group group) {
         if (payload != null) {
-//            Graphics2D g2d = (Graphics2D)g;
-            payload.paintPatterns(g2d);
+//            payload.paintPatterns(g2d);
         }
-        Color color = new Color(20, 100, 20);
-        g2d.setColor(color);
-        g2d.fillRect(xPos,yPos,width,height);
-        g2d.setColor(Color.WHITE);
-        g2d.drawRect(xPos,yPos,width,height);
-        g2d.drawLine(xPos, yPos, xPos+width, yPos+height);
-        g2d.drawLine(xPos+width, yPos, xPos, yPos+height);
+
+        final Color backCol = Color.DARKGREEN;
+        final Color foreCol = Color.WHITE;
+        final int lineWidth = 1;
+
+        Rectangle box = new Rectangle(xPos, yPos, width, height);
+        box.setFill(backCol);
+        box.setStrokeWidth(lineWidth);
+        box.setStroke(foreCol);
+
+        Line line1 = new Line(xPos, yPos, xPos+width, yPos+height);
+        line1.setStrokeWidth(lineWidth);
+        line1.setStroke(foreCol);
+
+        Line line2 = new Line(xPos+width, yPos, xPos, yPos+height);
+        line2.setStrokeWidth(lineWidth);
+        line2.setStroke(foreCol);
+
+        group.getChildren().add(box);
+        group.getChildren().add(line1);
+        group.getChildren().add(line2);
     }
 }

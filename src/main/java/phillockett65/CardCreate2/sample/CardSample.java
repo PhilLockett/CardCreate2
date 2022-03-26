@@ -38,6 +38,7 @@ public class CardSample extends Stage {
 
 	private Group group;
 	private Scene scene;
+	private Handle handle;
 
 	private final String title;
 
@@ -67,8 +68,21 @@ public class CardSample extends Stage {
 		setScene(scene);
 		this.setX(20);
 		this.setY(20);
+		handle = new Handle(model.getHandleImage());
+		group.getChildren().add(handle);
+		handle.set(20, 10);
+
 		show();
 	}
+
+	/**
+	 * Temp for debug.
+	 * @param x
+	 * @param y
+	 */
+    public void setHandle(int x, int y) {
+        handle.set(x, y);
+    }
 
 	/**
 	 * Calls the grid constructor, initializes some globals and adds the nodes 

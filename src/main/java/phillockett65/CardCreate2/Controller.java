@@ -366,6 +366,7 @@ public class Controller {
     /************************************************************************
      * Support code for "Generate" panel. 
      */
+	private int xPos = 81, yPos = 98;
 
     @FXML
     private Button generateButton;
@@ -373,6 +374,11 @@ public class Controller {
     @FXML
     void generateButtonActionPerformed(ActionEvent event) {
     	model.displayDiags();
+    	xPos += 5;
+    	yPos += 7;
+    	sample.setHandle(xPos, yPos);
+		model.setCurrentX(xPos, true);
+		model.setCurrentY(yPos, true);
     	setStatusMessage("Output sent to: " + model.getOutputDirectory());
     }
 
@@ -812,15 +818,18 @@ public class Controller {
 	    itemCentreYSpinner.setValueFactory(model.getItemCentreYSVF());
 
 	    itemHeightSpinner.valueProperty().addListener( (v, oldValue, newValue) -> {
-			model.setCurrentH(newValue);
+	    	System.out.println("itemHeightSpinner.valueProperty().Listener());");
+			model.setCurrentH(newValue, false);
 	    });
 
 	    itemCentreXSpinner.valueProperty().addListener( (v, oldValue, newValue) -> {
-			model.setCurrentX(newValue);
+	    	System.out.println("itemCentreXSpinner.valueProperty().Listener());");
+			model.setCurrentX(newValue, false);
 	    });
 
 	    itemCentreYSpinner.valueProperty().addListener( (v, oldValue, newValue) -> {
-			model.setCurrentY(newValue);
+	    	System.out.println("itemCentreYSpinner.valueProperty().Listener());");
+			model.setCurrentY(newValue, false);
 	    });
 
 	}

@@ -24,14 +24,19 @@
  */
 package phillockett65.CardCreate2.sample;
 
-import java.awt.Color;
-import java.awt.Graphics2D;
-import java.awt.geom.AffineTransform;
-import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.net.URI;
 
 import javax.imageio.ImageIO;
+
+import javafx.scene.Group;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 
 public class Payload {
 
@@ -129,7 +134,7 @@ public class Payload {
     private int pattern = 0;
     private final Item item;
     private final String path;
-    private BufferedImage image = null;
+    private Image image = null;
     private int imageWidthPX = 0;
     private int imageHeightPX = 0;
     private int cardWidthPX = Default.WIDTH.getInt();
@@ -144,6 +149,7 @@ public class Payload {
     private float spriteScale = 1.0F;
 
     public Payload(String path, int w, int h, int p, Item it) {
+    	System.out.println("Payload(" + path + ")");
 
         pattern = p;
         item = it;
@@ -158,41 +164,54 @@ public class Payload {
         spriteWidth = new Real(false);
         spriteHeight = new Real(true);
 
-        // Set up default pecentages.
+        // Set up default percentages.
         spriteHeight.setPercent(item.getH());
         centreX.setPercent(item.getX());
         centreY.setPercent(item.getY());
 
         // Set up image dependent values.
         this.path = path;
+        if (path.equals(""))
+        	return;
+
         image = loadImage(path);
         if (image != null) {
-            imageWidthPX = image.getWidth();
-            imageHeightPX = image.getHeight();
+            imageWidthPX = Math.round((float)image.getWidth());
+            imageHeightPX = Math.round((float)image.getHeight());
             spriteWidth.setPixels(spriteHeight.getRealPixels() * imageWidthPX / imageHeightPX);
             spriteScale = spriteHeight.getRealPixels() / imageHeightPX;
         }
     }
 
-    private BufferedImage loadImage(String path) {
-        BufferedImage loadedImage;
+    private Image loadImage(String path) {
+//    	System.out.println("loadImage(" + path + ")");
         File file = new File(path);
-        if (!file.exists()) {
-            return null;
-        }
+        boolean fileExists = file.exists();
+        if (!fileExists)
+        	System.out.println("File does not exist!");
 
-        try {
-            loadedImage = ImageIO.read(file);
-        }
-        catch(IOException e) {
-            loadedImage = null;
-            System.out.println("loadImage(" + path + ") - FILE NOT FOUND!");
-        }
+        Image loadedImage = null;
+		try {
+			loadedImage = new Image(new FileInputStream(file));
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+//			e.printStackTrace();
+		}
+
+//		URI uri = file.toURI();
+//    	Image loadedImage = new Image(getClass().getResourceAsStream(path));
+//    	Image loadImage = new Image("file://" + uri.getPath());
+//    	System.out.println("loadImage(file://" + uri.getPath() + ")");
+
+//        if (loadedImage.isError()) {
+//            loadedImage = null;
+//            System.out.println("loadImage(" + path + ") - FILE NOT FOUND!");
+//        }
 
         return loadedImage;
     }
 
-    private void paintImage(Graphics2D g2d, boolean generate) {
+    private void paintImage(Group group, boolean generate) {
 
         final int pX = centreX.getIntPixels();
         final int pY = centreY.getIntPixels();
@@ -200,36 +219,37 @@ public class Payload {
         final float winY = (float)cardHeightPX - (2*centreY.getRealPixels());
 
 //        System.out.printf("paintImage() pX = %d,  pY = %d generate = %s\n", pX, pY, generate ? "true" : "false");
-        AffineTransform at = AffineTransform.getTranslateInstance(pX, pY);
+//        AffineTransform at = AffineTransform.getTranslateInstance(pX, pY);
 
         float scaleX = winX / imageWidthPX;
         float scaleY = winY / imageHeightPX;
         float scale;
         if (keepAspectRatio) {
             if (!generate) {
-                g2d.setColor(Color.LIGHT_GRAY);
-                g2d.drawRect(pX,pY,Math.round(winX),Math.round(winY));
+                Rectangle box = new Rectangle(pX, pY, Math.round(winX), Math.round(winY));
+                box.setFill(Color.LIGHTGREY);
+                group.getChildren().add(box);
             }
             if (scaleX < scaleY) {
                 scale = scaleX;
                 int dY = Math.round((winY - (imageHeightPX * scale)) / 2);
-                at.translate(0, dY);
+//                at.translate(0, dY);
             }
             else {
                 scale = scaleY;
                 int dX = Math.round((winX - (imageWidthPX * scale)) / 2);
-                at.translate(dX, 0);
+//                at.translate(dX, 0);
             }
-            at.scale(scale, scale);
+//            at.scale(scale, scale);
         } 
         else {
-            at.scale(scaleX, scaleY);
+//            at.scale(scaleX, scaleY);
         }
-        g2d.drawImage(image, at, null);
+//        g2d.drawImage(image, at, null);
     }
 
 
-    private void paintIcon(Graphics2D g2d, Loc location) {
+    private void paintIcon(Group group, Loc location) {
 
         final float winX = (float)cardWidthPX - (2*centreX.getRealPixels());
         final float offX = location.getXOffset() * winX;
@@ -239,36 +259,36 @@ public class Payload {
         final float offY = location.getYOffset() * winY;
         final int pY = Math.round(centreY.getRealOrigin() + offY);
 
-        AffineTransform at = AffineTransform.getTranslateInstance(pX, pY);
-
-        if (location.getRotate()) {
-            at.setToTranslation(cardWidthPX-pX, cardHeightPX-pY);
-            at.quadrantRotate(2);
-        }
-        at.scale(spriteScale, spriteScale);
-        g2d.drawImage(image, at, null);
+//        AffineTransform at = AffineTransform.getTranslateInstance(pX, pY);
+//
+//        if (location.getRotate()) {
+//            at.setToTranslation(cardWidthPX-pX, cardHeightPX-pY);
+//            at.quadrantRotate(2);
+//        }
+//        at.scale(spriteScale, spriteScale);
+//        g2d.drawImage(image, at, null);
     }
 
     /**
      * Paint the icons associated with his payload.
      * @param g2d the 2D graphics object.
      */
-    public void paintPatterns(Graphics2D g2d) {
+    public void paintPatterns(Group group) {
         if (!display)
             return;
         
-        if (getPattern() == PAINT_DISPLAY) {
-            paintImage(g2d, false);
-            return;
-        }
-        if (getPattern() == PAINT_FILE) {
-            paintImage(g2d, true);
-            return;
-        }
-
-        for (int i = 0; i < patterns[getPattern()].length; ++i) {
-            paintIcon(g2d, patterns[getPattern()][i]);
-        }
+//        if (getPattern() == PAINT_DISPLAY) {
+//            paintImage(g2d, false);
+//            return;
+//        }
+//        if (getPattern() == PAINT_FILE) {
+//            paintImage(g2d, true);
+//            return;
+//        }
+//
+//        for (int i = 0; i < patterns[getPattern()].length; ++i) {
+//            paintIcon(g2d, patterns[getPattern()][i]);
+//        }
     }
 
     /**
