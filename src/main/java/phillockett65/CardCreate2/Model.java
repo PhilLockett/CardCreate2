@@ -943,8 +943,6 @@ public class Model {
 		System.out.println((keepAspectRatio ? "Keeping" : "NOT keeping") + " image aspect ratio");
 	
 		System.out.println("Current card: " + suits[suit] + cards[card]);
-		System.out.println("Card Width: " + cardWidthPX + " (" + getCalculatedWidth() + ")");
-		System.out.println("Card Height: " + cardHeightPX);
 	
 		System.out.println("Index path: " + index.getPath());
 		System.out.println("Corner Pip path: " + cornerPip.getPath());
