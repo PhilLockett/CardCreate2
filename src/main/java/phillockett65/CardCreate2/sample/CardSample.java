@@ -65,14 +65,14 @@ public class CardSample extends Stage {
 		initCardSample();
 
 		scene = new Scene(group, model.getWidth(), model.getHeight());
-		setScene(scene);
+		this.setScene(scene);
 		this.setX(20);
 		this.setY(20);
 		handle = new Handle(model.getHandleImage());
 		group.getChildren().add(handle);
 		handle.set(20, 10);
 
-		show();
+		this.show();
 	}
 
 	/**
