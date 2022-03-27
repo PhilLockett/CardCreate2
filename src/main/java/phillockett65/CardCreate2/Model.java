@@ -439,6 +439,26 @@ public class Model {
 		cardHeightPX = height;
 	}
 
+	/**
+	 * Convert X coordinate percentage to pixels.
+	 * 
+	 * @param x coordinate as a percentage of the card width.
+	 * @return equivalent pixel count.
+	 */
+    public long percentageToPX(double x) {
+    	return Math.round(x * cardWidthPX / 100); 
+    }
+
+	/**
+	 * Convert Y coordinate percentage to pixels.
+	 * 
+	 * @param y coordinate as a percentage of the card height.
+	 * @return equivalent pixel count.
+	 */
+    public long percentageToPY(double y) {
+    	return Math.round(y * cardHeightPX / 100); 
+    }
+
 	public SpinnerValueFactory<Integer> getWidthSVF() {
 		return widthSVF;
 	}
