@@ -49,7 +49,11 @@ public enum Default {
     FACE_PIPCENTRE_Y (10.14F+9.77F),
 
     WIDTH (380F),
-    HEIGHT (532F);
+    MIN_WIDTH (38F),
+    MAX_WIDTH (3800F),
+    HEIGHT (380F * 7 / 5),
+    MIN_HEIGHT (38F * 7 / 5),
+    MAX_HEIGHT (3800F * 7 / 5);
 
     private final int	iValue;
     private final float	rValue;

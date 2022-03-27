@@ -480,10 +480,14 @@ public class Model {
 	 */
 	private void initializeCardSize() {
 		final int WIDTH = Default.WIDTH.getInt();
+		final int MIN_WIDTH = Default.MIN_WIDTH.getInt();
+		final int MAX_WIDTH = Default.MAX_WIDTH.getInt();
 		final int HEIGHT = Default.HEIGHT.getInt();
+		final int MIN_HEIGHT = Default.MIN_HEIGHT.getInt();
+		final int MAX_HEIGHT = Default.MAX_HEIGHT.getInt();
 
-		widthSVF = new SpinnerValueFactory.IntegerSpinnerValueFactory(WIDTH/10, WIDTH*10, WIDTH);
-	    heightSVF = new SpinnerValueFactory.IntegerSpinnerValueFactory(HEIGHT/10, HEIGHT*10, HEIGHT);
+		widthSVF = new SpinnerValueFactory.IntegerSpinnerValueFactory(MIN_WIDTH, MAX_WIDTH, WIDTH);
+	    heightSVF = new SpinnerValueFactory.IntegerSpinnerValueFactory(MIN_HEIGHT, MAX_HEIGHT, HEIGHT);
 	}
 
 
