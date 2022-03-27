@@ -109,8 +109,8 @@ public class CardSample extends Stage {
 
         };
 
-        this.widthProperty().addListener(listener);
-        this.heightProperty().addListener(listener);
+//        this.widthProperty().addListener(listener);
+//        this.heightProperty().addListener(listener);
 
 
 		handle = new Handle(model.getHandleImage());
