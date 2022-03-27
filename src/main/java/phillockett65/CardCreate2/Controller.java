@@ -517,14 +517,20 @@ public class Controller {
 
     @FXML
     void cardSizeRadioButtonActionPerformed(ActionEvent event) {
-    	if (pokerRadioButton.isSelected())
+    	if (pokerRadioButton.isSelected()) {
     		model.setCardSize(Model.CardSize.POKER);
+			sample.syncCardSize();
+    	}
     	else
-    	if (bridgeRadioButton.isSelected())
+    	if (bridgeRadioButton.isSelected()) {
     		model.setCardSize(Model.CardSize.BRIDGE);
+			sample.syncCardSize();
+    	}
     	else
-    	if (freeRadioButton.isSelected())
+    	if (freeRadioButton.isSelected()) {
     		model.setCardSize(Model.CardSize.FREE);
+			sample.syncCardSize();
+    	}
 
     	final boolean autoWidth = model.isAutoCardWidth();
     	widthSpinner.setDisable(autoWidth);
@@ -561,10 +567,12 @@ public class Controller {
 
 	    widthSpinner.valueProperty().addListener( (v, oldValue, newValue) -> {
 			model.setWidth(newValue);
+			sample.syncCardSize();
 	    });
 
 	    heightSpinner.valueProperty().addListener( (v, oldValue, newValue) -> {
 			model.setHeight(newValue);
+			sample.syncCardSize();
 	    });
 
 	}
@@ -584,6 +592,7 @@ public class Controller {
     @FXML
     void colourPickerActionPerformed(ActionEvent event) {
     	model.setBackgroundColour(colourPicker.getValue());
+		sample.syncBackgroundColour();
 		colourTextField.setText(model.getBackgroundColourString());
     }
 

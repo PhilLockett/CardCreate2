@@ -25,9 +25,14 @@
 package phillockett65.CardCreate2.sample;
 
 import javafx.application.Platform;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.geometry.Point2D;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+
 import phillockett65.CardCreate2.Controller;
 import phillockett65.CardCreate2.Model;
 
@@ -36,9 +41,13 @@ public class CardSample extends Stage {
 	private Controller controller;
 	private Model model;
 
-	private Group group;
+	private Stage stage;
 	private Scene scene;
+	private Group group;
 	private Handle handle;
+
+	private double dx;	// Difference between the size of the stage and the size of the scene.
+	private double dy;
 
 	private final String title;
 
@@ -53,6 +62,7 @@ public class CardSample extends Stage {
 	public CardSample(Controller mainController, Model mainModel, String title) {
 //		System.out.println("PTable constructed: " + title);
 
+		stage = this;
 		this.title = title;
 		setTitle(title);
 		resizableProperty().setValue(false);
@@ -64,16 +74,73 @@ public class CardSample extends Stage {
 
 		initCardSample();
 
-		scene = new Scene(group, model.getWidth(), model.getHeight());
+		final int WIDTH = Default.WIDTH.getInt();
+		final int HEIGHT = Default.HEIGHT.getInt();
+		scene = new Scene(group, WIDTH, HEIGHT);
+//		scene.setFill(Color.YELLOW);
+//		scene = new Scene(group);
 		this.setScene(scene);
 		this.setX(20);
 		this.setY(20);
+
+		System.out.println("Default Size " + WIDTH + " and " + HEIGHT);
+		System.out.println("Scene Size set to " + scene.getWidth() + " and " + scene.getHeight());
+
+
+        ChangeListener<Number> listener = new ChangeListener<Number>() {
+            private Point2D stageSize = null ;
+            private Point2D previousStageSize = new Point2D(stage.getWidth(), stage.getHeight());
+
+            @Override
+            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+
+//            @Override
+                if (stageSize == null) {
+                    Platform.runLater(() -> {
+                        System.out.printf("Old: (%.1f, %.1f); new: (%.1f, %.1f)%n", 
+                                previousStageSize.getX(), previousStageSize.getY(), 
+                                stageSize.getX(), stageSize.getY());
+                        previousStageSize = stageSize;
+                        stageSize = null;
+                    });
+                }
+                stageSize = new Point2D(stage.getWidth(), stage.getHeight());
+            }
+
+        };
+
+        this.widthProperty().addListener(listener);
+        this.heightProperty().addListener(listener);
+
+
 		handle = new Handle(model.getHandleImage());
 		group.getChildren().add(handle);
 		handle.set(20, 10);
 
 		this.show();
+
+		System.out.println("Stage Size set to " + this.getWidth() + " and " + this.getHeight());
+		dx = this.getWidth() - WIDTH;
+		dy = this.getHeight() - HEIGHT;
+		System.out.println("Stage deltas " + dx + " and " + dy + "   " + (dy-dx));
+
+		this.setMinWidth(Default.MIN_WIDTH.getFloat() + dx);
+		this.setMinHeight(Default.MIN_HEIGHT.getFloat() + dy);
+		this.setMaxWidth(Default.MAX_WIDTH.getFloat() + dx);
+		this.setMaxHeight(Default.MAX_HEIGHT.getFloat() + dy);
+
 	}
+
+
+    public void syncBackgroundColour() {
+		scene.setFill(model.getBackgroundColour());
+    }
+
+    public void syncCardSize() {
+    	this.setWidth(model.getCalculatedWidth() + dx);
+    	this.setHeight(model.getHeight() + dy);
+    }
+
 
 	/**
 	 * Temp for debug.
