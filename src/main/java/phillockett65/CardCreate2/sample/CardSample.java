@@ -74,11 +74,9 @@ public class CardSample extends Stage {
 
 		initCardSample();
 
-		final int WIDTH = Default.WIDTH.getInt();
-		final int HEIGHT = Default.HEIGHT.getInt();
+		final float WIDTH = Default.WIDTH.getFloat();
+		final float HEIGHT = Default.HEIGHT.getFloat();
 		scene = new Scene(group, WIDTH, HEIGHT);
-//		scene.setFill(Color.YELLOW);
-//		scene = new Scene(group);
 		this.setScene(scene);
 		this.setX(20);
 		this.setY(20);
@@ -87,27 +85,26 @@ public class CardSample extends Stage {
 		System.out.println("Scene Size set to " + scene.getWidth() + " and " + scene.getHeight());
 
 
-        ChangeListener<Number> listener = new ChangeListener<Number>() {
-            private Point2D stageSize = null ;
-            private Point2D previousStageSize = new Point2D(stage.getWidth(), stage.getHeight());
-
-            @Override
-            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-
+//        ChangeListener<Number> listener = new ChangeListener<Number>() {
+//            private Point2D stageSize = null ;
+//            private Point2D previousStageSize = new Point2D(stage.getWidth(), stage.getHeight());
+//
 //            @Override
-                if (stageSize == null) {
-                    Platform.runLater(() -> {
-                        System.out.printf("Old: (%.1f, %.1f); new: (%.1f, %.1f)%n", 
-                                previousStageSize.getX(), previousStageSize.getY(), 
-                                stageSize.getX(), stageSize.getY());
-                        previousStageSize = stageSize;
-                        stageSize = null;
-                    });
-                }
-                stageSize = new Point2D(stage.getWidth(), stage.getHeight());
-            }
-
-        };
+//            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+//
+//                if (stageSize == null) {
+//                    Platform.runLater(() -> {
+//                        System.out.printf("Old: (%.1f, %.1f); new: (%.1f, %.1f)%n", 
+//                                previousStageSize.getX(), previousStageSize.getY(), 
+//                                stageSize.getX(), stageSize.getY());
+//                        previousStageSize = stageSize;
+//                        stageSize = null;
+//                    });
+//                }
+//                stageSize = new Point2D(stage.getWidth(), stage.getHeight());
+//            }
+//
+//        };
 
 //        this.widthProperty().addListener(listener);
 //        this.heightProperty().addListener(listener);
