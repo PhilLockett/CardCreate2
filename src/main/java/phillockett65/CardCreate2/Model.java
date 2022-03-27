@@ -596,15 +596,15 @@ public class Model {
 		currentItem = cardItem;
 
 		if (currentItem == Item.INDEX) {
-			setCurrentCardItemAndUpdateControls(index);
+			changeCurrentCardItemAndSyncSpinners(index);
 		} else if (currentItem == Item.CORNER_PIP) {
-			setCurrentCardItemAndUpdateControls(cornerPip);
+			changeCurrentCardItemAndSyncSpinners(cornerPip);
 		} else if (currentItem == Item.STANDARD_PIP) {
-			setCurrentCardItemAndUpdateControls(standardPip);
+			changeCurrentCardItemAndSyncSpinners(standardPip);
 		} else if (currentItem == Item.FACE) {
-			setCurrentCardItemAndUpdateControls(face);
+			changeCurrentCardItemAndSyncSpinners(face);
 		} else if (currentItem == Item.FACE_PIP) {
-			setCurrentCardItemAndUpdateControls(facePip);
+			changeCurrentCardItemAndSyncSpinners(facePip);
 		}
 
 	}
@@ -646,7 +646,7 @@ public class Model {
 
 
 
-	public void setCardItemsPayload() {
+	public void initializeCardItemPayloads() {
 
         String pathToFaceImage = getFaceDirectory() + "\\" + suits[suit] + cards[card] + ".png";
         face = new Payload(pathToFaceImage, cardWidthPX, cardHeightPX, Payload.PAINT_FILE, Item.FACE);
@@ -667,7 +667,7 @@ public class Model {
         	pathToPip = pathToCornerPip;
         cornerPip = new Payload(pathToPip, cardWidthPX, cardHeightPX, 0, Item.CORNER_PIP);
 
-        setCurrentCardItemAndUpdateControls(index);
+        changeCurrentCardItemAndSyncSpinners(index);
     }
 
     public SpinnerValueFactory<Double> getItemHeightSVF() {
@@ -813,7 +813,7 @@ public class Model {
      * Update the "Modify Card Item" controls.
      */
 
-	private void setCurrentCardItemAndUpdateControls(Payload item) {
+	private void changeCurrentCardItemAndSyncSpinners(Payload item) {
         current = item;
 	    itemHeightSVF.setValue(roundPercentage(getCurrentH()));
 	    itemCentreXSVF.setValue(roundPercentage(getCurrentX()));

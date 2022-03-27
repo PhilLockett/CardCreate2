@@ -139,8 +139,9 @@ public class Controller {
             stage.close();
             sample.close();
         }
+
 		setInitialBaseDirectory();
-		model.setCardItemsPayload();
+		model.initializeCardItemPayloads();
         setSelectCardItemTooltips();
 	}
 
