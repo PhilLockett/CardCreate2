@@ -62,19 +62,18 @@ public class Payload {
 
     public class Real {
         private final boolean height;
+        private final double scale;
         private double decimal = 0;
         private double percent = 0;
         private double pixels = 0;
         
         public Real(boolean height) {
             this.height = height;
+            scale = height ? cardHeightPX : cardWidthPX;
         }
 
         private void calcPixels() {
-            if (height)
-                pixels = decimal * cardHeightPX;
-            else
-                pixels = decimal * cardWidthPX;
+            pixels = decimal * scale;
         }
         public void setPercent(double value) {
             percent = value;
@@ -90,10 +89,7 @@ public class Payload {
 
         public void setPixels(double value) {
             pixels = value;
-            if (height)
-                decimal = pixels / cardHeightPX;
-            else
-                decimal = pixels / cardWidthPX;
+            decimal = pixels / scale;
             percent = decimal * 100;
         }
         
@@ -114,13 +110,10 @@ public class Payload {
         }
 
         public double getRealOrigin() {
-        	double origin;
             if (height)
-                origin = pixels - (spriteHeight.getRealPixels()/2);
+                return pixels - (spriteHeight.getRealPixels()/2);
             else
-                origin = pixels - (spriteWidth.getRealPixels()/2);
-
-            return origin;
+                return pixels - (spriteWidth.getRealPixels()/2);
         }
 
         public long getOrigin() {
