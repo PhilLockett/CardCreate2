@@ -106,8 +106,7 @@ public class CardSample extends Stage {
 //        this.heightProperty().addListener(listener);
 
 
-		handle = new Handle(model.getHandleImage());
-		group.getChildren().add(handle);
+		handle = model.getHandle();
 		handle.set(20, 10);
 
 		this.show();

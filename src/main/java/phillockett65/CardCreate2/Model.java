@@ -39,6 +39,7 @@ import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import phillockett65.CardCreate2.sample.Default;
+import phillockett65.CardCreate2.sample.Handle;
 import phillockett65.CardCreate2.sample.Item;
 import phillockett65.CardCreate2.sample.Payload;
 
@@ -885,6 +886,7 @@ public class Model {
 
 	private Group group;
     private Image image;
+	private Handle handle;
 
 	public Group getGroup() {
 		return group;
@@ -894,6 +896,9 @@ public class Model {
 		return image;
 	}
 
+	public Handle getHandle() {
+		return handle;
+	}
 
     /**
 	 * Initialize "Sample" panel.
@@ -901,6 +906,8 @@ public class Model {
 	private void initializeSample() {
 		group = new Group();
 		image = new Image(getClass().getResourceAsStream("Handle.png"));
+		handle = new Handle(image);
+		group.getChildren().add(handle);
     }
 
 
