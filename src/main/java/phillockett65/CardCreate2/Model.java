@@ -654,11 +654,11 @@ public class Model {
     private SpinnerValueFactory<Double> itemCentreYSVF;
 
 
-    private String getFaceImagePath() {
+    public String getFaceImagePath() {
         return getFaceDirectory() + "\\" + suits[suit] + cards[card] + ".png";
     }
 
-    private String getIndexImagePath() {
+    public String getIndexImagePath() {
         String pathToImage = getIndexDirectory() + "\\" + suits[suit] + cards[card] + ".png";
         File file = new File(pathToImage);
         if (!file.exists())
@@ -667,11 +667,11 @@ public class Model {
         return pathToImage;
     }
 
-    private String getPipImagePath() {
+    public String getPipImagePath() {
         return getPipDirectory() + "\\" + suits[suit] + ".png";
     }
 
-    private String getCornerPipImagePath() {
+    public String getCornerPipImagePath() {
         String pathToImage = getPipDirectory() + "\\" + suits[suit] + "S.png";
         File file = new File(pathToImage);
         if (file.exists())
@@ -702,18 +702,17 @@ public class Model {
     }
 
 
-    public void initializeCardItemPayloads() {
-        final double Width = cardWidthPX;
-        final double Height = cardHeightPX;
+    private void initializeCardItemPayloads() {
+		System.out.println("initializeCardItemPayloads()");
 
-        face		= new Payload(group, getFaceImagePath(), Width, Height, Payload.PAINT_FILE, Item.FACE);
+        face		= new Payload(this, Payload.PAINT_FILE, Item.FACE);
 
-        index		= new Payload(group, getIndexImagePath(), Width, Height, 0, Item.INDEX);
+        index		= new Payload(this, 0, Item.INDEX);
 
-        standardPip	= new Payload(group, getPipImagePath(), Width, Height, card, Item.STANDARD_PIP);
-        facePip		= new Payload(group, getPipImagePath(), Width, Height, 0, Item.FACE_PIP);
+        standardPip	= new Payload(this, card, Item.STANDARD_PIP);
+        facePip		= new Payload(this, 0, Item.FACE_PIP);
 
-        cornerPip	= new Payload(group, getCornerPipImagePath(), Width, Height, 0, Item.CORNER_PIP);
+        cornerPip	= new Payload(this, 0, Item.CORNER_PIP);
 
         changeCurrentCardItemAndSyncSpinners(index);
     }
@@ -934,7 +933,11 @@ public class Model {
 		initializeSample();
 	}
 
+	public void init() {
+		System.out.println("init()");
 
+		initializeCardItemPayloads();
+	}
 
 
 	/************************************************************************

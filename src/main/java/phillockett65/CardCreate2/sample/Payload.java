@@ -38,6 +38,8 @@ import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
+import phillockett65.CardCreate2.Model;
+
 public class Payload {
 
 	private enum Loc {
@@ -245,6 +247,8 @@ public class Payload {
     
     // "image" refers to the image in the file, 
     // "sprite" refers to the image on screen.
+	private Model model;
+
     private int pattern = 0;
     private final Item item;
     private final String path;
@@ -263,15 +267,17 @@ public class Payload {
     private final Real spriteWidth;
     private double spriteScale = 1;
 
-    public Payload(Group group, String path, double w, double h, int p, Item it) {
-        System.out.println("Payload(" + path + ")");
+    public Payload(Model mainModel, int p, Item it) {
+        System.out.println("Payload()");
 
-        this.group = group;
+		model = mainModel;
+
+        group = model.getGroup();
+        cardWidthPX = model.getWidth();
+        cardHeightPX = model.getHeight();
+
         pattern = p;
         item = it;
-
-        cardWidthPX = w;
-        cardHeightPX = h;
 
         display = true;
         keepAspectRatio = true;

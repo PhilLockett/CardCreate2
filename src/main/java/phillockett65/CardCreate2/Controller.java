@@ -140,7 +140,7 @@ public class Controller {
         }
 
 		setInitialBaseDirectory();
-		model.initializeCardItemPayloads();
+		model.init();
         setSelectCardItemTooltips();
         initInputDirectoryChoiceBoxHandlers();
 	}
@@ -392,7 +392,8 @@ public class Controller {
     	sample.setHandle(xPos, yPos);
 		model.setCurrentX(xPos, true);
 		model.setCurrentY(yPos, true);
-    	setStatusMessage("Output sent to: " + model.getOutputDirectory());
+
+        setStatusMessage("Output sent to: " + model.getOutputDirectory());
     }
 
 	/**
