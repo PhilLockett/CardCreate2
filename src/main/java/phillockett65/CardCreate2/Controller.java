@@ -51,7 +51,6 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
 
-import phillockett65.CardCreate2.Model;
 import phillockett65.CardCreate2.sample.CardSample;
 import phillockett65.CardCreate2.sample.Item;
 

@@ -30,8 +30,6 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.text.DecimalFormat;
-import java.text.ParseException;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -40,7 +38,6 @@ import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
-import javafx.util.StringConverter;
 import phillockett65.CardCreate2.sample.Default;
 import phillockett65.CardCreate2.sample.Item;
 import phillockett65.CardCreate2.sample.Payload;

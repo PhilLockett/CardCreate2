@@ -25,12 +25,8 @@
 package phillockett65.CardCreate2.sample;
 
 import javafx.application.Platform;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.geometry.Point2D;
 import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 import phillockett65.CardCreate2.Controller;
