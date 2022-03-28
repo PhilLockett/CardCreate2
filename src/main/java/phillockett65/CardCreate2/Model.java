@@ -656,56 +656,63 @@ public class Model {
     private SpinnerValueFactory<Double> itemCentreYSVF;
 
 
-    public void setCardItemPayloads() {
+    private String getFaceImagePath() {
+        return getFaceDirectory() + "\\" + suits[suit] + cards[card] + ".png";
+    }
+
+    private String getIndexImagePath() {
+        String pathToImage = getIndexDirectory() + "\\" + suits[suit] + cards[card] + ".png";
+        File file = new File(pathToImage);
+        if (!file.exists())
+            pathToImage = getIndexDirectory() + "\\" + alts[suit] + cards[card] + ".png";
+
+        return pathToImage;
+    }
+
+    private String getPipImagePath() {
+        return getPipDirectory() + "\\" + suits[suit] + ".png";
+    }
+
+    private String getCornerPipImagePath() {
+        String pathToImage = getPipDirectory() + "\\" + suits[suit] + "S.png";
+        File file = new File(pathToImage);
+        if (file.exists())
+            return pathToImage;
+
+        return getPipImagePath();
+    }
+
+    private void setFaceCardItemPayload() {
+        face.loadNewImageFile(getFaceImagePath());
+    }
+
+    private void setIndexCardItemPayload() {
+        index.loadNewImageFile(getIndexImagePath());
+    }
+
+    private void setPipCardItemPayloads() {
+        standardPip.loadNewImageFile(getPipImagePath());
+        facePip.loadNewImageFile(getPipImagePath());
+
+        cornerPip.loadNewImageFile(getCornerPipImagePath());
+    }
+
+    private void setCardItemPayloads() {
         setFaceCardItemPayload();
         setIndexCardItemPayload();
         setPipCardItemPayloads();
     }
 
-	public void setFaceCardItemPayload() {
-        String pathToFaceImage = getFaceDirectory() + "\\" + suits[suit] + cards[card] + ".png";
-        face.loadNewImageFile(pathToFaceImage);
-    }
-
-    public void setIndexCardItemPayload() {
-        String pathToIndexImage = getIndexDirectory() + "\\" + suits[suit] + cards[card] + ".png";
-        boolean indexFileExists = new File(pathToIndexImage).exists();
-        if (!indexFileExists)
-            pathToIndexImage = getIndexDirectory() + "\\" + alts[suit] + cards[card] + ".png";
-        index.loadNewImageFile(pathToIndexImage);
-    }
-
-    public void setPipCardItemPayloads() {
-        String pathToPip = getPipDirectory() + "\\" + suits[suit] + ".png";
-        standardPip.loadNewImageFile(pathToPip);
-        facePip.loadNewImageFile(pathToPip);
-
-        String pathToCornerPip = getPipDirectory() + "\\" + suits[suit] + "S.png";
-        boolean cornerPipFileExists = new File(pathToCornerPip).exists();
-        if (cornerPipFileExists)
-            pathToPip = pathToCornerPip;
-        cornerPip.loadNewImageFile(pathToPip);
-    }
 
     public void initializeCardItemPayloads() {
-        String pathToFaceImage = getFaceDirectory() + "\\" + suits[suit] + cards[card] + ".png";
-        face = new Payload(pathToFaceImage, cardWidthPX, cardHeightPX, Payload.PAINT_FILE, Item.FACE);
+        face = new Payload(getFaceImagePath(), cardWidthPX, cardHeightPX, Payload.PAINT_FILE, Item.FACE);
 
-        String pathToIndexImage = getIndexDirectory() + "\\" + suits[suit] + cards[card] + ".png";
-        boolean indexFileExists = new File(pathToIndexImage).exists();
-        if (!indexFileExists)
-            pathToIndexImage = getIndexDirectory() + "\\" + alts[suit] + cards[card] + ".png";
-        index = new Payload(pathToIndexImage, cardWidthPX, cardHeightPX, 0, Item.INDEX);
+        index = new Payload(getIndexImagePath(), cardWidthPX, cardHeightPX, 0, Item.INDEX);
 
-        String pathToPip = getPipDirectory() + "\\" + suits[suit] + ".png";
-        standardPip = new Payload(pathToPip, cardWidthPX, cardHeightPX, card, Item.STANDARD_PIP);
-        facePip = new Payload(pathToPip, cardWidthPX, cardHeightPX, 0, Item.FACE_PIP);
+        standardPip = new Payload(getPipImagePath(), cardWidthPX, cardHeightPX, card, Item.STANDARD_PIP);
+        facePip = new Payload(getPipImagePath(), cardWidthPX, cardHeightPX, 0, Item.FACE_PIP);
 
-        String pathToCornerPip = getPipDirectory() + "\\" + suits[suit] + "S.png";
-        boolean cornerPipFileExists = new File(pathToCornerPip).exists();
-        if (cornerPipFileExists)
-            pathToPip = pathToCornerPip;
-        cornerPip = new Payload(pathToPip, cardWidthPX, cardHeightPX, 0, Item.CORNER_PIP);
+        cornerPip = new Payload(getCornerPipImagePath(), cardWidthPX, cardHeightPX, 0, Item.CORNER_PIP);
 
         changeCurrentCardItemAndSyncSpinners(index);
     }
