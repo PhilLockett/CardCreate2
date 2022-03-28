@@ -297,11 +297,8 @@ public class Payload {
         final double offY = location.getYOffset() * winY;
         final long pY = Math.round(centreY.getRealOrigin() + offY);
 
-//        AffineTransform at = AffineTransform.getTranslateInstance(pX, pY);
-//
+
 //        if (location.getRotate()) {
-//            at.setToTranslation(cardWidthPX-pX, cardHeightPX-pY);
-//            at.quadrantRotate(2);
 //        }
 //        at.scale(spriteScale, spriteScale);
 //        g2d.drawImage(image, at, null);
