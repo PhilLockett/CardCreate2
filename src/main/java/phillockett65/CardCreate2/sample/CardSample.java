@@ -138,6 +138,10 @@ public class CardSample extends Stage {
     	this.setHeight(model.getHeight() + dy);
     }
 
+    public void syncCurrentCard() {
+    	System.out.println("syncCurrentCard()");
+    }
+
 
 	/**
 	 * Temp for debug.

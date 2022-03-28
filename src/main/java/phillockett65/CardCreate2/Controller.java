@@ -143,6 +143,7 @@ public class Controller {
 		setInitialBaseDirectory();
 		model.initializeCardItemPayloads();
         setSelectCardItemTooltips();
+        initInputDirectoryChoiceBoxHandlers();
 	}
 
 
@@ -351,19 +352,27 @@ public class Controller {
 	    faceChoiceBox.setTooltip(new Tooltip("Requires the Base Directory to be correctly set"));
 	    indexChoiceBox.setTooltip(new Tooltip("Requires the Base Directory to be correctly set"));
 	    pipChoiceBox.setTooltip(new Tooltip("Requires the Base Directory to be correctly set"));
+	}
 
-		faceChoiceBox.getSelectionModel().selectedItemProperty().addListener( (v, oldValue, newValue) -> {
-	    	model.setFaceStyle(newValue);
-	    	outputTextField.setText(model.getOutputName());
-	    });
+    /**
+     * This has to be done after the base directory has been set up.
+     */
+    private void initInputDirectoryChoiceBoxHandlers() {
+        faceChoiceBox.getSelectionModel().selectedItemProperty().addListener( (v, oldValue, newValue) -> {
+            model.setFaceStyle(newValue);
+            sample.syncCurrentCard();
+            outputTextField.setText(model.getOutputName());
+        });
 
-	    indexChoiceBox.getSelectionModel().selectedItemProperty().addListener( (v, oldValue, newValue) -> {
-	    	model.setIndexStyle(newValue);
-	    });
+        indexChoiceBox.getSelectionModel().selectedItemProperty().addListener( (v, oldValue, newValue) -> {
+            model.setIndexStyle(newValue);
+            sample.syncCurrentCard();
+        });
 
-	    pipChoiceBox.getSelectionModel().selectedItemProperty().addListener( (v, oldValue, newValue) -> {
-	    	model.setPipStyle(newValue);
-	    });
+        pipChoiceBox.getSelectionModel().selectedItemProperty().addListener( (v, oldValue, newValue) -> {
+            model.setPipStyle(newValue);
+            sample.syncCurrentCard();
+        });
 	}
 
 
@@ -453,21 +462,25 @@ public class Controller {
     @FXML
     void previousCardButtonActionPerformed(ActionEvent event) {
     	model.prevCard();
+    	sample.syncCurrentCard();
     }
 
     @FXML
     void previousSuitButtonActionPerformed(ActionEvent event) {
     	model.prevSuit();
+    	sample.syncCurrentCard();
     }
 
     @FXML
     void nextCardButtonActionPerformed(ActionEvent event) {
     	model.nextCard();
+    	sample.syncCurrentCard();
     }
 
     @FXML
     void nextSuitButtonActionPerformed(ActionEvent event) {
     	model.nextSuit();
+    	sample.syncCurrentCard();
     }
 
 	/**
