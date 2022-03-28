@@ -55,17 +55,17 @@ public enum Item {
     private final DecimalFormat df = new DecimalFormat("#.#");
 
     /**
-     * @return the default height for the item.
+     * @return the default height for the item as a percentage of the card height.
      */
     public float getH() { return height; }
 
     /**
-     * @return the default X coordinate of the centre of the item.
+     * @return the default X coordinate of the centre of the item as a percentage of the card width.
      */
     public float getX() { return centreX; }
 
     /**
-     * @return the default Y coordinate of the centre of the item.
+     * @return the default Y coordinate of the centre of the item as a percentage of the card height.
      */
     public float getY() { return centreY; }
 
