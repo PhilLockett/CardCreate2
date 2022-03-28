@@ -40,6 +40,46 @@ import javafx.scene.shape.Rectangle;
 
 public class Payload {
 
+	private enum Loc {
+	    L_0 (0, 0, false),
+	    L_1 (0, 1, true), 
+	    L_2 (0, 1, false),
+	    L_3 (1, 1, true), 
+	    L_4 (2, 1, true), 
+	    L_5 (1, 1, false),
+	    L_6 (2, 1, false),
+	    L_7 (1, 0, false),
+	    L_8 (2, 0, false),
+	    L_9 (0, 3, false),
+	    L10 (0, 3, true), 
+	    L11 (1, 4, true), 
+	    L12 (2, 4, true), 
+	    L13 (1, 4, false),
+	    L14 (2, 4, false),
+	    L15 (0, 5, true), 
+	    L16 (0, 5, false);
+
+	    private final int       xIndex;
+	    private final int       yIndex;
+	    private final boolean   rotate;
+
+	    Loc(int ix, int iy, boolean rot) {
+	        xIndex = ix;
+	        yIndex = iy;
+	        rotate = rot;
+	    }
+
+	    public int getXIndex() { return xIndex; }
+	    public int getYIndex() { return yIndex; }
+	    public boolean getRotate() { return rotate; }
+	    
+	    private final double[] offsets = { 0.5F, 0F, 1F, 0.25F, 1F / 3, 1F / 6 };
+
+	    public double getXOffset() { return offsets[xIndex]; }
+	    public double getYOffset() { return offsets[yIndex]; }
+
+	};
+
     public static final int PAINT_DISPLAY = -1;
     public static final int PAINT_FILE = -2;
 
