@@ -404,8 +404,8 @@ public class Model {
 	
 	private CardSize cardSize = CardSize.POKER;
 
-	private int cardWidthPX = Default.WIDTH.getInt();
-	private int cardHeightPX = Default.HEIGHT.getInt();
+	private double cardWidthPX = Default.WIDTH.getInt();
+	private double cardHeightPX = Default.HEIGHT.getInt();
 
 	private SpinnerValueFactory<Integer> widthSVF;
 	private SpinnerValueFactory<Integer> heightSVF;
@@ -422,11 +422,11 @@ public class Model {
 		return cardSize != CardSize.FREE;
 	}
 
-	public int getWidth() {
+	public double getWidth() {
 		return cardWidthPX;
 	}
 
-	public int getCalculatedWidth() {
+	public double getCalculatedWidth() {
 		if (cardSize == CardSize.POKER)
 			return cardHeightPX * 5 / 7;
 
@@ -436,15 +436,15 @@ public class Model {
 		return cardWidthPX;
 	}
 
-	public void setWidth(int width) {
+	public void setWidth(double width) {
 		cardWidthPX = width;
 	}
 
-	public int getHeight() {
+	public double getHeight() {
 		return cardHeightPX;
 	}
 
-	public void setHeight(int height) {
+	public void setHeight(double height) {
 		cardHeightPX = height;
 	}
 
@@ -703,8 +703,8 @@ public class Model {
 
 
     public void initializeCardItemPayloads() {
-        final int Width = cardWidthPX;
-        final int Height = cardHeightPX;
+        final double Width = cardWidthPX;
+        final double Height = cardHeightPX;
 
         face		= new Payload(group, getFaceImagePath(), Width, Height, Payload.PAINT_FILE, Item.FACE);
 

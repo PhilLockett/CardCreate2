@@ -252,8 +252,8 @@ public class Payload {
     private Image image = null;
     private long imageWidthPX = 0;
     private long imageHeightPX = 0;
-    private int cardWidthPX = Default.WIDTH.getInt();
-    private int cardHeightPX = Default.HEIGHT.getInt();
+    private double cardWidthPX;
+    private double cardHeightPX;
 
     private boolean display;
     private boolean keepAspectRatio;
@@ -263,7 +263,7 @@ public class Payload {
     private final Real spriteWidth;
     private double spriteScale = 1;
 
-    public Payload(Group group, String path, int w, int h, int p, Item it) {
+    public Payload(Group group, String path, double w, double h, int p, Item it) {
         System.out.println("Payload(" + path + ")");
 
         this.group = group;
