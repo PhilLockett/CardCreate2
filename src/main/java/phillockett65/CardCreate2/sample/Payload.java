@@ -149,7 +149,7 @@ public class Payload {
     private double spriteScale = 1;
 
     public Payload(String path, int w, int h, int p, Item it) {
-    	System.out.println("Payload(" + path + ")");
+        System.out.println("Payload(" + path + ")");
 
         pattern = p;
         item = it;
@@ -172,43 +172,47 @@ public class Payload {
         // Set up image dependent values.
         this.path = path;
         if (path.equals(""))
-        	return;
+            return;
 
-        image = loadImage(path);
-        if (image != null) {
-            imageWidthPX = Math.round(image.getWidth());
-            imageHeightPX = Math.round(image.getHeight());
-            spriteWidth.setPixels(spriteHeight.getRealPixels() * imageWidthPX / imageHeightPX);
-            spriteScale = spriteHeight.getRealPixels() / imageHeightPX;
-        }
+        loadNewImageFile(path);
     }
 
     private Image loadImage(String path) {
 //    	System.out.println("loadImage(" + path + ")");
         File file = new File(path);
-        boolean fileExists = file.exists();
-        if (!fileExists)
-        	System.out.println("File does not exist!");
+
+        if (!file.exists()) {
+            System.out.println("File does not exist!");
+
+             return null;
+        }
 
         Image loadedImage = null;
-		try {
-			loadedImage = new Image(new FileInputStream(file));
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-//			e.printStackTrace();
-		}
-
-//		URI uri = file.toURI();
-//    	Image loadedImage = new Image(getClass().getResourceAsStream(path));
-//    	Image loadImage = new Image("file://" + uri.getPath());
-//    	System.out.println("loadImage(file://" + uri.getPath() + ")");
-
-//        if (loadedImage.isError()) {
-//            loadedImage = null;
-//            System.out.println("loadImage(" + path + ") - FILE NOT FOUND!");
-//        }
+        try {
+            loadedImage = new Image(new FileInputStream(file));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
 
         return loadedImage;
+    }
+    
+    public boolean loadNewImageFile(String path) {
+    	System.out.println("loadNewImageFile(" + path + ")");
+
+        image = loadImage(path);
+
+        if (image != null) {
+            imageWidthPX = Math.round(image.getWidth());
+            imageHeightPX = Math.round(image.getHeight());
+            spriteWidth.setPixels(spriteHeight.getRealPixels() * imageWidthPX / imageHeightPX);
+            spriteScale = spriteHeight.getRealPixels() / imageHeightPX;
+
+            return true;
+        }
+
+
+        return false;
     }
 
     private void paintImage(Group group, boolean generate) {

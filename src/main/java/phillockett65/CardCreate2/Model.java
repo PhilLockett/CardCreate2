@@ -131,17 +131,20 @@ public class Model {
 		return pipStyle;
 	}
 
-	public void setFaceStyle(String style) {
-		faceStyle = style;
-	}
+    public void setFaceStyle(String style) {
+        faceStyle = style;
+        setFaceCardItemPayload();
+    }
 
-	public void setIndexStyle(String style) {
-		indexStyle = style;
-	}
+    public void setIndexStyle(String style) {
+        indexStyle = style;
+        setIndexCardItemPayload();
+    }
 
-	public void setPipStyle(String style) {
-		pipStyle = style;
-	}
+    public void setPipStyle(String style) {
+        pipStyle = style;
+        setPipCardItemPayloads();
+    }
 
 
 	/**
@@ -355,28 +358,36 @@ public class Model {
 		if (++suit >= suits.length)
 			suit = 0;
 
-		return suit;
+        setCardItemPayloads();
+
+        return suit;
 	}
 
 	public int nextCard() {
 		if (++card >= cards.length)
 			card = 1;
 
-		return card;
+        setCardItemPayloads();
+
+        return card;
 	}
 
 	public int prevSuit() {
 		if (--suit < 0)
 			suit = suits.length - 1;
 
-		return suit;
+        setCardItemPayloads();
+
+        return suit;
 	}
 
 	public int prevCard() {
 		if (--card <= 0)
 			card = cards.length - 1;
 
-		return card;
+        setCardItemPayloads();
+
+        return card;
 	}
 
 	/**
@@ -645,9 +656,38 @@ public class Model {
     private SpinnerValueFactory<Double> itemCentreYSVF;
 
 
+    public void setCardItemPayloads() {
+        setFaceCardItemPayload();
+        setIndexCardItemPayload();
+        setPipCardItemPayloads();
+    }
 
-	public void initializeCardItemPayloads() {
+	public void setFaceCardItemPayload() {
+        String pathToFaceImage = getFaceDirectory() + "\\" + suits[suit] + cards[card] + ".png";
+        face.loadNewImageFile(pathToFaceImage);
+    }
 
+    public void setIndexCardItemPayload() {
+        String pathToIndexImage = getIndexDirectory() + "\\" + suits[suit] + cards[card] + ".png";
+        boolean indexFileExists = new File(pathToIndexImage).exists();
+        if (!indexFileExists)
+            pathToIndexImage = getIndexDirectory() + "\\" + alts[suit] + cards[card] + ".png";
+        index.loadNewImageFile(pathToIndexImage);
+    }
+
+    public void setPipCardItemPayloads() {
+        String pathToPip = getPipDirectory() + "\\" + suits[suit] + ".png";
+        standardPip.loadNewImageFile(pathToPip);
+        facePip.loadNewImageFile(pathToPip);
+
+        String pathToCornerPip = getPipDirectory() + "\\" + suits[suit] + "S.png";
+        boolean cornerPipFileExists = new File(pathToCornerPip).exists();
+        if (cornerPipFileExists)
+            pathToPip = pathToCornerPip;
+        cornerPip.loadNewImageFile(pathToPip);
+    }
+
+    public void initializeCardItemPayloads() {
         String pathToFaceImage = getFaceDirectory() + "\\" + suits[suit] + cards[card] + ".png";
         face = new Payload(pathToFaceImage, cardWidthPX, cardHeightPX, Payload.PAINT_FILE, Item.FACE);
 
@@ -664,7 +704,7 @@ public class Model {
         String pathToCornerPip = getPipDirectory() + "\\" + suits[suit] + "S.png";
         boolean cornerPipFileExists = new File(pathToCornerPip).exists();
         if (cornerPipFileExists)
-        	pathToPip = pathToCornerPip;
+            pathToPip = pathToCornerPip;
         cornerPip = new Payload(pathToPip, cardWidthPX, cardHeightPX, 0, Item.CORNER_PIP);
 
         changeCurrentCardItemAndSyncSpinners(index);
