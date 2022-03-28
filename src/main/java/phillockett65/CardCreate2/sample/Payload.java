@@ -83,22 +83,103 @@ public class Payload {
     public static final int PAINT_DISPLAY = -1;
     public static final int PAINT_FILE = -2;
 
-    final Loc[][] patterns = {
-        { Loc.L_3, Loc.L_5 },
-        { Loc.L_0 },
-        { Loc.L_1, Loc.L_2 },
-        { Loc.L_1, Loc.L_0, Loc.L_2 },
-        { Loc.L_3, Loc.L_4, Loc.L_5, Loc.L_6 },
-        { Loc.L_3, Loc.L_4, Loc.L_0, Loc.L_5, Loc.L_6 },
-        { Loc.L_3, Loc.L_4, Loc.L_5, Loc.L_6, Loc.L_7, Loc.L_8 },
-        { Loc.L_3, Loc.L_4, Loc.L_5, Loc.L_6, Loc.L_7, Loc.L_8, Loc.L_9 },
-        { Loc.L_3, Loc.L_4, Loc.L10, Loc.L_5, Loc.L_6, Loc.L_7, Loc.L_8, Loc.L_9 },
-        { Loc.L_3, Loc.L_4, Loc.L11, Loc.L12, Loc.L_0, Loc.L_5, Loc.L_6, Loc.L13, Loc.L14 },
-        { Loc.L_3, Loc.L_4, Loc.L11, Loc.L12, Loc.L15, Loc.L_5, Loc.L_6, Loc.L13, Loc.L14, Loc.L16 },
-        { Loc.L_3, Loc.L_4, Loc.L10, Loc.L11, Loc.L12, Loc.L_0, Loc.L_5, Loc.L_6, Loc.L_9, Loc.L13, Loc.L14 },
-        { Loc.L_1, Loc.L_3, Loc.L_4, Loc.L10, Loc.L11, Loc.L12, Loc.L_2, Loc.L_5, Loc.L_6, Loc.L_9, Loc.L13, Loc.L14 },
-        { Loc.L_1, Loc.L_3, Loc.L_4, Loc.L10, Loc.L11, Loc.L12, Loc.L_0, Loc.L_2, Loc.L_5, Loc.L_6, Loc.L_9, Loc.L13, Loc.L14 },
-     };
+//    final Loc[][] patterns = {
+//        { Loc.L_3, Loc.L_5 },
+//        { Loc.L_0 },
+//        { Loc.L_1, Loc.L_2 },
+//        { Loc.L_1, Loc.L_0, Loc.L_2 },
+//        { Loc.L_3, Loc.L_4, Loc.L_5, Loc.L_6 },
+//        { Loc.L_3, Loc.L_4, Loc.L_0, Loc.L_5, Loc.L_6 },
+//        { Loc.L_3, Loc.L_4, Loc.L_5, Loc.L_6, Loc.L_7, Loc.L_8 },
+//        { Loc.L_3, Loc.L_4, Loc.L_5, Loc.L_6, Loc.L_7, Loc.L_8, Loc.L_9 },
+//        { Loc.L_3, Loc.L_4, Loc.L10, Loc.L_5, Loc.L_6, Loc.L_7, Loc.L_8, Loc.L_9 },
+//        { Loc.L_3, Loc.L_4, Loc.L11, Loc.L12, Loc.L_0, Loc.L_5, Loc.L_6, Loc.L13, Loc.L14 },
+//        { Loc.L_3, Loc.L_4, Loc.L11, Loc.L12, Loc.L15, Loc.L_5, Loc.L_6, Loc.L13, Loc.L14, Loc.L16 },
+//        { Loc.L_3, Loc.L_4, Loc.L10, Loc.L11, Loc.L12, Loc.L_0, Loc.L_5, Loc.L_6, Loc.L_9, Loc.L13, Loc.L14 },
+//        { Loc.L_1, Loc.L_3, Loc.L_4, Loc.L10, Loc.L11, Loc.L12, Loc.L_2, Loc.L_5, Loc.L_6, Loc.L_9, Loc.L13, Loc.L14 },
+//        { Loc.L_1, Loc.L_3, Loc.L_4, Loc.L10, Loc.L11, Loc.L12, Loc.L_0, Loc.L_2, Loc.L_5, Loc.L_6, Loc.L_9, Loc.L13, Loc.L14 },
+//    };
+//
+//    final int[][] pats = {
+//        { 3, 5 },
+//        { 0 },
+//        { 1, 2 },
+//        { 1, 0, 2 },
+//        { 3, 4, 5, 6 },
+//        { 3, 4, 0, 5, 6 },
+//        { 3, 4, 5, 6, 7, 8 },
+//        { 3, 4, 5, 6, 7, 8, 9 },
+//        { 3, 4, 10, 5, 6, 7, 8, 9 },
+//        { 3, 4, 11, 12, 0, 5, 6, 13, 14 },
+//        { 3, 4, 11, 12, 15, 5, 6, 13, 14, 16 },
+//        { 3, 4, 10, 11, 12, 0, 5, 6, 9, 13, 14 },
+//        { 1, 3, 4, 10, 11, 12, 2, 5, 6, 9, 13, 14 },
+//        { 1, 3, 4, 10, 11, 12, 0, 2, 5, 6, 9, 13, 14 },
+//    };
+//
+//    public void dump() {
+//    	for (int i = 0; i < pats.length; ++i) {
+//    		boolean[] flags = {
+//    				false, false, false, false,
+//    				false, false, false, false,
+//    				false, false, false, false,
+//    				false, false, false, false,
+//    				false
+//    				};
+//    		for (int j = 0; j < pats[i].length; ++j) {
+//        		flags[pats[i][j]] = true;
+//    		}
+//    		for (int j = 0; j < flags.length; ++j) {
+//        		System.out.print(flags[j] + ", ");
+//    		}
+//    		System.out.println();
+//		}
+//    }
+//
+//    final boolean[][] flags1 = {
+//        { false, false, false,  true, false,  true, false, false, false, false, false, false, false, false, false, false, false },
+//        {  true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false },
+//        { false,  true,  true, false, false, false, false, false, false, false, false, false, false, false, false, false, false },
+//        {  true,  true,  true, false, false, false, false, false, false, false, false, false, false, false, false, false, false },
+//        { false, false, false,  true,  true,  true,  true, false, false, false, false, false, false, false, false, false, false },
+//        {  true, false, false,  true,  true,  true,  true, false, false, false, false, false, false, false, false, false, false },
+//        { false, false, false,  true,  true,  true,  true,  true,  true, false, false, false, false, false, false, false, false },
+//        { false, false, false,  true,  true,  true,  true,  true,  true,  true, false, false, false, false, false, false, false },
+//        { false, false, false,  true,  true,  true,  true,  true,  true,  true,  true, false, false, false, false, false, false },
+//        {  true, false, false,  true,  true,  true,  true, false, false, false, false,  true,  true,  true,  true, false, false },
+//        { false, false, false,  true,  true,  true,  true, false, false, false, false,  true,  true,  true,  true,  true,  true },
+//        {  true, false, false,  true,  true,  true,  true, false, false,  true,  true,  true,  true,  true,  true, false, false },
+//        { false,  true,  true,  true,  true,  true,  true, false, false,  true,  true,  true,  true,  true,  true, false, false },
+//        {  true,  true,  true,  true,  true,  true,  true, false, false,  true,  true,  true,  true,  true,  true, false, false }
+//    };
+
+    final int[][] flags = {
+        { 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+        { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+        { 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+        { 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+        { 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+        { 1, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+        { 0, 0, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0 },
+        { 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0 },
+        { 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0 },
+        { 1, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0 },
+        { 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1 },
+        { 1, 0, 0, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 0, 0 },
+        { 0, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 0, 0 },
+        { 1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 0, 0 }
+    };
+
+    final Loc[] patternList = {
+        Loc.L_0, Loc.L_1, Loc.L_2, Loc.L_3,
+        Loc.L_4, Loc.L_5, Loc.L_6, Loc.L_7,
+        Loc.L_8, Loc.L_9, Loc.L10, Loc.L11,
+        Loc.L12, Loc.L13, Loc.L14, Loc.L15,
+        Loc.L16 
+    };
+
+    private ImageView[] views;
+
 
     public class Real {
         private final boolean height;
@@ -204,12 +285,20 @@ public class Payload {
         centreX.setPercent(item.getX());
         centreY.setPercent(item.getY());
 
+        int icons = (item == Item.STANDARD_PIP) ? 17 : 2;
+        views = new ImageView[icons];
+        for (int i = 0; i < views.length; ++i)
+            views[i] = new ImageView();
+
         // Set up image dependent values.
         this.path = path;
         if (path.equals(""))
             return;
 
-        loadNewImageFile(path);
+        if (loadNewImageFile(path))
+            for (int i = 0; i < views.length; ++i)
+                group.getChildren().add(views[i]);
+
     }
 
     private Image loadImage(String path) {
@@ -312,18 +401,19 @@ public class Payload {
         if (!display)
             return;
         
-//        if (getPattern() == PAINT_DISPLAY) {
-//            paintImage(g2d, false);
-//            return;
-//        }
-//        if (getPattern() == PAINT_FILE) {
-//            paintImage(g2d, true);
-//            return;
-//        }
-//
-//        for (int i = 0; i < patterns[getPattern()].length; ++i) {
-//            paintIcon(g2d, patterns[getPattern()][i]);
-//        }
+        if (getPattern() == PAINT_DISPLAY) {
+            paintImage(false);
+            return;
+        }
+        if (getPattern() == PAINT_FILE) {
+            paintImage(true);
+            return;
+        }
+
+        for (int i = 0; i < flags[getPattern()].length; ++i) {
+            if (flags[getPattern()][i] == 1)
+                paintIcon(patternList[i]);
+        }
     }
 
     /**
