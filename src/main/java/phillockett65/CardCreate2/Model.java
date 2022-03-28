@@ -831,6 +831,12 @@ public class Model {
 		itemCentreYSVF.setValue(roundPercentage(current.getItem().getY()));
 	}
 
+	/**
+	 * Set the height of the currently selected card item.
+	 * 
+	 * @param value as a percentage of the card height.
+	 * @param updateSVF flag indicating if itemHeightSVF should be updated.
+	 */
 	public void setCurrentH(double value, boolean updateSVF) {
     	System.out.println("model.setCurrentH(" + value + ");");
 
@@ -839,6 +845,12 @@ public class Model {
         	itemHeightSVF.setValue(roundPercentage(value));
 	}
 
+	/**
+	 * Set the X co-ordinate of the centre of the currently selected card item.
+	 * 
+	 * @param value as a percentage of the card width.
+	 * @param updateSVF flag indicating if itemCentreXSVF should be updated.
+	 */
 	public void setCurrentX(double value, boolean updateSVF) {
     	System.out.println("model.setCurrentX(" + value + ");");
 
@@ -847,6 +859,12 @@ public class Model {
         	itemCentreXSVF.setValue(roundPercentage(value));
 	}
 
+	/**
+	 * Set the Y co-ordinate of the centre of the currently selected card item.
+	 * 
+	 * @param value as a percentage of the card height.
+	 * @param updateSVF flag indicating if itemCentreYSVF should be updated.
+	 */
 	public void setCurrentY(double value, boolean updateSVF) {
     	System.out.println("model.setCurrentY(" + value + ");");
 
