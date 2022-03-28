@@ -104,7 +104,7 @@ public class Handle extends ImageView {
 
     public long getWidth() {
         if (payload != null) {
-            return payload.getWidthPX();
+            return Math.round(payload.getWidthPX());
         }
 
         return width;
@@ -112,7 +112,7 @@ public class Handle extends ImageView {
 
     public long getHeight() {
         if (payload != null) {
-            return payload.getHeightPX();
+            return Math.round(payload.getHeightPX());
         }
 
         return height;

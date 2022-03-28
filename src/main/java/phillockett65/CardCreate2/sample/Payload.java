@@ -184,8 +184,8 @@ public class Payload {
     private final String path;
     private Group group;
     private Image image = null;
-    private long imageWidthPX = 0;
-    private long imageHeightPX = 0;
+    private double imageWidthPX = 0;
+    private double imageHeightPX = 0;
     private double cardWidthPX;
     private double cardHeightPX;
 
@@ -289,8 +289,8 @@ public class Payload {
         image = loadImage(path);
 
         if (image != null) {
-            imageWidthPX = Math.round(image.getWidth());
-            imageHeightPX = Math.round(image.getHeight());
+            imageWidthPX = image.getWidth();
+            imageHeightPX = image.getHeight();
             spriteWidth.setPixels(spriteHeight.getRealPixels() * imageWidthPX / imageHeightPX);
             spriteScale = spriteHeight.getRealPixels() / imageHeightPX;
 
@@ -414,7 +414,7 @@ public class Payload {
         spriteScale = spriteHeight.getRealPixels() / imageHeightPX;
     }
     
-    public void resizeCard(int w, int h) {
+    public void resizeCard(double w, double h) {
         if (image == null) {
             return;
         }
@@ -517,14 +517,14 @@ public class Payload {
     /**
      * @return the width of the image on disc.
      */
-    public long getWidthPX() {
+    public double getWidthPX() {
         return imageWidthPX;
     } 
 
     /**
      * @return the height of the image on disc.
      */
-    public long getHeightPX() {
+    public double getHeightPX() {
         return imageHeightPX;
     }
 
