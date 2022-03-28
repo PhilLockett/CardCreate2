@@ -191,7 +191,7 @@ public class Payload {
 
         return loadedImage;
     }
-    
+
     public boolean loadNewImageFile(String path) {
     	System.out.println("loadNewImageFile(" + path + ")");
 
@@ -206,11 +206,10 @@ public class Payload {
             return true;
         }
 
-
         return false;
     }
 
-    private void paintImage(Group group, boolean generate) {
+    private void paintImage(boolean generate) {
 
         final long pX = centreX.getIntPixels();
         final long pY = centreY.getIntPixels();
@@ -231,12 +230,12 @@ public class Payload {
             }
             if (scaleX < scaleY) {
                 scale = scaleX;
-                long dY = Math.round((winY - (imageHeightPX * scale)) / 2);
+//                long dY = Math.round((winY - (imageHeightPX * scale)) / 2);
 //                at.translate(0, dY);
             }
             else {
                 scale = scaleY;
-                long dX = Math.round((winX - (imageWidthPX * scale)) / 2);
+//                long dX = Math.round((winX - (imageWidthPX * scale)) / 2);
 //                at.translate(dX, 0);
             }
 //            at.scale(scale, scale);
