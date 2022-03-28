@@ -35,6 +35,7 @@ import java.text.ParseException;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.Group;
 import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
@@ -705,14 +706,17 @@ public class Model {
 
 
     public void initializeCardItemPayloads() {
-        face = new Payload(getFaceImagePath(), cardWidthPX, cardHeightPX, Payload.PAINT_FILE, Item.FACE);
+        final int Width = cardWidthPX;
+        final int Height = cardHeightPX;
 
-        index = new Payload(getIndexImagePath(), cardWidthPX, cardHeightPX, 0, Item.INDEX);
+        face		= new Payload(group, getFaceImagePath(), Width, Height, Payload.PAINT_FILE, Item.FACE);
 
-        standardPip = new Payload(getPipImagePath(), cardWidthPX, cardHeightPX, card, Item.STANDARD_PIP);
-        facePip = new Payload(getPipImagePath(), cardWidthPX, cardHeightPX, 0, Item.FACE_PIP);
+        index		= new Payload(group, getIndexImagePath(), Width, Height, 0, Item.INDEX);
 
-        cornerPip = new Payload(getCornerPipImagePath(), cardWidthPX, cardHeightPX, 0, Item.CORNER_PIP);
+        standardPip	= new Payload(group, getPipImagePath(), Width, Height, card, Item.STANDARD_PIP);
+        facePip		= new Payload(group, getPipImagePath(), Width, Height, 0, Item.FACE_PIP);
+
+        cornerPip	= new Payload(group, getCornerPipImagePath(), Width, Height, 0, Item.CORNER_PIP);
 
         changeCurrentCardItemAndSyncSpinners(index);
     }
@@ -883,7 +887,12 @@ public class Model {
 	 * Support code for "Sample" panel.
 	 */
 
+	private Group group;
     private Image image;
+
+	public Group getGroup() {
+		return group;
+	}
 
 	public Image getHandleImage() {
 		return image;
@@ -894,6 +903,7 @@ public class Model {
 	 * Initialize "Sample" panel.
 	 */
 	private void initializeSample() {
+		group = new Group();
 		image = new Image(getClass().getResourceAsStream("Handle.png"));
     }
 

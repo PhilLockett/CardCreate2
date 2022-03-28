@@ -134,6 +134,7 @@ public class Payload {
     private int pattern = 0;
     private final Item item;
     private final String path;
+    private Group group;
     private Image image = null;
     private long imageWidthPX = 0;
     private long imageHeightPX = 0;
@@ -148,9 +149,10 @@ public class Payload {
     private final Real spriteWidth;
     private double spriteScale = 1;
 
-    public Payload(String path, int w, int h, int p, Item it) {
+    public Payload(Group group, String path, int w, int h, int p, Item it) {
         System.out.println("Payload(" + path + ")");
 
+        this.group = group;
         pattern = p;
         item = it;
 
@@ -253,7 +255,7 @@ public class Payload {
     }
 
 
-    private void paintIcon(Group group, Loc location) {
+    private void paintIcon(Loc location) {
 
         final double winX = (double)cardWidthPX - (2*centreX.getRealPixels());
         final double offX = location.getXOffset() * winX;
@@ -277,7 +279,7 @@ public class Payload {
      * Paint the icons associated with his payload.
      * @param g2d the 2D graphics object.
      */
-    public void paintPatterns(Group group) {
+    public void paintPatterns() {
         if (!display)
             return;
         

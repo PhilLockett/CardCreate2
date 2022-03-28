@@ -60,7 +60,7 @@ public class CardSample extends Stage {
 	 * @param title				- string displayed as the heading of the Stage.
 	 */
 	public CardSample(Controller mainController, Model mainModel, String title) {
-//		System.out.println("PTable constructed: " + title);
+//		System.out.println("CardSample constructed: " + title);
 
 		stage = this;
 		this.title = title;
@@ -70,7 +70,7 @@ public class CardSample extends Stage {
 
 		controller = mainController;
 		model = mainModel;
-		group = new Group();
+		group = model.getGroup();
 
 		initCardSample();
 
