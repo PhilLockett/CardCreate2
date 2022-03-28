@@ -102,7 +102,7 @@ public class Payload {
         { 1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 0, 0 }
     };
 
-    final Loc[] patternList = {
+    final Loc[] locationList = {
         Loc.L_0, Loc.L_1, Loc.L_2, Loc.L_3,
         Loc.L_4, Loc.L_5, Loc.L_6, Loc.L_7,
         Loc.L_8, Loc.L_9, Loc.L10, Loc.L11,
@@ -223,18 +223,44 @@ public class Payload {
 
         int icons = (item == Item.STANDARD_PIP) ? 17 : 2;
         views = new ImageView[icons];
-        for (int i = 0; i < views.length; ++i)
+        for (int i = 0; i < views.length; ++i) {
             views[i] = new ImageView();
 
+            // views[i].setImage(image);
+            views[i].setPreserveRatio(true);
+            if (locationList[i].getRotate())
+                views[i].setRotate(180);
+            
+            group.getChildren().add(views[i]);
+        }
+
         // Set up image dependent values.
-        this.path = path;
+        path = setPath();
+        System.out.println("Payload(" + path + ")");
         if (path.equals(""))
             return;
 
-        if (loadNewImageFile(path))
-            for (int i = 0; i < views.length; ++i)
-                group.getChildren().add(views[i]);
+        loadNewImageFile(path);
+        if (item == Item.STANDARD_PIP)
+            setPatterns();
 
+    }
+
+
+    private String setPath() {
+        if (item == Item.FACE)
+            return model.getFaceImagePath();
+
+        if (item == Item.INDEX)
+			return model.getIndexImagePath();
+
+		if ((item == Item.STANDARD_PIP) || (item == Item.FACE_PIP))
+            return model.getPipImagePath();
+
+        if (item == Item.CORNER_PIP)
+			return model.getCornerPipImagePath();
+
+        return "";
     }
 
     private Image loadImage(String path) {
@@ -268,6 +294,9 @@ public class Payload {
             spriteWidth.setPixels(spriteHeight.getRealPixels() * imageWidthPX / imageHeightPX);
             spriteScale = spriteHeight.getRealPixels() / imageHeightPX;
 
+            for (int i = 0; i < views.length; ++i)
+                views[i].setImage(image);
+    
             return true;
         }
 
@@ -312,28 +341,27 @@ public class Payload {
     }
 
 
-    private void paintIcon(Loc location) {
+    private void paintIcon(ImageView view, Loc location) {
 
-        final double winX = (double)cardWidthPX - (2*centreX.getRealPixels());
+        final double winX = cardWidthPX - (2*centreX.getRealPixels());
         final double offX = location.getXOffset() * winX;
-        final long pX = Math.round(centreX.getRealOrigin() + offX);
+        final double pX = centreX.getRealOrigin() + offX;
 
-        final double winY = (double)cardHeightPX - (2*centreY.getRealPixels());
+        final double winY = cardHeightPX - (2*centreY.getRealPixels());
         final double offY = location.getYOffset() * winY;
-        final long pY = Math.round(centreY.getRealOrigin() + offY);
+        final double pY = centreY.getRealOrigin() + offY;
 
-
-//        if (location.getRotate()) {
-//        }
-//        at.scale(spriteScale, spriteScale);
-//        g2d.drawImage(image, at, null);
+        view.relocate(pX, pY);
+        view.setScaleX(spriteScale);
+        view.setScaleY(spriteScale);
     }
 
     /**
      * Paint the icons associated with his payload.
      * @param g2d the 2D graphics object.
      */
-    public void paintPatterns() {
+    public void setPatterns() {
+    	System.out.println("setPatterns()");
         if (!display)
             return;
         
@@ -347,8 +375,11 @@ public class Payload {
         }
 
         for (int i = 0; i < flags[getPattern()].length; ++i) {
-            if (flags[getPattern()][i] == 1)
-                paintIcon(patternList[i]);
+            final boolean visible = flags[getPattern()][i] == 1;
+            views[i].setVisible(visible);
+
+            if (visible)
+                paintIcon(views[i], locationList[i]);
         }
     }
 
