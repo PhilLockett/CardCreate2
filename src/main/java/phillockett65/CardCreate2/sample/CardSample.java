@@ -37,7 +37,7 @@ public class CardSample extends Stage {
 	private Controller controller;
 	private Model model;
 
-	private Stage stage;
+	// private Stage stage;
 	private Scene scene;
 	private Group group;
 	private Handle handle;
@@ -58,7 +58,7 @@ public class CardSample extends Stage {
 	public CardSample(Controller mainController, Model mainModel, String title) {
 //		System.out.println("CardSample constructed: " + title);
 
-		stage = this;
+		// stage = this;
 		this.title = title;
 		setTitle(title);
 		resizableProperty().setValue(false);
