@@ -870,10 +870,10 @@ public class Model {
 	/**
 	 * Initialize "Modify Selected Card Item" panel.
 	 */
-	private void initializeModifySelectedCardItem() {
-		itemHeightSVF = new SpinnerValueFactory.DoubleSpinnerValueFactory(0, 100, 10, 0.05);
-	    itemCentreXSVF = new SpinnerValueFactory.DoubleSpinnerValueFactory(0, 100, 10, 0.05);
-	    itemCentreYSVF = new SpinnerValueFactory.DoubleSpinnerValueFactory(0, 100, 10, 0.05);
+    private void initializeModifySelectedCardItem() {
+        itemHeightSVF = new SpinnerValueFactory.DoubleSpinnerValueFactory(0, 100, 10, 0.05);
+        itemCentreXSVF = new SpinnerValueFactory.DoubleSpinnerValueFactory(0, 100, 10, 0.05);
+        itemCentreYSVF = new SpinnerValueFactory.DoubleSpinnerValueFactory(0, 100, 10, 0.05);
 	}
 
 
