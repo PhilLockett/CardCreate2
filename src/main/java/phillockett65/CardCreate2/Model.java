@@ -130,16 +130,31 @@ public class Model {
 		return pipStyle;
 	}
 
+	/**
+	 * Set the selected face style and update the necessary card item Payloads.
+	 * 
+	 * @param style selected.
+	 */
     public void setFaceStyle(String style) {
         faceStyle = style;
         setFaceCardItemPayload();
     }
 
+	/**
+	 * Set the selected index style and update the necessary card item Payloads.
+	 * 
+	 * @param style selected.
+	 */
     public void setIndexStyle(String style) {
         indexStyle = style;
         setIndexCardItemPayload();
     }
 
+	/**
+	 * Set the selected pip style and update the necessary card item Payloads.
+	 * 
+	 * @param style selected.
+	 */
     public void setPipStyle(String style) {
         pipStyle = style;
         setPipCardItemPayloads();
@@ -631,7 +646,6 @@ public class Model {
 		} else if (currentItem == Item.FACE_PIP) {
 			changeCurrentCardItemAndSyncSpinners(facePip);
 		}
-
 	}
 
 //	public enum CardItem { INDEX, CORNER_PIP, STANDARD_PIP, FACE, FACE_PIP };
@@ -730,7 +744,8 @@ public class Model {
 
         cornerPip.syncImageFile();
     }
-    private void setCardItemPayloads() {
+
+	private void setCardItemPayloads() {
         setFaceCardItemPayload();
         setIndexCardItemPayload();
         setPipCardItemPayloads();
