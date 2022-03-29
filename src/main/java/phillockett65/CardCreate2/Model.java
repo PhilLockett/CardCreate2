@@ -715,18 +715,18 @@ public class Model {
     }
 
     private void setFaceCardItemPayload() {
-        face.loadNewImageFile(getFaceImagePath());
+        face.syncImageFile();
     }
 
     private void setIndexCardItemPayload() {
-        index.loadNewImageFile(getIndexImagePath());
+        index.syncImageFile();
     }
 
     private void setPipCardItemPayloads() {
-        standardPip.loadNewImageFile(getPipImagePath());
-        facePip.loadNewImageFile(getPipImagePath());
+        standardPip.syncImageFile();
+        facePip.syncImageFile();
 
-        cornerPip.loadNewImageFile(getCornerPipImagePath());
+        cornerPip.syncImageFile();
     }
     private void setCardItemPayloads() {
         setFaceCardItemPayload();

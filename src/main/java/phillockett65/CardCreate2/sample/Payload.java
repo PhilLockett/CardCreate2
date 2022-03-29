@@ -223,7 +223,7 @@ public class Payload {
     private int pattern = 0;
     private int icons;
     private final Item item;
-    private final String path;
+    private String path;
     private Group group;
     private Image image = null;
     private ImageView[] views;
@@ -278,16 +278,14 @@ public class Payload {
         }
 
         // Set up image dependent values.
-        path = setPath();
-        System.out.println("Payload(" + path + ")");
-        if (path.equals(""))
-            return;
-
-        loadNewImageFile(path);
+        syncImageFile();
         setPatterns();
     }
 
 
+    /**
+     * @return the file path for the image of the Item for the current card.
+     */
     private String setPath() {
         if (item == Item.FACE)
             return model.getFaceImagePath();
@@ -304,6 +302,12 @@ public class Payload {
         return "";
     }
 
+    /**
+     * Load an image file from disc.
+     * 
+     * @param path to the image file.
+     * @return the Image, or null if the file is not found.
+     */
     private Image loadImage(String path) {
 //    	System.out.println("loadImage(" + path + ")");
         File file = new File(path);
@@ -324,7 +328,7 @@ public class Payload {
         return loadedImage;
     }
 
-    public boolean loadNewImageFile(String path) {
+    private boolean loadNewImageFile(String path) {
     	System.out.println("loadNewImageFile(" + path + ")");
 
         image = loadImage(path);
@@ -342,6 +346,21 @@ public class Payload {
         }
 
         return false;
+    }
+
+    /**
+     * Set up the new image file.
+     * 
+     * @return true if the new file was loaded, false otherwise.
+     */
+    public boolean syncImageFile() {
+        path = setPath();
+        // System.out.println("syncImageFile(" + path + ")");
+
+        if (path.equals(""))
+            return false;
+
+        return loadNewImageFile(path);
     }
 
     private void paintImage(boolean generate) {
@@ -404,8 +423,7 @@ public class Payload {
     }
 
     /**
-     * Paint the icons associated with his payload.
-     * @param g2d the 2D graphics object.
+     * Paint the icons associated with this payload.
      */
     public void setPatterns() {
     	System.out.println("setPatterns()");
