@@ -108,7 +108,50 @@ public class Payload {
         Loc.L16 
     };
 
-    private ImageView[] views;
+     /**
+      * Get the corresponding Loc for the indicated ImageView.
+      * 
+      * @param imageIndex for the ImageView in views[].
+      * @return the corresponding Loc for the indicated ImageView.
+      */
+      private Loc getLocation(int imageIndex) {
+        return locationList[imageIndex];
+    }
+
+     /**
+      * Get the indicated ImageView.
+      * 
+      * @param imageIndex for the ImageView in views[].
+      * @return the indicated ImageView.
+      */
+      private ImageView getImageView(int imageIndex) {
+        return views[imageIndex];
+    }
+
+     /**
+      * Indicates whether the indicated ImageView is part of the current 
+      * pattern.
+      * 
+      * @param imageIndex for the ImageView in views[].
+      * @return true if the image is part of pattern, false otherwise.
+      */
+      private boolean isImageUsedByPattern(int imageIndex) {
+        return flags[getPattern()][imageIndex] == 1;
+    }
+
+     /**
+      * Indicates whether the indicated ImageView should be drawn.
+      * 
+      * @param imageIndex for the ImageView in views[].
+      * @return true if the image should be drawn, false otherwise.
+      */
+      private boolean isVisible(int imageIndex) {
+        if (!isVisible())
+            return false;
+
+        return isImageUsedByPattern(imageIndex);
+    }
+
 
 
     public class Real {
@@ -178,10 +221,12 @@ public class Payload {
 	private Model model;
 
     private int pattern = 0;
+    private int icons;
     private final Item item;
     private final String path;
     private Group group;
     private Image image = null;
+    private ImageView[] views;
     private double imageWidthPX = 0;
     private double imageHeightPX = 0;
     private double cardWidthPX;
@@ -219,14 +264,14 @@ public class Payload {
         centreX.setPercent(item.getX());
         centreY.setPercent(item.getY());
 
-        int icons = (item == Item.STANDARD_PIP) ? 17 : 2;
-        views = new ImageView[icons];
+        // Set up the image views.
+        icons = (pattern > 0) ? pattern : 2;
+        views = new ImageView[17];
         for (int i = 0; i < views.length; ++i) {
             views[i] = new ImageView();
 
-            // views[i].setImage(image);
             views[i].setPreserveRatio(true);
-            if (locationList[i].getRotate())
+            if (getLocation(i).getRotate())
                 views[i].setRotate(180);
             
             group.getChildren().add(views[i]);
@@ -239,9 +284,7 @@ public class Payload {
             return;
 
         loadNewImageFile(path);
-        if (item == Item.STANDARD_PIP)
-            setPatterns();
-
+        setPatterns();
     }
 
 
@@ -293,8 +336,8 @@ public class Payload {
             spriteScale = spriteHeight.getRealPixels() / imageHeightPX;
 
             for (int i = 0; i < views.length; ++i)
-                views[i].setImage(image);
-    
+                getImageView(i).setImage(image);
+
             return true;
         }
 
@@ -316,9 +359,9 @@ public class Payload {
         double scale;
         if (keepAspectRatio) {
             if (!generate) {
-                Rectangle box = new Rectangle(pX, pY, Math.round(winX), Math.round(winY));
-                box.setFill(Color.LIGHTGREY);
-                group.getChildren().add(box);
+                // Rectangle box = new Rectangle(pX, pY, Math.round(winX), Math.round(winY));
+                // box.setFill(Color.LIGHTGREY);
+                // group.getChildren().add(box);
             }
             if (scaleX < scaleY) {
                 scale = scaleX;
@@ -343,15 +386,21 @@ public class Payload {
 
         final double winX = cardWidthPX - (2*centreX.getRealPixels());
         final double offX = location.getXOffset() * winX;
-        final double pX = centreX.getRealOrigin() + offX;
+        double pX = centreX.getRealOrigin() + offX;
 
         final double winY = cardHeightPX - (2*centreY.getRealPixels());
         final double offY = location.getYOffset() * winY;
-        final double pY = centreY.getRealOrigin() + offY;
+        double pY = centreY.getRealOrigin() + offY;
+
+        if (location.getRotate()) {
+            pX = cardWidthPX-pX;
+            pY = cardHeightPX-pY;
+        }
 
         view.relocate(pX, pY);
-        view.setScaleX(spriteScale);
-        view.setScaleY(spriteScale);
+
+        view.setFitWidth(spriteWidth.getRealPixels());
+        view.setFitHeight(spriteHeight.getRealPixels());
     }
 
     /**
@@ -372,12 +421,13 @@ public class Payload {
             return;
         }
 
-        for (int i = 0; i < flags[getPattern()].length; ++i) {
-            final boolean visible = flags[getPattern()][i] == 1;
-            views[i].setVisible(visible);
+        for (int i = 0; i < views.length; ++i) {
+            final boolean visible = isVisible(i);
+            ImageView view = getImageView(i);
+            view.setVisible(visible);
 
             if (visible)
-                paintIcon(views[i], locationList[i]);
+                paintIcon(view, getLocation(i));
         }
     }
 
@@ -619,10 +669,17 @@ public class Payload {
 
     /**
      * Flag whether the Payload image should be drawn.
-     * @param display the pattern if true.
+     * @param state the pattern if true.
      */
-    public void setVisible(boolean display) {
-        this.display = display;
+    public void setVisible(boolean state) {
+    	System.out.println("setVisible(" + state + ")");
+        display = state;
+
+        for (int i = 0; i < views.length; ++i) {
+            final boolean visible = isVisible(i);
+            ImageView view = getImageView(i);
+            view.setVisible(visible);
+        }
     }
 
     /**
