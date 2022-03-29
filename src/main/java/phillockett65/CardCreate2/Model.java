@@ -654,11 +654,21 @@ public class Model {
     private SpinnerValueFactory<Double> itemCentreXSVF;
     private SpinnerValueFactory<Double> itemCentreYSVF;
 
+	private boolean keepAspectRatio = true;
 
+
+	/**
+	 * @return the file path for the face image of the current card in the 
+	 * current style.
+	 */
     public String getFaceImagePath() {
         return getFaceDirectory() + "\\" + suits[suit] + cards[card] + ".png";
     }
 
+	/**
+	 * @return the file path for the index image of the current card in the 
+	 * current style.
+	 */
     public String getIndexImagePath() {
         String pathToImage = getIndexDirectory() + "\\" + suits[suit] + cards[card] + ".png";
         File file = new File(pathToImage);
@@ -668,10 +678,18 @@ public class Model {
         return pathToImage;
     }
 
+	/**
+	 * @return the file path for the pip image of the current card in the 
+	 * current style.
+	 */
     public String getPipImagePath() {
         return getPipDirectory() + "\\" + suits[suit] + ".png";
     }
 
+	/**
+	 * @return the file path for the corner pip image of the current card in 
+	 * the current style.
+	 */
     public String getCornerPipImagePath() {
         String pathToImage = getPipDirectory() + "\\" + suits[suit] + "S.png";
         File file = new File(pathToImage);
@@ -703,6 +721,10 @@ public class Model {
     }
 
 
+	/**
+	 * Create the card item Payload instances after the base directory has 
+	 * been selected.
+	 */
     private void initializeCardItemPayloads() {
 		System.out.println("initializeCardItemPayloads()");
 
@@ -729,8 +751,6 @@ public class Model {
 	public SpinnerValueFactory<Double> getItemCentreYSVF() {
 		return itemCentreYSVF;
 	}
-
-	private boolean keepAspectRatio = true;
 
 	public boolean iskeepImageAspectRatio() {
 		return keepAspectRatio;
@@ -819,15 +839,27 @@ public class Model {
 		return value;
 	}
 
-	public void setCurrentDefaultH() {
+	/**
+	 * Set itemHeightSVF to the default value of the currently selected card 
+	 * item.
+	 */
+	public void resetCurrentH() {
 		itemHeightSVF.setValue(roundPercentage(current.getItem().getH()));
 	}
 
-	public void setCurrentDefaultX() {
+	/**
+	 * Set itemCentreXSVF to the default value of the currently selected card 
+	 * item.
+	 */
+	public void resetCurrentX() {
 		itemCentreXSVF.setValue(roundPercentage(current.getItem().getX()));
 	}
 
-	public void setCurrentDefaultY() {
+	/**
+	 * Set itemCentreYSVF to the default value of the currently selected card 
+	 * item.
+	 */
+	public void resetCurrentY() {
 		itemCentreYSVF.setValue(roundPercentage(current.getItem().getY()));
 	}
 
@@ -906,14 +938,23 @@ public class Model {
     private Image image;
 	private Handle handle;
 
+	/**
+	 * @return the Group used by the "Sample" panel.
+	 */
 	public Group getGroup() {
 		return group;
 	}
 
+	/**
+	 * @return the Handle Image used by the "Sample" panel.
+	 */
 	public Image getHandleImage() {
 		return image;
 	}
 
+	/**
+	 * @return the Handle used by the "Sample" panel.
+	 */
 	public Handle getHandle() {
 		return handle;
 	}
@@ -958,6 +999,10 @@ public class Model {
 		initializeSample();
 	}
 
+	/**
+	 * Initialization for the "Playing Card Generator" panel after a base 
+	 * directory has been selected.
+	 */
 	public void init() {
 		System.out.println("init()");
 

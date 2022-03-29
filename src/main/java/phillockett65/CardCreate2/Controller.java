@@ -820,17 +820,17 @@ public class Controller {
 
     @FXML
     void itemHeightButtonActionPerformed(ActionEvent event) {
-    	model.setCurrentDefaultH();
+    	model.resetCurrentH();
     }
 
     @FXML
     void itemCentreXButtonActionPerformed(ActionEvent event) {
-    	model.setCurrentDefaultX();
+    	model.resetCurrentX();
     }
 
     @FXML
     void itemCentreYButtonActionPerformed(ActionEvent event) {
-    	model.setCurrentDefaultY();
+    	model.resetCurrentY();
     }
 
     @FXML
