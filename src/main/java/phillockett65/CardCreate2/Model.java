@@ -724,7 +724,9 @@ public class Model {
 
     private void setPipCardItemPayloads() {
         standardPip.syncImageFile();
-        facePip.syncImageFile();
+		standardPip.syncCurrentCard();
+
+		facePip.syncImageFile();
 
         cornerPip.syncImageFile();
     }

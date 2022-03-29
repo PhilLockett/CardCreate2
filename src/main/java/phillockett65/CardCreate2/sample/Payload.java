@@ -349,6 +349,21 @@ public class Payload {
     }
 
     /**
+     * Change the pattern of standard pips to match the current card.
+     * 
+     * @return true if the pattern was changed, false otherwise.
+     */
+    public boolean syncCurrentCard() {
+		if (item == Item.STANDARD_PIP) {
+            pattern = model.getCard();
+            setPatterns();
+         
+            return true;
+        }
+
+        return false;
+    }
+    /**
      * Set up the new image file.
      * 
      * @return true if the new file was loaded, false otherwise.
