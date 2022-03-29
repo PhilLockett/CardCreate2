@@ -48,10 +48,9 @@ public class Handle extends ImageView {
     public Handle(Image handleImage) {
 		image = handleImage;
 		this.setImage(image);
-//		width = Math.round((float)image.getWidth());
-//		height = Math.round((float)image.getHeight());
-		this.resize(width, height);
-//		this.relocate(20, 10);
+
+        this.setFitWidth(width);
+        this.setFitHeight(height);
     }
 
     public Payload getPayload() {
