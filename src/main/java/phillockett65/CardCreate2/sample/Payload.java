@@ -42,7 +42,7 @@ import phillockett65.CardCreate2.Model;
 
 public class Payload {
 
-	private enum Loc {
+	private static enum Loc {
 	    L_0 (0, 0, false),
 	    L_1 (0, 1, true), 
 	    L_2 (0, 1, false),
@@ -71,8 +71,6 @@ public class Payload {
 	        rotate = rot;
 	    }
 
-	    public int getXIndex() { return xIndex; }
-	    public int getYIndex() { return yIndex; }
 	    public boolean getRotate() { return rotate; }
 	    
 	    private final double[] offsets = { 0.5F, 0F, 1F, 0.25F, 1F / 3, 1F / 6 };
@@ -85,7 +83,7 @@ public class Payload {
     public static final int PAINT_DISPLAY = -1;
     public static final int PAINT_FILE = -2;
 
-    final int[][] flags = {
+    final static int[][] flags = {
         { 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
         { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
         { 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
@@ -102,7 +100,7 @@ public class Payload {
         { 1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 0, 0 }
     };
 
-    final Loc[] locationList = {
+    final static Loc[] locationList = {
         Loc.L_0, Loc.L_1, Loc.L_2, Loc.L_3,
         Loc.L_4, Loc.L_5, Loc.L_6, Loc.L_7,
         Loc.L_8, Loc.L_9, Loc.L10, Loc.L11,
