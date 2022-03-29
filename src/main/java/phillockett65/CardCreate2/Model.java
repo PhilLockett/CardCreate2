@@ -390,6 +390,21 @@ public class Model {
 	}
 
 	/**
+	 * @return true if the current card is a face card (court card), false 
+	 * otherwise.
+	 */
+	public boolean isFaceCard() {
+		return card > 10;
+	}
+
+	/**
+	 * @return true if the current card has an image file, false otherwise.
+	 */
+	public boolean isImageCard() {
+		return face.hasImage();
+	}
+
+	/**
 	 * Initialize "Sample Navigation" panel.
 	 */
 	private void initializeSampleNavigation() {
@@ -713,11 +728,31 @@ public class Model {
 
         cornerPip.loadNewImageFile(getCornerPipImagePath());
     }
-
     private void setCardItemPayloads() {
         setFaceCardItemPayload();
         setIndexCardItemPayload();
         setPipCardItemPayloads();
+	}
+
+	/**
+	 * Set the sample display status of the card items for the current card.
+	 */
+    private void updateCardItemDisplayStatus() {
+		index.setVisible(displayIndex);
+		cornerPip.setVisible(displayCornerPip);
+
+		if (isImageCard()) {
+			face.setVisible(displayFaceImage);
+			standardPip.setVisible(false);
+		} else {
+			standardPip.setVisible(displayStandardPip);
+			face.setVisible(false);
+		}
+		if (isFaceCard()) {
+			facePip.setVisible(displayFacePip);
+		} else {
+			facePip.setVisible(false);
+		}
     }
 
 
@@ -738,6 +773,7 @@ public class Model {
         cornerPip	= new Payload(this, 0, Item.CORNER_PIP);
 
         changeCurrentCardItemAndSyncSpinners(index);
+		updateCardItemDisplayStatus();
     }
 
     public SpinnerValueFactory<Double> getItemHeightSVF() {
@@ -911,6 +947,10 @@ public class Model {
      * Update the "Modify Card Item" controls.
      */
 
+	/**
+	 * Set the current card item and adjust the Card Item spinners.
+	 * @param item currently selected card item Payload.
+	 */
 	private void changeCurrentCardItemAndSyncSpinners(Payload item) {
         current = item;
 	    itemHeightSVF.setValue(roundPercentage(getCurrentH()));
