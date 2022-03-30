@@ -108,44 +108,47 @@ public class Payload {
         Loc.L16 
     };
 
-     /**
-      * Get the corresponding Loc for the indicated ImageView.
-      * 
-      * @param imageIndex for the ImageView in views[].
-      * @return the corresponding Loc for the indicated ImageView.
-      */
-      private Loc getLocation(int imageIndex) {
+    /**
+     * Get the corresponding Loc for the indicated ImageView.
+     * 
+     * @param imageIndex for the ImageView in views[].
+     * @return the corresponding Loc for the indicated ImageView.
+     */
+    private Loc getLocation(int imageIndex) {
         return locationList[imageIndex];
     }
 
-     /**
-      * Get the indicated ImageView.
-      * 
-      * @param imageIndex for the ImageView in views[].
-      * @return the indicated ImageView.
-      */
-      private ImageView getImageView(int imageIndex) {
+    /**
+     * Get the indicated ImageView.
+     * 
+     * @param imageIndex for the ImageView in views[].
+     * @return the indicated ImageView.
+     */
+    private ImageView getImageView(int imageIndex) {
         return views[imageIndex];
     }
 
-     /**
-      * Indicates whether the indicated ImageView is part of the current 
-      * pattern.
-      * 
-      * @param imageIndex for the ImageView in views[].
-      * @return true if the image is part of pattern, false otherwise.
-      */
-      private boolean isImageUsedByPattern(int imageIndex) {
+    /**
+     * Indicates whether the indicated ImageView is part of the current 
+     * pattern.
+     * 
+     * @param imageIndex for the ImageView in views[].
+     * @return true if the image is part of pattern, false otherwise.
+     */
+    private boolean isImageUsedByPattern(int imageIndex) {
+        if (getPattern() < 0)
+            return display;
+
         return flags[getPattern()][imageIndex] == 1;
     }
 
-     /**
-      * Indicates whether the indicated ImageView should be drawn.
-      * 
-      * @param imageIndex for the ImageView in views[].
-      * @return true if the image should be drawn, false otherwise.
-      */
-      private boolean isVisible(int imageIndex) {
+    /**
+     * Indicates whether the indicated ImageView should be drawn.
+     * 
+     * @param imageIndex for the ImageView in views[].
+     * @return true if the image should be drawn, false otherwise.
+     */
+    private boolean isImageViewVisible(int imageIndex) {
         if (!isVisible())
             return false;
 
@@ -459,7 +462,7 @@ public class Payload {
         }
 
         for (int i = 0; i < views.length; ++i) {
-            final boolean visible = isVisible(i);
+            final boolean visible = isImageViewVisible(i);
             ImageView view = getImageView(i);
             view.setVisible(visible);
 
