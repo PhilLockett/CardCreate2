@@ -73,10 +73,10 @@ public class Payload {
 
 	    public boolean getRotate() { return rotate; }
 	    
-	    private final double[] offsets = { 0.5F, 0F, 1F, 0.25F, 1F / 3, 1F / 6 };
+	    private final double[] offsets = { 0.5D, 0D, 1D, 0.25D, 1D / 3, 1D / 6 };
 
-	    public double getXOffset() { return offsets[xIndex]; }
-	    public double getYOffset() { return offsets[yIndex]; }
+	    public double getXOffset() { return rotate ? 1-offsets[xIndex] : offsets[xIndex]; }
+	    public double getYOffset() { return rotate ? 1-offsets[yIndex] : offsets[yIndex]; }
 
 	};
 
@@ -432,11 +432,6 @@ public class Payload {
         final double winY = cardHeightPX - (2*centreY.getRealPixels());
         final double offY = location.getYOffset() * winY;
         double pY = centreY.getRealOrigin() + offY;
-
-        if (location.getRotate()) {
-            pX = cardWidthPX-pX;
-            pY = cardHeightPX-pY;
-        }
 
     	System.out.println("relocate(" + pX + ", " + pY+ ")  scale = " + spriteScale);
         view.relocate(pX, pY);
