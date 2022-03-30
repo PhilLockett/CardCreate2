@@ -309,7 +309,7 @@ public class Payload {
      * @return the Image, or null if the file is not found.
      */
     private Image loadImage(String path) {
-//    	System.out.println("loadImage(" + path + ")");
+   	System.out.println("loadImage(" + path + ")");
         File file = new File(path);
 
         if (!file.exists()) {
@@ -338,6 +338,7 @@ public class Payload {
             imageHeightPX = image.getHeight();
             spriteWidth.setPixels(spriteHeight.getRealPixels() * imageWidthPX / imageHeightPX);
             spriteScale = spriteHeight.getRealPixels() / imageHeightPX;
+            System.out.println("image size(" + imageWidthPX + ", " + imageHeightPX+ ")  scale = " + spriteScale);
 
             for (int i = 0; i < views.length; ++i)
                 getImageView(i).setImage(image);
@@ -379,6 +380,7 @@ public class Payload {
     }
 
     private void paintImage(boolean generate) {
+    	System.out.println("paintImage(" + generate + ")");
 
         final long pX = centreX.getIntPixels();
         final long pY = centreY.getIntPixels();
@@ -417,6 +419,7 @@ public class Payload {
 
 
     private void paintIcon(ImageView view, Loc location) {
+    	System.out.println("paintIcon()");
 
         final double winX = cardWidthPX - (2*centreX.getRealPixels());
         final double offX = location.getXOffset() * winX;
@@ -431,6 +434,7 @@ public class Payload {
             pY = cardHeightPX-pY;
         }
 
+    	System.out.println("relocate(" + pX + ", " + pY+ ")  scale = " + spriteScale);
         view.relocate(pX, pY);
 
         view.setFitWidth(spriteWidth.getRealPixels());
