@@ -711,11 +711,8 @@ public class Payload {
     	System.out.println("setVisible(" + state + ")");
         display = state;
 
-        for (int i = 0; i < views.length; ++i) {
-            final boolean visible = isVisible(i);
-            ImageView view = getImageView(i);
-            view.setVisible(visible);
-        }
+        for (int i = 0; i < views.length; ++i) 
+            getImageView(i).setVisible(isImageViewVisible(i));
     }
 
     /**
