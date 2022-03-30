@@ -390,35 +390,14 @@ public class Payload {
         final long pY = centreY.getIntPixels();
         final double winX = (double)cardWidthPX - (2*centreX.getRealPixels());
         final double winY = (double)cardHeightPX - (2*centreY.getRealPixels());
+        ImageView view = getImageView(0);
 
-//        System.out.printf("paintImage() pX = %d,  pY = %d generate = %s\n", pX, pY, generate ? "true" : "false");
-//        AffineTransform at = AffineTransform.getTranslateInstance(pX, pY);
+    	System.out.println("relocate(" + pX + ", " + pY+ ")  scale = " + spriteScale);
+        view.relocate(pX, pY);
 
-        double scaleX = winX / imageWidthPX;
-        double scaleY = winY / imageHeightPX;
-        double scale;
-        if (keepAspectRatio) {
-            if (!generate) {
-                // Rectangle box = new Rectangle(pX, pY, Math.round(winX), Math.round(winY));
-                // box.setFill(Color.LIGHTGREY);
-                // group.getChildren().add(box);
-            }
-            if (scaleX < scaleY) {
-                scale = scaleX;
-//                long dY = Math.round((winY - (imageHeightPX * scale)) / 2);
-//                at.translate(0, dY);
-            }
-            else {
-                scale = scaleY;
-//                long dX = Math.round((winX - (imageWidthPX * scale)) / 2);
-//                at.translate(dX, 0);
-            }
-//            at.scale(scale, scale);
-        } 
-        else {
-//            at.scale(scaleX, scaleY);
-        }
-//        g2d.drawImage(image, at, null);
+        view.setFitWidth(spriteWidth.getRealPixels());
+        view.setFitHeight(spriteHeight.getRealPixels());
+
     }
 
 
