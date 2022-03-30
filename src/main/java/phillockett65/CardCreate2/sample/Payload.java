@@ -359,14 +359,14 @@ public class Payload {
      * @return true if the pattern was changed, false otherwise.
      */
     public boolean syncCurrentCard() {
-		if (item == Item.STANDARD_PIP) {
-            pattern = model.getCard();
-            setPatterns();
-         
-            return true;
-        }
+        final boolean change = (item == Item.STANDARD_PIP);
 
-        return false;
+        if (change)
+            pattern = model.getCard();
+
+        setPatterns();
+
+        return change;
     }
     /**
      * Set up the new image file.
