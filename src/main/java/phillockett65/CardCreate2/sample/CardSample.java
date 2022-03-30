@@ -107,7 +107,7 @@ public class CardSample extends Stage {
 
 
 		handle = model.getHandle();
-		handle.set(20, 10);
+		handle.set(10, 10);
 
 		this.show();
 

@@ -41,8 +41,8 @@ public class Handle extends ImageView {
     private long yMouse = yPos;
     private long xOff = 0;
     private long yOff = 0;
-    private final long width = 16;
-    private final long height = 16;
+    private final long width = 20;
+    private final long height = 20;
     private Payload payload;
 
     public Handle(Image handleImage) {
