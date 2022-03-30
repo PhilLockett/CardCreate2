@@ -218,7 +218,8 @@ public class Payload {
         }
 
     }
-    
+
+
     // "image" refers to the image in the file, 
     // "sprite" refers to the image on screen.
 	private Model model;
@@ -708,8 +709,8 @@ public class Payload {
     }
 
     /**
-     * Flag whether the Payload image should be drawn.
-     * @param state the pattern if true.
+     * Hide/display all locations of icons for this item.
+     * @param state if true, display the icons, hide them otherwise.
      */
     public void setVisible(boolean state) {
     	System.out.println("setVisible(" + state + ")");

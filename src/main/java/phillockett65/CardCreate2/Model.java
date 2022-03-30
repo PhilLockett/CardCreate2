@@ -745,6 +745,9 @@ public class Model {
         cornerPip.syncImageFile();
     }
 
+	/**
+	 * Synchronize the card items with the current selected images.
+	 */
 	private void setCardItemPayloads() {
         setFaceCardItemPayload();
         setIndexCardItemPayload();
@@ -752,7 +755,8 @@ public class Model {
 	}
 
 	/**
-	 * Set the sample display status of the card items for the current card.
+	 * Set the Visible status of the card items specifically to the current 
+	 * card.
 	 */
     private void updateCardItemDisplayStatus() {
 		index.setVisible(displayIndex);
