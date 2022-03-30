@@ -44,21 +44,21 @@ public class Payload {
 
 	private static enum Loc {
 	    L_0 (0, 0, false),
-	    L_1 (0, 1, true), 
+	    L_1 (0, 1,  true),
 	    L_2 (0, 1, false),
-	    L_3 (1, 1, true), 
-	    L_4 (2, 1, true), 
+	    L_3 (1, 1,  true),
+	    L_4 (2, 1,  true),
 	    L_5 (1, 1, false),
 	    L_6 (2, 1, false),
 	    L_7 (1, 0, false),
 	    L_8 (2, 0, false),
 	    L_9 (0, 3, false),
-	    L10 (0, 3, true), 
-	    L11 (1, 4, true), 
-	    L12 (2, 4, true), 
+	    L10 (0, 3,  true),
+	    L11 (1, 4,  true),
+	    L12 (2, 4,  true),
 	    L13 (1, 4, false),
 	    L14 (2, 4, false),
-	    L15 (0, 5, true), 
+	    L15 (0, 5,  true),
 	    L16 (0, 5, false);
 
 	    private final int       xIndex;
