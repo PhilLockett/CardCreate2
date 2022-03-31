@@ -109,7 +109,7 @@ public class Payload {
     };
 
     /**
-     * Get the corresponding Loc for the indicated ImageView.
+     * Get the corresponding Loc for the indexed ImageView.
      * 
      * @param imageIndex for the ImageView in views[].
      * @return the corresponding Loc for the indicated ImageView.
@@ -119,7 +119,7 @@ public class Payload {
     }
 
     /**
-     * Get the indicated ImageView.
+     * Get the indexed ImageView.
      * 
      * @param imageIndex for the ImageView in views[].
      * @return the indicated ImageView.
@@ -143,7 +143,7 @@ public class Payload {
     }
 
     /**
-     * Indicates whether the indicated ImageView should be drawn.
+     * Indicates whether the indexed ImageView should be drawn.
      * 
      * @param imageIndex for the ImageView in views[].
      * @return true if the image should be drawn, false otherwise.

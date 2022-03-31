@@ -755,7 +755,7 @@ public class Model {
 	}
 
 	/**
-	 * Set the Visible status of the card items specifically to the current 
+	 * Set the display status of the card items specifically for the current 
 	 * card.
 	 */
     private void updateCardItemDisplayStatus() {
