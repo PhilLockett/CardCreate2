@@ -129,17 +129,10 @@ public class Payload {
     }
 
     /**
-     * Indicates whether the indicated ImageView is part of the current 
-     * pattern.
-     * 
-     * @param imageIndex for the ImageView in views[].
-     * @return true if the image is part of pattern, false otherwise.
+     * @return the ImageView count.
      */
-    private boolean isImageUsedByPattern(int imageIndex) {
-        if (getPattern() < 0)
-            return display;
-
-        return flags[getPattern()][imageIndex] == 1;
+    private int getImageCount() {
+        return views.length;
     }
 
     /**
@@ -149,10 +142,10 @@ public class Payload {
      * @return true if the image should be drawn, false otherwise.
      */
     private boolean isImageViewVisible(int imageIndex) {
-        if (!isVisible())
+        if (!display)
             return false;
 
-        return isImageUsedByPattern(imageIndex);
+        return flags[getPattern()][imageIndex] == 1;
     }
 
 
@@ -344,7 +337,7 @@ public class Payload {
             spriteScale = spriteHeight.getRealPixels() / imageHeightPX;
             // System.out.println("image size(" + imageWidthPX + ", " + imageHeightPX+ ")  scale = " + spriteScale);
 
-            for (int i = 0; i < views.length; ++i)
+            for (int i = 0; i < getImageCount(); ++i)
                 getImageView(i).setImage(image);
 
             return true;
@@ -436,7 +429,7 @@ public class Payload {
             return;
         }
 
-        for (int i = 0; i < views.length; ++i) {
+        for (int i = 0; i < getImageCount(); ++i) {
             final boolean visible = isImageViewVisible(i);
             ImageView view = getImageView(i);
             view.setVisible(visible);
@@ -690,7 +683,7 @@ public class Payload {
     	System.out.println("setVisible(" + state + ")");
         display = state;
 
-        for (int i = 0; i < views.length; ++i) 
+        for (int i = 0; i < getImageCount(); ++i) 
             getImageView(i).setVisible(isImageViewVisible(i));
     }
 
