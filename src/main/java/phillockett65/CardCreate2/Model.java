@@ -373,6 +373,7 @@ public class Model {
 			suit = 0;
 
         setCardItemPayloads();
+        updateCardItemDisplayStatus();
 
         return suit;
 	}
@@ -382,6 +383,7 @@ public class Model {
 			card = 1;
 
         setCardItemPayloads();
+        updateCardItemDisplayStatus();
 
         return card;
 	}
@@ -391,6 +393,7 @@ public class Model {
 			suit = suits.length - 1;
 
         setCardItemPayloads();
+        updateCardItemDisplayStatus();
 
         return suit;
 	}
@@ -400,6 +403,7 @@ public class Model {
 			card = cards.length - 1;
 
         setCardItemPayloads();
+        updateCardItemDisplayStatus();
 
         return card;
 	}
@@ -580,6 +584,7 @@ public class Model {
 
 	public void setDisplayIndex(boolean state) {
 		displayIndex = state;
+		index.setVisible(displayIndex);
 	}
 
 	public boolean isDisplayCornerPip() {
@@ -588,6 +593,7 @@ public class Model {
 
 	public void setDisplayCornerPip(boolean state) {
 		displayCornerPip = state;
+		cornerPip.setVisible(displayCornerPip);
 	}
 
 	public boolean isDisplayStandardPip() {
@@ -596,6 +602,7 @@ public class Model {
 
 	public void setDisplayStandardPip(boolean state) {
 		displayStandardPip = state;
+		standardPip.setVisible(displayStandardPip);
 	}
 
 	public boolean isDisplayFaceImage() {
@@ -604,6 +611,7 @@ public class Model {
 
 	public void setDisplayFaceImage(boolean state) {
 		displayFaceImage = state;
+		face.setVisible(displayFaceImage);
 	}
 
 	public boolean isDisplayFacePip() {
@@ -612,6 +620,7 @@ public class Model {
 
 	public void setDisplayFacePip(boolean state) {
 		displayFacePip = state;
+		facePip.setVisible(displayFacePip);
 	}
 
 	/**
@@ -730,6 +739,7 @@ public class Model {
 
     private void setFaceCardItemPayload() {
         face.syncImageFile();
+		face.syncCurrentCard();
     }
 
     private void setIndexCardItemPayload() {
