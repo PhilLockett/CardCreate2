@@ -313,11 +313,11 @@ public class Payload {
      * @return the Image, or null if the file is not found.
      */
     private Image loadImage(String path) {
-   	System.out.println("loadImage(" + path + ")");
+   	// System.out.println("loadImage(" + path + ")");
         File file = new File(path);
 
         if (!file.exists()) {
-            System.out.println("File does not exist!");
+            // System.out.println("File does not exist!");
 
              return null;
         }
@@ -333,7 +333,7 @@ public class Payload {
     }
 
     private boolean loadNewImageFile(String path) {
-    	System.out.println("loadNewImageFile(" + path + ")");
+    	// System.out.println("loadNewImageFile(" + path + ")");
 
         image = loadImage(path);
 
@@ -342,7 +342,7 @@ public class Payload {
             imageHeightPX = image.getHeight();
             spriteWidth.setPixels(spriteHeight.getRealPixels() * imageWidthPX / imageHeightPX);
             spriteScale = spriteHeight.getRealPixels() / imageHeightPX;
-            System.out.println("image size(" + imageWidthPX + ", " + imageHeightPX+ ")  scale = " + spriteScale);
+            // System.out.println("image size(" + imageWidthPX + ", " + imageHeightPX+ ")  scale = " + spriteScale);
 
             for (int i = 0; i < views.length; ++i)
                 getImageView(i).setImage(image);
@@ -392,7 +392,7 @@ public class Payload {
         final double winY = (double)cardHeightPX - (2*centreY.getRealPixels());
         ImageView view = getImageView(0);
 
-    	System.out.println("relocate(" + pX + ", " + pY+ ")  scale = " + spriteScale);
+    	// System.out.println("relocate(" + pX + ", " + pY+ ")  scale = " + spriteScale);
         view.relocate(pX, pY);
 
         view.setFitWidth(spriteWidth.getRealPixels());
@@ -412,7 +412,7 @@ public class Payload {
         final double offY = location.getYOffset() * winY;
         double pY = centreY.getRealOrigin() + offY;
 
-    	System.out.println("relocate(" + pX + ", " + pY+ ")  scale = " + spriteScale);
+    	// System.out.println("relocate(" + pX + ", " + pY+ ")  scale = " + spriteScale);
         view.relocate(pX, pY);
 
         view.setFitWidth(spriteWidth.getRealPixels());

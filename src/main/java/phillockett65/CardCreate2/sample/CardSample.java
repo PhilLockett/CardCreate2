@@ -77,8 +77,8 @@ public class CardSample extends Stage {
 		this.setX(20);
 		this.setY(20);
 
-		System.out.println("Default Size " + WIDTH + " and " + HEIGHT);
-		System.out.println("Scene Size set to " + scene.getWidth() + " and " + scene.getHeight());
+		// System.out.println("Default Size " + WIDTH + " and " + HEIGHT);
+		// System.out.println("Scene Size set to " + scene.getWidth() + " and " + scene.getHeight());
 
 
 //        ChangeListener<Number> listener = new ChangeListener<Number>() {
@@ -111,10 +111,10 @@ public class CardSample extends Stage {
 
 		this.show();
 
-		System.out.println("Stage Size set to " + this.getWidth() + " and " + this.getHeight());
+		// System.out.println("Stage Size set to " + this.getWidth() + " and " + this.getHeight());
 		dx = this.getWidth() - WIDTH;
 		dy = this.getHeight() - HEIGHT;
-		System.out.println("Stage deltas " + dx + " and " + dy + "   " + (dy-dx));
+		// System.out.println("Stage deltas " + dx + " and " + dy + "   " + (dy-dx));
 
 		this.setMinWidth(Default.MIN_WIDTH.getFloat() + dx);
 		this.setMinHeight(Default.MIN_HEIGHT.getFloat() + dy);
@@ -134,7 +134,7 @@ public class CardSample extends Stage {
     }
 
     public void syncCurrentCard() {
-    	System.out.println("syncCurrentCard()");
+    	// System.out.println("syncCurrentCard()");
     }
 
 
