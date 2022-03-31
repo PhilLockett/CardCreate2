@@ -132,9 +132,12 @@ public class Payload {
     }
 
     /**
-     * @return the ImageView count.
+     * @return the active ImageView count.
      */
     private int getImageCount() {
+        if ((item == Item.FACE) && (!isLandscape()))
+            return 1;
+
         return views.length;
     }
 
