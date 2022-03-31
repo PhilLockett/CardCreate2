@@ -74,8 +74,17 @@ public class Payload {
 
 	};
 
-    public static final int PAINT_DISPLAY = -1;
-    public static final int PAINT_FILE = -2;
+    private static enum Destination { DISPLAY, DISC };
+    private static Destination destination = Destination.DISPLAY;
+
+    public static void setDestinationToDisplay() {
+        destination = Destination.DISPLAY;
+    }
+    
+    public static void setDestinationToDisc() {
+        destination = Destination.DISC;
+    }
+
 
     final static int[][] flags = {
         { 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
@@ -414,12 +423,8 @@ public class Payload {
         if (!display)
             return;
         
-        if (getPattern() == PAINT_DISPLAY) {
-            paintImage(false);
-            return;
-        }
-        if (getPattern() == PAINT_FILE) {
-            paintImage(true);
+        if (item == Item.FACE) {
+            paintImage(destination == Destination.DISC);
             return;
         }
 

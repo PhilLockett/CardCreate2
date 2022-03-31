@@ -784,7 +784,7 @@ public class Model {
     private void initializeCardItemPayloads() {
 		System.out.println("initializeCardItemPayloads()");
 
-        face		= new Payload(this, Payload.PAINT_FILE, Item.FACE);
+        face		= new Payload(this, 0, Item.FACE);
 
         index		= new Payload(this, 0, Item.INDEX);
 
