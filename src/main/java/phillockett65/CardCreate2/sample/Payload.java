@@ -376,6 +376,14 @@ public class Payload {
         view.setFitWidth(spriteWidth.getRealPixels());
         view.setFitHeight(spriteHeight.getRealPixels());
 
+        view = getImageView(1);
+
+    	// System.out.println("relocate(" + pX + ", " + pY+ ")  scale = " + spriteScale);
+        view.relocate(pX, pY);
+
+        view.setFitWidth(spriteWidth.getRealPixels());
+        view.setFitHeight(spriteHeight.getRealPixels());
+
     }
 
 
