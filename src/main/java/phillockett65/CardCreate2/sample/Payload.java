@@ -281,25 +281,6 @@ public class Payload {
 
 
     /**
-     * @return the file path for the image of the Item for the current card.
-     */
-    private String setPath() {
-        if (item == Item.FACE)
-            return model.getFaceImagePath();
-
-        if (item == Item.INDEX)
-			return model.getIndexImagePath();
-
-		if ((item == Item.STANDARD_PIP) || (item == Item.FACE_PIP))
-            return model.getPipImagePath();
-
-        if (item == Item.CORNER_PIP)
-			return model.getCornerPipImagePath();
-
-        return "";
-    }
-
-    /**
      * Load an image file from disc.
      * 
      * @param path to the image file.
@@ -325,7 +306,7 @@ public class Payload {
         return loadedImage;
     }
 
-    private boolean loadNewImageFile(String path) {
+    private boolean loadNewImageFile() {
     	// System.out.println("loadNewImageFile(" + path + ")");
 
         image = loadImage(path);
@@ -347,33 +328,37 @@ public class Payload {
     }
 
     /**
-     * Change the pattern of standard pips to match the current card.
-     * 
-     * @return true if the pattern was changed, false otherwise.
+     * @return the file path for the image of the Item for the current card.
      */
-    public boolean syncCurrentCard() {
-        final boolean change = (item == Item.STANDARD_PIP);
+    private String getImagePath() {
+        if (item == Item.FACE)
+            return model.getFaceImagePath();
 
-        if (change)
-            pattern = model.getCard();
+        if (item == Item.INDEX)
+			return model.getIndexImagePath();
 
-        setPatterns();
+		if ((item == Item.STANDARD_PIP) || (item == Item.FACE_PIP))
+            return model.getPipImagePath();
 
-        return change;
+        if (item == Item.CORNER_PIP)
+			return model.getCornerPipImagePath();
+
+        return "";
     }
+
     /**
      * Set up the new image file.
      * 
      * @return true if the new file was loaded, false otherwise.
      */
     public boolean syncImageFile() {
-        path = setPath();
+        path = getImagePath();
         // System.out.println("syncImageFile(" + path + ")");
 
         if (path.equals(""))
             return false;
 
-        return loadNewImageFile(path);
+        return loadNewImageFile();
     }
 
     private void paintImage(boolean generate) {
