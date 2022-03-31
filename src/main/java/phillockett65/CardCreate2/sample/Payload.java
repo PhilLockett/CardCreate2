@@ -279,7 +279,28 @@ public class Payload {
 
         // Set up image dependent values.
         syncImageFile();
-        setPatterns();
+        initPatterns();
+    }
+    private void initPatterns() {
+    	System.out.println("initPatterns()");
+        // if (!display) {
+        //     System.out.println("initPatterns() ABORTING!");
+
+        //     return;
+        // }
+        
+        if (item == Item.FACE) {
+            paintImage();
+            return;
+        }
+
+        for (int i = 0; i < getImageCount(); ++i) {
+            final boolean visible = isImageViewVisible(i);
+            ImageView view = getImageView(i);
+            view.setVisible(visible);
+
+            paintIcon(view, getLocation(i));
+        }
     }
 
 
