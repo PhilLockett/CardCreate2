@@ -377,13 +377,19 @@ public class Payload {
         view.setFitWidth(spriteWidth.getRealPixels());
         view.setFitHeight(spriteHeight.getRealPixels());
 
-        view = getImageView(1);
-
     	// System.out.println("relocate(" + pX + ", " + pY+ ")  scale = " + spriteScale);
-        view.relocate(pX, pY);
+        view = getImageView(1);
+        if (isLandscape()) {
+        	System.out.println("landscape");
 
-        view.setFitWidth(spriteWidth.getRealPixels());
-        view.setFitHeight(spriteHeight.getRealPixels());
+            view.relocate(pX, pY);  // FIX THIS ??
+            
+            view.setFitWidth(spriteWidth.getRealPixels());
+            view.setFitHeight(spriteHeight.getRealPixels());
+        } else {
+        	System.out.println("portrait");
+            view.setVisible(false);
+        }
 
     }
 
