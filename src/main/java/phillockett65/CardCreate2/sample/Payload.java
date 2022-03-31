@@ -439,6 +439,25 @@ public class Payload {
     }
 
     /**
+     * Change the pattern of standard pips to match the current card.
+     * 
+     * @return true if the pattern was changed, false otherwise.
+     */
+    public boolean syncCurrentCard() {
+    	// System.out.println("syncCurrentCard(" + item + ")");
+        final boolean change = (item == Item.STANDARD_PIP);
+
+        if (change)
+            pattern = model.getCard();
+
+        System.out.println("syncCurrentCard(" + pattern + ")");
+
+        setPatterns();
+
+        return change;
+    }
+
+    /**
      * Copy the attributes from another Payload object.
      * @param p the Payload object to copy.
      * @return true if the attributes were copied, false otherwise.
