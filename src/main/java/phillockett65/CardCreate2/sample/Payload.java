@@ -361,7 +361,8 @@ public class Payload {
         return loadNewImageFile();
     }
 
-    private void paintImage(boolean generate) {
+    private void paintImage() {
+        final boolean generate = (destination == Destination.DISC);
     	System.out.println("paintImage(" + generate + ")");
 
         final long pX = centreX.getIntPixels();
@@ -417,7 +418,8 @@ public class Payload {
         // }
         
         if (item == Item.FACE) {
-            paintImage(destination == Destination.DISC);
+            if (image != null)
+                paintImage();
             return;
         }
 
@@ -691,7 +693,7 @@ public class Payload {
      * @param state if true, display the icons, hide them otherwise.
      */
     public void setVisible(boolean state) {
-    	System.out.println("setVisible(" + state + ")");
+    	// System.out.println("setVisible(" + state + ")");
         display = state;
 
         for (int i = 0; i < getImageCount(); ++i) 

@@ -766,8 +766,8 @@ public class Model {
 			face.setVisible(displayFaceImage);
 			standardPip.setVisible(false);
 		} else {
-			standardPip.setVisible(displayStandardPip);
 			face.setVisible(false);
+			standardPip.setVisible(displayStandardPip);
 		}
 		if (isFaceCard()) {
 			facePip.setVisible(displayFacePip);
