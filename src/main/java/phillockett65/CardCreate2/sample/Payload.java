@@ -221,7 +221,6 @@ public class Payload {
 	private Model model;
 
     private int pattern = 0;
-    private int icons;
     private final Item item;
     private String path;
     private Group group;
@@ -232,8 +231,8 @@ public class Payload {
     private double cardWidthPX;
     private double cardHeightPX;
 
-    private boolean display;
-    private boolean keepAspectRatio;
+    private boolean display = true;
+    private boolean keepAspectRatio = true;
     private final Real centreX;
     private final Real centreY;
     private final Real spriteHeight;
@@ -252,8 +251,6 @@ public class Payload {
         pattern = p;
         item = it;
 
-        display = true;
-        keepAspectRatio = true;
         centreX = new Real(false);
         centreY = new Real(true);
         spriteWidth = new Real(false);
@@ -265,8 +262,8 @@ public class Payload {
         centreY.setPercent(item.getY());
 
         // Set up the image views.
-        icons = (pattern > 0) ? pattern : 2;
-        views = new ImageView[17];
+        int icons = (pattern > 1) ? 17 : 2;
+        views = new ImageView[icons];
         for (int i = 0; i < views.length; ++i) {
             views[i] = new ImageView();
 
