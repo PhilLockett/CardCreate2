@@ -553,12 +553,12 @@ public class Controller {
 
     @FXML
     void widthjButtonActionPerformed(ActionEvent event) {
-    	model.defaultWidthSVF();
+    	model.resetCardWidthSVF();
     }
 
     @FXML
     void heightjButtonActionPerformed(ActionEvent event) {
-    	model.defaultHeightSVF();
+    	model.resetCardHeightSVF();
     }
 
 	/**
@@ -820,17 +820,17 @@ public class Controller {
 
     @FXML
     void itemHeightButtonActionPerformed(ActionEvent event) {
-    	model.resetCurrentH();
+    	model.resetCurrentHSVF();
     }
 
     @FXML
     void itemCentreXButtonActionPerformed(ActionEvent event) {
-    	model.resetCurrentX();
+    	model.resetCurrentXSVF();
     }
 
     @FXML
     void itemCentreYButtonActionPerformed(ActionEvent event) {
-    	model.resetCurrentY();
+    	model.resetCurrentYSVF();
     }
 
     @FXML

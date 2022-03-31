@@ -507,11 +507,11 @@ public class Model {
 		return heightSVF;
 	}
 
-	public void defaultWidthSVF() {
+	public void resetCardWidthSVF() {
 		widthSVF.setValue(Default.WIDTH.getInt());
 	}
 
-	public void defaultHeightSVF() {
+	public void resetCardHeightSVF() {
 		heightSVF.setValue(Default.HEIGHT.getInt());
 	}
 
@@ -900,7 +900,7 @@ public class Model {
 	 * Set itemHeightSVF to the default value of the currently selected card 
 	 * item.
 	 */
-	public void resetCurrentH() {
+	public void resetCurrentHSVF() {
 		itemHeightSVF.setValue(roundPercentage(current.getItem().getH()));
 	}
 
@@ -908,7 +908,7 @@ public class Model {
 	 * Set itemCentreXSVF to the default value of the currently selected card 
 	 * item.
 	 */
-	public void resetCurrentX() {
+	public void resetCurrentXSVF() {
 		itemCentreXSVF.setValue(roundPercentage(current.getItem().getX()));
 	}
 
@@ -916,7 +916,7 @@ public class Model {
 	 * Set itemCentreYSVF to the default value of the currently selected card 
 	 * item.
 	 */
-	public void resetCurrentY() {
+	public void resetCurrentYSVF() {
 		itemCentreYSVF.setValue(roundPercentage(current.getItem().getY()));
 	}
 
