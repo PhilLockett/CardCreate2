@@ -27,16 +27,10 @@ package phillockett65.CardCreate2.sample;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.net.URI;
-
-import javax.imageio.ImageIO;
 
 import javafx.scene.Group;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
 
 import phillockett65.CardCreate2.Model;
 
@@ -692,7 +686,7 @@ public class Payload {
      * @return true if the image should be drawn, false otherwise.
      */
     public boolean isVisible() {
-        return this.display;
+        return display;
     }
 
     /**
