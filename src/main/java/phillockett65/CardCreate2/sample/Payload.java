@@ -415,10 +415,13 @@ public class Payload {
     /**
      * Paint the icons associated with this payload.
      */
-    public void setPatterns() {
+    private void setPatterns() {
     	System.out.println("setPatterns()");
-        if (!display)
-            return;
+        // if (!display) {
+        //     System.out.println("setPatterns() ABORTING!");
+
+        //     return;
+        // }
         
         if (item == Item.FACE) {
             paintImage(destination == Destination.DISC);
