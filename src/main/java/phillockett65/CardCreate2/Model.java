@@ -582,40 +582,50 @@ public class Model {
         return displayIndex;
     }
 
-    public void setDisplayIndex(boolean state) {
-        displayIndex = state;
-        index.setVisible(displayIndex);
-    }
-
     public boolean isDisplayCornerPip() {
         return displayCornerPip;
-    }
-
-    public void setDisplayCornerPip(boolean state) {
-        displayCornerPip = state;
-        cornerPip.setVisible(displayCornerPip);
     }
 
     public boolean isDisplayStandardPip() {
         return displayStandardPip;
     }
 
-    public void setDisplayStandardPip(boolean state) {
-        displayStandardPip = state;
-        standardPip.setVisible(displayStandardPip);
-    }
-
     public boolean isDisplayFaceImage() {
         return displayFaceImage;
     }
 
-    public void setDisplayFaceImage(boolean state) {
-        displayFaceImage = state;
-        face.setVisible(displayFaceImage);
-    }
-
     public boolean isDisplayFacePip() {
         return displayFacePip;
+    }
+
+        return displayCornerPip;
+    }
+
+    }
+
+    }
+
+        return false;
+    }
+
+    public void setDisplayIndex(boolean state) {
+        displayIndex = state;
+        index.setVisible(shouldDisplayIndex());
+    }
+
+    public void setDisplayCornerPip(boolean state) {
+        displayCornerPip = state;
+        cornerPip.setVisible(shouldDisplayCornerPip());
+    }
+
+    public void setDisplayStandardPip(boolean state) {
+        displayStandardPip = state;
+        standardPip.setVisible(shouldDisplayStandardPip());
+    }
+
+    public void setDisplayFaceImage(boolean state) {
+        displayFaceImage = state;
+        face.setVisible(shouldDisplayFaceImage());
     }
 
     public void setDisplayFacePip(boolean state) {
