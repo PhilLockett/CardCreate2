@@ -33,9 +33,9 @@ import javafx.scene.shape.Rectangle;
 
 public class Handle extends ImageView {
 
-	private Image image;
+    private Image image;
 
-	private long xPos = 150;
+    private long xPos = 150;
     private long yPos = 50;
     private long xMouse = xPos;
     private long yMouse = yPos;
@@ -46,8 +46,8 @@ public class Handle extends ImageView {
     private Payload payload;
 
     public Handle(Image handleImage) {
-		image = handleImage;
-		this.setImage(image);
+        image = handleImage;
+        this.setImage(image);
 
         this.setFitWidth(width);
         this.setFitHeight(height);
@@ -82,7 +82,7 @@ public class Handle extends ImageView {
     public void set(long x, long y) {
         xPos = x - (width/2);
         yPos = y - (height/2);
-		this.relocate(xPos, yPos);
+        this.relocate(xPos, yPos);
     }
 
     public long getXPos() {

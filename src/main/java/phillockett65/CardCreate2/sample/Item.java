@@ -165,6 +165,6 @@ public enum Item {
     }
 
     public boolean isCentre() {
-    	return centre;
+        return centre;
     }
 }

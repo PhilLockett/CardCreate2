@@ -33,52 +33,52 @@ import phillockett65.CardCreate2.Controller;
 import phillockett65.CardCreate2.Model;
 
 public class CardSample extends Stage {
-	
-	private Controller controller;
-	private Model model;
+    
+    private Controller controller;
+    private Model model;
 
-	// private Stage stage;
-	private Scene scene;
-	private Group group;
-	private Handle handle;
+    // private Stage stage;
+    private Scene scene;
+    private Group group;
+    private Handle handle;
 
-	private double dx;	// Difference between the size of the stage and the size of the scene.
-	private double dy;
+    private double dx;	// Difference between the size of the stage and the size of the scene.
+    private double dy;
 
-	private final String title;
+    private final String title;
 
 
-	/**
-	 * Constructor.
-	 * 
-	 * @param mainController	- used to call the centralized controller.
-	 * @param mainModel			- used to call the centralized data model.
-	 * @param title				- string displayed as the heading of the Stage.
-	 */
-	public CardSample(Controller mainController, Model mainModel, String title) {
+    /**
+     * Constructor.
+     * 
+     * @param mainController	- used to call the centralized controller.
+     * @param mainModel			- used to call the centralized data model.
+     * @param title				- string displayed as the heading of the Stage.
+     */
+    public CardSample(Controller mainController, Model mainModel, String title) {
 //		System.out.println("CardSample constructed: " + title);
 
-		// stage = this;
-		this.title = title;
-		setTitle(title);
-		resizableProperty().setValue(false);
-		setOnCloseRequest(e -> Platform.exit());
+        // stage = this;
+        this.title = title;
+        setTitle(title);
+        resizableProperty().setValue(false);
+        setOnCloseRequest(e -> Platform.exit());
 
-		controller = mainController;
-		model = mainModel;
-		group = model.getGroup();
+        controller = mainController;
+        model = mainModel;
+        group = model.getGroup();
 
-		initCardSample();
+        initCardSample();
 
-		final float WIDTH = Default.WIDTH.getFloat();
-		final float HEIGHT = Default.HEIGHT.getFloat();
-		scene = new Scene(group, WIDTH, HEIGHT);
-		this.setScene(scene);
-		this.setX(20);
-		this.setY(20);
+        final float WIDTH = Default.WIDTH.getFloat();
+        final float HEIGHT = Default.HEIGHT.getFloat();
+        scene = new Scene(group, WIDTH, HEIGHT);
+        this.setScene(scene);
+        this.setX(20);
+        this.setY(20);
 
-		// System.out.println("Default Size " + WIDTH + " and " + HEIGHT);
-		// System.out.println("Scene Size set to " + scene.getWidth() + " and " + scene.getHeight());
+        // System.out.println("Default Size " + WIDTH + " and " + HEIGHT);
+        // System.out.println("Scene Size set to " + scene.getWidth() + " and " + scene.getHeight());
 
 
 //        ChangeListener<Number> listener = new ChangeListener<Number>() {
@@ -106,59 +106,59 @@ public class CardSample extends Stage {
 //        this.heightProperty().addListener(listener);
 
 
-		handle = model.getHandle();
-		handle.set(10, 10);
+        handle = model.getHandle();
+        handle.set(10, 10);
 
-		this.show();
+        this.show();
 
-		// System.out.println("Stage Size set to " + this.getWidth() + " and " + this.getHeight());
-		dx = this.getWidth() - WIDTH;
-		dy = this.getHeight() - HEIGHT;
-		// System.out.println("Stage deltas " + dx + " and " + dy + "   " + (dy-dx));
+        // System.out.println("Stage Size set to " + this.getWidth() + " and " + this.getHeight());
+        dx = this.getWidth() - WIDTH;
+        dy = this.getHeight() - HEIGHT;
+        // System.out.println("Stage deltas " + dx + " and " + dy + "   " + (dy-dx));
 
-		this.setMinWidth(Default.MIN_WIDTH.getFloat() + dx);
-		this.setMinHeight(Default.MIN_HEIGHT.getFloat() + dy);
-		this.setMaxWidth(Default.MAX_WIDTH.getFloat() + dx);
-		this.setMaxHeight(Default.MAX_HEIGHT.getFloat() + dy);
+        this.setMinWidth(Default.MIN_WIDTH.getFloat() + dx);
+        this.setMinHeight(Default.MIN_HEIGHT.getFloat() + dy);
+        this.setMaxWidth(Default.MAX_WIDTH.getFloat() + dx);
+        this.setMaxHeight(Default.MAX_HEIGHT.getFloat() + dy);
 
-	}
+    }
 
 
     public void syncBackgroundColour() {
-		scene.setFill(model.getBackgroundColour());
+        scene.setFill(model.getBackgroundColour());
     }
 
     public void syncCardSize() {
-    	this.setWidth(model.getCalculatedWidth() + dx);
-    	this.setHeight(model.getHeight() + dy);
+        this.setWidth(model.getCalculatedWidth() + dx);
+        this.setHeight(model.getHeight() + dy);
     }
 
     public void syncCurrentCard() {
-    	// System.out.println("syncCurrentCard()");
+        // System.out.println("syncCurrentCard()");
     }
 
 
-	/**
-	 * Temp for debug.
+    /**
+     * Temp for debug.
      * @param x coordinate of the centre of the current Item as a percentage of the card width.
      * @param y coordinate of the centre of the current Item as a percentage of the card height.
-	 */
+     */
     public void setHandle(double x, double y) {
-    	// Convert to pixels.
-    	final long xPos = model.percentageToPX(x); 
-    	final long yPos = model.percentageToPX(y); 
+        // Convert to pixels.
+        final long xPos = model.percentageToPX(x); 
+        final long yPos = model.percentageToPX(y); 
 
-    	handle.set(xPos, yPos);
+        handle.set(xPos, yPos);
     }
 
-	/**
-	 * Calls the grid constructor, initializes some globals and adds the nodes 
-	 * of the cells to the model. 
-	 */
-	private void initCardSample() {
+    /**
+     * Calls the grid constructor, initializes some globals and adds the nodes 
+     * of the cells to the model. 
+     */
+    private void initCardSample() {
 
 
-	}
+    }
 
 
 
@@ -172,15 +172,15 @@ public class CardSample extends Stage {
  * Key handling support code.
  */
 
-	/**
-	 * Allow the KeyHandler to update the window title to indicate the 
-	 * Shift/Control key press sate.
-	 * 
-	 * @param action - String to indicate the current user action.
-	 */
-	public void augmentTitle(String action) {
-		setTitle(title + action);
-	}
+    /**
+     * Allow the KeyHandler to update the window title to indicate the 
+     * Shift/Control key press sate.
+     * 
+     * @param action - String to indicate the current user action.
+     */
+    public void augmentTitle(String action) {
+        setTitle(title + action);
+    }
 
 
 

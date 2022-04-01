@@ -36,43 +36,43 @@ import phillockett65.CardCreate2.Model;
 
 public class Payload {
 
-	private static enum Loc {
-	    L_0 (0, 0, false),
-	    L_1 (0, 0,  true),
-	    L_2 (2, 2, false),
-	    L_3 (2, 0,  true),
-	    L_4 (2, 0, false),
-	    L_5 (1, 0,  true),
-	    L_6 (1, 0, false),
-	    L_7 (0, 2, false),
-	    L_8 (1, 2, false),
-	    L_9 (2, 3, false),
-	    L10 (2, 3,  true),
-	    L11 (0, 4,  true),
-	    L12 (1, 4,  true),
-	    L13 (0, 4, false),
-	    L14 (1, 4, false),
-	    L15 (2, 5,  true),
-	    L16 (2, 5, false);
+    private static enum Loc {
+        L_0 (0, 0, false),
+        L_1 (0, 0,  true),
+        L_2 (2, 2, false),
+        L_3 (2, 0,  true),
+        L_4 (2, 0, false),
+        L_5 (1, 0,  true),
+        L_6 (1, 0, false),
+        L_7 (0, 2, false),
+        L_8 (1, 2, false),
+        L_9 (2, 3, false),
+        L10 (2, 3,  true),
+        L11 (0, 4,  true),
+        L12 (1, 4,  true),
+        L13 (0, 4, false),
+        L14 (1, 4, false),
+        L15 (2, 5,  true),
+        L16 (2, 5, false);
 
-	    private final int       xIndex;
-	    private final int       yIndex;
-	    private final boolean   rotate;
+        private final int       xIndex;
+        private final int       yIndex;
+        private final boolean   rotate;
 
-	    Loc(int ix, int iy, boolean rot) {
-	        xIndex = ix;
-	        yIndex = iy;
-	        rotate = rot;
-	    }
+        Loc(int ix, int iy, boolean rot) {
+            xIndex = ix;
+            yIndex = iy;
+            rotate = rot;
+        }
 
-	    public boolean getRotate() { return rotate; }
+        public boolean getRotate() { return rotate; }
 
-	    private final double[] offsets = { 0D, 1D, 0.5D, 0.25D, 1D / 3, 1D / 6 };
+        private final double[] offsets = { 0D, 1D, 0.5D, 0.25D, 1D / 3, 1D / 6 };
 
-	    public double getXOffset() { return rotate ? 1-offsets[xIndex] : offsets[xIndex]; }
-	    public double getYOffset() { return rotate ? 1-offsets[yIndex] : offsets[yIndex]; }
+        public double getXOffset() { return rotate ? 1-offsets[xIndex] : offsets[xIndex]; }
+        public double getYOffset() { return rotate ? 1-offsets[yIndex] : offsets[yIndex]; }
 
-	};
+    };
 
     private static enum Destination { DISPLAY, DISC };
     private static Destination destination = Destination.DISPLAY;
@@ -221,7 +221,7 @@ public class Payload {
 
     // "image" refers to the image in the file, 
     // "sprite" refers to the image on screen.
-	private Model model;
+    private Model model;
 
     private int pattern = 0;
     private final Item item;
@@ -245,7 +245,7 @@ public class Payload {
     public Payload(Model mainModel, int p, Item it) {
         System.out.println("Payload()");
 
-		model = mainModel;
+        model = mainModel;
 
         group = model.getGroup();
         cardWidthPX = model.getWidth();
@@ -282,7 +282,7 @@ public class Payload {
         initPatterns();
     }
     private void initPatterns() {
-    	System.out.println("initPatterns()");
+        System.out.println("initPatterns()");
         // if (!display) {
         //     System.out.println("initPatterns() ABORTING!");
 
@@ -311,7 +311,7 @@ public class Payload {
      * @return the Image, or null if the file is not found.
      */
     private Image loadImage(String path) {
-   	// System.out.println("loadImage(" + path + ")");
+    // System.out.println("loadImage(" + path + ")");
         File file = new File(path);
 
         if (!file.exists()) {
@@ -331,7 +331,7 @@ public class Payload {
     }
 
     private boolean loadNewImageFile() {
-    	// System.out.println("loadNewImageFile(" + path + ")");
+        // System.out.println("loadNewImageFile(" + path + ")");
 
         image = loadImage(path);
 
@@ -359,13 +359,13 @@ public class Payload {
             return model.getFaceImagePath();
 
         if (item == Item.INDEX)
-			return model.getIndexImagePath();
+            return model.getIndexImagePath();
 
-		if ((item == Item.STANDARD_PIP) || (item == Item.FACE_PIP))
+        if ((item == Item.STANDARD_PIP) || (item == Item.FACE_PIP))
             return model.getPipImagePath();
 
         if (item == Item.CORNER_PIP)
-			return model.getCornerPipImagePath();
+            return model.getCornerPipImagePath();
 
         return "";
     }
@@ -387,7 +387,7 @@ public class Payload {
 
     private void paintImage() {
         final boolean generate = (destination == Destination.DISC);
-    	System.out.println("paintImage(" + generate + ")");
+        System.out.println("paintImage(" + generate + ")");
 
         final long pX = centreX.getIntPixels();
         final long pY = centreY.getIntPixels();
@@ -395,23 +395,23 @@ public class Payload {
         final double winY = (double)cardHeightPX - (2*centreY.getRealPixels());
         ImageView view = getImageView(0);
 
-    	// System.out.println("relocate(" + pX + ", " + pY+ ")  scale = " + spriteScale);
+        // System.out.println("relocate(" + pX + ", " + pY+ ")  scale = " + spriteScale);
         view.relocate(pX, pY);
 
         view.setFitWidth(spriteWidth.getRealPixels());
         view.setFitHeight(spriteHeight.getRealPixels());
 
-    	// System.out.println("relocate(" + pX + ", " + pY+ ")  scale = " + spriteScale);
+        // System.out.println("relocate(" + pX + ", " + pY+ ")  scale = " + spriteScale);
         view = getImageView(1);
         if (isLandscape()) {
-        	System.out.println("landscape");
+            System.out.println("landscape");
 
             view.relocate(pX, pY);  // FIX THIS ??
             
             view.setFitWidth(spriteWidth.getRealPixels());
             view.setFitHeight(spriteHeight.getRealPixels());
         } else {
-        	System.out.println("portrait");
+            System.out.println("portrait");
             view.setVisible(false);
         }
 
@@ -419,7 +419,7 @@ public class Payload {
 
 
     private void paintIcon(ImageView view, Loc location) {
-    	System.out.println("paintIcon()");
+        System.out.println("paintIcon()");
 
         final double winX = cardWidthPX - (2*centreX.getRealPixels());
         final double offX = location.getXOffset() * winX;
@@ -429,7 +429,7 @@ public class Payload {
         final double offY = location.getYOffset() * winY;
         double pY = centreY.getRealOrigin() + offY;
 
-    	// System.out.println("relocate(" + pX + ", " + pY+ ")  scale = " + spriteScale);
+        // System.out.println("relocate(" + pX + ", " + pY+ ")  scale = " + spriteScale);
         view.relocate(pX, pY);
 
         view.setFitWidth(spriteWidth.getRealPixels());
@@ -440,7 +440,7 @@ public class Payload {
      * Paint the icons associated with this payload.
      */
     private void setPatterns() {
-    	System.out.println("setPatterns()");
+        System.out.println("setPatterns()");
         // if (!display) {
         //     System.out.println("setPatterns() ABORTING!");
 
@@ -469,7 +469,7 @@ public class Payload {
      * @return true if the pattern was changed, false otherwise.
      */
     public boolean syncCurrentCard() {
-    	// System.out.println("syncCurrentCard(" + item + ")");
+        // System.out.println("syncCurrentCard(" + item + ")");
         final boolean change = (item == Item.STANDARD_PIP);
 
         if (change)
@@ -563,7 +563,7 @@ public class Payload {
      * @return the new size as a percentage of the card height.
      */
     public double incSize() {
-    	double size = spriteHeight.getPercent();
+        double size = spriteHeight.getPercent();
         if (size != 100f) {
             size += 0.5F;
             if (size > 100f)
@@ -580,7 +580,7 @@ public class Payload {
      * @return the new size as a percentage of the card height.
      */
     public double decSize() {
-    	double size = spriteHeight.getPercent();
+        double size = spriteHeight.getPercent();
         if (size != 0f) {
             size -= 0.5F;
             if (size < 0f)
@@ -723,7 +723,7 @@ public class Payload {
      * @param state if true, display the icons, hide them otherwise.
      */
     public void setVisible(boolean state) {
-    	// System.out.println("setVisible(" + state + ")");
+        // System.out.println("setVisible(" + state + ")");
         display = state;
 
         for (int i = 0; i < getImageCount(); ++i) 
