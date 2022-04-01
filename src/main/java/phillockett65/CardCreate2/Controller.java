@@ -141,6 +141,7 @@ public class Controller {
 
         setInitialBaseDirectory();
         model.init();
+        sample.syncHandle();
         setSelectCardItemTooltips();
         initInputDirectoryChoiceBoxHandlers();
     }
