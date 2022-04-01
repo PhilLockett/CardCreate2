@@ -242,7 +242,7 @@ public class Payload {
     private final Real spriteWidth;
     private double spriteScale = 1;
 
-    public Payload(Model mainModel, int p, Item it) {
+    public Payload(Model mainModel, Item it) {
         System.out.println("Payload()");
 
         model = mainModel;
@@ -251,8 +251,8 @@ public class Payload {
         cardWidthPX = model.getWidth();
         cardHeightPX = model.getHeight();
 
-        pattern = p;
         item = it;
+        syncPattern();
 
         centreX = new Real(false);
         centreY = new Real(true);
@@ -464,16 +464,29 @@ public class Payload {
     }
 
     /**
+     * Change pattern of a standard pip item to match the current card or set
+     *  it to 0 if this is not a standard pip card item.
+     * 
+     * @return true if pattern was changed, false otherwise.
+     */
+    private boolean syncPattern() {
+        final boolean change = (item == Item.STANDARD_PIP);
+
+        pattern = (change) ? model.getCard() : 0;
+
+        System.out.println("syncPattern(" + pattern + ")");
+
+        return change;
+    }
+
+    /**
      * Change the pattern of standard pips to match the current card.
      * 
      * @return true if the pattern was changed, false otherwise.
      */
     public boolean syncCurrentCard() {
         // System.out.println("syncCurrentCard(" + item + ")");
-        final boolean change = (item == Item.STANDARD_PIP);
-
-        if (change)
-            pattern = model.getCard();
+        final boolean change = syncPattern();
 
         System.out.println("syncCurrentCard(" + pattern + ")");
 

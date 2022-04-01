@@ -794,14 +794,14 @@ public class Model {
     private void initializeCardItemPayloads() {
         System.out.println("initializeCardItemPayloads()");
 
-        face		= new Payload(this, 0, Item.FACE);
+        face		= new Payload(this, Item.FACE);
 
-        index		= new Payload(this, 0, Item.INDEX);
+        index		= new Payload(this, Item.INDEX);
 
-        standardPip	= new Payload(this, card, Item.STANDARD_PIP);
-        facePip		= new Payload(this, 0, Item.FACE_PIP);
+        standardPip	= new Payload(this, Item.STANDARD_PIP);
+        facePip		= new Payload(this, Item.FACE_PIP);
 
-        cornerPip	= new Payload(this, 0, Item.CORNER_PIP);
+        cornerPip	= new Payload(this, Item.CORNER_PIP);
 
         changeCurrentCardItemAndSyncSpinners(index);
         updateCardItemDisplayStatus();
