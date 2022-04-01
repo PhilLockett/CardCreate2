@@ -1073,8 +1073,6 @@ public class Model {
     private void initializeSample() {
         group = new Group();
         image = new Image(getClass().getResourceAsStream("Handle.png"));
-        handle = new Handle(image);
-        group.getChildren().add(handle);
     }
 
 
@@ -1115,6 +1113,10 @@ public class Model {
         // System.out.println("init()");
 
         initializeCardItemPayloads();
+
+        // Add handle last so that it is displayed on top.
+        handle = new Handle(image);
+        group.getChildren().add(handle);
     }
 
 
