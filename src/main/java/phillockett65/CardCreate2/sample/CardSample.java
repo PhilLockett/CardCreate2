@@ -25,7 +25,12 @@
 package phillockett65.CardCreate2.sample;
 
 import javafx.application.Platform;
+// import javafx.beans.value.ChangeListener;
+// import javafx.beans.value.ObservableValue;
+// import javafx.geometry.Point2D;
 import javafx.scene.Group;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
@@ -40,6 +45,7 @@ public class CardSample extends Stage {
     // private Stage stage;
     private Scene scene;
     private Group group;
+    private Rectangle card;
     private Handle handle;
 
     private double dx;	// Difference between the size of the stage and the size of the scene.
@@ -66,50 +72,33 @@ public class CardSample extends Stage {
 
         controller = mainController;
         model = mainModel;
-        group = model.getGroup();
 
+        this.show();
+        
         initCardSample();
+    }
+
+    /**
+     * Calls the grid constructor, initializes some globals and adds the nodes 
+     * of the cells to the model. 
+     */
+    private void initCardSample() {
 
         final float WIDTH = Default.WIDTH.getFloat();
         final float HEIGHT = Default.HEIGHT.getFloat();
+
+        group = model.getGroup();
+
         scene = new Scene(group, WIDTH, HEIGHT);
+        scene.setFill(Color.GREEN);
+        drawBlankCard();
+
         this.setScene(scene);
         this.setX(20);
         this.setY(20);
 
         // System.out.println("Default Size " + WIDTH + " and " + HEIGHT);
         // System.out.println("Scene Size set to " + scene.getWidth() + " and " + scene.getHeight());
-
-
-//        ChangeListener<Number> listener = new ChangeListener<Number>() {
-//            private Point2D stageSize = null ;
-//            private Point2D previousStageSize = new Point2D(stage.getWidth(), stage.getHeight());
-//
-//            @Override
-//            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-//
-//                if (stageSize == null) {
-//                    Platform.runLater(() -> {
-//                        System.out.printf("Old: (%.1f, %.1f); new: (%.1f, %.1f)%n", 
-//                                previousStageSize.getX(), previousStageSize.getY(), 
-//                                stageSize.getX(), stageSize.getY());
-//                        previousStageSize = stageSize;
-//                        stageSize = null;
-//                    });
-//                }
-//                stageSize = new Point2D(stage.getWidth(), stage.getHeight());
-//            }
-//
-//        };
-
-//        this.widthProperty().addListener(listener);
-//        this.heightProperty().addListener(listener);
-
-
-        handle = model.getHandle();
-        handle.set(10, 10);
-
-        this.show();
 
         // System.out.println("Stage Size set to " + this.getWidth() + " and " + this.getHeight());
         dx = this.getWidth() - WIDTH;
@@ -120,17 +109,76 @@ public class CardSample extends Stage {
         this.setMinHeight(Default.MIN_HEIGHT.getFloat() + dy);
         this.setMaxWidth(Default.MAX_WIDTH.getFloat() + dx);
         this.setMaxHeight(Default.MAX_HEIGHT.getFloat() + dy);
-
     }
 
+    private void drawBlankCard() {
+        final double width = model.getCalculatedWidth();
+        final double height = model.getHeight();
+        final Color color = model.getBackgroundColour();
+        card = new Rectangle(width, height, color);
+
+        final double radius = height / 10;
+        card.setArcWidth(radius);
+        card.setArcHeight(radius);
+        card.setStroke(Color.BLACK);
+        card.setStrokeWidth(1);
+        group.getChildren().add(card);
+    }
+
+    // Stage stage;
+    // private void addChangeListener() {
+    //     stage = this;
+
+    //     ChangeListener<Number> listener = new ChangeListener<Number>() {
+    //         private Point2D stageSize = null ;
+    //         private Point2D previousStageSize = new Point2D(stage.getWidth(), stage.getHeight());
+
+    //         @Override
+    //         public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+
+    //             if (stageSize == null) {
+    //                 Platform.runLater(() -> {
+    //                     System.out.printf("Old: (%.1f, %.1f); new: (%.1f, %.1f)%n", 
+    //                             previousStageSize.getX(), previousStageSize.getY(), 
+    //                             stageSize.getX(), stageSize.getY());
+    //                     previousStageSize = stageSize;
+    //                     stageSize = null;
+    //                 });
+    //             }
+    //             stageSize = new Point2D(stage.getWidth(), stage.getHeight());
+    //         }
+
+    //     };
+
+    //     this.widthProperty().addListener(listener);
+    //     this.heightProperty().addListener(listener);
+    // }
+
+
+/************************************************************************
+ * Synchronize interface.
+ */
+
+    public void syncHandle() {
+        handle = model.getHandle();
+    }
 
     public void syncBackgroundColour() {
-        scene.setFill(model.getBackgroundColour());
+        card.setFill(model.getBackgroundColour());
     }
 
     public void syncCardSize() {
-        this.setWidth(model.getCalculatedWidth() + dx);
-        this.setHeight(model.getHeight() + dy);
+        final double width = model.getCalculatedWidth();
+        final double height = model.getHeight();
+
+        this.setWidth(width + dx);
+        this.setHeight(height + dy);
+
+        final double radius = height / 10;
+        card.setArcWidth(radius);
+        card.setArcHeight(radius);
+        card.setWidth(width);
+        card.setHeight(height);
     }
 
     public void syncCurrentCard() {
@@ -150,21 +198,6 @@ public class CardSample extends Stage {
 
         handle.set(xPos, yPos);
     }
-
-    /**
-     * Calls the grid constructor, initializes some globals and adds the nodes 
-     * of the cells to the model. 
-     */
-    private void initCardSample() {
-
-
-    }
-
-
-
-/************************************************************************
- * Table drawing support section.
- */
 
 
 
