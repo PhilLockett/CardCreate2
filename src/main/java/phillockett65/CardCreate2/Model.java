@@ -598,12 +598,46 @@ public class Model {
         return displayFacePip;
     }
 
+    /**
+     * @return true if the index Item should be displayed.
+     */
+    private boolean shouldDisplayIndex() {
+        return displayIndex;
+    }
+
+    /**
+     * @return true if the corner pip Item should be displayed.
+     */
+    private boolean shouldDisplayCornerPip() {
         return displayCornerPip;
     }
 
+    /**
+     * @return true if the standard pip Item should be displayed.
+     */
+    private boolean shouldDisplayStandardPip() {
+        if (!isImageCard())
+            return displayStandardPip;
+        
+        return false;
     }
 
+    /**
+     * @return true if the face image Item should be displayed.
+     */
+    private boolean shouldDisplayFaceImage() {
+        if (isImageCard())
+            return displayFaceImage;
+
+        return false;
     }
+
+    /**
+     * @return true if the face pip Item should be displayed.
+     */
+    private boolean shouldDisplayFacePip() {
+        if (isFaceCard())
+            return displayFacePip;
 
         return false;
     }
@@ -630,7 +664,7 @@ public class Model {
 
     public void setDisplayFacePip(boolean state) {
         displayFacePip = state;
-        facePip.setVisible(displayFacePip);
+        facePip.setVisible(shouldDisplayFacePip());
     }
 
     /**
@@ -779,21 +813,13 @@ public class Model {
      * card.
      */
     private void updateCardItemDisplayStatus() {
-        index.setVisible(displayIndex);
-        cornerPip.setVisible(displayCornerPip);
+        index.setVisible(shouldDisplayIndex());
+        cornerPip.setVisible(shouldDisplayCornerPip());
 
-        if (isImageCard()) {
-            face.setVisible(displayFaceImage);
-            standardPip.setVisible(false);
-        } else {
-            face.setVisible(false);
-            standardPip.setVisible(displayStandardPip);
-        }
-        if (isFaceCard()) {
-            facePip.setVisible(displayFacePip);
-        } else {
-            facePip.setVisible(false);
-        }
+        face.setVisible(shouldDisplayFaceImage());
+        standardPip.setVisible(shouldDisplayStandardPip());
+
+        facePip.setVisible(shouldDisplayFacePip());
     }
 
 
