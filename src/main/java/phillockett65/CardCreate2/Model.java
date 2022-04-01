@@ -1075,7 +1075,7 @@ public class Model {
      * directory has been selected.
      */
     public void init() {
-        System.out.println("init()");
+        // System.out.println("init()");
 
         initializeCardItemPayloads();
     }

@@ -387,6 +387,8 @@ public class Controller {
     @FXML
     void generateButtonActionPerformed(ActionEvent event) {
         model.displayDiags();
+
+        // Diags
         xPos += 0.5;
         yPos += 0.7;
         sample.setHandle(xPos, yPos);

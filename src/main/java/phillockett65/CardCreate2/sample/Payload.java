@@ -736,7 +736,7 @@ public class Payload {
      * @param state if true, display the icons, hide them otherwise.
      */
     public void setVisible(boolean state) {
-        // System.out.println("setVisible(" + state + ")");
+        // System.out.println("setVisible(" + state + ") :: " + item);
         display = state;
 
         for (int i = 0; i < getImageCount(); ++i) 
