@@ -38,6 +38,7 @@ import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
+
 import phillockett65.CardCreate2.sample.Default;
 import phillockett65.CardCreate2.sample.Handle;
 import phillockett65.CardCreate2.sample.Item;
