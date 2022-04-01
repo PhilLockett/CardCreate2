@@ -45,22 +45,30 @@ public class Handle extends ImageView {
     private final long height = 20;
     private Payload payload;
 
-    public Handle(Image handleImage) {
+    public Handle(Image handleImage, Payload payload) {
         image = handleImage;
         this.setImage(image);
 
         this.setFitWidth(width);
         this.setFitHeight(height);
+        setPayload(payload);
     }
 
     public Payload getPayload() {
         return payload;
     }
 
+    /**
+     * Attach this handle to the given Payload.
+     * 
+     * @param payload to control.
+     */
     public void setPayload(Payload payload) {
+        // System.out.println("handle.setPayload(" + payload + ");");
         this.payload = payload;
         xPos = payload.getCentreX() - width/2;
         yPos = payload.getCentreY() - height/2;
+        setPosition(xPos, yPos);
     }
 
     /**
@@ -79,7 +87,8 @@ public class Handle extends ImageView {
      * @param x coordinate of the centre of the current Item in pixels.
      * @param y coordinate of the centre of the current Item in pixels.
      */
-    public void set(long x, long y) {
+    public void setPosition(long x, long y) {
+        // System.out.println("handle.setPosition(" + x + ", " + y + ");");
         xPos = x - (width/2);
         yPos = y - (height/2);
         this.relocate(xPos, yPos);

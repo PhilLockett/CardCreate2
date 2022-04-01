@@ -602,21 +602,21 @@ public class Model {
     /**
      * @return true if the index Item should be displayed.
      */
-    private boolean shouldDisplayIndex() {
+    private boolean shouldIndexBeDisplayed() {
         return displayIndex;
     }
 
     /**
      * @return true if the corner pip Item should be displayed.
      */
-    private boolean shouldDisplayCornerPip() {
+    private boolean shouldCornerPipBeDisplayed() {
         return displayCornerPip;
     }
 
     /**
      * @return true if the standard pip Item should be displayed.
      */
-    private boolean shouldDisplayStandardPip() {
+    private boolean shouldStandardPipBeDisplayed() {
         if (!isImageCard())
             return displayStandardPip;
         
@@ -626,7 +626,7 @@ public class Model {
     /**
      * @return true if the face image Item should be displayed.
      */
-    private boolean shouldDisplayFaceImage() {
+    private boolean shouldFaceImageBeDisplayed() {
         if (isImageCard())
             return displayFaceImage;
 
@@ -636,36 +636,55 @@ public class Model {
     /**
      * @return true if the face pip Item should be displayed.
      */
-    private boolean shouldDisplayFacePip() {
+    private boolean shouldFacePipBeDisplayed() {
         if (isFaceCard())
             return displayFacePip;
 
         return false;
     }
 
+    /**
+     * @return true if the specified Item should be displayed for the current 
+     * card, false otherwise.
+     */
+    private boolean shouldItemBeDisplayed(Item item) {
+        if (item == Item.INDEX)
+            return shouldIndexBeDisplayed();
+        if (item == Item.CORNER_PIP)
+            return shouldCornerPipBeDisplayed();
+        if (item == Item.STANDARD_PIP)
+            return shouldStandardPipBeDisplayed();
+        if (item == Item.FACE)
+            return shouldFaceImageBeDisplayed();
+        if (item == Item.FACE_PIP)
+            return shouldFacePipBeDisplayed();
+ 
+        return false;
+    }
+
     public void setDisplayIndex(boolean state) {
         displayIndex = state;
-        index.setVisible(shouldDisplayIndex());
+        index.setVisible(shouldIndexBeDisplayed());
     }
 
     public void setDisplayCornerPip(boolean state) {
         displayCornerPip = state;
-        cornerPip.setVisible(shouldDisplayCornerPip());
+        cornerPip.setVisible(shouldCornerPipBeDisplayed());
     }
 
     public void setDisplayStandardPip(boolean state) {
         displayStandardPip = state;
-        standardPip.setVisible(shouldDisplayStandardPip());
+        standardPip.setVisible(shouldStandardPipBeDisplayed());
     }
 
     public void setDisplayFaceImage(boolean state) {
         displayFaceImage = state;
-        face.setVisible(shouldDisplayFaceImage());
+        face.setVisible(shouldFaceImageBeDisplayed());
     }
 
     public void setDisplayFacePip(boolean state) {
         displayFacePip = state;
-        facePip.setVisible(shouldDisplayFacePip());
+        facePip.setVisible(shouldFacePipBeDisplayed());
     }
 
     /**
@@ -687,6 +706,7 @@ public class Model {
     }
 
     public void setCardItem(Item cardItem) {
+        // System.out.println("setCardItem(" + cardItem + ")");
         currentItem = cardItem;
 
         if (currentItem == Item.INDEX) {
@@ -732,6 +752,7 @@ public class Model {
     private Payload face = null;
     private Payload facePip = null;
     private Payload current = null;
+    private Payload[] payloadSlider;
     
     private SpinnerValueFactory<Double> itemHeightSVF;
     private SpinnerValueFactory<Double> itemCentreXSVF;
@@ -814,22 +835,45 @@ public class Model {
      * card.
      */
     private void updateCardItemDisplayStatus() {
-        index.setVisible(shouldDisplayIndex());
-        cornerPip.setVisible(shouldDisplayCornerPip());
+        index.setVisible(shouldIndexBeDisplayed());
+        cornerPip.setVisible(shouldCornerPipBeDisplayed());
 
-        face.setVisible(shouldDisplayFaceImage());
-        standardPip.setVisible(shouldDisplayStandardPip());
+        face.setVisible(shouldFaceImageBeDisplayed());
+        standardPip.setVisible(shouldStandardPipBeDisplayed());
 
-        facePip.setVisible(shouldDisplayFacePip());
+        facePip.setVisible(shouldFacePipBeDisplayed());
     }
 
+    /**
+     * Find the next displayable card item for the current card and update the 
+     * current card item.
+     * 
+     * @return true if a new displayable card item is found, false otherwise.
+     */
+    public boolean setNextPayload() {
+        int index = current.getItem().index() + 1;
+
+        while (payloadSlider[index].getItem() != current.getItem()) {
+            if (shouldItemBeDisplayed(payloadSlider[index].getItem())) {
+                changeCurrentCardItemAndSyncSpinners(payloadSlider[index]);
+
+                return true;
+            }
+
+            index++;
+            if (index > payloadSlider.length)   // Safety check.
+                break;
+        }
+
+        return false;
+    }
 
     /**
      * Create the card item Payload instances after the base directory has 
      * been selected.
      */
     private void initializeCardItemPayloads() {
-        System.out.println("initializeCardItemPayloads()");
+        // System.out.println("initializeCardItemPayloads()");
 
         face		= new Payload(this, Item.FACE);
 
@@ -840,7 +884,21 @@ public class Model {
 
         cornerPip	= new Payload(this, Item.CORNER_PIP);
 
-        changeCurrentCardItemAndSyncSpinners(index);
+        // Set up payload slider used to determine next item.
+        final int CARDITEMCOUNT = 5;
+        payloadSlider = new Payload[CARDITEMCOUNT * 2];
+        payloadSlider[Item.FACE.index()] = face;
+        payloadSlider[Item.FACE.index() + CARDITEMCOUNT] = face;
+        payloadSlider[Item.INDEX.index()] = index;
+        payloadSlider[Item.INDEX.index() + CARDITEMCOUNT] = index;
+        payloadSlider[Item.STANDARD_PIP.index()] = standardPip;
+        payloadSlider[Item.STANDARD_PIP.index() + CARDITEMCOUNT] = standardPip;
+        payloadSlider[Item.FACE_PIP.index()] = facePip;
+        payloadSlider[Item.FACE_PIP.index() + CARDITEMCOUNT] = facePip;
+        payloadSlider[Item.CORNER_PIP.index()] = cornerPip;
+        payloadSlider[Item.CORNER_PIP.index() + CARDITEMCOUNT] = cornerPip;
+
+        initCurrentCardItemAndSyncSpinners(index);
         updateCardItemDisplayStatus();
     }
 
@@ -1019,11 +1077,15 @@ public class Model {
      * Set the current card item and adjust the Card Item spinners.
      * @param item currently selected card item Payload.
      */
-    private void changeCurrentCardItemAndSyncSpinners(Payload item) {
+    private void initCurrentCardItemAndSyncSpinners(Payload item) {
         current = item;
         itemHeightSVF.setValue(roundPercentage(getCurrentH()));
         itemCentreXSVF.setValue(roundPercentage(getCurrentX()));
         itemCentreYSVF.setValue(roundPercentage(getCurrentY()));
+    }
+    private void changeCurrentCardItemAndSyncSpinners(Payload item) {
+        initCurrentCardItemAndSyncSpinners(item);
+        handle.setPayload(current);
     }
 
     /**
@@ -1114,8 +1176,8 @@ public class Model {
 
         initializeCardItemPayloads();
 
-        // Add handle last so that it is displayed on top.
-        handle = new Handle(image);
+        // Add handle to the group last so that it is displayed on top.
+        handle = new Handle(image, current);
         group.getChildren().add(handle);
     }
 

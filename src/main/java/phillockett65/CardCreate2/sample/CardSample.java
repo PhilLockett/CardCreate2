@@ -193,10 +193,10 @@ public class CardSample extends Stage {
      */
     public void setHandle(double x, double y) {
         // Convert to pixels.
-        final long xPos = model.percentageToPX(x); 
-        final long yPos = model.percentageToPX(y); 
+        final long xPos = model.percentageToPX(x);
+        final long yPos = model.percentageToPX(y);
 
-        handle.set(xPos, yPos);
+        handle.setPosition(xPos, yPos);
     }
 
 
