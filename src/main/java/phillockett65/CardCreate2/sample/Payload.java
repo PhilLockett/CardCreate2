@@ -122,6 +122,30 @@ public class Payload {
     }
 
     /**
+     * Create the ImageView array to hold the image for this Payload.
+     * 
+     * @param pattern of icons/sprite for this Payload.
+     * @param group node to add the ImageViews to.
+     * @return the ImageView array.
+     */
+    private ImageView[] createImageViewArray(int pattern, Group group) {
+        int icons = (pattern > 1) ? 17 : 2;
+        views = new ImageView[icons];
+
+        for (int i = 0; i < views.length; ++i) {
+            views[i] = new ImageView();
+
+            views[i].setPreserveRatio(true);
+            if (getLocation(i).getRotate())
+                views[i].setRotate(180);
+            
+            group.getChildren().add(views[i]);
+        }
+
+        return views;
+    }
+
+    /**
      * Get the indexed ImageView.
      * 
      * @param imageIndex for the ImageView in views[].
@@ -265,17 +289,7 @@ public class Payload {
         centreY.setPercent(item.getY());
 
         // Set up the image views.
-        int icons = (pattern > 1) ? 17 : 2;
-        views = new ImageView[icons];
-        for (int i = 0; i < views.length; ++i) {
-            views[i] = new ImageView();
-
-            views[i].setPreserveRatio(true);
-            if (getLocation(i).getRotate())
-                views[i].setRotate(180);
-            
-            group.getChildren().add(views[i]);
-        }
+        views = createImageViewArray(pattern, group);
 
         // Set up image dependent values.
         syncImageFile();
