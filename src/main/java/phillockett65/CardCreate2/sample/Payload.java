@@ -602,8 +602,8 @@ public class Payload {
     }
 
     public void moveBy(long dx, long dy) {
-        centreX.setPixels((spriteWidth.getRealPixels()/2) + centreX.getOrigin() + dx);
-        centreY.setPixels((spriteHeight.getRealPixels()/2) + centreY.getOrigin() + dy);
+        centreX.setPixels((spriteWidth.getRealPixels()/2) + centreX.getRealOrigin() + dx);
+        centreY.setPixels((spriteHeight.getRealPixels()/2) + centreY.getRealOrigin() + dy);
     }
 
     public long getX() {
