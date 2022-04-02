@@ -1013,7 +1013,7 @@ public class Model {
      */
 
     private Group group;
-    private Image image;
+    private Image handleImage;
     private Handle handle;
 
     /**
@@ -1024,12 +1024,6 @@ public class Model {
     }
 
     /**
-     * @return the Handle Image used by the "Sample" panel.
-     */
-    public Image getHandleImage() {
-        return image;
-    }
-
     /**
      * @return the Handle used by the "Sample" panel.
      */
@@ -1042,7 +1036,7 @@ public class Model {
      */
     private void initializeSample() {
         group = new Group();
-        image = new Image(getClass().getResourceAsStream("Handle.png"));
+        handleImage = new Image(getClass().getResourceAsStream("Handle.png"));
     }
 
 
@@ -1084,7 +1078,7 @@ public class Model {
         initializeCardItemPayloads();
 
         // Add handle to the group last so that it is displayed on top.
-        handle = new Handle(image, current);
+        handle = new Handle(handleImage, current);
         group.getChildren().add(handle);
     }
 
@@ -1097,5 +1091,3 @@ public class Model {
     }
 
 }
-
-
