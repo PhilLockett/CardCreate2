@@ -687,17 +687,6 @@ public class Model {
         }
     }
 
-//	public enum CardItem { INDEX, CORNER_PIP, STANDARD_PIP, FACE, FACE_PIP };
-//	
-//	private CardItem cardItem = CardItem.INDEX;
-//
-//	public CardItem getCardItem() {
-//		return cardItem;
-//	}
-//
-//	public void setCardItem(CardItem cardItem) {
-//		this.cardItem = cardItem;
-//	}
 
     /**
      * Initialize "Select Card Item" panel.

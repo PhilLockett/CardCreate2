@@ -724,20 +724,6 @@ public class Controller {
         if (facePipRadioButton.isSelected())
             model.setCardItem(Item.FACE_PIP);
 
-//    	if (indicesRadioButton.isSelected())
-//    		model.setCardItem(Model.CardItem.INDEX);
-//    	else
-//    	if (cornerPipRadioButton.isSelected())
-//    		model.setCardItem(Model.CardItem.CORNER_PIP);
-//    	else
-//    	if (standardPipRadioButton.isSelected())
-//    		model.setCardItem(Model.CardItem.STANDARD_PIP);
-//    	else
-//    	if (faceRadioButton.isSelected())
-//    		model.setCardItem(Model.CardItem.FACE);
-//    	else
-//    	if (facePipRadioButton.isSelected())
-//    		model.setCardItem(Model.CardItem.FACE_PIP);
 
         setSelectCardItemPrompts();
     }
