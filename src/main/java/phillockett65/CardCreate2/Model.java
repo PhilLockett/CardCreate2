@@ -446,10 +446,17 @@ public class Model {
         return cardSize != CardSize.FREE;
     }
 
+    /**
+     * @return the freely set card width in pixels.
+     */
     public double getWidth() {
         return cardWidthPX;
     }
 
+    /**
+     * @return the calculated card width in pixels for Poker and Bridge, or 
+     * the freely set width.
+     */
     public double getCalculatedWidth() {
         if (cardSize == CardSize.POKER)
             return cardHeightPX * 5 / 7;
@@ -460,14 +467,27 @@ public class Model {
         return cardWidthPX;
     }
 
+    /**
+     * Set the freely set card width in pixels.
+     * 
+     * @param width value in pixels.
+     */
     public void setWidth(double width) {
         cardWidthPX = width;
     }
 
+    /**
+     * @return the card height in pixels.
+     */
     public double getHeight() {
         return cardHeightPX;
     }
 
+    /**
+     * Set the card height in pixels.
+     * 
+     * @param height value in pixels.
+     */
     public void setHeight(double height) {
         cardHeightPX = height;
     }
@@ -564,21 +584,21 @@ public class Model {
     private boolean displayFacePip = true;
 
     /**
-     * @return true if the index Item should be displayed.
+     * @return true if the index Item should be displayed, false otherwise.
      */
     private boolean shouldIndexBeDisplayed() {
         return displayIndex;
     }
 
     /**
-     * @return true if the corner pip Item should be displayed.
+     * @return true if the corner pip Item should be displayed, false otherwise.
      */
     private boolean shouldCornerPipBeDisplayed() {
         return displayCornerPip;
     }
 
     /**
-     * @return true if the standard pip Item should be displayed.
+     * @return true if the standard pip Item should be displayed, false otherwise.
      */
     private boolean shouldStandardPipBeDisplayed() {
         if (!isImageCard())
@@ -588,7 +608,7 @@ public class Model {
     }
 
     /**
-     * @return true if the face image Item should be displayed.
+     * @return true if the face image Item should be displayed, false otherwise.
      */
     private boolean shouldFaceImageBeDisplayed() {
         if (isImageCard())
@@ -598,7 +618,7 @@ public class Model {
     }
 
     /**
-     * @return true if the face pip Item should be displayed.
+     * @return true if the face pip Item should be displayed, false otherwise.
      */
     private boolean shouldFacePipBeDisplayed() {
         if (isFaceCard())
