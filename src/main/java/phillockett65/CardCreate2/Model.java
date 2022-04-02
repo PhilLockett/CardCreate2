@@ -666,27 +666,35 @@ public class Model {
 
     private Item currentItem = Item.INDEX;
 
-    public Item getCardItem() {
-        return currentItem;
+    public void setCurrentCardItemToIndex() {
+        // System.out.println("setCurrentCardItemToIndex()");
+        currentItem = Item.INDEX;
+        changeCurrentCardItemAndSyncSpinners(index);
     }
 
-    public void setCardItem(Item cardItem) {
-        // System.out.println("setCardItem(" + cardItem + ")");
-        currentItem = cardItem;
-
-        if (currentItem == Item.INDEX) {
-            changeCurrentCardItemAndSyncSpinners(index);
-        } else if (currentItem == Item.CORNER_PIP) {
-            changeCurrentCardItemAndSyncSpinners(cornerPip);
-        } else if (currentItem == Item.STANDARD_PIP) {
-            changeCurrentCardItemAndSyncSpinners(standardPip);
-        } else if (currentItem == Item.FACE) {
-            changeCurrentCardItemAndSyncSpinners(face);
-        } else if (currentItem == Item.FACE_PIP) {
-            changeCurrentCardItemAndSyncSpinners(facePip);
-        }
+    public void setCurrentCardItemToCornerPip() {
+        // System.out.println("setCurrentCardItemToCornerPip()");
+        currentItem = Item.CORNER_PIP;
+        changeCurrentCardItemAndSyncSpinners(cornerPip);
     }
 
+    public void setCurrentCardItemToStandardPip() {
+        // System.out.println("setCurrentCardItemToStandardPip()");
+        currentItem = Item.STANDARD_PIP;
+        changeCurrentCardItemAndSyncSpinners(standardPip);
+    }
+
+    public void setCurrentCardItemToFace() {
+        // System.out.println("setCurrentCardItemToFace()");
+        currentItem = Item.FACE;
+        changeCurrentCardItemAndSyncSpinners(face);
+    }
+
+    public void setCurrentCardItemToFacePip() {
+        // System.out.println("setCurrentCardItemToFacePip()");
+        currentItem = Item.FACE_PIP;
+        changeCurrentCardItemAndSyncSpinners(facePip);
+    }
 
     /**
      * Initialize "Select Card Item" panel.
