@@ -95,9 +95,8 @@ public class Controller {
     }
 
     /**
-     * Called by the FXML mechanism to initialize the controller. Creates a
-     * callback link for all the tab controllers, creates the PTable window and
-     * update the Status tab display.
+     * Called by the FXML mechanism to initialize the controller. Sets up the 
+     * images on the buttons and initialises all the controls.
      */
     @FXML public void initialize() {
 //		System.out.println("Controller initialized.");
@@ -126,7 +125,8 @@ public class Controller {
     }
 
     /**
-     * Called by Application after the stage has been set.
+     * Called by Application after the stage has been set. Sets up the base 
+     * directory (or aborts) then completes the initialization.
      */
     public void init(Stage stage) {
         this.stage = stage;
@@ -355,7 +355,8 @@ public class Controller {
     }
 
     /**
-     * This has to be done after the base directory has been set up.
+     * This has to be done after the base directory has been set up. This sets 
+     * up the change handlers for the Face, Index and Pip style choice boxes.
      */
     private void initInputDirectoryChoiceBoxHandlers() {
         faceChoiceBox.getSelectionModel().selectedItemProperty().addListener( (v, oldValue, newValue) -> {
@@ -809,7 +810,11 @@ public class Controller {
         setSelectCardItemTooltips();
     }
 
-    private void setSelectCardItemTooltips() {
+    /**
+     * Sets the tool tips for the current card item on the "Modify Card Item" 
+     * controls.
+     */
+    private void setCurrentCardItemTooltips() {
 //    	System.out.println("setSelectCardItemTooltips()");
 
         itemHeightButton.setTooltip(model.getCurrentHButtonTip());

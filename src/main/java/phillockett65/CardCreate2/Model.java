@@ -959,6 +959,10 @@ public class Model {
         return current.getItem().getYLabel();
     }
 
+    /**
+     * @return true if the current card item is positioned by it's centre 
+     * point, false otherwise.
+     */
     public boolean isCurrentCentred() {
         return current.getItem().isCentre();
     }
@@ -1168,8 +1172,7 @@ public class Model {
     }
 
     /**
-     * Initialization for the "Playing Card Generator" panel after a base 
-     * directory has been selected.
+     * Initialization after a base directory has been selected.
      */
     public void init() {
         // System.out.println("init()");

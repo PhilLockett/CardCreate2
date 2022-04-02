@@ -177,6 +177,9 @@ public enum Item {
         return "Image Y Boarder (%):";
     }
 
+    /**
+     * @return true if the card item is positioned by it's centre, false otherwise.
+     */
     public boolean isCentre() {
         return centre;
     }
