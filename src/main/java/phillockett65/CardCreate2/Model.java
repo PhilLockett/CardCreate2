@@ -664,35 +664,28 @@ public class Model {
      * Support code for "Select Card Item" panel.
      */
 
-    private Item currentItem = Item.INDEX;
-
     public void setCurrentCardItemToIndex() {
         // System.out.println("setCurrentCardItemToIndex()");
-        currentItem = Item.INDEX;
         changeCurrentCardItemAndSyncSpinners(index);
     }
 
     public void setCurrentCardItemToCornerPip() {
         // System.out.println("setCurrentCardItemToCornerPip()");
-        currentItem = Item.CORNER_PIP;
         changeCurrentCardItemAndSyncSpinners(cornerPip);
     }
 
     public void setCurrentCardItemToStandardPip() {
         // System.out.println("setCurrentCardItemToStandardPip()");
-        currentItem = Item.STANDARD_PIP;
         changeCurrentCardItemAndSyncSpinners(standardPip);
     }
 
     public void setCurrentCardItemToFace() {
         // System.out.println("setCurrentCardItemToFace()");
-        currentItem = Item.FACE;
         changeCurrentCardItemAndSyncSpinners(face);
     }
 
     public void setCurrentCardItemToFacePip() {
         // System.out.println("setCurrentCardItemToFacePip()");
-        currentItem = Item.FACE_PIP;
         changeCurrentCardItemAndSyncSpinners(facePip);
     }
 
@@ -1040,7 +1033,8 @@ public class Model {
      */
 
     /**
-     * Set the current card item and adjust the Card Item spinners.
+     * Init the current card item and adjust the Card Item spinners.
+     * 
      * @param item currently selected card item Payload.
      */
     private void initCurrentCardItemAndSyncSpinners(Payload item) {
@@ -1049,6 +1043,13 @@ public class Model {
         itemCentreXSVF.setValue(roundPercentage(getCurrentX()));
         itemCentreYSVF.setValue(roundPercentage(getCurrentY()));
     }
+
+    /**
+     * Change the current card item, adjust the Card Item spinners and update 
+     * the handle with the new Payload.
+     * 
+     * @param item currently selected card item Payload.
+     */
     private void changeCurrentCardItemAndSyncSpinners(Payload item) {
         initCurrentCardItemAndSyncSpinners(item);
         handle.setPayload(current);
