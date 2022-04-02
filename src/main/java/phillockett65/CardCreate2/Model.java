@@ -85,9 +85,6 @@ public class Model {
         return validBaseDirectory;
     }
 
-    public void setBaseDirectoryValidity(boolean validity) {
-        validBaseDirectory = validity;
-    }
 
     public String getBaseDirectory() {
         return baseDirectory;
