@@ -36,44 +36,6 @@ import phillockett65.CardCreate2.Model;
 
 public class Payload {
 
-    private static enum Loc {
-        L_0 (0, 0, false),
-        L_1 (0, 0,  true),
-        L_2 (2, 2, false),
-        L_3 (2, 0,  true),
-        L_4 (2, 0, false),
-        L_5 (1, 0,  true),
-        L_6 (1, 0, false),
-        L_7 (0, 2, false),
-        L_8 (1, 2, false),
-        L_9 (2, 3, false),
-        L10 (2, 3,  true),
-        L11 (0, 4,  true),
-        L12 (1, 4,  true),
-        L13 (0, 4, false),
-        L14 (1, 4, false),
-        L15 (2, 5,  true),
-        L16 (2, 5, false);
-
-        private final int       xIndex;
-        private final int       yIndex;
-        private final boolean   rotate;
-
-        Loc(int ix, int iy, boolean rot) {
-            xIndex = ix;
-            yIndex = iy;
-            rotate = rot;
-        }
-
-        public boolean getRotate() { return rotate; }
-
-        private final double[] offsets = { 0D, 1D, 0.5D, 0.25D, 1D / 3, 1D / 6 };
-
-        public double getXOffset() { return rotate ? 1-offsets[xIndex] : offsets[xIndex]; }
-        public double getYOffset() { return rotate ? 1-offsets[yIndex] : offsets[yIndex]; }
-
-    };
-
     private static enum Destination { DISPLAY, DISC };
     private static Destination destination = Destination.DISPLAY;
 
