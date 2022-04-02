@@ -279,15 +279,15 @@ public class Payload {
 
         // Set up image dependent values.
         syncImageFile();
-        initPatterns();
+        initImageViews();
     }
-    private void initPatterns() {
-        // System.out.println("initPatterns()");
-        // if (!display) {
-        //     System.out.println("initPatterns() ABORTING!");
 
-        //     return;
-        // }
+
+    /**
+     * Initialize the Image Views based on item.
+     */
+    private void initImageViews() {
+        // System.out.println("initImageViews()");
         
         if (item == Item.FACE) {
             paintImage();
