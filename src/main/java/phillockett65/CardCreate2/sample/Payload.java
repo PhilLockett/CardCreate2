@@ -86,7 +86,7 @@ public class Payload {
     }
 
 
-    final static int[][] flags = {
+    private final static int[][] flags = {
         { 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
         { 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
         { 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
@@ -103,7 +103,7 @@ public class Payload {
         { 1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 0, 0 }
     };
 
-    final static Loc[] locationList = {
+    private final static Loc[] locationList = {
         Loc.L_0, Loc.L_1, Loc.L_2, Loc.L_3,
         Loc.L_4, Loc.L_5, Loc.L_6, Loc.L_7,
         Loc.L_8, Loc.L_9, Loc.L10, Loc.L11,
