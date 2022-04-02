@@ -409,9 +409,23 @@ public class Model {
     private SpinnerValueFactory<Integer> heightSVF;
 
 
-    public void setPokerCardSize()  { this.cardSize = CardSize.POKER; }
-    public void setBridgeCardSize() { this.cardSize = CardSize.BRIDGE; }
-    public void setFreeCardSize()   { this.cardSize = CardSize.FREE; }
+    public void setPokerCardSize() {
+        cardSize = CardSize.POKER;
+
+        syncCardItemsWithCardSize();
+    }
+
+    public void setBridgeCardSize() {
+        cardSize = CardSize.BRIDGE;
+
+        syncCardItemsWithCardSize();
+    }
+
+    public void setFreeCardSize() {
+        cardSize = CardSize.FREE;
+
+        syncCardItemsWithCardSize();
+    }
 
     public boolean isAutoCardWidth() { return cardSize != CardSize.FREE; }
 
@@ -443,6 +457,8 @@ public class Model {
      */
     public void setWidth(double width) {
         cardWidthPX = width;
+
+        syncCardItemsWithCardSize();
     }
 
     /**
@@ -459,6 +475,7 @@ public class Model {
      */
     public void setHeight(double height) {
         cardHeightPX = height;
+        syncCardItemsWithCardSize();
     }
 
     /**
@@ -835,6 +852,18 @@ public class Model {
         updateCardItemDisplayStatus();
     }
 
+    /**
+     * Tells the card items to synchronize with the current card size.
+     */
+    private void syncCardItemsWithCardSize() {
+        index.syncCardSize();
+        cornerPip.syncCardSize();
+        standardPip.syncCardSize();
+        face.syncCardSize();
+        facePip.syncCardSize();
+    }
+
+
     public SpinnerValueFactory<Double> getItemHeightSVF()   { return itemHeightSVF; }
     public SpinnerValueFactory<Double> getItemCentreXSVF()  { return itemCentreXSVF; }
     public SpinnerValueFactory<Double> getItemCentreYSVF()  { return itemCentreYSVF; }
@@ -945,11 +974,6 @@ public class Model {
             itemCentreYSVF.setValue(roundPercentage(value));
     }
 
-
-
-    /************************************************************************
-     * Update the "Modify Card Item" controls.
-     */
 
     /**
      * Init the current card item and adjust the Card Item spinners.

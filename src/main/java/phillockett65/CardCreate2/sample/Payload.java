@@ -144,7 +144,7 @@ public class Payload {
 
     public class Real {
         private final boolean height;
-        private final double scale;
+        private double scale;
         private double decimal = 0;
         private double percent = 0;
         private double pixels = 0;
@@ -155,6 +155,7 @@ public class Payload {
         }
 
         private void calcPixels() {
+            scale = height ? cardHeightPX : cardWidthPX;
             pixels = decimal * scale;
         }
         public void setPercent(double value) {
@@ -171,6 +172,7 @@ public class Payload {
 
         public void setPixels(double value) {
             pixels = value;
+            scale = height ? cardHeightPX : cardWidthPX;
             decimal = pixels / scale;
             percent = decimal * 100;
         }
@@ -234,7 +236,7 @@ public class Payload {
         model = mainModel;
 
         group = model.getGroup();
-        cardWidthPX = model.getWidth();
+        cardWidthPX = model.getCalculatedWidth();
         cardHeightPX = model.getHeight();
 
         item = it;
@@ -475,6 +477,18 @@ public class Payload {
         setPatterns();
 
         return change;
+    }
+
+    /**
+     * Synchronise to the current card size.
+     */
+    public void syncCardSize() {
+        // System.out.println("syncCardSize(" + item + ")");
+
+        cardWidthPX = model.getCalculatedWidth();
+        cardHeightPX = model.getHeight();
+
+        setPatterns();
     }
 
     /**
