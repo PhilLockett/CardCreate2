@@ -857,62 +857,28 @@ public class Model {
         updateCardItemDisplayStatus();
     }
 
-    public SpinnerValueFactory<Double> getItemHeightSVF() {
-        return itemHeightSVF;
-    }
+    public SpinnerValueFactory<Double> getItemHeightSVF()   { return itemHeightSVF; }
+    public SpinnerValueFactory<Double> getItemCentreXSVF()  { return itemCentreXSVF; }
+    public SpinnerValueFactory<Double> getItemCentreYSVF()  { return itemCentreYSVF; }
 
-    public SpinnerValueFactory<Double> getItemCentreXSVF() {
-        return itemCentreXSVF;
-    }
-
-    public SpinnerValueFactory<Double> getItemCentreYSVF() {
-        return itemCentreYSVF;
-    }
-
-    public boolean iskeepImageAspectRatio() {
-        return keepAspectRatio;
-    }
+    public boolean iskeepImageAspectRatio() { return keepAspectRatio; }
 
     public void setkeepImageAspectRatio(boolean state) {
         keepAspectRatio = state;
     }
 
 
-    public Tooltip getCurrentHButtonTip() {
-        return new Tooltip(current.getItem().getHButtonTip());
-    }
+    public Tooltip getCurrentHButtonTip() { return new Tooltip(current.getItem().getHButtonTip()); }
+    public Tooltip getCurrentXButtonTip() { return new Tooltip(current.getItem().getXButtonTip()); }
+    public Tooltip getCurrentYButtonTip() { return new Tooltip(current.getItem().getYButtonTip()); }
 
-    public Tooltip getCurrentXButtonTip() {
-        return new Tooltip(current.getItem().getXButtonTip());
-    }
+    public Tooltip getCurrentHToolTip() { return new Tooltip(current.getItem().getHToolTip()); }
+    public Tooltip getCurrentXToolTip() { return new Tooltip(current.getItem().getXToolTip()); }
+    public Tooltip getCurrentYToolTip() { return new Tooltip(current.getItem().getYToolTip()); }
 
-    public Tooltip getCurrentYButtonTip() {
-        return new Tooltip(current.getItem().getYButtonTip());
-    }
-
-    public Tooltip getCurrentHToolTip() {
-        return new Tooltip(current.getItem().getHToolTip());
-    }
-
-    public Tooltip getCurrentXToolTip() {
-        return new Tooltip(current.getItem().getXToolTip());
-    }
-
-    public Tooltip getCurrentYToolTip() {
-        return new Tooltip(current.getItem().getYToolTip());
-    }
-
-    public String getCurrentHLabel() {
-        return current.getItem().getHLabel();
-    }
-
-    public String getCurrentXLabel() {
-        return current.getItem().getXLabel();
-    }
-
-    public String getCurrentYLabel() {
-        return current.getItem().getYLabel();
-    }
+    public String getCurrentHLabel() { return current.getItem().getHLabel(); }
+    public String getCurrentXLabel() { return current.getItem().getXLabel(); }
+    public String getCurrentYLabel() { return current.getItem().getYLabel(); }
 
     /**
      * @return true if the current card item is positioned by it's centre 
