@@ -430,21 +430,12 @@ public class Model {
     private SpinnerValueFactory<Integer> widthSVF;
     private SpinnerValueFactory<Integer> heightSVF;
 
-    public void setPokerCardSize() {
-        this.cardSize = CardSize.POKER;
-    }
 
-    public void setBridgeCardSize() {
-        this.cardSize = CardSize.BRIDGE;
-    }
+    public void setPokerCardSize()  { this.cardSize = CardSize.POKER; }
+    public void setBridgeCardSize() { this.cardSize = CardSize.BRIDGE; }
+    public void setFreeCardSize()   { this.cardSize = CardSize.FREE; }
 
-    public void setFreeCardSize() {
-        this.cardSize = CardSize.FREE;
-    }
-
-    public boolean isAutoCardWidth() {
-        return cardSize != CardSize.FREE;
-    }
+    public boolean isAutoCardWidth() { return cardSize != CardSize.FREE; }
 
     /**
      * @return the freely set card width in pixels.
@@ -512,21 +503,11 @@ public class Model {
         return Math.round(y * cardHeightPX / 100); 
     }
 
-    public SpinnerValueFactory<Integer> getWidthSVF() {
-        return widthSVF;
-    }
+    public SpinnerValueFactory<Integer> getWidthSVF()   { return widthSVF; }
+    public SpinnerValueFactory<Integer> getHeightSVF()  { return heightSVF; }
 
-    public SpinnerValueFactory<Integer> getHeightSVF() {
-        return heightSVF;
-    }
-
-    public void resetCardWidthSVF() {
-        widthSVF.setValue(Default.WIDTH.getInt());
-    }
-
-    public void resetCardHeightSVF() {
-        heightSVF.setValue(Default.HEIGHT.getInt());
-    }
+    public void resetCardWidthSVF()     { widthSVF.setValue(Default.WIDTH.getInt()); }
+    public void resetCardHeightSVF()    { heightSVF.setValue(Default.HEIGHT.getInt()); }
 
     /**
      * Initialize "Card Size" panel.
@@ -551,13 +532,13 @@ public class Model {
 
     private Color backgroundColour = Color.WHITE;
 
-    public Color getBackgroundColour() {
-        return backgroundColour;
-    }
+    public Color getBackgroundColour() { return backgroundColour; }
+    public void setBackgroundColour(Color colour) { backgroundColour = colour; }
 
     private int colourRealToInt(double comp) {
         return (int)(comp * 256);
     }
+
     public String getBackgroundColourString() {
         return String.format("rgb(%d, %d, %d)",
                 colourRealToInt(backgroundColour.getRed()),
