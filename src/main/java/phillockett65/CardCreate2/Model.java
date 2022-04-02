@@ -51,6 +51,8 @@ public class Model {
      * Support code for "Input Directories" panel.
      */
 
+    private final String PATHSFILE = "Files.txt";
+
     private boolean validBaseDirectory = false;
     private String baseDirectory = ".";
     private String faceStyle;
@@ -1044,8 +1046,6 @@ public class Model {
     /************************************************************************
      * Support code for "Playing Card Generator" panel.
      */
-    private final String PATHSFILE = "Files.txt";
-
 
     /**
      * Default Constructor.
