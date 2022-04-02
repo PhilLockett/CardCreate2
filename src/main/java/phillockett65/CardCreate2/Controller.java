@@ -536,17 +536,17 @@ public class Controller {
     @FXML
     void cardSizeRadioButtonActionPerformed(ActionEvent event) {
         if (pokerRadioButton.isSelected()) {
-            model.setCardSize(Model.CardSize.POKER);
+            model.setPokerCardSize();
             sample.syncCardSize();
         }
         else
         if (bridgeRadioButton.isSelected()) {
-            model.setCardSize(Model.CardSize.BRIDGE);
+            model.setBridgeCardSize();
             sample.syncCardSize();
         }
         else
         if (freeRadioButton.isSelected()) {
-            model.setCardSize(Model.CardSize.FREE);
+            model.setFreeCardSize();
             sample.syncCardSize();
         }
 

@@ -436,7 +436,7 @@ public class Model {
      * Support code for "Card Size" panel.
      */
 
-    public enum CardSize { POKER, BRIDGE, FREE };
+    private enum CardSize { POKER, BRIDGE, FREE };
     
     private CardSize cardSize = CardSize.POKER;
 
@@ -446,12 +446,16 @@ public class Model {
     private SpinnerValueFactory<Integer> widthSVF;
     private SpinnerValueFactory<Integer> heightSVF;
 
-    public CardSize getCardSize() {
-        return cardSize;
+    public void setPokerCardSize() {
+        this.cardSize = CardSize.POKER;
     }
 
-    public void setCardSize(CardSize cardSize) {
-        this.cardSize = cardSize;
+    public void setBridgeCardSize() {
+        this.cardSize = CardSize.BRIDGE;
+    }
+
+    public void setFreeCardSize() {
+        this.cardSize = CardSize.FREE;
     }
 
     public boolean isAutoCardWidth() {
