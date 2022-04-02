@@ -78,22 +78,6 @@ public class Model {
         return pipList;
     }
 
-    
-    public void setBaseList(ObservableList<String> baseList) {
-        this.baseList = baseList;
-    }
-
-    public void setFaceList(ObservableList<String> faceList) {
-        this.faceList = faceList;
-    }
-
-    public void setIndexList(ObservableList<String> indexList) {
-        this.indexList = indexList;
-    }
-
-    public void setPipList(ObservableList<String> pipList) {
-        this.pipList = pipList;
-    }
 
     public boolean isValidBaseDirectory() {
         return validBaseDirectory;
@@ -561,10 +545,6 @@ public class Model {
                 colourRealToInt(backgroundColour.getBlue()));
     }
 
-    public void setBackgroundColour(Color colour) {
-        backgroundColour = colour;
-    }
-
     /**
      * Initialize "Background Colour" panel.
      */
@@ -582,26 +562,6 @@ public class Model {
     private boolean displayStandardPip = true;
     private boolean displayFaceImage = true;
     private boolean displayFacePip = true;
-
-    public boolean isDisplayIndex() {
-        return displayIndex;
-    }
-
-    public boolean isDisplayCornerPip() {
-        return displayCornerPip;
-    }
-
-    public boolean isDisplayStandardPip() {
-        return displayStandardPip;
-    }
-
-    public boolean isDisplayFaceImage() {
-        return displayFaceImage;
-    }
-
-    public boolean isDisplayFacePip() {
-        return displayFacePip;
-    }
 
     /**
      * @return true if the index Item should be displayed.
