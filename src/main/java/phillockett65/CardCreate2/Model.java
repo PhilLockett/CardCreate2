@@ -1032,7 +1032,7 @@ public class Model {
      * @param updateSVF flag indicating if itemHeightSVF should be updated.
      */
     public void setCurrentH(double value, boolean updateSVF) {
-        System.out.println("model.setCurrentH(" + value + ");");
+        // System.out.println("model.setCurrentH(" + value + ");");
 
         current.setSize(value);
         if (updateSVF)
@@ -1046,7 +1046,7 @@ public class Model {
      * @param updateSVF flag indicating if itemCentreXSVF should be updated.
      */
     public void setCurrentX(double value, boolean updateSVF) {
-        System.out.println("model.setCurrentX(" + value + ");");
+        // System.out.println("model.setCurrentX(" + value + ");");
 
         current.setX(value);
         if (updateSVF)
@@ -1060,7 +1060,7 @@ public class Model {
      * @param updateSVF flag indicating if itemCentreYSVF should be updated.
      */
     public void setCurrentY(double value, boolean updateSVF) {
-        System.out.println("model.setCurrentY(" + value + ");");
+        // System.out.println("model.setCurrentY(" + value + ");");
 
         current.setY(value);
         if (updateSVF)

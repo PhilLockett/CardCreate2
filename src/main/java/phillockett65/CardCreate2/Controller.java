@@ -853,17 +853,17 @@ public class Controller {
         itemCentreYSpinner.setValueFactory(model.getItemCentreYSVF());
 
         itemHeightSpinner.valueProperty().addListener( (v, oldValue, newValue) -> {
-            System.out.println("itemHeightSpinner.valueProperty().Listener());");
+            // System.out.println("itemHeightSpinner.valueProperty().Listener());");
             model.setCurrentH(newValue, false);
         });
 
         itemCentreXSpinner.valueProperty().addListener( (v, oldValue, newValue) -> {
-            System.out.println("itemCentreXSpinner.valueProperty().Listener());");
+            // System.out.println("itemCentreXSpinner.valueProperty().Listener());");
             model.setCurrentX(newValue, false);
         });
 
         itemCentreYSpinner.valueProperty().addListener( (v, oldValue, newValue) -> {
-            System.out.println("itemCentreYSpinner.valueProperty().Listener());");
+            // System.out.println("itemCentreYSpinner.valueProperty().Listener());");
             model.setCurrentY(newValue, false);
         });
 

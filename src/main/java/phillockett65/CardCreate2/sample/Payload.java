@@ -243,7 +243,7 @@ public class Payload {
     private double spriteScale = 1;
 
     public Payload(Model mainModel, Item it) {
-        System.out.println("Payload()");
+        // System.out.println("Payload()");
 
         model = mainModel;
 
@@ -282,7 +282,7 @@ public class Payload {
         initPatterns();
     }
     private void initPatterns() {
-        System.out.println("initPatterns()");
+        // System.out.println("initPatterns()");
         // if (!display) {
         //     System.out.println("initPatterns() ABORTING!");
 
@@ -387,7 +387,7 @@ public class Payload {
 
     private void paintImage() {
         final boolean generate = (destination == Destination.DISC);
-        System.out.println("paintImage(" + generate + ")");
+        // System.out.println("paintImage(" + generate + ")");
 
         final long pX = centreX.getIntPixels();
         final long pY = centreY.getIntPixels();
@@ -404,14 +404,14 @@ public class Payload {
         // System.out.println("relocate(" + pX + ", " + pY+ ")  scale = " + spriteScale);
         view = getImageView(1);
         if (isLandscape()) {
-            System.out.println("landscape");
+            // System.out.println("landscape");
 
             view.relocate(pX, pY);  // FIX THIS ??
             
             view.setFitWidth(spriteWidth.getRealPixels());
             view.setFitHeight(spriteHeight.getRealPixels());
         } else {
-            System.out.println("portrait");
+            // System.out.println("portrait");
             view.setVisible(false);
         }
 
@@ -419,7 +419,7 @@ public class Payload {
 
 
     private void paintIcon(ImageView view, Loc location) {
-        System.out.println("paintIcon()");
+        // System.out.println("paintIcon()");
 
         final double winX = cardWidthPX - (2*centreX.getRealPixels());
         final double offX = location.getXOffset() * winX;
@@ -440,7 +440,7 @@ public class Payload {
      * Paint the icons associated with this payload.
      */
     private void setPatterns() {
-        System.out.println("setPatterns()");
+        // System.out.println("setPatterns()");
         // if (!display) {
         //     System.out.println("setPatterns() ABORTING!");
 
@@ -474,7 +474,7 @@ public class Payload {
 
         pattern = (change) ? model.getCard() : 0;
 
-        System.out.println("syncPattern(" + pattern + ")");
+        // System.out.println("syncPattern(" + pattern + ")");
 
         return change;
     }
@@ -488,7 +488,7 @@ public class Payload {
         // System.out.println("syncCurrentCard(" + item + ")");
         final boolean change = syncPattern();
 
-        System.out.println("syncCurrentCard(" + pattern + ")");
+        // System.out.println("syncCurrentCard(" + pattern + ")");
 
         setPatterns();
 
