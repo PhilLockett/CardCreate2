@@ -330,6 +330,12 @@ public class Payload {
         return loadedImage;
     }
 
+    /**
+     * Load an image into this payload and set up the attributes for the image 
+     * width and height.
+     * 
+     * @return true if the image file was found, false otherwise.
+     */
     private boolean loadNewImageFile() {
         // System.out.println("loadNewImageFile(" + path + ")");
 
