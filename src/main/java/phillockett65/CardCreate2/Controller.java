@@ -141,8 +141,8 @@ public class Controller {
 
         setInitialBaseDirectory();
         model.init();
-        sample.syncHandle();
-        setSelectCardItemTooltips();
+        sample.init();
+        setCurrentCardItemTooltips();
         initInputDirectoryChoiceBoxHandlers();
     }
 
@@ -807,7 +807,7 @@ public class Controller {
         itemCentreXLabel.setText(model.getCurrentXLabel());
         itemCentreYLabel.setText(model.getCurrentYLabel());
 
-        setSelectCardItemTooltips();
+        setCurrentCardItemTooltips();
     }
 
     /**

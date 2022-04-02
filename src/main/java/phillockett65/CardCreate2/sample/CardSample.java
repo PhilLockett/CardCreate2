@@ -75,14 +75,14 @@ public class CardSample extends Stage {
 
         this.show();
         
-        initCardSample();
+        initializeCardSample();
     }
 
     /**
      * Calls the grid constructor, initializes some globals and adds the nodes 
      * of the cells to the model. 
      */
-    private void initCardSample() {
+    private void initializeCardSample() {
 
         final float WIDTH = Default.WIDTH.getFloat();
         final float HEIGHT = Default.HEIGHT.getFloat();
@@ -154,6 +154,12 @@ public class CardSample extends Stage {
     //     this.heightProperty().addListener(listener);
     // }
 
+    /**
+     * Initialization after a base directory has been selected.
+     */
+    public void init() {
+        syncHandle();
+    }
 
 /************************************************************************
  * Synchronize interface.
