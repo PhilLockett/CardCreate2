@@ -64,27 +64,14 @@ public class Model {
     ObservableList<String> indexList = FXCollections.observableArrayList();
     ObservableList<String> pipList = FXCollections.observableArrayList();
 
-    public ObservableList<String> getBaseList() {
-        return baseList;
-    }
+    public ObservableList<String> getBaseList() { return baseList; }
 
-    public ObservableList<String> getFaceList() {
-        return faceList;
-    }
-
-    public ObservableList<String> getIndexList() {
-        return indexList;
-    }
-
-    public ObservableList<String> getPipList() {
-        return pipList;
-    }
+    public ObservableList<String> getFaceList()  { return faceList; }
+    public ObservableList<String> getIndexList() { return indexList; }
+    public ObservableList<String> getPipList()   { return pipList; }
 
 
-    public boolean isValidBaseDirectory() {
-        return validBaseDirectory;
-    }
-
+    public boolean isValidBaseDirectory() { return validBaseDirectory; }
 
     public String getBaseDirectory() {
         return baseDirectory;
@@ -102,17 +89,9 @@ public class Model {
         return baseDirectory + "\\pips\\" + pipStyle;
     }
 
-    public String getFaceStyle() {
-        return faceStyle;
-    }
-
-    public String getIndexStyle() {
-        return indexStyle;
-    }
-
-    public String getPipStyle() {
-        return pipStyle;
-    }
+    public String getFaceStyle()  { return faceStyle; }
+    public String getIndexStyle() { return indexStyle; }
+    public String getPipStyle()   { return pipStyle; }
 
     /**
      * Set the selected face style and update the necessary card item Payloads.
