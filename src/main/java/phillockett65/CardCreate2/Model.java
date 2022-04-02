@@ -922,31 +922,6 @@ public class Model {
         return current.getItem().isCentre();
     }
 
-
-    public double getCurrentDefaultH() {
-        return current.getItem().getH();
-    }
-
-    public double getCurrentDefaultX() {
-        return current.getItem().getX();
-    }
-
-    public double getCurrentDefaultY() {
-        return current.getItem().getY();
-    }
-
-    public double getCurrentH() {
-        return current.getSpriteH();
-    }
-
-    public double getCurrentX() {
-        return current.getSpriteX();
-    }
-
-    public double getCurrentY() {
-        return current.getSpriteY();
-    }
-
     /**
      * Round a value to the nearest 0.05.
      * 
@@ -1039,9 +1014,9 @@ public class Model {
      */
     private void initCurrentCardItemAndSyncSpinners(Payload item) {
         current = item;
-        itemHeightSVF.setValue(roundPercentage(getCurrentH()));
-        itemCentreXSVF.setValue(roundPercentage(getCurrentX()));
-        itemCentreYSVF.setValue(roundPercentage(getCurrentY()));
+        itemHeightSVF.setValue(roundPercentage(current.getSpriteH()));
+        itemCentreXSVF.setValue(roundPercentage(current.getSpriteX()));
+        itemCentreYSVF.setValue(roundPercentage(current.getSpriteY()));
     }
 
     /**
