@@ -19,8 +19,8 @@
  */
 
 /*
- * Default is an enumeration that captures the static values used by the  
- * application and provides access via integer and real getters.
+ * Payload is a class that is responsible for maintaining the image file and 
+ * the icon size and position.
  */
 package phillockett65.CardCreate2.sample;
 
