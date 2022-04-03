@@ -888,11 +888,30 @@ public class Model {
     public String getCurrentYLabel() { return current.getItem().getYLabel(); }
 
     /**
-     * @return true if the current card item is positioned by it's centre 
-     * point, false otherwise.
+     * @return true if the height of the current card item should be user
+     * changable, false otherwise.
      */
-    public boolean isCurrentCentred() {
+    public boolean isCurrentHeightChangable() {
+        if (!shouldItemBeDisplayed(current.getItem()))
+            return false;
+
         return current.getItem().isCentre();
+    }
+
+    /**
+     * @return true if the x coordinate of the centre of the current card item 
+     * should be user changable, false otherwise.
+     */
+    public boolean isCurrentXCentreChangable() {
+        return shouldItemBeDisplayed(current.getItem());
+    }
+
+    /**
+     * @return true if the y coordinate of the centre of the current card item 
+     * should be user changable, false otherwise.
+     */
+    public boolean isCurrentYCentreChangable() {
+        return shouldItemBeDisplayed(current.getItem());
     }
 
     /**

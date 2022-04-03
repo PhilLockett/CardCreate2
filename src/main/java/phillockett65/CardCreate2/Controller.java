@@ -142,7 +142,7 @@ public class Controller {
         setInitialBaseDirectory();
         model.init();
         sample.init();
-        setCurrentCardItemTooltips();
+        setCurrentCardItemLabelAndTooltips();
         initInputDirectoryChoiceBoxHandlers();
         setCardItemRadioState();
     }
@@ -747,6 +747,8 @@ public class Controller {
         standardPipRadioButton.setDisable(!model.shouldStandardPipBeDisplayed());
         faceRadioButton.setDisable(!model.shouldFaceImageBeDisplayed());
         facePipRadioButton.setDisable(!model.shouldFacePipBeDisplayed());
+
+        setDisabledStateOfCurrentCardItem();
     }
 
     /**
@@ -797,32 +799,49 @@ public class Controller {
     private CheckBox keepAspectRatioCheckBox;
 
     /**
-     * Fix the state of the "Modify Card Item" controls.
+     * Fix the disabled state of the "Modify Card Item" controls based on the 
+     * card items being displayed.
      */
     private void setSelectCardItemPrompts() {
 //    	System.out.println("setSelectCardItemPrompts()");
 
-//        samplejPanel.setPayload(item);
-//        currentItem = item;
-//        updateModifyCardItemControls();
-        final boolean centre = !model.isCurrentCentred();
-        itemHeightButton.setDisable(centre);
-        itemHeightSpinner.setDisable(centre);
-        itemHeightLabel.setDisable(centre);
+        setDisabledStateOfCurrentCardItem();
+
+        setCurrentCardItemLabelAndTooltips();
+    }
+
+    /**
+     * Fix the disable state of the "Modify Card Item" controls.
+     */
+    private void setDisabledStateOfCurrentCardItem() {
+//    	System.out.println("setDisabledStateOfCurrentCardItem()");
+
+        boolean disabled = !model.isCurrentHeightChangable();
+        itemHeightButton.setDisable(disabled);
+        itemHeightSpinner.setDisable(disabled);
+        itemHeightLabel.setDisable(disabled);
+
+        disabled = !model.isCurrentXCentreChangable();
+        itemCentreXButton.setDisable(disabled);
+        itemCentreXSpinner.setDisable(disabled);
+        itemCentreXLabel.setDisable(disabled);
+
+        disabled = !model.isCurrentYCentreChangable();
+        itemCentreYButton.setDisable(disabled);
+        itemCentreYSpinner.setDisable(disabled);
+        itemCentreYLabel.setDisable(disabled);
+    }
+        
+    /**
+     * Sets the label text and tool tips for the current card item on the 
+     * "Modify Card Item" controls.
+     */
+    private void setCurrentCardItemLabelAndTooltips() {
+//    	System.out.println("setCurrentCardItemLabelAndTooltips()");
 
         itemHeightLabel.setText(model.getCurrentHLabel());
         itemCentreXLabel.setText(model.getCurrentXLabel());
         itemCentreYLabel.setText(model.getCurrentYLabel());
-
-        setCurrentCardItemTooltips();
-    }
-
-    /**
-     * Sets the tool tips for the current card item on the "Modify Card Item" 
-     * controls.
-     */
-    private void setCurrentCardItemTooltips() {
-//    	System.out.println("setSelectCardItemTooltips()");
 
         itemHeightButton.setTooltip(model.getCurrentHButtonTip());
         itemCentreXButton.setTooltip(model.getCurrentXButtonTip());
