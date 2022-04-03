@@ -653,26 +653,31 @@ public class Controller {
     @FXML
     void indicesjCheckBoxActionPerformed(ActionEvent event) {
         model.setDisplayIndex(indicesCheckBox.isSelected());
+        setCardItemRadioState();
     }
 
     @FXML
     void cornerPipjCheckBoxActionPerformed(ActionEvent event) {
         model.setDisplayCornerPip(cornerPipCheckBox.isSelected());
+        setCardItemRadioState();
     }
 
     @FXML
     void standardPipjCheckBoxActionPerformed(ActionEvent event) {
         model.setDisplayStandardPip(standardPipCheckBox.isSelected());
+        setCardItemRadioState();
     }
 
     @FXML
     void facejCheckBoxActionPerformed(ActionEvent event) {
         model.setDisplayFaceImage(faceCheckBox.isSelected());
+        setCardItemRadioState();
     }
 
     @FXML
     void facePipjCheckBoxActionPerformed(ActionEvent event) {
         model.setDisplayFacePip(facePipCheckBox.isSelected());
+        setCardItemRadioState();
     }
 
     /**
