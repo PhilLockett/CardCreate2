@@ -73,6 +73,8 @@ public class Payload {
         Loc.L16 
     };
 
+    private ImageView[] views;
+
     /**
      * Get the corresponding Loc for the indexed ImageView.
      * 
@@ -90,7 +92,7 @@ public class Payload {
      * @param group node to add the ImageViews to.
      * @return the ImageView array.
      */
-    private ImageView[] createImageViewArray(int pattern, Group group) {
+    private void createImageViewArray(int pattern, Group group) {
         int icons = (pattern > 1) ? 17 : 2;
         views = new ImageView[icons];
 
@@ -103,8 +105,6 @@ public class Payload {
             
             group.getChildren().add(views[i]);
         }
-
-        return views;
     }
 
     /**
@@ -118,6 +118,17 @@ public class Payload {
     }
 
     /**
+     * set the image in all ImageViews.
+     * 
+     * @param imageIndex for the ImageView in views[].
+     * @return the indicated ImageView.
+     */
+    private void setImages(Image image) {
+        for (int i = 0; i < views.length; ++i)
+            getImageView(i).setImage(image);
+    }
+
+    /**
      * @return the active ImageView count.
      */
     private int getImageCount() {
@@ -128,16 +139,16 @@ public class Payload {
     }
 
     /**
-     * Indicates whether the indexed ImageView should be drawn.
+     * Indicates whether the indexed ImageView should be visible.
      * 
      * @param imageIndex for the ImageView in views[].
-     * @return true if the image should be drawn, false otherwise.
+     * @return true if the image should be visible, false otherwise.
      */
     private boolean isImageViewVisible(int imageIndex) {
         if (!display)
             return false;
 
-        return flags[getPattern()][imageIndex] == 1;
+        return flags[pattern][imageIndex] == 1;
     }
 
 
@@ -216,7 +227,6 @@ public class Payload {
     private String path;
     private Group group;
     private Image image = null;
-    private ImageView[] views;
     private double imageWidthPX = 0;
     private double imageHeightPX = 0;
     private double cardWidthPX;
@@ -253,7 +263,7 @@ public class Payload {
         centreY.setPercent(item.getY());
 
         // Set up the image views.
-        views = createImageViewArray(pattern, group);
+        createImageViewArray(pattern, group);
 
         // Set up image dependent values.
         syncImageFile();
@@ -326,8 +336,7 @@ public class Payload {
             spriteScale = spriteHeight.getRealPixels() / imageHeightPX;
             // System.out.println("image size(" + imageWidthPX + ", " + imageHeightPX+ ")  scale = " + spriteScale);
 
-            for (int i = 0; i < getImageCount(); ++i)
-                getImageView(i).setImage(image);
+            setImages(image);
 
             return true;
         }
