@@ -144,6 +144,7 @@ public class Controller {
         sample.init();
         setCurrentCardItemTooltips();
         initInputDirectoryChoiceBoxHandlers();
+        setCardItemRadioState();
     }
 
 
@@ -467,24 +468,28 @@ public class Controller {
     void previousCardButtonActionPerformed(ActionEvent event) {
         model.prevCard();
         sample.syncCurrentCard();
+        setCardItemRadioState();
     }
 
     @FXML
     void previousSuitButtonActionPerformed(ActionEvent event) {
         model.prevSuit();
         sample.syncCurrentCard();
+        setCardItemRadioState();
     }
 
     @FXML
     void nextCardButtonActionPerformed(ActionEvent event) {
         model.nextCard();
         sample.syncCurrentCard();
+        setCardItemRadioState();
     }
 
     @FXML
     void nextSuitButtonActionPerformed(ActionEvent event) {
         model.nextSuit();
         sample.syncCurrentCard();
+        setCardItemRadioState();
     }
 
     /**
@@ -725,6 +730,18 @@ public class Controller {
             model.setCurrentCardItemToFacePip();
 
         setSelectCardItemPrompts();
+    }
+
+    /**
+     * Set the "Select Card Item" radio button Disabled state based on the 
+     * current card.
+     */
+    private void setCardItemRadioState() {
+        indicesRadioButton.setDisable(!model.shouldIndexBeDisplayed());
+        cornerPipRadioButton.setDisable(!model.shouldCornerPipBeDisplayed());
+        standardPipRadioButton.setDisable(!model.shouldStandardPipBeDisplayed());
+        faceRadioButton.setDisable(!model.shouldFaceImageBeDisplayed());
+        facePipRadioButton.setDisable(!model.shouldFacePipBeDisplayed());
     }
 
     /**

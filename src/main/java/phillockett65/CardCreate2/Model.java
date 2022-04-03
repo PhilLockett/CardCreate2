@@ -562,21 +562,21 @@ public class Model {
     /**
      * @return true if the index Item should be displayed, false otherwise.
      */
-    private boolean shouldIndexBeDisplayed() {
+    public boolean shouldIndexBeDisplayed() {
         return displayIndex;
     }
 
     /**
      * @return true if the corner pip Item should be displayed, false otherwise.
      */
-    private boolean shouldCornerPipBeDisplayed() {
+    public boolean shouldCornerPipBeDisplayed() {
         return displayCornerPip;
     }
 
     /**
      * @return true if the standard pip Item should be displayed, false otherwise.
      */
-    private boolean shouldStandardPipBeDisplayed() {
+    public boolean shouldStandardPipBeDisplayed() {
         if (!isImageCard())
             return displayStandardPip;
         
@@ -586,7 +586,7 @@ public class Model {
     /**
      * @return true if the face image Item should be displayed, false otherwise.
      */
-    private boolean shouldFaceImageBeDisplayed() {
+    public boolean shouldFaceImageBeDisplayed() {
         if (isImageCard())
             return displayFaceImage;
 
@@ -596,7 +596,7 @@ public class Model {
     /**
      * @return true if the face pip Item should be displayed, false otherwise.
      */
-    private boolean shouldFacePipBeDisplayed() {
+    public boolean shouldFacePipBeDisplayed() {
         if (isFaceCard())
             return displayFacePip;
 
