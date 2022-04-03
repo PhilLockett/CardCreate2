@@ -25,9 +25,11 @@ package phillockett65.CardCreate2;
 
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -40,15 +42,26 @@ public class App extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("Main.fxml"));
+
         Parent root = fxmlLoader.load();
+
         Scene scene = new Scene(root);
         scene.getStylesheets().add(App.class.getResource("application.css").toExternalForm());
+
+        ObservableList<Image> icons = stage.getIcons();
+        icons.add(new Image(getClass().getResourceAsStream("icon48.png")));
+        icons.add(new Image(getClass().getResourceAsStream("icon32.png")));
+        icons.add(new Image(getClass().getResourceAsStream("icon16.png")));
+
         stage.setTitle("Playing Card Generator 2.0");
         stage.setOnCloseRequest(e -> Platform.exit());
         stage.resizableProperty().setValue(false);
         stage.setScene(scene);
+
         Controller controller = fxmlLoader.getController();
+
         stage.show();
+
         controller.init(stage);
     }
 
