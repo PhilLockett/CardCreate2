@@ -59,26 +59,15 @@ public class Handle extends ImageView {
     }
 
     /**
-     * Attach this handle to the given Payload.
+     * Attach this handle to the given Payload and reposition the handle.
      * 
      * @param payload to control.
      */
     public void setPayload(Payload payload) {
-        // System.out.println("handle.setPayload(" + payload + ");");
+        // System.out.println("handle.setPayload(" + payload.getItem() + ");");
         this.payload = payload;
-        xPos = payload.getCentreX() - width/2;
-        yPos = payload.getCentreY() - height/2;
-        setPosition(xPos, yPos);
-    }
 
-    /**
-     * Synchronize handle position with current payload.
-     */
-    public void syncToPayload() {
-        if (payload != null) {
-            xPos = payload.getCentreX() - width/2;
-            yPos = payload.getCentreY() - height/2;
-        }
+        setPosition(payload.getCentreX(), payload.getCentreY());
     }
 
     /**
