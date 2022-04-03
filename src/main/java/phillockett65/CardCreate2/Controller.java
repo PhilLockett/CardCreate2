@@ -314,8 +314,8 @@ public class Controller {
 
 
     @FXML
-    void baseDirectoryjButtonActionPerformed(ActionEvent event) {
-//    	System.out.println("baseDirectoryjButtonActionPerformed()");
+    void baseDirectoryButtonActionPerformed(ActionEvent event) {
+//    	System.out.println("baseDirectoryButtonActionPerformed()");
 
         if (!selectBaseDirectory()) {
             if (!selectValidBaseDirectory()) {
@@ -326,8 +326,8 @@ public class Controller {
     }
 
     @FXML
-    void baseDirectoryjComboBoxActionPerformed(ActionEvent event) {
-//    	System.out.println("baseDirectoryjComboBoxActionPerformed()" + event.toString());
+    void baseDirectoryComboBoxActionPerformed(ActionEvent event) {
+//    	System.out.println("baseDirectoryComboBoxActionPerformed()" + event.toString());
 
         if (!model.setBaseDirectory(baseDirectoryComboBox.getValue()))
             return;
@@ -561,12 +561,12 @@ public class Controller {
     }
 
     @FXML
-    void widthjButtonActionPerformed(ActionEvent event) {
+    void widthButtonActionPerformed(ActionEvent event) {
         model.resetCardWidthSVF();
     }
 
     @FXML
-    void heightjButtonActionPerformed(ActionEvent event) {
+    void heightButtonActionPerformed(ActionEvent event) {
         model.resetCardHeightSVF();
     }
 
@@ -651,31 +651,31 @@ public class Controller {
     private CheckBox facePipCheckBox;
 
     @FXML
-    void indicesjCheckBoxActionPerformed(ActionEvent event) {
+    void indicesCheckBoxActionPerformed(ActionEvent event) {
         model.setDisplayIndex(indicesCheckBox.isSelected());
         setCardItemRadioState();
     }
 
     @FXML
-    void cornerPipjCheckBoxActionPerformed(ActionEvent event) {
+    void cornerPipCheckBoxActionPerformed(ActionEvent event) {
         model.setDisplayCornerPip(cornerPipCheckBox.isSelected());
         setCardItemRadioState();
     }
 
     @FXML
-    void standardPipjCheckBoxActionPerformed(ActionEvent event) {
+    void standardPipCheckBoxActionPerformed(ActionEvent event) {
         model.setDisplayStandardPip(standardPipCheckBox.isSelected());
         setCardItemRadioState();
     }
 
     @FXML
-    void facejCheckBoxActionPerformed(ActionEvent event) {
+    void faceCheckBoxActionPerformed(ActionEvent event) {
         model.setDisplayFaceImage(faceCheckBox.isSelected());
         setCardItemRadioState();
     }
 
     @FXML
-    void facePipjCheckBoxActionPerformed(ActionEvent event) {
+    void facePipCheckBoxActionPerformed(ActionEvent event) {
         model.setDisplayFacePip(facePipCheckBox.isSelected());
         setCardItemRadioState();
     }

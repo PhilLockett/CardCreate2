@@ -32,11 +32,11 @@
                      <content>
                         <VBox prefHeight="129.0" prefWidth="177.0" spacing="4.0">
                            <children>
-                              <CheckBox fx:id="indicesCheckBox" mnemonicParsing="false" onAction="#indicesjCheckBoxActionPerformed" selected="true" text="Display Indices" />
-                              <CheckBox fx:id="cornerPipCheckBox" layoutX="21.0" layoutY="21.0" mnemonicParsing="false" onAction="#cornerPipjCheckBoxActionPerformed" selected="true" text="Display Corner Pip" />
-                              <CheckBox fx:id="standardPipCheckBox" layoutX="21.0" layoutY="46.0" mnemonicParsing="false" onAction="#standardPipjCheckBoxActionPerformed" selected="true" text="Display Standard Pip" />
-                              <CheckBox fx:id="faceCheckBox" layoutX="21.0" layoutY="71.0" mnemonicParsing="false" onAction="#facejCheckBoxActionPerformed" selected="true" text="Display Face Image" />
-                              <CheckBox fx:id="facePipCheckBox" layoutX="21.0" layoutY="97.0" mnemonicParsing="false" onAction="#facePipjCheckBoxActionPerformed" selected="true" text="Display Face Pip" />
+                              <CheckBox fx:id="indicesCheckBox" mnemonicParsing="false" onAction="#indicesCheckBoxActionPerformed" selected="true" text="Display Indices" />
+                              <CheckBox fx:id="cornerPipCheckBox" layoutX="21.0" layoutY="21.0" mnemonicParsing="false" onAction="#cornerPipCheckBoxActionPerformed" selected="true" text="Display Corner Pip" />
+                              <CheckBox fx:id="standardPipCheckBox" layoutX="21.0" layoutY="46.0" mnemonicParsing="false" onAction="#standardPipCheckBoxActionPerformed" selected="true" text="Display Standard Pip" />
+                              <CheckBox fx:id="faceCheckBox" layoutX="21.0" layoutY="71.0" mnemonicParsing="false" onAction="#faceCheckBoxActionPerformed" selected="true" text="Display Face Image" />
+                              <CheckBox fx:id="facePipCheckBox" layoutX="21.0" layoutY="97.0" mnemonicParsing="false" onAction="#facePipCheckBoxActionPerformed" selected="true" text="Display Face Pip" />
                            </children>
                         </VBox>
                      </content>
@@ -123,8 +123,8 @@
                         <HBox prefHeight="100.0" prefWidth="200.0" spacing="4.0">
                            <children>
                               <Label fx:id="baseDirectoryLabel" text="Base:" />
-                              <ComboBox fx:id="baseDirectoryComboBox" onAction="#baseDirectoryjComboBoxActionPerformed" prefHeight="25.0" prefWidth="410.0" />
-                              <Button fx:id="baseDirectoryButton" mnemonicParsing="false" onAction="#baseDirectoryjButtonActionPerformed" text="Browse..." />
+                              <ComboBox fx:id="baseDirectoryComboBox" onAction="#baseDirectoryComboBoxActionPerformed" prefHeight="25.0" prefWidth="410.0" />
+                              <Button fx:id="baseDirectoryButton" mnemonicParsing="false" onAction="#baseDirectoryButtonActionPerformed" text="Browse..." />
                            </children>
                            <padding>
                               <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
@@ -254,8 +254,8 @@
                            <children>
                               <Label fx:id="widthLabel" text="Card width (pixels):" GridPane.halignment="RIGHT" />
                               <Label fx:id="heightLabel" text="Card height (pixels):" GridPane.halignment="RIGHT" GridPane.rowIndex="1" />
-                              <Button fx:id="widthButton" disable="true" mnemonicParsing="false" onAction="#widthjButtonActionPerformed" text="Reset" GridPane.columnIndex="2" />
-                              <Button fx:id="heightButton" mnemonicParsing="false" onAction="#heightjButtonActionPerformed" text="Reset" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                              <Button fx:id="widthButton" disable="true" mnemonicParsing="false" onAction="#widthButtonActionPerformed" text="Reset" GridPane.columnIndex="2" />
+                              <Button fx:id="heightButton" mnemonicParsing="false" onAction="#heightButtonActionPerformed" text="Reset" GridPane.columnIndex="2" GridPane.rowIndex="1" />
                               <Spinner fx:id="widthSpinner" disable="true" GridPane.columnIndex="1" />
                               <Spinner fx:id="heightSpinner" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                            </children>
