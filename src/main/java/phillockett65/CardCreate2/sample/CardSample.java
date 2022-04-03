@@ -33,6 +33,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 import phillockett65.CardCreate2.Controller;
 import phillockett65.CardCreate2.Model;
@@ -69,6 +70,7 @@ public class CardSample extends Stage {
         setTitle(title);
         resizableProperty().setValue(false);
         setOnCloseRequest(e -> Platform.exit());
+        initStyle(StageStyle.TRANSPARENT);
 
         controller = mainController;
         model = mainModel;
@@ -90,7 +92,7 @@ public class CardSample extends Stage {
         group = model.getGroup();
 
         scene = new Scene(group, WIDTH, HEIGHT);
-        scene.setFill(Color.GREEN);
+        scene.setFill(null);
         drawBlankCard();
 
         this.setScene(scene);
