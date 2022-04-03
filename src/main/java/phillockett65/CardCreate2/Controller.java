@@ -797,7 +797,7 @@ public class Controller {
     private CheckBox keepAspectRatioCheckBox;
 
     /**
-     * Sets the Payload and fixes the "Modify Card Item" controls.
+     * Fix the state of the "Modify Card Item" controls.
      */
     private void setSelectCardItemPrompts() {
 //    	System.out.println("setSelectCardItemPrompts()");
