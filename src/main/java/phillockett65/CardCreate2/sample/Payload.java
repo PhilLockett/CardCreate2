@@ -162,7 +162,6 @@ public class Payload {
         
         public Real(boolean height) {
             this.height = height;
-            scale = height ? cardHeightPX : cardWidthPX;
         }
 
         private void calcPixels() {
@@ -367,13 +366,13 @@ public class Payload {
     }
 
     /**
-     * Set up the new image file.
+     * Set up the new image file based on the current file path.
      * 
      * @return true if the new file was loaded, false otherwise.
      */
     public boolean syncImageFile() {
         path = getImagePath();
-        // System.out.println("syncImageFile(" + path + ")");
+        // System.out.println("syncImageFile(" + path + ") :: " + item);
 
         if (path.equals(""))
             return false;
@@ -437,11 +436,6 @@ public class Payload {
      */
     private void setPatterns() {
         // System.out.println("setPatterns()");
-        // if (!display) {
-        //     System.out.println("setPatterns() ABORTING!");
-
-        //     return;
-        // }
         
         if (item == Item.FACE) {
             if (image != null)
