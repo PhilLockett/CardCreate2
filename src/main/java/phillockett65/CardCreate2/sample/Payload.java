@@ -354,8 +354,11 @@ public class Payload {
         if (item == Item.INDEX)
             return model.getIndexImagePath();
 
-        if ((item == Item.STANDARD_PIP) || (item == Item.FACE_PIP))
-            return model.getPipImagePath();
+        if (item == Item.STANDARD_PIP)
+            return model.getStandardPipImagePath();
+
+        if (item == Item.FACE_PIP)
+            return model.getFacePipImagePath();
 
         if (item == Item.CORNER_PIP)
             return model.getCornerPipImagePath();

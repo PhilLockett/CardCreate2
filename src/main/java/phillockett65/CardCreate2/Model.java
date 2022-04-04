@@ -733,11 +733,24 @@ public class Model {
     }
 
     /**
-     * @return the file path for the pip image of the current card in the 
+     * @return the file path for the standard pip image of the current card in 
+     * the current style.
+     */
+    public String getStandardPipImagePath() {
+        return getPipDirectory() + "\\" + suits[suit] + ".png";
+    }
+
+    /**
+     * @return the file path for the face pip image of the current card in the 
      * current style.
      */
-    public String getPipImagePath() {
-        return getPipDirectory() + "\\" + suits[suit] + ".png";
+    public String getFacePipImagePath() {
+        String pathToImage = getPipDirectory() + "\\" + suits[suit] + "F.png";
+        File file = new File(pathToImage);
+        if (file.exists())
+            return pathToImage;
+
+        return getStandardPipImagePath();
     }
 
     /**
@@ -750,7 +763,7 @@ public class Model {
         if (file.exists())
             return pathToImage;
 
-        return getPipImagePath();
+        return getStandardPipImagePath();
     }
 
     private void setFaceCardItemPayload() {
