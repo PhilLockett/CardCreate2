@@ -477,10 +477,9 @@ public class Payload {
      * @return true if the pattern was changed, false otherwise.
      */
     public boolean syncCurrentCard() {
-        // System.out.println("syncCurrentCard(" + item + ")");
         final boolean change = syncPattern();
 
-        // System.out.println("syncCurrentCard(" + pattern + ")");
+        // System.out.println("syncCurrentCard(" + pattern + ") :: " + item);
 
         setPatterns();
 
@@ -491,7 +490,7 @@ public class Payload {
      * Synchronise to the current card size.
      */
     public void syncCardSize() {
-        // System.out.println("syncCardSize(" + item + ")");
+        // System.out.println("syncCardSize(" + item + ") :: " + item);
 
         cardWidthPX = model.getCalculatedWidth();
         cardHeightPX = model.getHeight();
