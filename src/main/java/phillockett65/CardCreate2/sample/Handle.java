@@ -76,7 +76,7 @@ public class Handle extends ImageView {
      * @param x coordinate of the centre of the current Item in pixels.
      * @param y coordinate of the centre of the current Item in pixels.
      */
-    public void setPosition(long x, long y) {
+    private void setPosition(long x, long y) {
         // System.out.println("handle.setPosition(" + x + ", " + y + ");");
         xPos = x - (width/2);
         yPos = y - (height/2);

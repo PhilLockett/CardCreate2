@@ -499,9 +499,8 @@ public class Payload {
     }
 
     private void resizePercentages() {
-        if (image == null) {
+        if (image == null)
             return;
-        }
 
         spriteWidth.setPixels(spriteHeight.getPixels() * imageWidthPX / imageHeightPX);
         spriteScale = spriteHeight.getPixels() / imageHeightPX;
@@ -522,7 +521,7 @@ public class Payload {
      * @param value as a percentage of the card width.
      */
     public void setX(double value) {
-        if ((value < 0f) || (value > 100f))
+        if ((value < 0D) || (value > 100D))
             return;
 
         centreX.setPercent(value);
@@ -533,7 +532,7 @@ public class Payload {
      * @param value as a percentage of the card height.
      */
     public void setY(double value) {
-        if ((value < 0f) || (value > 100f))
+        if ((value < 0D) || (value > 100D))
             return;
 
         centreY.setPercent(value);
@@ -544,7 +543,7 @@ public class Payload {
      * @param size as a percentage of the card height.
      */
     public void setSize(double size) {
-        if ((size < 0f) || (size > 100f))
+        if ((size < 0D) || (size > 100D))
             return;
 
 //        System.out.printf("setSize(%f)\n", size);
