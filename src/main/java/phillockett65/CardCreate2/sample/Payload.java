@@ -738,5 +738,8 @@ public class Payload {
      */
     public void setKeepAspectRatio(boolean keepAspectRatio) {
         this.keepAspectRatio = keepAspectRatio;
+
+        if (item == Item.FACE)
+            getImageView(0).setPreserveRatio(keepAspectRatio);
     }
 }

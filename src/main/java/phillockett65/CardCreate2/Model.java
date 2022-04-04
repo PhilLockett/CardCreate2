@@ -910,6 +910,7 @@ public class Model {
 
     public void setkeepImageAspectRatio(boolean state) {
         keepAspectRatio = state;
+        face.setKeepAspectRatio(keepAspectRatio);
     }
 
 
