@@ -345,34 +345,12 @@ public class Payload {
     }
 
     /**
-     * @return the file path for the image of the Item for the current card.
-     */
-    private String getImagePath() {
-        if (item == Item.FACE)
-            return model.getFaceImagePath();
-
-        if (item == Item.INDEX)
-            return model.getIndexImagePath();
-
-        if (item == Item.STANDARD_PIP)
-            return model.getStandardPipImagePath();
-
-        if (item == Item.FACE_PIP)
-            return model.getFacePipImagePath();
-
-        if (item == Item.CORNER_PIP)
-            return model.getCornerPipImagePath();
-
-        return "";
-    }
-
-    /**
      * Set up the new image file based on the current file path.
      * 
      * @return true if the new file was loaded, false otherwise.
      */
     public boolean syncImageFile() {
-        path = getImagePath();
+        path = model.getImagePath(item);
         // System.out.println("syncImageFile(" + path + ") :: " + item);
 
         if (path.equals(""))

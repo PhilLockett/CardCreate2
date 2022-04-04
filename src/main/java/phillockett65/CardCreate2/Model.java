@@ -715,7 +715,7 @@ public class Model {
      * @return the file path for the face image of the current card in the 
      * current style.
      */
-    public String getFaceImagePath() {
+    private String getFaceImagePath() {
         return getFaceDirectory() + "\\" + suits[suit] + cards[card] + ".png";
     }
 
@@ -723,7 +723,7 @@ public class Model {
      * @return the file path for the index image of the current card in the 
      * current style.
      */
-    public String getIndexImagePath() {
+    private String getIndexImagePath() {
         String pathToImage = getIndexDirectory() + "\\" + suits[suit] + cards[card] + ".png";
         File file = new File(pathToImage);
         if (!file.exists())
@@ -736,7 +736,7 @@ public class Model {
      * @return the file path for the standard pip image of the current card in 
      * the current style.
      */
-    public String getStandardPipImagePath() {
+    private String getStandardPipImagePath() {
         return getPipDirectory() + "\\" + suits[suit] + ".png";
     }
 
@@ -744,7 +744,7 @@ public class Model {
      * @return the file path for the face pip image of the current card in the 
      * current style.
      */
-    public String getFacePipImagePath() {
+    private String getFacePipImagePath() {
         String pathToImage = getPipDirectory() + "\\" + suits[suit] + "F.png";
         File file = new File(pathToImage);
         if (file.exists())
@@ -757,13 +757,38 @@ public class Model {
      * @return the file path for the corner pip image of the current card in 
      * the current style.
      */
-    public String getCornerPipImagePath() {
+    private String getCornerPipImagePath() {
         String pathToImage = getPipDirectory() + "\\" + suits[suit] + "S.png";
         File file = new File(pathToImage);
         if (file.exists())
             return pathToImage;
 
         return getStandardPipImagePath();
+    }
+
+    /**
+     * Get the file path for the image for a specified Item.
+     * 
+     * @param item for which the image file path is required.
+     * @return the file path for the image of the given Item.
+     */
+    public String getImagePath(Item item) {
+        if (item == Item.FACE)
+            return getFaceImagePath();
+
+        if (item == Item.INDEX)
+            return getIndexImagePath();
+
+        if (item == Item.STANDARD_PIP)
+            return getStandardPipImagePath();
+
+        if (item == Item.FACE_PIP)
+            return getFacePipImagePath();
+
+        if (item == Item.CORNER_PIP)
+            return getCornerPipImagePath();
+
+        return "";
     }
 
     private void setFaceCardItemPayload() {
