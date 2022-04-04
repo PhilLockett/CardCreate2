@@ -440,16 +440,15 @@ public class Payload {
         if (item == Item.FACE) {
             if (image != null)
                 paintImage();
-            return;
-        }
-
-        for (int i = 0; i < getImageCount(); ++i) {
-            final boolean visible = isImageViewVisible(i);
-            ImageView view = getImageView(i);
-            view.setVisible(visible);
-
-            if (visible)
-                paintIcon(view, getLocation(i));
+        } else {
+            for (int i = 0; i < getImageCount(); ++i) {
+                final boolean visible = isImageViewVisible(i);
+                ImageView view = getImageView(i);
+                view.setVisible(visible);
+                
+                if (visible)
+                    paintIcon(view, getLocation(i));
+            }
         }
     }
 
