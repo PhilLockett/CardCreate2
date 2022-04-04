@@ -71,6 +71,14 @@ public class Handle extends ImageView {
     }
 
     /**
+     * Synchronise the Display State of the handle.
+     */
+    public void syncDisplayState(boolean display) {
+        // System.out.println("handle.syncDisplayState()");
+        setVisible(display);
+    }
+
+    /**
      * Synchronise the position of the handle with the payload.
      */
     public void syncPosition() {

@@ -625,26 +625,31 @@ public class Model {
     public void setDisplayIndex(boolean state) {
         displayIndex = state;
         index.setVisible(shouldIndexBeDisplayed());
+        handle.syncDisplayState(shouldIndexBeDisplayed());
     }
 
     public void setDisplayCornerPip(boolean state) {
         displayCornerPip = state;
         cornerPip.setVisible(shouldCornerPipBeDisplayed());
+        handle.syncDisplayState(shouldCornerPipBeDisplayed());
     }
 
     public void setDisplayStandardPip(boolean state) {
         displayStandardPip = state;
         standardPip.setVisible(shouldStandardPipBeDisplayed());
+        handle.syncDisplayState(shouldStandardPipBeDisplayed());
     }
 
     public void setDisplayFaceImage(boolean state) {
         displayFaceImage = state;
         face.setVisible(shouldFaceImageBeDisplayed());
+        handle.syncDisplayState(shouldFaceImageBeDisplayed());
     }
 
     public void setDisplayFacePip(boolean state) {
         displayFacePip = state;
         facePip.setVisible(shouldFacePipBeDisplayed());
+        handle.syncDisplayState(shouldFacePipBeDisplayed());
     }
 
     /**
@@ -662,26 +667,31 @@ public class Model {
     public void setCurrentCardItemToIndex() {
         // System.out.println("setCurrentCardItemToIndex()");
         changeCurrentCardItemAndSyncSpinners(index);
+        handle.syncDisplayState(shouldIndexBeDisplayed());
     }
 
     public void setCurrentCardItemToCornerPip() {
         // System.out.println("setCurrentCardItemToCornerPip()");
         changeCurrentCardItemAndSyncSpinners(cornerPip);
+        handle.syncDisplayState(shouldCornerPipBeDisplayed());
     }
 
     public void setCurrentCardItemToStandardPip() {
         // System.out.println("setCurrentCardItemToStandardPip()");
         changeCurrentCardItemAndSyncSpinners(standardPip);
+        handle.syncDisplayState(shouldStandardPipBeDisplayed());
     }
 
     public void setCurrentCardItemToFace() {
         // System.out.println("setCurrentCardItemToFace()");
         changeCurrentCardItemAndSyncSpinners(face);
+        handle.syncDisplayState(shouldFaceImageBeDisplayed());
     }
 
     public void setCurrentCardItemToFacePip() {
         // System.out.println("setCurrentCardItemToFacePip()");
         changeCurrentCardItemAndSyncSpinners(facePip);
+        handle.syncDisplayState(shouldFacePipBeDisplayed());
     }
 
     /**
@@ -830,6 +840,8 @@ public class Model {
         standardPip.setVisible(shouldStandardPipBeDisplayed());
 
         facePip.setVisible(shouldFacePipBeDisplayed());
+
+        handle.syncDisplayState(shouldItemBeDisplayed(current.getItem()));
     }
 
     /**
