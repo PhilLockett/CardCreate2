@@ -195,7 +195,7 @@ public class Payload {
             return decimal;
         }
         
-        public double getRealPixels() {
+        public double getPixels() {
             return pixels;
         }
 
@@ -203,15 +203,15 @@ public class Payload {
             return Math.round(pixels);
         }
 
-        public double getRealOrigin() {
+        public double getOrigin() {
             if (height)
-                return pixels - (spriteHeight.getRealPixels()/2);
+                return pixels - (spriteHeight.getPixels()/2);
             else
-                return pixels - (spriteWidth.getRealPixels()/2);
+                return pixels - (spriteWidth.getPixels()/2);
         }
 
-        public long getOrigin() {
-            return Math.round(getRealOrigin());
+        public long getIntOrigin() {
+            return Math.round(getOrigin());
         }
 
     }
@@ -331,8 +331,8 @@ public class Payload {
         if (image != null) {
             imageWidthPX = image.getWidth();
             imageHeightPX = image.getHeight();
-            spriteWidth.setPixels(spriteHeight.getRealPixels() * imageWidthPX / imageHeightPX);
-            spriteScale = spriteHeight.getRealPixels() / imageHeightPX;
+            spriteWidth.setPixels(spriteHeight.getPixels() * imageWidthPX / imageHeightPX);
+            spriteScale = spriteHeight.getPixels() / imageHeightPX;
             // System.out.println("image size(" + imageWidthPX + ", " + imageHeightPX+ ")  scale = " + spriteScale);
 
             setImages(image);
@@ -384,17 +384,17 @@ public class Payload {
         final boolean generate = (destination == Destination.DISC);
         // System.out.println("paintImage(" + generate + ")");
 
-        final long pX = centreX.getIntPixels();
-        final long pY = centreY.getIntPixels();
-        final double winX = (double)cardWidthPX - (2*centreX.getRealPixels());
-        final double winY = (double)cardHeightPX - (2*centreY.getRealPixels());
+        final double pX = centreX.getPixels();
+        final double pY = centreY.getPixels();
+        final double winX = cardWidthPX - (2*centreX.getPixels());
+        final double winY = cardHeightPX - (2*centreY.getPixels());
         ImageView view = getImageView(0);
 
         // System.out.println("relocate(" + pX + ", " + pY+ ")  scale = " + spriteScale);
         view.relocate(pX, pY);
 
-        view.setFitWidth(spriteWidth.getRealPixels());
-        view.setFitHeight(spriteHeight.getRealPixels());
+        view.setFitWidth(spriteWidth.getPixels());
+        view.setFitHeight(spriteHeight.getPixels());
 
         // System.out.println("relocate(" + pX + ", " + pY+ ")  scale = " + spriteScale);
         view = getImageView(1);
@@ -403,8 +403,8 @@ public class Payload {
 
             view.relocate(pX, pY);  // FIX THIS ??
             
-            view.setFitWidth(spriteWidth.getRealPixels());
-            view.setFitHeight(spriteHeight.getRealPixels());
+            view.setFitWidth(spriteWidth.getPixels());
+            view.setFitHeight(spriteHeight.getPixels());
         } else {
             // System.out.println("portrait");
             view.setVisible(false);
@@ -416,19 +416,19 @@ public class Payload {
     private void paintIcon(ImageView view, Loc location) {
         // System.out.println("paintIcon()");
 
-        final double winX = cardWidthPX - (2*centreX.getRealPixels());
+        final double winX = cardWidthPX - (2*centreX.getPixels());
         final double offX = location.getXOffset() * winX;
-        double pX = centreX.getRealOrigin() + offX;
+        double pX = centreX.getOrigin() + offX;
 
-        final double winY = cardHeightPX - (2*centreY.getRealPixels());
+        final double winY = cardHeightPX - (2*centreY.getPixels());
         final double offY = location.getYOffset() * winY;
-        double pY = centreY.getRealOrigin() + offY;
+        double pY = centreY.getOrigin() + offY;
 
         // System.out.println("relocate(" + pX + ", " + pY+ ")  scale = " + spriteScale);
         view.relocate(pX, pY);
 
-        view.setFitWidth(spriteWidth.getRealPixels());
-        view.setFitHeight(spriteHeight.getRealPixels());
+        view.setFitWidth(spriteWidth.getPixels());
+        view.setFitHeight(spriteHeight.getPixels());
     }
 
     /**
@@ -510,10 +510,10 @@ public class Payload {
         display = p.display;
         keepAspectRatio = p.keepAspectRatio;
         spriteHeight.setPercent(p.getSpriteH());
-        spriteWidth.setPixels(spriteHeight.getRealPixels() * imageWidthPX / imageHeightPX);
+        spriteWidth.setPixels(spriteHeight.getPixels() * imageWidthPX / imageHeightPX);
         centreX.setPercent(p.getSpriteX());
         centreY.setPercent(p.getSpriteY());
-        spriteScale = spriteHeight.getRealPixels() / imageHeightPX;
+        spriteScale = spriteHeight.getPixels() / imageHeightPX;
         
 //        System.out.printf("copyPercentages(payload) spriteSize = %f,  spriteScale = %f\n", p.getSpriteH(), spriteScale);
         return true;
@@ -524,8 +524,8 @@ public class Payload {
             return;
         }
 
-        spriteWidth.setPixels(spriteHeight.getRealPixels() * imageWidthPX / imageHeightPX);
-        spriteScale = spriteHeight.getRealPixels() / imageHeightPX;
+        spriteWidth.setPixels(spriteHeight.getPixels() * imageWidthPX / imageHeightPX);
+        spriteScale = spriteHeight.getPixels() / imageHeightPX;
     }
     
     public void resizeCard(double w, double h) {
@@ -608,16 +608,16 @@ public class Payload {
     }
 
     public void moveBy(long dx, long dy) {
-        centreX.setPixels((spriteWidth.getRealPixels()/2) + centreX.getRealOrigin() + dx);
-        centreY.setPixels((spriteHeight.getRealPixels()/2) + centreY.getRealOrigin() + dy);
+        centreX.setPixels((spriteWidth.getPixels()/2) + centreX.getOrigin() + dx);
+        centreY.setPixels((spriteHeight.getPixels()/2) + centreY.getOrigin() + dy);
     }
 
     public long getX() {
-        return centreX.getOrigin();
+        return centreX.getIntOrigin();
     }
 
     public long getY() {
-        return centreY.getOrigin();
+        return centreY.getIntOrigin();
     }
 
     public long getCentreX() {
