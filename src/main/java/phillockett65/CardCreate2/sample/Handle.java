@@ -67,6 +67,14 @@ public class Handle extends ImageView {
         // System.out.println("handle.setPayload(" + payload.getItem() + ");");
         this.payload = payload;
 
+        syncPosition();
+    }
+
+    /**
+     * Synchronise the position of the handle with the payload.
+     */
+    public void syncPosition() {
+        // System.out.println("handle.syncPosition()");
         setPosition(payload.getCentreX(), payload.getCentreY());
     }
 
