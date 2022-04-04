@@ -1014,6 +1014,8 @@ public class Model {
         // System.out.println("model.setCurrentX(" + value + ");");
 
         current.setX(value);
+        handle.syncPosition();
+
         if (updateSVF)
             itemCentreXSVF.setValue(roundPercentage(value));
     }
@@ -1028,6 +1030,8 @@ public class Model {
         // System.out.println("model.setCurrentY(" + value + ");");
 
         current.setY(value);
+        handle.syncPosition();
+
         if (updateSVF)
             itemCentreYSVF.setValue(roundPercentage(value));
     }
@@ -1040,6 +1044,9 @@ public class Model {
      */
     private void initCurrentCardItemAndSyncSpinners(Payload item) {
         current = item;
+        handle = new Handle(handleImage, current);
+        handle.setPayload(current);
+
         itemHeightSVF.setValue(roundPercentage(current.getSpriteH()));
         itemCentreXSVF.setValue(roundPercentage(current.getSpriteX()));
         itemCentreYSVF.setValue(roundPercentage(current.getSpriteY()));
@@ -1052,8 +1059,12 @@ public class Model {
      * @param item currently selected card item Payload.
      */
     private void changeCurrentCardItemAndSyncSpinners(Payload item) {
-        initCurrentCardItemAndSyncSpinners(item);
+        current = item;
         handle.setPayload(current);
+
+        itemHeightSVF.setValue(roundPercentage(current.getSpriteH()));
+        itemCentreXSVF.setValue(roundPercentage(current.getSpriteX()));
+        itemCentreYSVF.setValue(roundPercentage(current.getSpriteY()));
     }
 
     /**
@@ -1136,7 +1147,6 @@ public class Model {
         initializeCardItemPayloads();
 
         // Add handle to the group last so that it is displayed on top.
-        handle = new Handle(handleImage, current);
         group.getChildren().add(handle);
     }
 
