@@ -382,22 +382,12 @@ public class Controller {
     /************************************************************************
      * Support code for "Generate" panel. 
      */
-    private double xPos = 8.1, yPos = 9.8;
 
     @FXML
     private Button generateButton;
 
     @FXML
     void generateButtonActionPerformed(ActionEvent event) {
-        model.displayDiags();
-
-        // Diags
-        xPos += 0.5;
-        yPos += 0.7;
-        sample.setHandle(xPos, yPos);
-        model.setCurrentX(xPos, true);
-        model.setCurrentY(yPos, true);
-
         setStatusMessage("Output sent to: " + model.getOutputDirectory());
     }
 

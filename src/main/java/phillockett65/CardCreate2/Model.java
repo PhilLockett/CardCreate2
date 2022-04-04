@@ -1141,11 +1141,4 @@ public class Model {
     }
 
 
-    /************************************************************************
-     * Debug.
-     */
-    public void displayDiags() {
-        System.out.println((keepAspectRatio ? "Keeping" : "NOT keeping") + " image aspect ratio");
-    }
-
 }

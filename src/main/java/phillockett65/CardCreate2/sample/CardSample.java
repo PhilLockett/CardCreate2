@@ -194,20 +194,6 @@ public class CardSample extends Stage {
     }
 
 
-    /**
-     * Temp for debug.
-     * @param x coordinate of the centre of the current Item as a percentage of the card width.
-     * @param y coordinate of the centre of the current Item as a percentage of the card height.
-     */
-    public void setHandle(double x, double y) {
-        // Convert to pixels.
-        final long xPos = model.percentageToPX(x);
-        final long yPos = model.percentageToPX(y);
-
-        handle.setPosition(xPos, yPos);
-    }
-
-
 
 /************************************************************************
  * Key handling support code.
