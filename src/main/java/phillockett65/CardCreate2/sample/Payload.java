@@ -548,7 +548,8 @@ public class Payload {
         if ((size < 0D) || (size > 100D))
             return;
 
-//        System.out.printf("setSize(%f)\n", size);
+        // System.out.println("setSize(" + size + ") :: " + item);
+
         spriteHeight.setPercent(size);
         resizePercentages();
         setPatterns();
