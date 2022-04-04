@@ -404,7 +404,7 @@ public class Payload {
         if (isLandscape()) {
             // System.out.println("landscape");
 
-            view.relocate(pX, pY);  // FIX THIS ??
+            view.relocate(cardWidthPX - pX, cardHeightPX - pY);
             
             view.setFitWidth(spriteWidth.getPixels());
             view.setFitHeight(spriteHeight.getPixels());
