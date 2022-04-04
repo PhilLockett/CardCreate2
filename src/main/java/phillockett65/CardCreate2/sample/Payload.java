@@ -525,6 +525,7 @@ public class Payload {
             return;
 
         centreX.setPercent(value);
+        setPatterns();
     }
 
     /**
@@ -536,6 +537,7 @@ public class Payload {
             return;
 
         centreY.setPercent(value);
+        setPatterns();
     }
 
     /**
@@ -549,6 +551,7 @@ public class Payload {
 //        System.out.printf("setSize(%f)\n", size);
         spriteHeight.setPercent(size);
         resizePercentages();
+        setPatterns();
     }
 
     /**
