@@ -839,17 +839,17 @@ public class Model {
      * @return true if a new displayable card item is found, false otherwise.
      */
     public boolean setNextPayload() {
-        int index = current.getItem().index() + 1;
+        int idx = current.getItem().index() + 1;
 
-        while (payloadSlider[index].getItem() != current.getItem()) {
-            if (shouldItemBeDisplayed(payloadSlider[index].getItem())) {
-                changeCurrentCardItemAndSyncSpinners(payloadSlider[index]);
+        while (payloadSlider[idx].getItem() != current.getItem()) {
+            if (shouldItemBeDisplayed(payloadSlider[idx].getItem())) {
+                changeCurrentCardItemAndSyncSpinners(payloadSlider[idx]);
 
                 return true;
             }
 
-            index++;
-            if (index > payloadSlider.length)   // Safety check.
+            idx++;
+            if (idx > payloadSlider.length)   // Safety check.
                 break;
         }
 
