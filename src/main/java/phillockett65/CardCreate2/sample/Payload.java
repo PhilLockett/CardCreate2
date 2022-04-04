@@ -336,6 +336,7 @@ public class Payload {
             // System.out.println("image size(" + imageWidthPX + ", " + imageHeightPX+ ")  scale = " + spriteScale);
 
             setImages(image);
+            setPatterns();
 
             return true;
         }
@@ -393,8 +394,10 @@ public class Payload {
         // System.out.println("relocate(" + pX + ", " + pY+ ")  scale = " + spriteScale);
         view.relocate(pX, pY);
 
-        view.setFitWidth(spriteWidth.getPixels());
-        view.setFitHeight(spriteHeight.getPixels());
+        view.setFitWidth(winX);
+        view.setFitHeight(winY);
+        // view.setFitWidth(spriteWidth.getPixels());
+        // view.setFitHeight(spriteHeight.getPixels());
 
         // System.out.println("relocate(" + pX + ", " + pY+ ")  scale = " + spriteScale);
         view = getImageView(1);
