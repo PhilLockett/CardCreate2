@@ -803,7 +803,6 @@ public class Model {
 
     private void setFaceCardItemPayload() {
         face.syncImageFile();
-        face.syncCurrentCard();
     }
 
     private void setIndexCardItemPayload() {
@@ -812,7 +811,6 @@ public class Model {
 
     private void setPipCardItemPayloads() {
         standardPip.syncImageFile();
-        standardPip.syncCurrentCard();
 
         facePip.syncImageFile();
 

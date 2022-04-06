@@ -336,6 +336,7 @@ public class Payload {
             // System.out.println("image size(" + imageWidthPX + ", " + imageHeightPX+ ")  scale = " + spriteScale);
 
             setImages(image);
+            syncPattern();
             setPatterns();
 
             return true;
@@ -447,21 +448,6 @@ public class Payload {
         pattern = (change) ? model.getCard() : 0;
 
         // System.out.println("syncPattern(" + pattern + ")");
-
-        return change;
-    }
-
-    /**
-     * Change the pattern of standard pips to match the current card.
-     * 
-     * @return true if the pattern was changed, false otherwise.
-     */
-    public boolean syncCurrentCard() {
-        final boolean change = syncPattern();
-
-        // System.out.println("syncCurrentCard(" + pattern + ") :: " + item);
-
-        setPatterns();
 
         return change;
     }
