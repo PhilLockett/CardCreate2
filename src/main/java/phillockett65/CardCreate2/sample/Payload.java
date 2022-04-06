@@ -362,26 +362,27 @@ public class Payload {
 
     private void paintImage() {
         final boolean generate = (destination == Destination.DISC);
-        // System.out.println("paintImage(" + generate + ")");
+        System.out.println("paintImage(" + generate + ")");
 
-        final double pX = centreX.getPixels();
-        final double pY = centreY.getPixels();
-        final double winX = cardWidthPX - (2*centreX.getPixels());
-        final double winY = cardHeightPX - (2*centreY.getPixels());
-        ImageView view = getImageView(0);
-
-        // System.out.println("relocate(" + pX + ", " + pY+ ")  scale = " + spriteScale);
-        view.relocate(pX, pY);
-
-        view.setFitWidth(winX);
-        view.setFitHeight(winY);
-        // view.setFitWidth(spriteWidth.getPixels());
-        // view.setFitHeight(spriteHeight.getPixels());
-
-        // System.out.println("relocate(" + pX + ", " + pY+ ")  scale = " + spriteScale);
-        view = getImageView(1);
         if (isLandscape()) {
             // System.out.println("landscape");
+
+            final double pX = centreX.getPixels();
+            final double pY = centreY.getPixels();
+            final double winX = cardWidthPX - (2*centreX.getPixels());
+            final double winY = cardHeightPX - (2*centreY.getPixels());
+            ImageView view = getImageView(0);
+    
+            // System.out.println("relocate(" + pX + ", " + pY+ ")  scale = " + spriteScale);
+            view.relocate(pX, pY);
+    
+            view.setFitWidth(winX);
+            view.setFitHeight(winY);
+            // view.setFitWidth(spriteWidth.getPixels());
+            // view.setFitHeight(spriteHeight.getPixels());
+    
+            // System.out.println("relocate(" + pX + ", " + pY+ ")  scale = " + spriteScale);
+            view = getImageView(1);
 
             view.relocate(cardWidthPX - pX, cardHeightPX - pY);
             
@@ -389,6 +390,34 @@ public class Payload {
             view.setFitHeight(spriteHeight.getPixels());
         } else {
             // System.out.println("portrait");
+
+            double pX = centreX.getPixels();
+            double pY = centreY.getPixels();
+            final double winX = cardWidthPX - (2*centreX.getPixels());
+            final double winY = cardHeightPX - (2*centreY.getPixels());
+            ImageView view = getImageView(0);
+    
+            // System.out.println("relocate(" + pX + ", " + pY+ ")  scale = " + spriteScale);
+            if (keepAspectRatio) {
+
+                double scaleX = winX / imageWidthPX;
+                double scaleY = winY / imageHeightPX;
+                if (scaleX < scaleY) {
+                    pY += (winY - (imageHeightPX * scaleX)) / 2;
+                } else {
+                    pX += (winX - (imageWidthPX * scaleY)) / 2;
+                }
+            } 
+
+            view.relocate(pX, pY);
+    
+            view.setFitWidth(winX);
+            view.setFitHeight(winY);
+            // view.setFitWidth(spriteWidth.getPixels());
+            // view.setFitHeight(spriteHeight.getPixels());
+    
+            // System.out.println("relocate(" + pX + ", " + pY+ ")  scale = " + spriteScale);
+            view = getImageView(1);
             view.setVisible(false);
         }
 
