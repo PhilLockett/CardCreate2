@@ -155,36 +155,26 @@ public class Payload {
 
     public class Real {
         private final boolean height;
-        private double scale;
-        private double decimal = 0;
         private double percent = 0;
-        private double pixels = 0;
         
         public Real(boolean height) {
             this.height = height;
         }
 
-        private void calcPixels() {
-            scale = height ? cardHeightPX : cardWidthPX;
-            pixels = decimal * scale;
+        public double getScale() {
+            return height ? cardHeightPX : cardWidthPX;
         }
+
         public void setPercent(double value) {
             percent = value;
-            decimal = percent / 100;
-            calcPixels();
         }
 
         public void setReal(double value) {
-            decimal = value;
-            percent = decimal * 100;
-            calcPixels();
+            percent = value * 100;
         }
 
         public void setPixels(double value) {
-            pixels = value;
-            scale = height ? cardHeightPX : cardWidthPX;
-            decimal = pixels / scale;
-            percent = decimal * 100;
+            percent = value * 100 / getScale();
         }
         
         public double getPercent() {
@@ -192,22 +182,22 @@ public class Payload {
         }
 
         public double getReal() {
-            return decimal;
+            return percent / 100;
         }
         
         public double getPixels() {
-            return pixels;
+            return percent * getScale() / 100;
         }
 
         public long getIntPixels() {
-            return Math.round(pixels);
+            return Math.round(getPixels());
         }
 
         public double getOrigin() {
             if (height)
-                return pixels - (spriteHeight.getPixels()/2);
+                return (percent * cardHeightPX / 100) - (spriteHeight.getPixels()/2);
             else
-                return pixels - (spriteWidth.getPixels()/2);
+                return (percent * cardWidthPX / 100) - (spriteWidth.getPixels()/2);
         }
 
         public long getIntOrigin() {
