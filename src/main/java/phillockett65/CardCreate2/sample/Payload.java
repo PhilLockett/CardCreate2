@@ -274,7 +274,7 @@ public class Payload {
      * Initialize the Image Views based on item.
      */
     private void initImageViews() {
-        // System.out.println("initImageViews()");
+        // System.out.println("initImageViews() :: " + item);
         
         if (item == Item.FACE) {
             paintImage();
@@ -362,7 +362,7 @@ public class Payload {
 
     private void paintImage() {
         final boolean generate = (destination == Destination.DISC);
-        System.out.println("paintImage(" + generate + ")");
+        // System.out.println("paintImage(" + generate + ")");
 
         if (isLandscape()) {
             // System.out.println("landscape");

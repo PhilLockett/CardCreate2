@@ -456,6 +456,7 @@ public class Model {
      * @param width value in pixels.
      */
     public void setWidth(double width) {
+        // System.out.println("setWidth(" + width + ")");
         cardWidthPX = width;
 
         syncCardItemsWithCardSize();
@@ -474,7 +475,9 @@ public class Model {
      * @param height value in pixels.
      */
     public void setHeight(double height) {
+        // System.out.println("setHeight(" + height + ")");
         cardHeightPX = height;
+
         syncCardItemsWithCardSize();
     }
 
@@ -913,6 +916,8 @@ public class Model {
      * Tells the card items to synchronize with the current card size.
      */
     private void syncCardItemsWithCardSize() {
+        // System.out.println("syncCardItemsWithCardSize()");
+
         index.syncCardSize();
         cornerPip.syncCardSize();
         standardPip.syncCardSize();
