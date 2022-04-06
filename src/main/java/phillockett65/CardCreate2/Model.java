@@ -335,8 +335,8 @@ public class Model {
         if (++suit >= suits.length)
             suit = 0;
 
-        setCardItemPayloads();
         updateCardItemDisplayStatus();
+        setCardItemPayloads();
 
         return suit;
     }
@@ -345,8 +345,8 @@ public class Model {
         if (++card >= cards.length)
             card = 1;
 
-        setCardItemPayloads();
         updateCardItemDisplayStatus();
+        setCardItemPayloads();
 
         return card;
     }
@@ -355,8 +355,8 @@ public class Model {
         if (--suit < 0)
             suit = suits.length - 1;
 
-        setCardItemPayloads();
         updateCardItemDisplayStatus();
+        setCardItemPayloads();
 
         return suit;
     }
@@ -365,8 +365,8 @@ public class Model {
         if (--card <= 0)
             card = cards.length - 1;
 
-        setCardItemPayloads();
         updateCardItemDisplayStatus();
+        setCardItemPayloads();
 
         return card;
     }
@@ -383,7 +383,7 @@ public class Model {
      * @return true if the current card has an image file, false otherwise.
      */
     public boolean isImageCard() {
-        return face.hasImage();
+        return isFaceImageExists();
     }
 
     /**
@@ -720,6 +720,15 @@ public class Model {
 
     private boolean keepAspectRatio = true;
 
+
+    /**
+     * @return true if the face image file exits.
+     */
+    private boolean isFaceImageExists() {
+        File file = new File(getFaceImagePath());
+
+        return file.exists();
+    }
 
     /**
      * @return the file path for the face image of the current card in the 
