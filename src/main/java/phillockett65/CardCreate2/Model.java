@@ -1057,7 +1057,8 @@ public class Model {
 
 
     /**
-     * Init the current card item and adjust the Card Item spinners.
+     * Init the current card item, create the handle and adjust the Card Item 
+     * spinners.
      * 
      * @param item currently selected card item Payload.
      */
