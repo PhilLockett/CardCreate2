@@ -846,6 +846,7 @@ public class Model {
         index.setVisible(shouldIndexBeDisplayed());
         cornerPip.setVisible(shouldCornerPipBeDisplayed());
 
+        face.setBoxVisibility(shouldFaceImageBeDisplayed());
         face.setVisible(shouldFaceImageBeDisplayed());
         standardPip.setVisible(shouldStandardPipBeDisplayed());
 

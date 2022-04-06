@@ -31,6 +31,8 @@ import java.io.FileNotFoundException;
 import javafx.scene.Group;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 
 import phillockett65.CardCreate2.Model;
 
@@ -229,6 +231,9 @@ public class Payload {
     private final Real spriteWidth;
     private double spriteScale = 1;
 
+    private Rectangle box;
+
+
     public Payload(Model mainModel, Item it) {
         // System.out.println("Payload()");
 
@@ -267,7 +272,19 @@ public class Payload {
         // System.out.println("initImageViews() :: " + item);
         
         if (item == Item.FACE) {
+            final double pX = centreX.getPixels();
+            final double pY = centreY.getPixels();
+            final double winX = cardWidthPX - (2*centreX.getPixels());
+            final double winY = cardHeightPX - (2*centreY.getPixels());
+            box = new Rectangle(pX, pY, winX, winY);
+            box.setFill(null);
+            box.setStrokeWidth(2);
+            box.setStroke(Color.GREY);
+            group.getChildren().add(box);
+            
+            box.setVisible(false);
             paintImage();
+
             return;
         }
 
@@ -350,9 +367,15 @@ public class Payload {
         return loadNewImageFile();
     }
 
+    public void setBoxVisibility(boolean state) {
+        if (item == Item.FACE)
+            box.setVisible(state);
+    }
+
     private void paintImage() {
         final boolean generate = (destination == Destination.DISC);
         // System.out.println("paintImage(" + generate + ")");
+        box.setVisible(false);
 
         if (isLandscape()) {
             // System.out.println("landscape");
@@ -389,6 +412,14 @@ public class Payload {
     
             // System.out.println("relocate(" + pX + ", " + pY+ ")  scale = " + spriteScale);
             if (keepAspectRatio) {
+                if (!generate && isImageViewVisible(0)) {
+                    box.setX(pX);
+                    box.setY(pY);
+                    box.setWidth(winX);
+                    box.setHeight(winY);
+                    box.setVisible(true);
+                    // System.out.println("box.setVisible(true)");
+                }
 
                 double scaleX = winX / imageWidthPX;
                 double scaleY = winY / imageHeightPX;
