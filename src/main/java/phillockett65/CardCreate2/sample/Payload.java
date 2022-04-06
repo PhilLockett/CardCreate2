@@ -405,7 +405,8 @@ public class Payload {
         final double offY = location.getYOffset() * winY;
         double pY = centreY.getOrigin() + offY;
 
-        // System.out.println("relocate(" + pX + ", " + pY+ ")  scale = " + spriteScale);
+        // System.out.println("relocate(" + pX + ", " + pY+ ") :: " + item);
+        // System.out.println("size(" + spriteWidth.getPixels() + ", " + spriteHeight.getPixels()+ ")  scale = " + spriteScale);
         view.relocate(pX, pY);
 
         view.setFitWidth(spriteWidth.getPixels());
@@ -417,7 +418,7 @@ public class Payload {
      */
     private void setPatterns() {
         // System.out.println("setPatterns()");
-        
+
         if (item == Item.FACE) {
             if (image != null)
                 paintImage();
@@ -426,6 +427,7 @@ public class Payload {
                 final boolean visible = isImageViewVisible(i);
                 ImageView view = getImageView(i);
                 view.setVisible(visible);
+                // System.out.println(i + " visible = " + visible + " display = " + display);
                 
                 if (visible)
                     paintIcon(view, getLocation(i));
