@@ -418,7 +418,6 @@ public class Payload {
                     box.setWidth(winX);
                     box.setHeight(winY);
                     box.setVisible(true);
-                    // System.out.println("box.setVisible(true)");
                 }
 
                 double scaleX = winX / imageWidthPX;
