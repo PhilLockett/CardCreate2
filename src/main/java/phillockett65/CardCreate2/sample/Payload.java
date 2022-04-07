@@ -562,10 +562,10 @@ public class Payload {
      */
     public double incSize() {
         double size = spriteHeight.getPercent();
-        if (size != 100f) {
-            size += 0.5F;
-            if (size > 100f)
-                size = 100f;
+        if (size != 100D) {
+            size += 0.5D;
+            if (size > 100D)
+                size = 100D;
             spriteHeight.setPercent(size);
             resizePercentages();
         }
@@ -579,10 +579,10 @@ public class Payload {
      */
     public double decSize() {
         double size = spriteHeight.getPercent();
-        if (size != 0f) {
-            size -= 0.5F;
-            if (size < 0f)
-                size = 0f;
+        if (size != 0D) {
+            size -= 0.5D;
+            if (size < 0D)
+                size = 0D;
             spriteHeight.setPercent(size);
             resizePercentages();
         }
