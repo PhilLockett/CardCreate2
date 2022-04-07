@@ -111,6 +111,13 @@ public class CardSample extends Stage {
         this.setMinHeight(Default.MIN_HEIGHT.getFloat() + dy);
         this.setMaxWidth(Default.MAX_WIDTH.getFloat() + dx);
         this.setMaxHeight(Default.MAX_HEIGHT.getFloat() + dy);
+
+        scene.setOnMouseClicked(event -> {
+            // System.out.println("setOnMouseClicked(" + event.getButton() + ") on scene");
+            model.setNextPayload();
+            controller.syncToCurrentCardItem();
+        });
+
     }
 
     private void drawBlankCard() {
@@ -160,16 +167,17 @@ public class CardSample extends Stage {
      * Initialization after a base directory has been selected.
      */
     public void init() {
-        syncHandle();
+        handle = model.getHandle();
+
+        handle.setOnMouseClicked(event -> {
+            // System.out.println("setOnMouseClicked(" + event.getButton() + ") on handle");
+            event.consume();
+        });
     }
 
 /************************************************************************
  * Synchronize interface.
  */
-
-    public void syncHandle() {
-        handle = model.getHandle();
-    }
 
     public void syncBackgroundColour() {
         card.setFill(model.getBackgroundColour());
