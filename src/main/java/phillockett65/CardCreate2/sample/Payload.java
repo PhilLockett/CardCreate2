@@ -568,6 +568,7 @@ public class Payload {
                 size = 100D;
             spriteHeight.setPercent(size);
             resizePercentages();
+            setPatterns();
         }
         
         return size;
@@ -585,6 +586,7 @@ public class Payload {
                 size = 0D;
             spriteHeight.setPercent(size);
             resizePercentages();
+            setPatterns();
         }
         
         return size;
@@ -593,6 +595,7 @@ public class Payload {
     public void moveBy(long dx, long dy) {
         centreX.setPixels((spriteWidth.getPixels()/2) + centreX.getOrigin() + dx);
         centreY.setPixels((spriteHeight.getPixels()/2) + centreY.getOrigin() + dy);
+        setPatterns();
     }
 
     public long getX() {
