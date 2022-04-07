@@ -631,31 +631,31 @@ public class Model {
     public void setDisplayIndex(boolean state) {
         displayIndex = state;
         index.setVisible(shouldIndexBeDisplayed());
-        handle.syncDisplayState(shouldIndexBeDisplayed());
+        handle.syncDisplayState(shouldItemBeDisplayed(current.getItem()));
     }
 
     public void setDisplayCornerPip(boolean state) {
         displayCornerPip = state;
         cornerPip.setVisible(shouldCornerPipBeDisplayed());
-        handle.syncDisplayState(shouldCornerPipBeDisplayed());
+        handle.syncDisplayState(shouldItemBeDisplayed(current.getItem()));
     }
 
     public void setDisplayStandardPip(boolean state) {
         displayStandardPip = state;
         standardPip.setVisible(shouldStandardPipBeDisplayed());
-        handle.syncDisplayState(shouldStandardPipBeDisplayed());
+        handle.syncDisplayState(shouldItemBeDisplayed(current.getItem()));
     }
 
     public void setDisplayFaceImage(boolean state) {
         displayFaceImage = state;
         face.setVisible(shouldFaceImageBeDisplayed());
-        handle.syncDisplayState(shouldFaceImageBeDisplayed());
+        handle.syncDisplayState(shouldItemBeDisplayed(current.getItem()));
     }
 
     public void setDisplayFacePip(boolean state) {
         displayFacePip = state;
         facePip.setVisible(shouldFacePipBeDisplayed());
-        handle.syncDisplayState(shouldFacePipBeDisplayed());
+        handle.syncDisplayState(shouldItemBeDisplayed(current.getItem()));
     }
 
     /**
