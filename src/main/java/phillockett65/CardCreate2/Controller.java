@@ -740,7 +740,7 @@ public class Controller {
         faceRadioButton.setDisable(!model.shouldFaceImageBeDisplayed());
         facePipRadioButton.setDisable(!model.shouldFacePipBeDisplayed());
 
-        setDisabledStateOfCurrentCardItem();
+        setSelectCardItemPrompts();
     }
 
     /**
