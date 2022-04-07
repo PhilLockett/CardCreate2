@@ -180,8 +180,10 @@ public class Controller {
      * 
      * @param item now selected.
      */
-    public void changeIcon(Item item) {
-        System.out.println("changeIcon(" + item.getD() + ")");
+    public void syncToCurrentCardItem() {
+
+        Item item = model.getCurrent().getItem();
+        System.out.println("syncToCurrentCardItem(" + item.getD() + ")");
 
         if (item == Item.INDEX) {
             indicesRadioButton.setSelected(true);
