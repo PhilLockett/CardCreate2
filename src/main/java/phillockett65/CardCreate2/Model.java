@@ -628,34 +628,53 @@ public class Model {
         return false;
     }
 
+    /**
+     * Update the state of the handle based on a change to a Card Item check 
+     * box. Check if we have disabled the current card item or if it is 
+     * already disabled, in which case find the next one available, otherwise 
+     * set the state for the current.
+     * 
+     * @param state of the changed Card Item check box.
+     * @param item changed Card Item.
+     */
+    private void updateHandleState(boolean state, Item item) {
+        if ((!state) && (current.getItem() == item))
+            setNextPayload();
+        else
+        if (!current.isVisible())
+            setNextPayload();
+        else
+            handle.syncDisplayState(shouldItemBeDisplayed(current.getItem()));
+    }
+
     public void setDisplayIndex(boolean state) {
         displayIndex = state;
         index.setVisible(shouldIndexBeDisplayed());
-        handle.syncDisplayState(shouldItemBeDisplayed(current.getItem()));
+        updateHandleState(state, Item.INDEX);
     }
 
     public void setDisplayCornerPip(boolean state) {
         displayCornerPip = state;
         cornerPip.setVisible(shouldCornerPipBeDisplayed());
-        handle.syncDisplayState(shouldItemBeDisplayed(current.getItem()));
+        updateHandleState(state, Item.CORNER_PIP);
     }
 
     public void setDisplayStandardPip(boolean state) {
         displayStandardPip = state;
         standardPip.setVisible(shouldStandardPipBeDisplayed());
-        handle.syncDisplayState(shouldItemBeDisplayed(current.getItem()));
+        updateHandleState(state, Item.STANDARD_PIP);
     }
 
     public void setDisplayFaceImage(boolean state) {
         displayFaceImage = state;
         face.setVisible(shouldFaceImageBeDisplayed());
-        handle.syncDisplayState(shouldItemBeDisplayed(current.getItem()));
+        updateHandleState(state, Item.FACE);
     }
 
     public void setDisplayFacePip(boolean state) {
         displayFacePip = state;
         facePip.setVisible(shouldFacePipBeDisplayed());
-        handle.syncDisplayState(shouldItemBeDisplayed(current.getItem()));
+        updateHandleState(state, Item.FACE_PIP);
     }
 
     /**
@@ -878,6 +897,8 @@ public class Model {
             if (shouldItemBeDisplayed(payloadSlider[idx].getItem())) {
                 changeCurrentCardItemAndSyncSpinners(payloadSlider[idx]);
 
+                handle.syncDisplayState(shouldItemBeDisplayed(current.getItem()));
+
                 return true;
             }
 
@@ -885,6 +906,8 @@ public class Model {
             if (idx > payloadSlider.length)   // Safety check.
                 break;
         }
+
+        handle.syncDisplayState(shouldItemBeDisplayed(current.getItem()));
 
         return false;
     }
