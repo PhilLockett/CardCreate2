@@ -163,16 +163,12 @@ public class Payload {
             this.height = height;
         }
 
-        public double getScale() {
+        private double getScale() {
             return height ? cardHeightPX : cardWidthPX;
         }
 
         public void setPercent(double value) {
             percent = value;
-        }
-
-        public void setReal(double value) {
-            percent = value * 100;
         }
 
         public void setPixels(double value) {
@@ -183,10 +179,6 @@ public class Payload {
             return percent;
         }
 
-        public double getReal() {
-            return percent / 100;
-        }
-        
         public double getPixels() {
             return percent * getScale() / 100;
         }
