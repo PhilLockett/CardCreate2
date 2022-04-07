@@ -183,7 +183,7 @@ public class Controller {
     public void syncToCurrentCardItem() {
 
         Item item = model.getCurrent().getItem();
-        // System.out.println("syncToCurrentCardItem(" + item.getD() + ")");
+        // System.out.println("syncToCurrentCardItem(" + item + ")");
 
         if (item == Item.INDEX) {
             indicesRadioButton.setSelected(true);
@@ -202,6 +202,7 @@ public class Controller {
         }
 
         setSelectCardItemPrompts();
+        setSelectedCardItemRadioToCurrent();
     }
 
 
@@ -709,7 +710,7 @@ public class Controller {
 
     @FXML
     void cardItemRadioButtonActionPerformed(ActionEvent event) {
-//    	System.out.println("cardItemRadioButtonActionPerformed()");
+        // System.out.println("cardItemRadioButtonActionPerformed()");
 
         if (indicesRadioButton.isSelected())
             model.setCurrentCardItemToIndex();
@@ -730,6 +731,29 @@ public class Controller {
     }
 
     /**
+     * Set the "Select Card Item" radio button to the current card item .
+     */
+    private void setSelectedCardItemRadioToCurrent() {
+        Item item = model.getCurrent().getItem();
+        // System.out.println("setSelectedCardItemRadioToCurrent(" + item + ")");
+
+        if (item == Item.INDEX)
+            indicesRadioButton.setSelected(true);
+        else
+        if (item == Item.CORNER_PIP)
+            cornerPipRadioButton.setSelected(true);
+        else
+        if (item == Item.STANDARD_PIP)
+            standardPipRadioButton.setSelected(true);
+        else
+        if (item == Item.FACE)
+            faceRadioButton.setSelected(true);
+        else
+        if (item == Item.FACE_PIP)
+            facePipRadioButton.setSelected(true);
+    }
+
+    /**
      * Set the "Select Card Item" radio button Disabled state based on the 
      * current card.
      */
@@ -741,6 +765,7 @@ public class Controller {
         facePipRadioButton.setDisable(!model.shouldFacePipBeDisplayed());
 
         setSelectCardItemPrompts();
+        setSelectedCardItemRadioToCurrent();
     }
 
     /**
