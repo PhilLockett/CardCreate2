@@ -630,17 +630,10 @@ public class Model {
 
     /**
      * Update the state of the handle based on a change to a Card Item check 
-     * box. Check if we have disabled the current card item or if it is 
-     * already disabled, in which case find the next one available, otherwise 
-     * set the state for the current.
-     * 
-     * @param state of the changed Card Item check box.
-     * @param item changed Card Item.
+     * box. If the current card item is disabled find the next one available, 
+     * otherwise set the state for the current.
      */
-    private void updateHandleState(boolean state, Item item) {
-        if ((!state) && (current.getItem() == item))
-            setNextPayload();
-        else
+    private void updateHandleState() {
         if (!current.isVisible())
             setNextPayload();
         else
@@ -650,31 +643,31 @@ public class Model {
     public void setDisplayIndex(boolean state) {
         displayIndex = state;
         index.setVisible(shouldIndexBeDisplayed());
-        updateHandleState(state, Item.INDEX);
+        updateHandleState();
     }
 
     public void setDisplayCornerPip(boolean state) {
         displayCornerPip = state;
         cornerPip.setVisible(shouldCornerPipBeDisplayed());
-        updateHandleState(state, Item.CORNER_PIP);
+        updateHandleState();
     }
 
     public void setDisplayStandardPip(boolean state) {
         displayStandardPip = state;
         standardPip.setVisible(shouldStandardPipBeDisplayed());
-        updateHandleState(state, Item.STANDARD_PIP);
+        updateHandleState();
     }
 
     public void setDisplayFaceImage(boolean state) {
         displayFaceImage = state;
         face.setVisible(shouldFaceImageBeDisplayed());
-        updateHandleState(state, Item.FACE);
+        updateHandleState();
     }
 
     public void setDisplayFacePip(boolean state) {
         displayFacePip = state;
         facePip.setVisible(shouldFacePipBeDisplayed());
-        updateHandleState(state, Item.FACE_PIP);
+        updateHandleState();
     }
 
     /**
