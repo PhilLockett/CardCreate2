@@ -101,6 +101,7 @@ public class Model {
     public void setFaceStyle(String style) {
         faceStyle = style;
         setFaceCardItemPayload();
+        updateCardItemDisplayStatus();
     }
 
     /**
@@ -111,6 +112,7 @@ public class Model {
     public void setIndexStyle(String style) {
         indexStyle = style;
         setIndexCardItemPayload();
+        updateCardItemDisplayStatus();
     }
 
     /**
@@ -121,6 +123,7 @@ public class Model {
     public void setPipStyle(String style) {
         pipStyle = style;
         setPipCardItemPayloads();
+        updateCardItemDisplayStatus();
     }
 
 
