@@ -221,7 +221,6 @@ public class Payload {
     private final Real centreY;
     private final Real spriteHeight;
     private final Real spriteWidth;
-    private double spriteScale = 1;
 
     private Rectangle box;
 
@@ -331,7 +330,6 @@ public class Payload {
             imageWidthPX = image.getWidth();
             imageHeightPX = image.getHeight();
             spriteWidth.setPixels(spriteHeight.getPixels() * imageWidthPX / imageHeightPX);
-            spriteScale = spriteHeight.getPixels() / imageHeightPX;
             // System.out.println("image size(" + imageWidthPX + ", " + imageHeightPX+ ")  scale = " + spriteScale);
 
             setImages(image);
@@ -521,7 +519,6 @@ public class Payload {
         spriteWidth.setPixels(spriteHeight.getPixels() * imageWidthPX / imageHeightPX);
         centreX.setPercent(p.getSpriteX());
         centreY.setPercent(p.getSpriteY());
-        spriteScale = spriteHeight.getPixels() / imageHeightPX;
         
 //        System.out.printf("copyPercentages(payload) spriteSize = %f,  spriteScale = %f\n", p.getSpriteH(), spriteScale);
         return true;
@@ -532,7 +529,6 @@ public class Payload {
             return;
 
         spriteWidth.setPixels(spriteHeight.getPixels() * imageWidthPX / imageHeightPX);
-        spriteScale = spriteHeight.getPixels() / imageHeightPX;
     }
     
     public void resizeCard(double w, double h) {
