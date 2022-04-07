@@ -272,19 +272,17 @@ public class Payload {
             box.setStrokeWidth(2);
             box.setStroke(Color.GREY);
             group.getChildren().add(box);
-            
             box.setVisible(false);
+            
             paintImage();
+        } else {
+            for (int i = 0; i < getImageCount(); ++i) {
+                final boolean visible = isImageViewVisible(i);
+                ImageView view = getImageView(i);
+                view.setVisible(visible);
 
-            return;
-        }
-
-        for (int i = 0; i < getImageCount(); ++i) {
-            final boolean visible = isImageViewVisible(i);
-            ImageView view = getImageView(i);
-            view.setVisible(visible);
-
-            paintIcon(view, getLocation(i));
+                paintIcon(view, getLocation(i));
+            }
         }
     }
 
