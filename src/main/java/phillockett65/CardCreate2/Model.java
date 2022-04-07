@@ -340,6 +340,7 @@ public class Model {
 
         updateCardItemDisplayStatus();
         setCardItemPayloads();
+        updateHandleState();
 
         return suit;
     }
@@ -350,6 +351,7 @@ public class Model {
 
         updateCardItemDisplayStatus();
         setCardItemPayloads();
+        updateHandleState();
 
         return card;
     }
@@ -360,6 +362,7 @@ public class Model {
 
         updateCardItemDisplayStatus();
         setCardItemPayloads();
+        updateHandleState();
 
         return suit;
     }
@@ -370,6 +373,7 @@ public class Model {
 
         updateCardItemDisplayStatus();
         setCardItemPayloads();
+        updateHandleState();
 
         return card;
     }
