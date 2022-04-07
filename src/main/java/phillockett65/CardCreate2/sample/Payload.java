@@ -431,7 +431,6 @@ public class Payload {
 
     }
 
-
     private void paintIcon(ImageView view, Loc location) {
         // System.out.println("paintIcon()");
 
@@ -499,27 +498,6 @@ public class Payload {
         cardHeightPX = model.getHeight();
 
         setPatterns();
-    }
-
-    /**
-     * Copy the attributes from another Payload object.
-     * @param p the Payload object to copy.
-     * @return true if the attributes were copied, false otherwise.
-     */
-    public boolean copyPercentages(Payload p) {
-        if ((p == this) || (image == null)) {
-            return false;
-        }
-
-        display = p.display;
-        keepAspectRatio = p.keepAspectRatio;
-        spriteHeight.setPercent(p.getSpriteH());
-        spriteWidth.setPixels(spriteHeight.getPixels() * imageWidthPX / imageHeightPX);
-        centreX.setPercent(p.getSpriteX());
-        centreY.setPercent(p.getSpriteY());
-        
-//        System.out.printf("copyPercentages(payload) spriteSize = %f,  spriteScale = %f\n", p.getSpriteH(), spriteScale);
-        return true;
     }
 
     private void resizePercentages() {
