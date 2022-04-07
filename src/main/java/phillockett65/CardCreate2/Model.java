@@ -728,6 +728,13 @@ public class Model {
 
 
     /**
+     * @return the current Payload.
+     */
+    public Payload getCurrent() {
+        return current;
+    }
+
+    /**
      * @return true if the face image file exits.
      */
     private boolean isFaceImageExists() {
