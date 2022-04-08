@@ -159,11 +159,11 @@ public class Controller {
      * @param x coordinate of the centre of the current Item as a percentage of the card width.
      * @param y coordinate of the centre of the current Item as a percentage of the card height.
      */
-    public void moveIcon(double x, double y) {
-        System.out.println("moveIcon(" + x + ", " + y + ")");
-        model.setCurrentX(x, true);
-        model.setCurrentY(y, true);
-    }
+    // public void moveIcon(double x, double y) {
+    //     System.out.println("moveIcon(" + x + ", " + y + ")");
+    //     model.setCurrentX(x, true);
+    //     model.setCurrentY(y, true);
+    // }
 
     /**
      * Called by Sample when the mouse changes the selected Item.
