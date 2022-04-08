@@ -355,18 +355,15 @@ public class Controller {
     private void initInputDirectoryChoiceBoxHandlers() {
         faceChoiceBox.getSelectionModel().selectedItemProperty().addListener( (v, oldValue, newValue) -> {
             model.setFaceStyle(newValue);
-            sample.syncCurrentCard();
             outputTextField.setText(model.getOutputName());
         });
 
         indexChoiceBox.getSelectionModel().selectedItemProperty().addListener( (v, oldValue, newValue) -> {
             model.setIndexStyle(newValue);
-            sample.syncCurrentCard();
         });
 
         pipChoiceBox.getSelectionModel().selectedItemProperty().addListener( (v, oldValue, newValue) -> {
             model.setPipStyle(newValue);
-            sample.syncCurrentCard();
         });
     }
 
@@ -450,28 +447,24 @@ public class Controller {
     @FXML
     void previousCardButtonActionPerformed(ActionEvent event) {
         model.prevCard();
-        sample.syncCurrentCard();
         setCardItemRadioState();
     }
 
     @FXML
     void previousSuitButtonActionPerformed(ActionEvent event) {
         model.prevSuit();
-        sample.syncCurrentCard();
         setCardItemRadioState();
     }
 
     @FXML
     void nextCardButtonActionPerformed(ActionEvent event) {
         model.nextCard();
-        sample.syncCurrentCard();
         setCardItemRadioState();
     }
 
     @FXML
     void nextSuitButtonActionPerformed(ActionEvent event) {
         model.nextSuit();
-        sample.syncCurrentCard();
         setCardItemRadioState();
     }
 
