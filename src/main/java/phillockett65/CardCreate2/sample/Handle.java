@@ -76,19 +76,8 @@ public class Handle extends ImageView {
      */
     public void syncPosition() {
         // System.out.println("handle.syncPosition()");
-        setPosition(payload.getCentreX(), payload.getCentreY());
-    }
-
-    /**
-     * Position the handle.
-     * 
-     * @param x coordinate of the centre of the current Item in pixels.
-     * @param y coordinate of the centre of the current Item in pixels.
-     */
-    private void setPosition(long x, long y) {
-        // System.out.println("handle.setPosition(" + x + ", " + y + ");");
-        double xPos = x - (width/2);
-        double yPos = y - (height/2);
+        double xPos = payload.getCentreX() - (width/2);
+        double yPos = payload.getCentreY() - (height/2);
         this.setTranslateX(xPos);
         this.setTranslateY(yPos);
     }
