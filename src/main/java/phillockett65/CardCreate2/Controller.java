@@ -154,16 +154,6 @@ public class Controller {
      */
 
     /**
-     * Called by Sample when the mouse changes the height of the current Item.
-     * 
-     * @param h height of the current Item as a percentage of the card height.
-     */
-    public void resizeIcon(double h) {
-        System.out.println("resizeIcon(" + h + ")");
-        model.setCurrentH(h, true);
-    }
-
-    /**
      * Called by Sample when the mouse moves the current Item.
      * 
      * @param x coordinate of the centre of the current Item as a percentage of the card width.

@@ -1102,10 +1102,7 @@ public class Model {
         current = item;
         handle = new Handle(handleImage, current);
         handle.setPayload(current);
-
-        itemHeightSVF.setValue(roundPercentage(current.getSpriteH()));
-        itemCentreXSVF.setValue(roundPercentage(current.getSpriteX()));
-        itemCentreYSVF.setValue(roundPercentage(current.getSpriteY()));
+        SyncSpinners();
     }
 
     /**
@@ -1117,7 +1114,13 @@ public class Model {
     private void changeCurrentCardItemAndSyncSpinners(Payload item) {
         current = item;
         handle.setPayload(current);
+        SyncSpinners();
+    }
 
+    /**
+     * Sync the Card Item spinners to the current payload.
+     */
+    private void SyncSpinners() {
         itemHeightSVF.setValue(roundPercentage(current.getSpriteH()));
         itemCentreXSVF.setValue(roundPercentage(current.getSpriteX()));
         itemCentreYSVF.setValue(roundPercentage(current.getSpriteY()));
@@ -1151,11 +1154,26 @@ public class Model {
     }
 
     /**
-    /**
      * @return the Handle used by the "Sample" panel.
      */
     public Handle getHandle() {
         return handle;
+    }
+
+    /**
+     * Increase the size of the current card item.
+     */
+    public void incCurrent() {
+        current.incSize();
+        SyncSpinners();
+    }
+
+    /**
+     * Decrease the size of the current card item.
+     */
+    public void decCurrent() {
+        current.decSize();
+        SyncSpinners();
     }
 
     /**

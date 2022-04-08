@@ -114,8 +114,18 @@ public class CardSample extends Stage {
 
         scene.setOnMouseClicked(event -> {
             // System.out.println("setOnMouseClicked(" + event.getButton() + ") on scene");
-            model.setNextPayload();
-            controller.syncToCurrentCardItem();
+            if (event.isAltDown()) {
+                if (!event.isControlDown())
+                    model.decCurrent();
+            }
+            else
+            if (event.isControlDown()) {
+                model.incCurrent();
+            }
+            else {
+                model.setNextPayload();
+                controller.syncToCurrentCardItem();
+            }
         });
 
     }
