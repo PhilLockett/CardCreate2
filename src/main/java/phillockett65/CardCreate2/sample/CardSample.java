@@ -51,6 +51,8 @@ public class CardSample extends Stage {
 
     private double dx;	// Difference between the size of the stage and the size of the scene.
     private double dy;
+    private double xScale = 1D;
+    private double yScale = 1D;
 
     private final String title;
 
@@ -182,6 +184,26 @@ public class CardSample extends Stage {
         handle.setOnMouseClicked(event -> {
             // System.out.println("setOnMouseClicked(" + event.getButton() + ") on handle");
             event.consume();
+        });
+
+        handle.setOnMousePressed(event -> {
+            // System.out.println("setOnMousePressed(" + event.getButton() + ") on handle");
+            dx = event.getSceneX() - model.getCurrentX();
+            dy = event.getSceneY() - model.getCurrentY();
+            xScale = 100 / model.getCalculatedWidth();
+            yScale = 100 / model.getHeight();
+        });
+
+        handle.setOnMouseReleased(event -> {
+            // System.out.println("setOnMouseReleased(" + event.getButton() + ") on handle");
+        });
+
+        handle.setOnMouseDragged(event -> {
+            // System.out.println("setOnMouseDragged(" + event.getButton() + ") on handle");
+            double xPos = (event.getSceneX() - dx) * xScale;
+            double yPos = (event.getSceneY() - dy) * yScale;
+            model.setCurrentX(xPos, true);
+            model.setCurrentY(yPos, true);
         });
     }
 

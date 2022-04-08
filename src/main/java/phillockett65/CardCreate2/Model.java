@@ -1091,6 +1091,20 @@ public class Model {
             itemCentreYSVF.setValue(roundPercentage(value));
     }
 
+    /**
+     * Get the X co-ordinate of the centre of the currently selected card item.
+     */
+    public double getCurrentX() {
+        return current.getCentreX();
+    }
+
+    /**
+     * Get the Y co-ordinate of the centre of the currently selected card item.
+     */
+    public double getCurrentY() {
+        return current.getCentreY();
+    }
+
 
     /**
      * Init the current card item, create the handle and adjust the Card Item 
