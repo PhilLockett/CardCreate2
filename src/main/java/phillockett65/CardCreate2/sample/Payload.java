@@ -355,10 +355,10 @@ public class Payload {
 
             double pX = centreX.getPixels();
             double pY = centreY.getPixels();
-            final double winX = cardWidthPX - (2*centreX.getPixels());
-            final double winY = cardHeightPX - (2*centreY.getPixels());
+            final double winX = cardWidthPX - (2*pX);
+            final double winY = cardHeightPX - (2*pY);
             ImageView view = getImageView(0);
-    
+
             // System.out.println("relocate(" + pX + ", " + pY+ ")  scale = " + spriteScale);
             if (keepAspectRatio) {
                 double scaleX = winX / imageWidthPX;

@@ -1194,9 +1194,6 @@ public class Model {
         final double pY = face.getCentreY();
         final double winX = getCalculatedWidth() - (2*pX);
         final double winY = cardHeightPX - (2*pY);
-        // System.out.println("showImageBox(" + pX + ", " + pY + "); position");
-        // System.out.println("showImageBox(" + winX + ", " + winY + "); size");
-        // System.out.println("showImageBox(" + getCalculatedWidth() + ", " + cardHeightPX + "); card");
 
         box.setX(pX);
         box.setY(pY);
