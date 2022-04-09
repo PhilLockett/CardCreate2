@@ -379,10 +379,10 @@ public class Payload {
             // System.out.println("relocate(" + pX + ", " + pY+ ")  scale = " + spriteScale);
             view = getImageView(1);
 
-            view.relocate(cardWidthPX - pX, cardHeightPX - pY);
+            view.relocate(pX, pY + spriteHeight.getPixels()/2);
             
-            view.setFitWidth(spriteWidth.getPixels());
-            view.setFitHeight(spriteHeight.getPixels());
+            view.setFitWidth(winX);
+            view.setFitHeight(winY);
         } else {
             // System.out.println("portrait");
 
