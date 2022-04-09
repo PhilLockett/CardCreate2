@@ -961,6 +961,7 @@ public class Model {
         face.syncCardSize();
         facePip.syncCardSize();
 
+        showImageBox(shouldFaceImageBeDisplayed());
         handle.syncPosition();
     }
 
@@ -1182,6 +1183,7 @@ public class Model {
     }
 
     private void showImageBox(boolean display) {
+        // System.out.println("showImageBox(" + display + ");");
         if (!display) {
             box.setVisible(false);
 
@@ -1190,8 +1192,11 @@ public class Model {
 
         final double pX = face.getCentreX();
         final double pY = face.getCentreY();
-        final double winX = cardWidthPX - (2*face.getCentreX());
-        final double winY = cardHeightPX - (2*face.getCentreY());
+        final double winX = getCalculatedWidth() - (2*pX);
+        final double winY = cardHeightPX - (2*pY);
+        // System.out.println("showImageBox(" + pX + ", " + pY + "); position");
+        // System.out.println("showImageBox(" + winX + ", " + winY + "); size");
+        // System.out.println("showImageBox(" + getCalculatedWidth() + ", " + cardHeightPX + "); card");
 
         box.setX(pX);
         box.setY(pY);
