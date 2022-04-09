@@ -379,8 +379,6 @@ public class Payload {
     
             view.setFitWidth(winX);
             view.setFitHeight(winY);
-            // view.setFitWidth(spriteWidth.getPixels());
-            // view.setFitHeight(spriteHeight.getPixels());
     
             // System.out.println("relocate(" + pX + ", " + pY+ ")  scale = " + spriteScale);
             view = getImageView(1);
@@ -421,8 +419,6 @@ public class Payload {
     
             view.setFitWidth(winX);
             view.setFitHeight(winY);
-            // view.setFitWidth(spriteWidth.getPixels());
-            // view.setFitHeight(spriteHeight.getPixels());
     
             // System.out.println("relocate(" + pX + ", " + pY+ ")  scale = " + spriteScale);
             view = getImageView(1);
