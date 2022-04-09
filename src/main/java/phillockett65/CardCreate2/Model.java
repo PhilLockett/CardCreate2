@@ -944,7 +944,8 @@ public class Model {
     }
 
     /**
-     * Tells the card items to synchronize with the current card size.
+     * Tells the card items to synchronize with the current card size and the 
+     * handle to reposition.
      */
     private void syncCardItemsWithCardSize() {
         // System.out.println("syncCardItemsWithCardSize()");
@@ -954,6 +955,8 @@ public class Model {
         standardPip.syncCardSize();
         face.syncCardSize();
         facePip.syncCardSize();
+
+        handle.syncPosition();
     }
 
 
