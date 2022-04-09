@@ -43,7 +43,7 @@ import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
-
+import javafx.scene.shape.Rectangle;
 import phillockett65.CardCreate2.sample.Default;
 import phillockett65.CardCreate2.sample.Handle;
 import phillockett65.CardCreate2.sample.Item;
@@ -877,7 +877,7 @@ public class Model {
         index.setVisible(shouldIndexBeDisplayed());
         cornerPip.setVisible(shouldCornerPipBeDisplayed());
 
-        face.setBoxVisibility(shouldFaceImageBeDisplayed());
+        showImageBox(shouldFaceImageBeDisplayed());
         face.setVisible(shouldFaceImageBeDisplayed());
         standardPip.setVisible(shouldStandardPipBeDisplayed());
 
@@ -1077,6 +1077,7 @@ public class Model {
         // System.out.println("model.setCurrentX(" + value + ");");
 
         current.setX(value);
+        showImageBox(shouldFaceImageBeDisplayed());
         handle.syncPosition();
 
         if (updateSVF)
@@ -1093,6 +1094,7 @@ public class Model {
         // System.out.println("model.setCurrentY(" + value + ");");
 
         current.setY(value);
+        showImageBox(shouldFaceImageBeDisplayed());
         handle.syncPosition();
 
         if (updateSVF)
@@ -1169,6 +1171,34 @@ public class Model {
     private GraphicsContext gc;
     private Image handleImage;
     private Handle handle;
+    private Rectangle box;
+
+    private void buildImageBox() {
+        box = new Rectangle();
+        box.setFill(null);
+        box.setStrokeWidth(2);
+        box.setStroke(Color.GREY);
+        box.setVisible(false);
+    }
+
+    private void showImageBox(boolean display) {
+        if (!display) {
+            box.setVisible(false);
+
+            return;
+        }
+
+        final double pX = face.getCentreX();
+        final double pY = face.getCentreY();
+        final double winX = cardWidthPX - (2*face.getCentreX());
+        final double winY = cardHeightPX - (2*face.getCentreY());
+
+        box.setX(pX);
+        box.setY(pY);
+        box.setWidth(winX);
+        box.setHeight(winY);
+        box.setVisible(true);
+    }
 
     /**
      * @return the Group used by the "Sample" panel.
@@ -1215,6 +1245,7 @@ public class Model {
         canvas = new Canvas();
         gc = canvas.getGraphicsContext2D();
         handleImage = new Image(getClass().getResourceAsStream("Handle.png"));
+        buildImageBox();
     }
 
 
@@ -1265,6 +1296,7 @@ public class Model {
         initializeCardItemPayloads();
 
         // Add handle to the group last so that it is displayed on top.
+        group.getChildren().add(box);
         group.getChildren().add(handle);
     }
 
