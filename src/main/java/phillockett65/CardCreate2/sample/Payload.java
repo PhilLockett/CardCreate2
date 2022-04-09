@@ -194,10 +194,6 @@ public class Payload {
                 return (percent * cardWidthPX / 100) - (spriteWidth.getPixels()/2);
         }
 
-        public long getIntOrigin() {
-            return Math.round(getOrigin());
-        }
-
     }
 
 
@@ -595,11 +591,11 @@ public class Payload {
     }
 
     public long getX() {
-        return centreX.getIntOrigin();
+        return Math.round(centreX.getOrigin());
     }
 
     public long getY() {
-        return centreY.getIntOrigin();
+        return Math.round(centreY.getOrigin());
     }
 
     public long getCentreX() {
