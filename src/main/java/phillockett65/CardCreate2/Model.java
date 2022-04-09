@@ -744,10 +744,10 @@ public class Model {
 
 
     /**
-     * @return the current Payload.
+     * @return the current Item.
      */
-    public Payload getCurrent() {
-        return current;
+    public Item getCurrentItem() {
+        return current.getItem();
     }
 
     /**

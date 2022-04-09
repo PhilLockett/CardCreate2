@@ -160,7 +160,7 @@ public class Controller {
      */
     public void syncToCurrentCardItem() {
 
-        Item item = model.getCurrent().getItem();
+        Item item = model.getCurrentItem();
         // System.out.println("syncToCurrentCardItem(" + item + ")");
 
         if (item == Item.INDEX) {
@@ -705,7 +705,7 @@ public class Controller {
      * Set the "Select Card Item" radio button to the current card item .
      */
     private void setSelectedCardItemRadioToCurrent() {
-        Item item = model.getCurrent().getItem();
+        Item item = model.getCurrentItem();
         // System.out.println("setSelectedCardItemRadioToCurrent(" + item + ")");
 
         if (item == Item.INDEX)
