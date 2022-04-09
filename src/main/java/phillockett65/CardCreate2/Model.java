@@ -31,9 +31,14 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 
+import javax.imageio.ImageIO;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.Group;
+import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
@@ -1160,6 +1165,8 @@ public class Model {
      */
 
     private Group group;
+    private Canvas canvas;
+    private GraphicsContext gc;
     private Image handleImage;
     private Handle handle;
 
@@ -1168,6 +1175,13 @@ public class Model {
      */
     public Group getGroup() {
         return group;
+    }
+
+    /**
+     * @return the Graphics Context used by the "Sample" panel.
+     */
+    public GraphicsContext getGC() {
+        return gc;
     }
 
     /**
@@ -1198,6 +1212,8 @@ public class Model {
      */
     private void initializeSample() {
         group = new Group();
+        canvas = new Canvas();
+        gc = canvas.getGraphicsContext2D();
         handleImage = new Image(getClass().getResourceAsStream("Handle.png"));
     }
 
@@ -1206,6 +1222,17 @@ public class Model {
     /************************************************************************
      * Support code for "Playing Card Generator" panel.
      */
+
+    public void save() {
+        try {
+        	Image snapshot = canvas.snapshot(null, null);
+
+            ImageIO.write(SwingFXUtils.fromFXImage(snapshot, null), ".png", new File("CA.png"));
+        } catch (Exception e) {
+            System.out.println("Failed saving.");
+        }
+
+    }
 
     /**
      * Default Constructor.
