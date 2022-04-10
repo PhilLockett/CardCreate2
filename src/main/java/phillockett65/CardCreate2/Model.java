@@ -657,11 +657,11 @@ public class Model {
         if (item == Item.CORNER_PIP)
             return shouldCornerPipBeDisplayed();
         if (item == Item.STANDARD_PIP)
-            return shouldStandardPipBeDisplayed(suit, card);
+            return shouldStandardPipBeDisplayed();
         if (item == Item.FACE)
-            return shouldFaceImageBeDisplayed(suit, card);
+            return shouldFaceImageBeDisplayed();
         if (item == Item.FACE_PIP)
-            return shouldFacePipBeDisplayed(card);
+            return shouldFacePipBeDisplayed();
  
         return false;
     }
@@ -692,19 +692,19 @@ public class Model {
 
     public void setDisplayStandardPip(boolean state) {
         displayStandardPip = state;
-        standardPip.setVisible(shouldStandardPipBeDisplayed(suit, card));
+        standardPip.setVisible(shouldStandardPipBeDisplayed());
         updateHandleState();
     }
 
     public void setDisplayFaceImage(boolean state) {
         displayFaceImage = state;
-        face.setVisible(shouldFaceImageBeDisplayed(suit, card));
+        face.setVisible(shouldFaceImageBeDisplayed());
         updateHandleState();
     }
 
     public void setDisplayFacePip(boolean state) {
         displayFacePip = state;
-        facePip.setVisible(shouldFacePipBeDisplayed(card));
+        facePip.setVisible(shouldFacePipBeDisplayed());
         updateHandleState();
     }
 
@@ -735,19 +735,19 @@ public class Model {
     public void setCurrentCardItemToStandardPip() {
         // System.out.println("setCurrentCardItemToStandardPip()");
         changeCurrentCardItemAndSyncSpinners(standardPip);
-        handle.syncDisplayState(shouldStandardPipBeDisplayed(suit, card));
+        handle.syncDisplayState(shouldStandardPipBeDisplayed());
     }
 
     public void setCurrentCardItemToFace() {
         // System.out.println("setCurrentCardItemToFace()");
         changeCurrentCardItemAndSyncSpinners(face);
-        handle.syncDisplayState(shouldFaceImageBeDisplayed(suit, card));
+        handle.syncDisplayState(shouldFaceImageBeDisplayed());
     }
 
     public void setCurrentCardItemToFacePip() {
         // System.out.println("setCurrentCardItemToFacePip()");
         changeCurrentCardItemAndSyncSpinners(facePip);
-        handle.syncDisplayState(shouldFacePipBeDisplayed(card));
+        handle.syncDisplayState(shouldFacePipBeDisplayed());
     }
 
     /**
@@ -947,11 +947,11 @@ public class Model {
         index.setVisible(shouldIndexBeDisplayed());
         cornerPip.setVisible(shouldCornerPipBeDisplayed());
 
-        showImageBox(shouldFaceImageBeDisplayed(suit, card));
-        face.setVisible(shouldFaceImageBeDisplayed(suit, card));
-        standardPip.setVisible(shouldStandardPipBeDisplayed(suit, card));
+        showImageBox(shouldFaceImageBeDisplayed());
+        face.setVisible(shouldFaceImageBeDisplayed());
+        standardPip.setVisible(shouldStandardPipBeDisplayed());
 
-        facePip.setVisible(shouldFacePipBeDisplayed(card));
+        facePip.setVisible(shouldFacePipBeDisplayed());
 
         handle.syncDisplayState(shouldItemBeDisplayed(current.getItem()));
     }
@@ -1031,7 +1031,7 @@ public class Model {
         face.syncCardSize();
         facePip.syncCardSize();
 
-        showImageBox(shouldFaceImageBeDisplayed(suit, card));
+        showImageBox(shouldFaceImageBeDisplayed());
         handle.syncPosition();
     }
 
@@ -1045,7 +1045,7 @@ public class Model {
     public void setkeepImageAspectRatio(boolean state) {
         keepAspectRatio = state;
         face.setKeepAspectRatio(keepAspectRatio);
-        showImageBox(shouldFaceImageBeDisplayed(suit, card));
+        showImageBox(shouldFaceImageBeDisplayed());
     }
 
 
@@ -1149,7 +1149,7 @@ public class Model {
         // System.out.println("model.setCurrentX(" + value + ");");
 
         current.setX(value);
-        showImageBox(shouldFaceImageBeDisplayed(suit, card));
+        showImageBox(shouldFaceImageBeDisplayed());
         handle.syncPosition();
 
         if (updateSVF)
@@ -1166,7 +1166,7 @@ public class Model {
         // System.out.println("model.setCurrentY(" + value + ");");
 
         current.setY(value);
-        showImageBox(shouldFaceImageBeDisplayed(suit, card));
+        showImageBox(shouldFaceImageBeDisplayed());
         handle.syncPosition();
 
         if (updateSVF)
