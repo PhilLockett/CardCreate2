@@ -1184,8 +1184,8 @@ public class Model {
     }
 
     private void showImageBox(boolean display) {
-        // System.out.println("showImageBox(" + display + ");");
-        if (!display) {
+        // System.out.println("showImageBox(" + display + "); keepAspectRatio = " + keepAspectRatio);
+        if ((!display) || (!keepAspectRatio)) {
             box.setVisible(false);
 
             return;
