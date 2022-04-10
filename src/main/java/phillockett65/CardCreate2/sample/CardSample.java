@@ -127,13 +127,16 @@ public class CardSample extends Stage {
 
     }
 
+    /**
+     * Called on initialization to set up the blank card.
+     */
     private void drawBlankCard() {
         final double width = model.getCalculatedWidth();
         final double height = model.getHeight();
         final Color color = model.getBackgroundColour();
         card = new Rectangle(width, height, color);
 
-        final double radius = height / 10;
+        final double radius = height / Default.RADIUS.getFloat();
         card.setArcWidth(radius);
         card.setArcHeight(radius);
         card.setStroke(Color.BLACK);
@@ -206,10 +209,16 @@ public class CardSample extends Stage {
  * Synchronize interface.
  */
 
+    /**
+     * Synchronise to the current background colour.
+     */
     public void syncBackgroundColour() {
         card.setFill(model.getBackgroundColour());
     }
 
+    /**
+     * Synchronise to the current card size.
+     */
     public void syncCardSize() {
         final double width = model.getCalculatedWidth();
         final double height = model.getHeight();

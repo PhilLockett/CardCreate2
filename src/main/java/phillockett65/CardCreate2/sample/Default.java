@@ -29,8 +29,8 @@ package phillockett65.CardCreate2.sample;
  * @author Phil
  */
 public enum Default {
-    POKER_ASPECT ((2.5F / 3.5F)),
-    BRIDGE_ASPECT ((2.25F / 3.5F)),
+    POKER_ASPECT ((5F / 7F)),
+    BRIDGE_ASPECT ((9F / 14F)),
 
     INDEX_HEIGHT (10.5F),
     INDEX_CENTRE_X (8.07F),
@@ -53,7 +53,8 @@ public enum Default {
     MAX_WIDTH (3800F),
     HEIGHT (380F * 7 / 5),
     MIN_HEIGHT (38F * 7 / 5),
-    MAX_HEIGHT (3800F * 7 / 5);
+    MAX_HEIGHT (3800F * 7 / 5),
+    RADIUS (10F);
 
     private final int	iValue;
     private final float	rValue;
