@@ -344,14 +344,17 @@ public class Controller {
         faceChoiceBox.getSelectionModel().selectedItemProperty().addListener( (v, oldValue, newValue) -> {
             model.setFaceStyle(newValue);
             outputTextField.setText(model.getOutputName());
+            setCardItemRadioState();
         });
 
         indexChoiceBox.getSelectionModel().selectedItemProperty().addListener( (v, oldValue, newValue) -> {
             model.setIndexStyle(newValue);
+            setCardItemRadioState();
         });
 
         pipChoiceBox.getSelectionModel().selectedItemProperty().addListener( (v, oldValue, newValue) -> {
             model.setPipStyle(newValue);
+            setCardItemRadioState();
         });
     }
 

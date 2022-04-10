@@ -104,6 +104,7 @@ public class Model {
         faceStyle = style;
         setFaceCardItemPayload();
         updateCardItemDisplayStatus();
+        updateHandleState();
     }
 
     /**
@@ -115,6 +116,7 @@ public class Model {
         indexStyle = style;
         setIndexCardItemPayload();
         updateCardItemDisplayStatus();
+        updateHandleState();
     }
 
     /**
@@ -126,6 +128,7 @@ public class Model {
         pipStyle = style;
         setPipCardItemPayloads();
         updateCardItemDisplayStatus();
+        updateHandleState();
     }
 
 
@@ -972,6 +975,7 @@ public class Model {
     public void setkeepImageAspectRatio(boolean state) {
         keepAspectRatio = state;
         face.setKeepAspectRatio(keepAspectRatio);
+        showImageBox(shouldFaceImageBeDisplayed());
     }
 
 
