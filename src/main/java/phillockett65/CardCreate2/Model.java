@@ -31,11 +31,8 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 
-import javax.imageio.ImageIO;
-
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.Group;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -1256,16 +1253,11 @@ public class Model {
      * Support code for "Playing Card Generator" panel.
      */
 
-    public void save() {
-        try {
-        	Image snapshot = canvas.snapshot(null, null);
 
-            ImageIO.write(SwingFXUtils.fromFXImage(snapshot, null), ".png", new File("CA.png"));
-        } catch (Exception e) {
-            System.out.println("Failed saving.");
-        }
 
-    }
+    /************************************************************************
+     * Support code for the Initialization of the Model.
+     */
 
     /**
      * Default Constructor.
