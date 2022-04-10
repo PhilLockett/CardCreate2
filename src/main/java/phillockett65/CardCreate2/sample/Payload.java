@@ -134,12 +134,15 @@ public class Payload {
      * @return true if the image should be visible, false otherwise.
      */
     private boolean isImageViewVisible(int imageIndex) {
+        return isImageViewVisible(pattern, imageIndex);
+    }
+
+    private boolean isImageViewVisible(int pattern, int imageIndex) {
         if (!display)
             return false;
 
         return flags[pattern][imageIndex] == 1;
     }
-
 
 
     public class Real {

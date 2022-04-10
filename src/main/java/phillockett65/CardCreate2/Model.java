@@ -765,11 +765,67 @@ public class Model {
     }
 
     /**
+     * @return the file path for the face image of the specified card in the 
+     * current style.
+     */
+    private String getFaceImagePath(int s, int c) {
+        return getFaceDirectory() + "\\" + suits[s] + cards[c] + ".png";
+    }
+
+    /**
+     * @return the file path for the index image of the specified card in the 
+     * current style.
+     */
+    private String getIndexImagePath(int s, int c) {
+        String pathToImage = getIndexDirectory() + "\\" + suits[s] + cards[c] + ".png";
+        File file = new File(pathToImage);
+        if (!file.exists())
+            pathToImage = getIndexDirectory() + "\\" + alts[s] + cards[c] + ".png";
+
+        return pathToImage;
+    }
+
+    /**
+     * @return the file path for the standard pip image of the specified card 
+     * in the current style.
+     */
+    private String getStandardPipImagePath(int s) {
+        return getPipDirectory() + "\\" + suits[s] + ".png";
+    }
+
+    /**
+     * @return the file path for the face pip image of the specified card in 
+     * the current style.
+     */
+    private String getFacePipImagePath(int s) {
+        String pathToImage = getPipDirectory() + "\\" + suits[s] + "F.png";
+        File file = new File(pathToImage);
+        if (file.exists())
+            return pathToImage;
+
+        return getStandardPipImagePath(s);
+    }
+
+    /**
+     * @return the file path for the corner pip image of the specified card in 
+     * the current style.
+     */
+    private String getCornerPipImagePath(int s) {
+        String pathToImage = getPipDirectory() + "\\" + suits[s] + "S.png";
+        File file = new File(pathToImage);
+        if (file.exists())
+            return pathToImage;
+
+        return getStandardPipImagePath(s);
+    }
+
+
+    /**
      * @return the file path for the face image of the current card in the 
      * current style.
      */
     private String getFaceImagePath() {
-        return getFaceDirectory() + "\\" + suits[suit] + cards[card] + ".png";
+        return getFaceImagePath(suit, card);
     }
 
     /**
@@ -777,12 +833,7 @@ public class Model {
      * current style.
      */
     private String getIndexImagePath() {
-        String pathToImage = getIndexDirectory() + "\\" + suits[suit] + cards[card] + ".png";
-        File file = new File(pathToImage);
-        if (!file.exists())
-            pathToImage = getIndexDirectory() + "\\" + alts[suit] + cards[card] + ".png";
-
-        return pathToImage;
+        return getIndexImagePath(suit, card);
     }
 
     /**
@@ -790,7 +841,7 @@ public class Model {
      * the current style.
      */
     private String getStandardPipImagePath() {
-        return getPipDirectory() + "\\" + suits[suit] + ".png";
+        return getStandardPipImagePath(suit);
     }
 
     /**
@@ -798,12 +849,7 @@ public class Model {
      * current style.
      */
     private String getFacePipImagePath() {
-        String pathToImage = getPipDirectory() + "\\" + suits[suit] + "F.png";
-        File file = new File(pathToImage);
-        if (file.exists())
-            return pathToImage;
-
-        return getStandardPipImagePath();
+        return getFacePipImagePath(suit);
     }
 
     /**
@@ -811,12 +857,7 @@ public class Model {
      * the current style.
      */
     private String getCornerPipImagePath() {
-        String pathToImage = getPipDirectory() + "\\" + suits[suit] + "S.png";
-        File file = new File(pathToImage);
-        if (file.exists())
-            return pathToImage;
-
-        return getStandardPipImagePath();
+        return getCornerPipImagePath(suit);
     }
 
     /**
