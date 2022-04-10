@@ -384,18 +384,32 @@ public class Model {
     }
 
     /**
-     * @return true if the current card is a face card (court card), false 
+     * @return true if the specified card is a face card (court card), false 
      * otherwise.
      */
+    public boolean isFaceCard(int c) {
+        return c > 10;
+    }
+
+    /**
+     * @return true if the current card is a face card, false otherwise.
+     */
     public boolean isFaceCard() {
-        return card > 10;
+        return isFaceCard(card);
+    }
+
+    /**
+     * @return true if the specified card has an image file, false otherwise.
+     */
+    public boolean isImageCard(int s, int c) {
+        return isFaceImageExists(s, c);
     }
 
     /**
      * @return true if the current card has an image file, false otherwise.
      */
     public boolean isImageCard() {
-        return isFaceImageExists();
+        return isFaceImageExists(suit, card);
     }
 
     /**
@@ -758,8 +772,8 @@ public class Model {
     /**
      * @return true if the face image file exits.
      */
-    private boolean isFaceImageExists() {
-        File file = new File(getFaceImagePath());
+    private boolean isFaceImageExists(int s, int c) {
+        File file = new File(getFaceImagePath(s, c));
 
         return file.exists();
     }
