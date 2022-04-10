@@ -387,29 +387,15 @@ public class Model {
      * @return true if the specified card is a face card (court card), false 
      * otherwise.
      */
-    public boolean isFaceCard(int c) {
+    private boolean isFaceCard(int c) {
         return c > 10;
-    }
-
-    /**
-     * @return true if the current card is a face card, false otherwise.
-     */
-    public boolean isFaceCard() {
-        return isFaceCard(card);
     }
 
     /**
      * @return true if the specified card has an image file, false otherwise.
      */
-    public boolean isImageCard(int s, int c) {
+    private boolean isImageCard(int s, int c) {
         return isFaceImageExists(s, c);
-    }
-
-    /**
-     * @return true if the current card has an image file, false otherwise.
-     */
-    public boolean isImageCard() {
-        return isFaceImageExists(suit, card);
     }
 
     /**
@@ -589,44 +575,73 @@ public class Model {
     private boolean displayFacePip = true;
 
     /**
-     * @return true if the index Item should be displayed, false otherwise.
+     * @return true if the index Item for the current card should be 
+     * displayed, false otherwise.
      */
     public boolean shouldIndexBeDisplayed() {
         return displayIndex;
     }
 
     /**
-     * @return true if the corner pip Item should be displayed, false otherwise.
+     * @return true if the corner pip Item for the current card should be 
+     * displayed, false otherwise.
      */
     public boolean shouldCornerPipBeDisplayed() {
         return displayCornerPip;
     }
 
     /**
-     * @return true if the standard pip Item should be displayed, false otherwise.
+     * @return true if the standard pip Item for the current card should be 
+     * displayed, false otherwise.
      */
     public boolean shouldStandardPipBeDisplayed() {
-        if (!isImageCard())
+        return shouldStandardPipBeDisplayed(suit, card);
+    }
+
+    /**
+     * @return true if the face image Item for the current card should be 
+     * displayed, false otherwise.
+     */
+    public boolean shouldFaceImageBeDisplayed() {
+        return shouldFaceImageBeDisplayed(suit, card);
+    }
+
+    /**
+     * @return true if the face pip Item for the current card should be 
+     * displayed, false otherwise.
+     */
+    public boolean shouldFacePipBeDisplayed() {
+        return shouldFacePipBeDisplayed(card);
+    }
+
+    /**
+     * @return true if the standard pip Item should be displayed for the given 
+     * card, false otherwise.
+     */
+    private boolean shouldStandardPipBeDisplayed(int s, int c) {
+        if (!isImageCard(s, c))
             return displayStandardPip;
         
         return false;
     }
 
     /**
-     * @return true if the face image Item should be displayed, false otherwise.
+     * @return true if the face image Item should be displayed for the given 
+     * card, false otherwise.
      */
-    public boolean shouldFaceImageBeDisplayed() {
-        if (isImageCard())
+    private boolean shouldFaceImageBeDisplayed(int s, int c) {
+        if (isImageCard(s, c))
             return displayFaceImage;
 
         return false;
     }
 
     /**
-     * @return true if the face pip Item should be displayed, false otherwise.
+     * @return true if the face pip Item should be displayed for the given 
+     * card, false otherwise.
      */
-    public boolean shouldFacePipBeDisplayed() {
-        if (isFaceCard())
+    private boolean shouldFacePipBeDisplayed(int c) {
+        if (isFaceCard(c))
             return displayFacePip;
 
         return false;
@@ -642,11 +657,11 @@ public class Model {
         if (item == Item.CORNER_PIP)
             return shouldCornerPipBeDisplayed();
         if (item == Item.STANDARD_PIP)
-            return shouldStandardPipBeDisplayed();
+            return shouldStandardPipBeDisplayed(suit, card);
         if (item == Item.FACE)
-            return shouldFaceImageBeDisplayed();
+            return shouldFaceImageBeDisplayed(suit, card);
         if (item == Item.FACE_PIP)
-            return shouldFacePipBeDisplayed();
+            return shouldFacePipBeDisplayed(card);
  
         return false;
     }
@@ -677,19 +692,19 @@ public class Model {
 
     public void setDisplayStandardPip(boolean state) {
         displayStandardPip = state;
-        standardPip.setVisible(shouldStandardPipBeDisplayed());
+        standardPip.setVisible(shouldStandardPipBeDisplayed(suit, card));
         updateHandleState();
     }
 
     public void setDisplayFaceImage(boolean state) {
         displayFaceImage = state;
-        face.setVisible(shouldFaceImageBeDisplayed());
+        face.setVisible(shouldFaceImageBeDisplayed(suit, card));
         updateHandleState();
     }
 
     public void setDisplayFacePip(boolean state) {
         displayFacePip = state;
-        facePip.setVisible(shouldFacePipBeDisplayed());
+        facePip.setVisible(shouldFacePipBeDisplayed(card));
         updateHandleState();
     }
 
@@ -720,19 +735,19 @@ public class Model {
     public void setCurrentCardItemToStandardPip() {
         // System.out.println("setCurrentCardItemToStandardPip()");
         changeCurrentCardItemAndSyncSpinners(standardPip);
-        handle.syncDisplayState(shouldStandardPipBeDisplayed());
+        handle.syncDisplayState(shouldStandardPipBeDisplayed(suit, card));
     }
 
     public void setCurrentCardItemToFace() {
         // System.out.println("setCurrentCardItemToFace()");
         changeCurrentCardItemAndSyncSpinners(face);
-        handle.syncDisplayState(shouldFaceImageBeDisplayed());
+        handle.syncDisplayState(shouldFaceImageBeDisplayed(suit, card));
     }
 
     public void setCurrentCardItemToFacePip() {
         // System.out.println("setCurrentCardItemToFacePip()");
         changeCurrentCardItemAndSyncSpinners(facePip);
-        handle.syncDisplayState(shouldFacePipBeDisplayed());
+        handle.syncDisplayState(shouldFacePipBeDisplayed(card));
     }
 
     /**
@@ -932,11 +947,11 @@ public class Model {
         index.setVisible(shouldIndexBeDisplayed());
         cornerPip.setVisible(shouldCornerPipBeDisplayed());
 
-        showImageBox(shouldFaceImageBeDisplayed());
-        face.setVisible(shouldFaceImageBeDisplayed());
-        standardPip.setVisible(shouldStandardPipBeDisplayed());
+        showImageBox(shouldFaceImageBeDisplayed(suit, card));
+        face.setVisible(shouldFaceImageBeDisplayed(suit, card));
+        standardPip.setVisible(shouldStandardPipBeDisplayed(suit, card));
 
-        facePip.setVisible(shouldFacePipBeDisplayed());
+        facePip.setVisible(shouldFacePipBeDisplayed(card));
 
         handle.syncDisplayState(shouldItemBeDisplayed(current.getItem()));
     }
@@ -1016,7 +1031,7 @@ public class Model {
         face.syncCardSize();
         facePip.syncCardSize();
 
-        showImageBox(shouldFaceImageBeDisplayed());
+        showImageBox(shouldFaceImageBeDisplayed(suit, card));
         handle.syncPosition();
     }
 
@@ -1030,7 +1045,7 @@ public class Model {
     public void setkeepImageAspectRatio(boolean state) {
         keepAspectRatio = state;
         face.setKeepAspectRatio(keepAspectRatio);
-        showImageBox(shouldFaceImageBeDisplayed());
+        showImageBox(shouldFaceImageBeDisplayed(suit, card));
     }
 
 
@@ -1134,7 +1149,7 @@ public class Model {
         // System.out.println("model.setCurrentX(" + value + ");");
 
         current.setX(value);
-        showImageBox(shouldFaceImageBeDisplayed());
+        showImageBox(shouldFaceImageBeDisplayed(suit, card));
         handle.syncPosition();
 
         if (updateSVF)
@@ -1151,7 +1166,7 @@ public class Model {
         // System.out.println("model.setCurrentY(" + value + ");");
 
         current.setY(value);
-        showImageBox(shouldFaceImageBeDisplayed());
+        showImageBox(shouldFaceImageBeDisplayed(suit, card));
         handle.syncPosition();
 
         if (updateSVF)
