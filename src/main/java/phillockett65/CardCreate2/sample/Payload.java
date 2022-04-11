@@ -769,7 +769,8 @@ public class Payload {
 
         final double pixelsX = centreX.getPixels();
         final double pixelsY = centreY.getPixels();
-        final double winX = cardWidthPX - (2*pixelsX);
+        double winX = cardWidthPX - (2*pixelsX);
+        double winY = cardHeightPX - (2*pixelsY);
 
         double dX = 0;
         double dY = 0;
@@ -777,15 +778,17 @@ public class Payload {
         if (imageHeightPX < imageWidthPX) {
             // System.out.println("landscape");
 
-            final double winY = (cardHeightPX / 2) - pixelsY;
+            winY = (cardHeightPX / 2) - pixelsY;
 
             if (keepAspectRatio) {
                 double scaleX = winX / imageWidthPX;
                 double scaleY = winY / imageHeightPX;
                 if (scaleX < scaleY) {
                     dY = (winY - (imageHeightPX * scaleX));
+                    winY = imageHeightPX * scaleX;
                 } else {
                     dX = (winX - (imageWidthPX * scaleY)) / 2;
+                    winX = imageWidthPX * scaleY;
                 }
             }
 
@@ -794,16 +797,15 @@ public class Payload {
         } else {
             // System.out.println("portrait");
 
-            final double winY = cardHeightPX - (2*pixelsY);
-
-            // System.out.println("relocate(" + pX + ", " + pY+ ")  scale = " + spriteScale);
             if (keepAspectRatio) {
                 double scaleX = winX / imageWidthPX;
                 double scaleY = winY / imageHeightPX;
                 if (scaleX < scaleY) {
                     dY = (winY - (imageHeightPX * scaleX)) / 2;
+                    winY = imageHeightPX * scaleX;
                 } else {
                     dX = (winX - (imageWidthPX * scaleY)) / 2;
+                    winX = imageWidthPX * scaleY;
                 }
             }
 
