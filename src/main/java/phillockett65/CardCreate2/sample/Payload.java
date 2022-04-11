@@ -340,10 +340,7 @@ public class Payload {
         double dY = 0;
 
         if (isLandscape()) {
-            // System.out.println("landscape");
-
             final double winY = (cardHeightPX / 2) - pY;
-            ImageView view = getImageView(0);
 
             if (keepAspectRatio) {
                 double scaleX = winX / imageWidthPX;
@@ -355,26 +352,18 @@ public class Payload {
                 }
             }
 
-            // System.out.println("relocate(" + pX + ", " + pY + ")  deltas = " + dX + ", " + dY);
+            ImageView view = getImageView(0);
             view.relocate(pX + dX, pY + dY);
-    
             view.setFitWidth(winX);
             view.setFitHeight(winY);
     
-            // System.out.println("relocate(" + pX + ", " + pY+ ")  scale = " + spriteScale);
             view = getImageView(1);
-
             view.relocate(pX + dX, cardHeightPX/2);
-            
             view.setFitWidth(winX);
             view.setFitHeight(winY);
         } else {
-            // System.out.println("portrait");
-
             final double winY = cardHeightPX - (2*pY);
-            ImageView view = getImageView(0);
 
-            // System.out.println("relocate(" + pX + ", " + pY+ ")  scale = " + spriteScale);
             if (keepAspectRatio) {
                 double scaleX = winX / imageWidthPX;
                 double scaleY = winY / imageHeightPX;
@@ -385,12 +374,11 @@ public class Payload {
                 }
             } 
 
+            ImageView view = getImageView(0);
             view.relocate(pX + dX, pY + dY);
-
             view.setFitWidth(winX);
             view.setFitHeight(winY);
 
-            // System.out.println("relocate(" + pX + ", " + pY+ ")  scale = " + spriteScale);
             view = getImageView(1);
             view.setVisible(false);
         }
@@ -408,8 +396,6 @@ public class Payload {
         final double offY = location.getYOffset() * winY;
         double pY = getYOriginPX() + offY;
 
-        // System.out.println("relocate(" + pX + ", " + pY+ ") :: " + item);
-        // System.out.println("size(" + spriteWidth.getPixels() + ", " + spriteHeight.getPixels()+ ")  scale = " + spriteScale);
         view.relocate(pX, pY);
 
         view.setFitWidth(spriteWidth.getPixels());
