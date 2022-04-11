@@ -84,9 +84,10 @@
                                     <Label fx:id="itemCentreYLabel" text="Index Y Centre (%):" GridPane.halignment="RIGHT" GridPane.rowIndex="2" />
                                  </children>
                               </GridPane>
-                              <HBox>
+                              <HBox spacing="10.0">
                                  <children>
                                     <CheckBox fx:id="keepAspectRatioCheckBox" mnemonicParsing="false" onAction="#keepAspectRatioCheckBoxActionPerformed" selected="true" text="Keep Image Aspect Ratio" />
+                                    <CheckBox fx:id="showGuideBoxCheckBox" mnemonicParsing="false" onAction="#showGuideBoxCheckBoxActionPerformed" text="Show Guide Box" />
                                  </children>
                               </HBox>
                            </children>

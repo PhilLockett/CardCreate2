@@ -809,6 +809,7 @@ public class Model {
     private SpinnerValueFactory<Double> itemCentreYSVF;
 
     private boolean keepAspectRatio = true;
+    private boolean showGuideBox = false;
 
 
     /**
@@ -981,7 +982,7 @@ public class Model {
         index.setVisible(shouldIndexBeDisplayed());
         cornerPip.setVisible(shouldCornerPipBeDisplayed());
 
-        showImageBox(shouldFaceImageBeDisplayed());
+        showImageBox();
         face.setVisible(shouldFaceImageBeDisplayed());
         standardPip.setVisible(shouldStandardPipBeDisplayed());
 
@@ -1065,7 +1066,7 @@ public class Model {
         face.syncCardSize();
         facePip.syncCardSize();
 
-        showImageBox(shouldFaceImageBeDisplayed());
+        showImageBox();
         handle.syncPosition();
     }
 
@@ -1074,12 +1075,14 @@ public class Model {
     public SpinnerValueFactory<Double> getItemCentreXSVF()  { return itemCentreXSVF; }
     public SpinnerValueFactory<Double> getItemCentreYSVF()  { return itemCentreYSVF; }
 
-    public boolean iskeepImageAspectRatio() { return keepAspectRatio; }
-
-    public void setkeepImageAspectRatio(boolean state) {
+    public void setKeepImageAspectRatio(boolean state) {
         keepAspectRatio = state;
         face.setKeepAspectRatio(keepAspectRatio);
-        showImageBox(shouldFaceImageBeDisplayed());
+    }
+
+    public void setShowGuideBox(boolean state) {
+        showGuideBox = state;
+        showImageBox();
     }
 
 
@@ -1183,7 +1186,7 @@ public class Model {
         // System.out.println("model.setCurrentX(" + value + ");");
 
         current.setX(value);
-        showImageBox(shouldFaceImageBeDisplayed());
+        showImageBox();
         handle.syncPosition();
 
         if (updateSVF)
@@ -1200,7 +1203,7 @@ public class Model {
         // System.out.println("model.setCurrentY(" + value + ");");
 
         current.setY(value);
-        showImageBox(shouldFaceImageBeDisplayed());
+        showImageBox();
         handle.syncPosition();
 
         if (updateSVF)
@@ -1284,16 +1287,16 @@ public class Model {
         box.setVisible(false);
     }
 
-    private void showImageBox(boolean display) {
+    private void showImageBox() {
         // System.out.println("showImageBox(" + display + "); keepAspectRatio = " + keepAspectRatio);
-        if ((!display) || (!keepAspectRatio)) {
+        if (!showGuideBox) {
             box.setVisible(false);
 
             return;
         }
 
-        final double pX = face.getCentreX();
-        final double pY = face.getCentreY();
+        final double pX = current.getCentreX();
+        final double pY = current.getCentreY();
         final double winX = getCalculatedWidth() - (2*pX);
         final double winY = cardHeightPX - (2*pY);
 

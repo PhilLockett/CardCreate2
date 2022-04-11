@@ -816,6 +816,9 @@ public class Controller {
     @FXML
     private CheckBox keepAspectRatioCheckBox;
 
+    @FXML
+    private CheckBox showGuideBoxCheckBox;
+
     /**
      * Fix the disabled state of the "Modify Card Item" controls based on the 
      * card items being displayed.
@@ -887,7 +890,12 @@ public class Controller {
 
     @FXML
     void keepAspectRatioCheckBoxActionPerformed(ActionEvent event) {
-        model.setkeepImageAspectRatio(keepAspectRatioCheckBox.isSelected());
+        model.setKeepImageAspectRatio(keepAspectRatioCheckBox.isSelected());
+    }
+
+    @FXML
+    void showGuideBoxCheckBoxActionPerformed(ActionEvent event) {
+        model.setShowGuideBox(showGuideBoxCheckBox.isSelected());
     }
 
     /**
@@ -896,6 +904,7 @@ public class Controller {
     private void initializeModifySelectedCardItem() {
 
         keepAspectRatioCheckBox.setTooltip(new Tooltip("Keep Aspect Ratio of image's from the faces directory"));
+        showGuideBoxCheckBox.setTooltip(new Tooltip("Display guide to aid Card Item positioning."));
 
         itemHeightSpinner.setValueFactory(model.getItemHeightSVF());
         itemCentreXSpinner.setValueFactory(model.getItemCentreXSVF());
