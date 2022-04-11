@@ -136,18 +136,17 @@ public class Payload {
      * @return true if the image should be visible, false otherwise.
      */
     private boolean isImageViewVisible(int imageIndex) {
-        return isImageViewVisible(pattern, imageIndex);
-    }
-
-    private boolean isImageViewVisible(int pattern, int imageIndex) {
         if (!display)
             return false;
 
+        return isIconVisible(pattern, imageIndex);
+    }
+
+    private boolean isIconVisible(int pattern, int imageIndex) {
         return flags[pattern][imageIndex] == 1;
     }
 
-
-    public class Real {
+    private class Real {
         private final boolean height;
         private double percent = 0;
         
@@ -179,13 +178,13 @@ public class Payload {
             return Math.round(getPixels());
         }
 
-        public double getOrigin() {
-            if (height)
-                return (percent * cardHeightPX / 100) - (spriteHeight.getPixels()/2);
-            else
-                return (percent * cardWidthPX / 100) - (spriteWidth.getPixels()/2);
-        }
+    }
 
+    private double getXOriginPX() {
+            return (centreX.getPixels()) - (spriteWidth.getPixels()/2);
+    }
+    private double getYOriginPX() {
+            return (centreY.getPixels()) - (spriteHeight.getPixels()/2);
     }
 
 
@@ -392,11 +391,11 @@ public class Payload {
 
         final double winX = cardWidthPX - (2*centreX.getPixels());
         final double offX = location.getXOffset() * winX;
-        double pX = centreX.getOrigin() + offX;
+        double pX = getXOriginPX() + offX;
 
         final double winY = cardHeightPX - (2*centreY.getPixels());
         final double offY = location.getYOffset() * winY;
-        double pY = centreY.getOrigin() + offY;
+        double pY = getYOriginPX() + offY;
 
         // System.out.println("relocate(" + pX + ", " + pY+ ") :: " + item);
         // System.out.println("size(" + spriteWidth.getPixels() + ", " + spriteHeight.getPixels()+ ")  scale = " + spriteScale);
@@ -421,7 +420,7 @@ public class Payload {
                 ImageView view = getImageView(i);
                 view.setVisible(visible);
                 // System.out.println(i + " visible = " + visible + " display = " + display);
-                
+
                 if (visible)
                     paintIcon(view, getLocation(i));
             }
@@ -549,17 +548,17 @@ public class Payload {
     }
 
     public void moveBy(long dx, long dy) {
-        centreX.setPixels((spriteWidth.getPixels()/2) + centreX.getOrigin() + dx);
-        centreY.setPixels((spriteHeight.getPixels()/2) + centreY.getOrigin() + dy);
+        centreX.setPixels((spriteWidth.getPixels()/2) + getXOriginPX() + dx);
+        centreY.setPixels((spriteHeight.getPixels()/2) + getYOriginPX() + dy);
         setPatterns();
     }
 
     public long getX() {
-        return Math.round(centreX.getOrigin());
+        return Math.round(getXOriginPX());
     }
 
     public long getY() {
-        return Math.round(centreY.getOrigin());
+        return Math.round(getYOriginPX());
     }
 
     public double getCentreX() {
