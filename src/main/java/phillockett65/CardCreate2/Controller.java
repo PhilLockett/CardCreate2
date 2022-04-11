@@ -495,16 +495,25 @@ public class Controller {
     private Label heightLabel;
 
     @FXML
+    private Label radiusLabel;
+
+    @FXML
     private Spinner<Integer> widthSpinner;
 
     @FXML
     private Spinner<Integer> heightSpinner;
 
     @FXML
+    private Spinner<Double> radiusSpinner;
+
+    @FXML
     private Button widthButton;
 
     @FXML
     private Button heightButton;
+
+    @FXML
+    private Button radiusButton;
 
     @FXML
     void cardSizeRadioButtonActionPerformed(ActionEvent event) {
@@ -538,6 +547,11 @@ public class Controller {
         model.resetCardHeightSVF();
     }
 
+    @FXML
+    void radiusButtonActionPerformed(ActionEvent event) {
+        model.resetRadiusSVF();
+    }
+
     /**
      * Initialize "Card Size" panel.
      */
@@ -546,15 +560,22 @@ public class Controller {
         pokerRadioButton.setTooltip(new Tooltip("Maintain poker card aspect ratio"));
         bridgeRadioButton.setTooltip(new Tooltip("Maintain bridge card aspect ratio"));
         freeRadioButton.setTooltip(new Tooltip("independently set card width and height"));
+
         widthLabel.setTooltip(new Tooltip("Card width in pixels (default: 380)"));
         heightLabel.setTooltip(new Tooltip("Card height in pixels (default: 532)"));
+        radiusLabel.setTooltip(new Tooltip("Corner radius as a percentage of card height (default: 10)"));
+
         widthSpinner.setTooltip(new Tooltip("Select card width in pixels"));
         heightSpinner.setTooltip(new Tooltip("Select card height in pixels"));
+        radiusSpinner.setTooltip(new Tooltip("Select corner radius as a percentage of card height"));
+
         widthButton.setTooltip(new Tooltip("Reset Card Width to default value of 380 pixels"));
         heightButton.setTooltip(new Tooltip("Reset Card Height to default value of 532 pixels"));
+        radiusButton.setTooltip(new Tooltip("Reset Corner radius to default value of 10 percent"));
 
         widthSpinner.setValueFactory(model.getWidthSVF());
         heightSpinner.setValueFactory(model.getHeightSVF());
+        radiusSpinner.setValueFactory(model.getRadiusSVF());
 
         widthSpinner.valueProperty().addListener( (v, oldValue, newValue) -> {
             model.setWidth(newValue);
@@ -563,6 +584,11 @@ public class Controller {
 
         heightSpinner.valueProperty().addListener( (v, oldValue, newValue) -> {
             model.setHeight(newValue);
+            sample.syncCardSize();
+        });
+
+        radiusSpinner.valueProperty().addListener( (v, oldValue, newValue) -> {
+            model.setRadius(newValue);
             sample.syncCardSize();
         });
 

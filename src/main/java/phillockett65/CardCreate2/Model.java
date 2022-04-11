@@ -424,9 +424,11 @@ public class Model {
 
     private double cardWidthPX = Default.WIDTH.getInt();
     private double cardHeightPX = Default.HEIGHT.getInt();
+    private double cornerRadius = Default.RADIUS.getFloat();
 
     private SpinnerValueFactory<Integer> widthSVF;
     private SpinnerValueFactory<Integer> heightSVF;
+    private SpinnerValueFactory<Double>  radiusSVF;
 
 
     public void setPokerCardSize() {
@@ -502,6 +504,24 @@ public class Model {
     }
 
     /**
+     * @return the corner radius as a percentage of the card height.
+     */
+    public double getRadius() {
+        return cornerRadius;
+    }
+
+    /**
+     * Set the corner radius as a percentage of the card height.
+     * 
+     * @param radius value as a percentage of the card height.
+     */
+    public void setRadius(double radius) {
+        cornerRadius = radius;
+
+        syncCardItemsWithCardSize();
+    }
+
+    /**
      * Convert X coordinate percentage to pixels.
      * 
      * @param x coordinate as a percentage of the card width.
@@ -523,9 +543,11 @@ public class Model {
 
     public SpinnerValueFactory<Integer> getWidthSVF()   { return widthSVF; }
     public SpinnerValueFactory<Integer> getHeightSVF()  { return heightSVF; }
+    public SpinnerValueFactory<Double>  getRadiusSVF()  { return radiusSVF; }
 
     public void resetCardWidthSVF()     { widthSVF.setValue(Default.WIDTH.getInt()); }
     public void resetCardHeightSVF()    { heightSVF.setValue(Default.HEIGHT.getInt()); }
+    public void resetRadiusSVF()        { radiusSVF.setValue((double)Default.RADIUS.getFloat()); }
 
     /**
      * Initialize "Card Size" panel.
@@ -537,9 +559,13 @@ public class Model {
         final int HEIGHT = Default.HEIGHT.getInt();
         final int MIN_HEIGHT = Default.MIN_HEIGHT.getInt();
         final int MAX_HEIGHT = Default.MAX_HEIGHT.getInt();
+        final double RADIUS = Default.RADIUS.getFloat();
+        final double MIN_RADIUS = Default.MIN_RADIUS.getFloat();
+        final double MAX_RADIUS = Default.MAX_RADIUS.getFloat();
 
         widthSVF = new SpinnerValueFactory.IntegerSpinnerValueFactory(MIN_WIDTH, MAX_WIDTH, WIDTH);
         heightSVF = new SpinnerValueFactory.IntegerSpinnerValueFactory(MIN_HEIGHT, MAX_HEIGHT, HEIGHT);
+        radiusSVF = new SpinnerValueFactory.DoubleSpinnerValueFactory(MIN_RADIUS, MAX_RADIUS, RADIUS, 0.05);
     }
 
 
@@ -1341,7 +1367,7 @@ public class Model {
         gc.setStroke(Color.BLACK);
         gc.setLineWidth(1);
 
-        final double radius = getHeight() / Default.RADIUS.getFloat();
+        final double radius = cardHeightPX * cornerRadius / 100;
         gc.fillRoundRect(0, 0, getCalculatedWidth(), getHeight(), radius, radius);
         gc.strokeRoundRect(0, 0, getCalculatedWidth(), getHeight(), radius, radius);
 
