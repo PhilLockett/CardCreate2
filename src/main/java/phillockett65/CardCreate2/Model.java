@@ -1446,12 +1446,12 @@ public class Model {
     private Image rotateImage(Image image) {
         // System.out.println("rotateImage()");
 
-        ImageView iv = new ImageView(image);
-        iv.setRotate(180);
+        ImageView view = new ImageView(image);
+        view.setRotate(180);
         SnapshotParameters params = new SnapshotParameters();
         params.setFill(Color.TRANSPARENT);
 
-        return iv.snapshot(params, null);
+        return view.snapshot(params, null);
     }
 
 
