@@ -369,6 +369,7 @@ public class Controller {
 
     @FXML
     void generateButtonActionPerformed(ActionEvent event) {
+        model.generate();
         setStatusMessage("Output sent to: " + model.getOutputDirectory());
     }
 

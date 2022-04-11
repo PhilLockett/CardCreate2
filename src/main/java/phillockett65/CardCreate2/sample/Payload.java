@@ -29,9 +29,11 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
 import javafx.scene.Group;
+import javafx.scene.SnapshotParameters;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-
+import javafx.scene.paint.Color;
 import phillockett65.CardCreate2.Model;
 
 public class Payload {
@@ -705,4 +707,125 @@ public class Payload {
             getImageView(0).setPreserveRatio(keepAspectRatio);
         }
     }
+
+
+
+    /************************************************************************
+     * Support code for Playing Card Generation.
+     */
+
+    /**
+     * Class to build the data needed to render the icons.
+     */
+    private class Data {
+        public final double iconWidthPX;
+        public final double iconHeightPX;
+        public final double width;
+        public final double height;
+
+        public final double pixelsX;
+        public final double pixelsY;
+        public final double winX;
+        public final double winY;
+
+        public final double originX;
+        public final double originY;
+
+        public Data(Image iconImage) {
+            iconWidthPX = iconImage.getWidth();
+            iconHeightPX = iconImage.getHeight();
+            height = spriteHeight.getPixels();
+            width = height * iconWidthPX / iconHeightPX;
+    
+            pixelsX = centreX.getPixels();
+            pixelsY = centreY.getPixels();
+            winX = cardWidthPX - (2*pixelsX);
+            winY = cardHeightPX - (2*pixelsY);
+    
+            originX = pixelsX - (width/2);
+            originY = pixelsY - (height/2);
+        }
+     }
+
+     /**
+      * Draw the image card image -- work in progress.
+      * @param gc
+      * @param image
+      */
+     private void drawImage(GraphicsContext gc, Image image) {
+        // System.out.println("drawImage()");
+        final double imageWidthPX = image.getWidth();
+        final double imageHeightPX = image.getHeight();
+
+        final double pixelsX = centreX.getPixels();
+        final double pixelsY = centreY.getPixels();
+        final double winX = cardWidthPX - (2*pixelsX);
+        final double winY = cardHeightPX - (2*pixelsY);
+        double dX = 0;
+        double dY = 0;
+
+        if (imageHeightPX < imageWidthPX) {
+            // System.out.println("landscape");
+
+            gc.drawImage(image, pixelsX + dX, pixelsY + dY, winX, winY);
+
+            dY += spriteHeight.getPixels()/2;
+            gc.drawImage(image, pixelsX + dX, pixelsY + dY, winX, winY);
+        } else {
+            // System.out.println("portrait");
+
+
+            // System.out.println("relocate(" + pX + ", " + pY+ ")  scale = " + spriteScale);
+            if (keepAspectRatio) {
+                double scaleX = winX / imageWidthPX;
+                double scaleY = winY / imageHeightPX;
+                if (scaleX < scaleY) {
+                    dY = (winY - (imageHeightPX * scaleX)) / 2;
+                } else {
+                    dX = (winX - (imageWidthPX * scaleY)) / 2;
+                }
+            }
+
+            gc.drawImage(image, pixelsX + dX, pixelsY + dY, winX, winY);
+        }
+    }
+
+    /**
+     * Draw icons to a given graphics context using the user specification.
+     * 
+     * @param gc graphics context to draw on.
+     * @param iconImage used for the icons.
+     * @param rotatedImage rotated version of the image used for the icons.
+     * @param pattern indicating the arrangement of icons.
+     * @return true if the icons are drawn, false otherwise.
+     */
+    public boolean drawCard(GraphicsContext gc, Image iconImage, Image rotatedImage, int pattern) {
+        if (iconImage == null)
+            return false;
+
+        if (item == Item.FACE) {
+            drawImage(gc, iconImage);
+        } else {
+            final Data data = new Data(iconImage);
+
+            for (int i = 0; i < getImageCount(); ++i) {
+                if (isIconVisible(pattern, i)) {
+                    final Loc location = getLocation(i);
+
+                    final double posX = data.originX + (location.getXOffset() * data.winX);
+                    final double posY = data.originY + (location.getYOffset() * data.winY);
+                    
+                    if (location.getRotate())
+                        gc.drawImage(rotatedImage, posX, posY, data.width, data.height);
+                    else
+                        gc.drawImage(iconImage, posX, posY, data.width, data.height);
+                }
+            }
+        }
+
+        return true;
+    }
+
+
+
 }

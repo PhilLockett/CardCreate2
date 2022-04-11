@@ -24,21 +24,29 @@
  */
 package phillockett65.CardCreate2;
 
+import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 
+import javax.imageio.ImageIO;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.Group;
+import javafx.scene.SnapshotParameters;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import phillockett65.CardCreate2.sample.Default;
@@ -1233,14 +1241,11 @@ public class Model {
 
 
 
-
     /************************************************************************
      * Support code for "Sample" panel.
      */
 
     private Group group;
-    private Canvas canvas;
-    private GraphicsContext gc;
     private Image handleImage;
     private Handle handle;
     private Rectangle box;
@@ -1281,13 +1286,6 @@ public class Model {
     }
 
     /**
-     * @return the Graphics Context used by the "Sample" panel.
-     */
-    public GraphicsContext getGC() {
-        return gc;
-    }
-
-    /**
      * @return the Handle used by the "Sample" panel.
      */
     public Handle getHandle() {
@@ -1315,8 +1313,6 @@ public class Model {
      */
     private void initializeSample() {
         group = new Group();
-        canvas = new Canvas();
-        gc = canvas.getGraphicsContext2D();
         handleImage = new Image(getClass().getResourceAsStream("Handle.png"));
         buildImageBox();
     }
@@ -1324,8 +1320,130 @@ public class Model {
 
 
     /************************************************************************
-     * Support code for "Playing Card Generator" panel.
+     * Support code for Playing Card Generation.
      */
+
+    /**
+     * Draw a blank card, add the icons using the Payloads then write the 
+     * image to disc.
+     * 
+     * @param suit of card to generate.
+     * @param card number of card to generate.
+     * @param images list of pip Images to use (so they are only read once).
+     */
+    private void save(int suit, int card, Image[] images) {
+        Canvas canvas = new Canvas(getCalculatedWidth(), getHeight());
+        GraphicsContext gc = canvas.getGraphicsContext2D();
+
+        gc.setFill(null);
+        gc.fillRect(0, 0, getCalculatedWidth(), getHeight());
+        gc.setFill(backgroundColour);
+        gc.setStroke(Color.BLACK);
+        gc.setLineWidth(1);
+
+        final double radius = getHeight() / Default.RADIUS.getFloat();
+        gc.fillRoundRect(0, 0, getCalculatedWidth(), getHeight(), radius, radius);
+        gc.strokeRoundRect(0, 0, getCalculatedWidth(), getHeight(), radius, radius);
+
+        if (shouldIndexBeDisplayed()) {
+            Image image = loadImage(getIndexImagePath(suit, card));
+            Image rotatedImage = rotateImage(image);
+
+            index.drawCard(gc, image, rotatedImage, 0);
+        }
+
+        if (shouldCornerPipBeDisplayed())
+            cornerPip.drawCard(gc, images[2], images[3], 0);
+
+        if (shouldFaceImageBeDisplayed(suit, card)) {
+            Image image = loadImage(getFaceImagePath(suit, card));
+            Image rotatedImage = rotateImage(image);
+
+            face.drawCard(gc, image, rotatedImage, 0);
+        }
+
+        if (shouldStandardPipBeDisplayed(suit, card))
+            standardPip.drawCard(gc, images[0], images[1], card);
+
+        if (shouldFacePipBeDisplayed(card))
+            facePip.drawCard(gc, images[4], images[5], 0);
+
+        String outputPath = getOutputDirectory() + "\\" + suits[suit] + cards[card] + ".png";
+        // System.out.println(outputPath);
+
+        try {
+            Image snapshot = canvas.snapshot(null, null);
+            BufferedImage image = SwingFXUtils.fromFXImage(snapshot, null);
+            
+            ImageIO.write(image, "png", new File(outputPath));
+        } catch (Exception e) {
+            System.out.println("Failed saving image: " + e);
+        }
+
+    }
+
+    /**
+     * Load an image file from disc.
+     * 
+     * @param path to the image file.
+     * @return the Image, or null if the file is not found.
+     */
+    private Image loadImage(String path) {
+        // System.out.println("loadImage(" + path + ")");
+        File file = new File(path);
+
+        if (!file.exists()) {
+            // System.out.println("File does not exist!");
+
+                return null;
+        }
+
+        Image loadedImage = null;
+        try {
+            loadedImage = new Image(new FileInputStream(file));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        return loadedImage;
+    }
+
+    /**
+     * Rotate the given image by 189 degrees.
+     * 
+     * @param image to rotate.
+     * @return the rotated Image.
+     */
+    private Image rotateImage(Image image) {
+        // System.out.println("rotateImage()");
+
+        ImageView iv = new ImageView(image);
+        iv.setRotate(180);
+        SnapshotParameters params = new SnapshotParameters();
+        params.setFill(Color.TRANSPARENT);
+
+        return iv.snapshot(params, null);
+    }
+
+
+    /**
+     * Generate the card images and save them to disc.
+     */
+    public void generate() {
+        for (int s = 0; s < suits.length; ++s) {
+            Image[] images = new Image[6];
+            images[0] = loadImage(getStandardPipImagePath(s));
+            images[1] = rotateImage(images[0]);
+            images[2] = loadImage(getCornerPipImagePath(s));
+            images[3] = rotateImage(images[2]);
+            images[4] = loadImage(getFacePipImagePath(s));
+            images[5] = rotateImage(images[4]);
+
+            for (int c = 0; c < cards.length; ++c) {
+                save(s, c, images);
+            }
+        }
+    }
 
 
 
