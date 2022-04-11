@@ -29,11 +29,9 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
 import javafx.scene.Group;
-import javafx.scene.SnapshotParameters;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.paint.Color;
 import phillockett65.CardCreate2.Model;
 
 public class Payload {

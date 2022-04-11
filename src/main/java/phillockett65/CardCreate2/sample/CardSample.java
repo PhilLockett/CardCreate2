@@ -54,8 +54,6 @@ public class CardSample extends Stage {
     private double xScale = 1D;
     private double yScale = 1D;
 
-    private final String title;
-
 
     /**
      * Constructor.
@@ -68,8 +66,6 @@ public class CardSample extends Stage {
 //		System.out.println("CardSample constructed: " + title);
 
         // stage = this;
-        this.title = title;
-        setTitle(title);
         resizableProperty().setValue(false);
         setOnCloseRequest(e -> Platform.exit());
         initStyle(StageStyle.TRANSPARENT);
