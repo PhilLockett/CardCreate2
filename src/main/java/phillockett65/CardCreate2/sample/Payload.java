@@ -339,21 +339,22 @@ public class Payload {
         double dX = 0;
         double dY = 0;
 
-
         if (isLandscape()) {
             // System.out.println("landscape");
 
             final double winY = (cardHeightPX / 2) - pY;
             ImageView view = getImageView(0);
 
-            double scaleX = winX / imageWidthPX;
-            double scaleY = winY / imageHeightPX;
-            if (scaleX < scaleY) {
-                dY = (winY - (imageHeightPX * scaleX));
-            } else {
-                dX = (winX - (imageWidthPX * scaleY)) / 2;
+            if (keepAspectRatio) {
+                double scaleX = winX / imageWidthPX;
+                double scaleY = winY / imageHeightPX;
+                if (scaleX < scaleY) {
+                    dY = (winY - (imageHeightPX * scaleX));
+                } else {
+                    dX = (winX - (imageWidthPX * scaleY)) / 2;
+                }
             }
-    
+
             // System.out.println("relocate(" + pX + ", " + pY + ")  deltas = " + dX + ", " + dY);
             view.relocate(pX + dX, pY + dY);
     
