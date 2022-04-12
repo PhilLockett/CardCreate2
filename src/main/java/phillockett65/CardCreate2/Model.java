@@ -33,6 +33,11 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Files;
+import static java.nio.file.Files.notExists;
+import java.nio.file.LinkOption;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 import javax.imageio.ImageIO;
 
@@ -1459,6 +1464,17 @@ public class Model {
      * Generate the card images and save them to disc.
      */
     public void generate() {
+
+        // Ensure that the output directory exists.
+        try {
+            Path outputDir = Paths.get(getOutputDirectory());
+            if (notExists(outputDir, LinkOption.NOFOLLOW_LINKS)) {
+                Files.createDirectories(outputDir);
+            }
+        } catch (IOException e) {
+            // e.printStackTrace();
+        }
+
         for (int s = 0; s < suits.length; ++s) {
             Image[] images = new Image[6];
             images[0] = loadImage(getStandardPipImagePath(s));
