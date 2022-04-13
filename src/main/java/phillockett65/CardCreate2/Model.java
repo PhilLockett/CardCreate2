@@ -509,10 +509,10 @@ public class Model {
     }
 
     /**
-     * @return the corner radius as a percentage of the card height.
+     * @return the corner radius in pixels.
      */
-    public double getRadius() {
-        return cornerRadius;
+    public double getRadiusPX() {
+        return cardHeightPX * cornerRadius / 100;
     }
 
     /**
@@ -1375,7 +1375,7 @@ public class Model {
         gc.setStroke(Color.BLACK);
         gc.setLineWidth(1);
 
-        final double radius = cardHeightPX * cornerRadius / 100;
+        final double radius = getRadiusPX();
         gc.fillRoundRect(0, 0, getCalculatedWidth(), getHeight(), radius, radius);
         gc.strokeRoundRect(0, 0, getCalculatedWidth(), getHeight(), radius, radius);
 

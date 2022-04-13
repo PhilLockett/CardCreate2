@@ -132,7 +132,7 @@ public class CardSample extends Stage {
         final Color color = model.getBackgroundColour();
         card = new Rectangle(width, height, color);
 
-        final double radius = height * model.getRadius() / 100;
+        final double radius = model.getRadiusPX();
         card.setArcWidth(radius);
         card.setArcHeight(radius);
         card.setStroke(Color.BLACK);
@@ -222,7 +222,7 @@ public class CardSample extends Stage {
         this.setWidth(width + dx);
         this.setHeight(height + dy);
 
-        final double radius = height * model.getRadius() / 100;
+        final double radius = model.getRadiusPX();
         card.setArcWidth(radius);
         card.setArcHeight(radius);
         card.setWidth(width);
