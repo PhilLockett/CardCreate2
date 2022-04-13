@@ -56,7 +56,7 @@ public enum Default {
     MAX_HEIGHT (3800F * 7 / 5),
     RADIUS (10F),
     MIN_RADIUS (0F),
-    MAX_RADIUS (50F);
+    MAX_RADIUS (100F);
 
     private final int	iValue;
     private final float	rValue;
