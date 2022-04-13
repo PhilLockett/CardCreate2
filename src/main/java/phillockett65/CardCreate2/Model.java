@@ -45,6 +45,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.Group;
+import javafx.scene.Scene;
 import javafx.scene.SnapshotParameters;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -1366,18 +1367,26 @@ public class Model {
      * @param images list of pip Images to use (so they are only read once).
      */
     private void save(int suit, int card, Image[] images) {
-        Canvas canvas = new Canvas(getCalculatedWidth(), getHeight());
+
+        final double xMax = getCalculatedWidth();
+        final double yMax = getHeight();
+        final double radius = getRadiusPX();
+
+        Group root = new Group();
+        // We need this Scene otherwise the canvas gets default background colour.
+        Scene s = new Scene(root, xMax, yMax, Color.TRANSPARENT);
+        final Canvas canvas = new Canvas(xMax, yMax);
         GraphicsContext gc = canvas.getGraphicsContext2D();
 
-        gc.setFill(null);
-        gc.fillRect(0, 0, getCalculatedWidth(), getHeight());
+        // We add the canvas to the root otherwise the snapshot gets default background colour.
+        root.getChildren().add(canvas);
+
         gc.setFill(backgroundColour);
         gc.setStroke(Color.BLACK);
         gc.setLineWidth(1);
 
-        final double radius = getRadiusPX();
-        gc.fillRoundRect(0, 0, getCalculatedWidth(), getHeight(), radius, radius);
-        gc.strokeRoundRect(0, 0, getCalculatedWidth(), getHeight(), radius, radius);
+        gc.fillRoundRect(0, 0, xMax, yMax, radius, radius);
+        gc.strokeRoundRect(0, 0, xMax, yMax, radius, radius);
 
         if (shouldIndexBeDisplayed()) {
             Image image = loadImage(getIndexImagePath(suit, card));
