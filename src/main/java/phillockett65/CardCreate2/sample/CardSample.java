@@ -89,8 +89,7 @@ public class CardSample extends Stage {
 
         group = model.getGroup();
 
-        scene = new Scene(group, WIDTH, HEIGHT);
-        scene.setFill(null);
+        scene = new Scene(group, WIDTH, HEIGHT, Color.TRANSPARENT);
         drawBlankCard();
 
         this.setScene(scene);
