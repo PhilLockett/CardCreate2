@@ -228,6 +228,13 @@ public class Model {
         return !styleList.isEmpty();
     }
 
+    /**
+     * Set up the base directory, check if it is valid and set up the style 
+     * lists. 
+     * 
+     * @param base path of the directory.
+     * @return true if base is a valid base directory, false otherwise.
+     */
     public boolean setBaseDirectory(String base) {
 //		System.out.println("model.setBaseDirectory(" + base + ")");
 
