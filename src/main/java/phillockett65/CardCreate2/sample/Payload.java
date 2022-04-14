@@ -414,16 +414,48 @@ public class Payload {
         cardHeightPX = h;
     }
 
+    private boolean isValidPercentage(double value) {
+        if ((value < 0D) || (value > 100D))
+            return false;
+
+        return true;
+    }
+
+    /**
+     * Set the X co-ordinate of the centre of the sprite.
+     * @param value as a percentage of the card width.
+     * @return true if value is valid, false otherwise.
+     */
+    protected boolean setSpriteCentreX(double value) {
+        if (!isValidPercentage(value))
+            return false;
+
+        centreX.setPercent(value);
+        
+        return true;
+    }
+
     /**
      * Set the X co-ordinate of the centre of the sprite.
      * @param value as a percentage of the card width.
      */
     public void setX(double value) {
-        if ((value < 0D) || (value > 100D))
-            return;
+        if (setSpriteCentreX(value))
+            setPatterns();
+    }
 
-        centreX.setPercent(value);
-        setPatterns();
+    /**
+     * Set the Y co-ordinate of the centre of the sprite.
+     * @param value as a percentage of the card height.
+     * @return true if value is valid, false otherwise.
+     */
+    protected boolean setSpriteCentreY(double value) {
+        if (!isValidPercentage(value))
+            return false;
+
+        centreY.setPercent(value);
+
+        return true;
     }
 
     /**
@@ -431,11 +463,25 @@ public class Payload {
      * @param value as a percentage of the card height.
      */
     public void setY(double value) {
-        if ((value < 0D) || (value > 100D))
-            return;
+        if (setSpriteCentreY(value))
+            setPatterns();
+    }
 
-        centreY.setPercent(value);
-        setPatterns();
+    /**
+     * Set the size of the sprite.
+     * @param size as a percentage of the card height.
+     * @return true if size is valid, false otherwise.
+     */
+    protected boolean setSpriteSize(double size) {
+        if (!isValidPercentage(size))
+            return false;
+
+        // System.out.println("setSize(" + size + ") :: " + item);
+
+        spriteHeight.setPercent(size);
+        resizePercentages();
+
+        return false;
     }
 
     /**
@@ -443,50 +489,63 @@ public class Payload {
      * @param size as a percentage of the card height.
      */
     public void setSize(double size) {
-        if ((size < 0D) || (size > 100D))
-            return;
-
         // System.out.println("setSize(" + size + ") :: " + item);
-
-        spriteHeight.setPercent(size);
-        resizePercentages();
-        setPatterns();
+        if (setSpriteSize(size))
+            setPatterns();
     }
 
     /**
      * Increase the size of the sprite.
-     * @return the new size as a percentage of the card height.
+     * @return true if size is increased, false otherwise.
      */
-    public double incSize() {
+    protected boolean incSpriteSize() {
         double size = spriteHeight.getPercent();
-        if (size != 100D) {
-            size += 0.5D;
-            if (size > 100D)
-                size = 100D;
-            spriteHeight.setPercent(size);
-            resizePercentages();
+
+        if (size == 100D)
+            return false;
+
+        size += 0.5D;
+        if (size > 100D)
+            size = 100D;
+
+        setSpriteSize(size);
+
+        return true;
+    }
+
+    /**
+     * Increase the size of the sprite.
+     */
+    public void incSize() {
+        if (incSpriteSize())
             setPatterns();
-        }
-        
-        return size;
     }
 
     /**
      * Decrease the size of the sprite.
-     * @return the new size as a percentage of the card height.
+     * @return true if size is decreased, false otherwise.
      */
-    public double decSize() {
+    protected boolean decSpriteSize() {
         double size = spriteHeight.getPercent();
-        if (size != 0D) {
-            size -= 0.5D;
-            if (size < 0D)
-                size = 0D;
-            spriteHeight.setPercent(size);
-            resizePercentages();
-            setPatterns();
-        }
+
+        if (size == 0D)
+        return false;
+
+        size -= 0.5D;
+        if (size < 0D)
+            size = 0D;
+
+        setSpriteSize(size);
         
-        return size;
+        return true;
+    }
+
+    /**
+     * Decrease the size of the sprite.
+     */
+    public void decSize() {
+        if (decSpriteSize())
+            setPatterns();
     }
 
     public double getCentreX() {

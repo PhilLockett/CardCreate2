@@ -41,6 +41,9 @@ public class ImagePayload extends Payload {
     private void paintImage() {
         // System.out.println("paintImage() :: ImagePayload");
 
+        if (!hasImage())
+            return;
+
         final double pX = centreX.getPixels();
         final double pY = centreY.getPixels();
         final double winX = cardWidthPX - (2*pX);
@@ -101,13 +104,13 @@ public class ImagePayload extends Payload {
      */
     public boolean syncImageFile() {
         path = model.getImagePath(Item.FACE);
-        // System.out.println("syncImageFile(" + path + ") :: " + item);
+        // System.out.println("syncImageFile() :: image");
 
         if (path.equals(""))
             return false;
 
         if (loadNewImageFile()) {
-            setPatterns();
+            paintImage();
 
             return true;
         }
@@ -115,17 +118,6 @@ public class ImagePayload extends Payload {
         return false;
     }
 
-    /**
-     * Paint the icons associated with this payload.
-     */
-    private void setPatterns() {
-        // System.out.println("setPatterns()");
-
-        if (hasImage())
-            paintImage();
-    }
-
-    
     /**
      * Synchronise to the current card size.
      */
@@ -135,7 +127,7 @@ public class ImagePayload extends Payload {
         cardWidthPX = model.getCalculatedWidth();
         cardHeightPX = model.getHeight();
 
-        setPatterns();
+        paintImage();
     }
 
     
@@ -144,11 +136,8 @@ public class ImagePayload extends Payload {
      * @param value as a percentage of the card width.
      */
     public void setX(double value) {
-        if ((value < 0D) || (value > 100D))
-            return;
-
-        centreX.setPercent(value);
-        setPatterns();
+        if (setSpriteCentreX(value))
+            paintImage();
     }
 
     /**
@@ -156,11 +145,8 @@ public class ImagePayload extends Payload {
      * @param value as a percentage of the card height.
      */
     public void setY(double value) {
-        if ((value < 0D) || (value > 100D))
-            return;
-
-        centreY.setPercent(value);
-        setPatterns();
+        if (setSpriteCentreY(value))
+            paintImage();
     }
 
     /**
@@ -168,50 +154,26 @@ public class ImagePayload extends Payload {
      * @param size as a percentage of the card height.
      */
     public void setSize(double size) {
-        if ((size < 0D) || (size > 100D))
-            return;
-
-        // System.out.println("setSize(" + size + ") :: image");
-
-        spriteHeight.setPercent(size);
-        resizePercentages();
-        setPatterns();
+        if (setSpriteSize(size))
+            paintImage();
     }
 
     /**
      * Increase the size of the sprite.
      * @return the new size as a percentage of the card height.
      */
-    public double incSize() {
-        double size = spriteHeight.getPercent();
-        if (size != 100D) {
-            size += 0.5D;
-            if (size > 100D)
-                size = 100D;
-            spriteHeight.setPercent(size);
-            resizePercentages();
-            setPatterns();
-        }
-        
-        return size;
+    public void incSize() {
+        if (incSpriteSize())
+            paintImage();
     }
 
     /**
      * Decrease the size of the sprite.
      * @return the new size as a percentage of the card height.
      */
-    public double decSize() {
-        double size = spriteHeight.getPercent();
-        if (size != 0D) {
-            size -= 0.5D;
-            if (size < 0D)
-                size = 0D;
-            spriteHeight.setPercent(size);
-            resizePercentages();
-            setPatterns();
-        }
-        
-        return size;
+    public void decSize() {
+        if (decSpriteSize())
+            paintImage();
     }
 
     /**
@@ -221,7 +183,7 @@ public class ImagePayload extends Payload {
     public void setKeepAspectRatio(boolean keepAspectRatio) {
         this.keepAspectRatio = keepAspectRatio;
 
-        setPatterns();
+        paintImage();
         getImageView(0).setPreserveRatio(keepAspectRatio);
         getImageView(1).setPreserveRatio(keepAspectRatio);
     }
