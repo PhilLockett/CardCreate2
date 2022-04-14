@@ -542,12 +542,6 @@ public class Payload {
         return size;
     }
 
-    public void moveBy(long dx, long dy) {
-        centreX.setPixels((spriteWidth.getPixels()/2) + getXOriginPX() + dx);
-        centreY.setPixels((spriteHeight.getPixels()/2) + getYOriginPX() + dy);
-        setPatterns();
-    }
-
     public long getX() {
         return Math.round(getXOriginPX());
     }
