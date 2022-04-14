@@ -33,11 +33,6 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.nio.file.Files;
-import static java.nio.file.Files.notExists;
-import java.nio.file.LinkOption;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 
 import javax.imageio.ImageIO;
 
@@ -276,9 +271,12 @@ public class Model {
             if (!baseList.contains(baseDirectory))
                 baseList.add(baseDirectory);
             writeBaseDirectoryFilePathsToDisc();
+
             faceStyle = faceList.get(0);
             indexStyle = indexList.get(0);
             pipStyle = pipList.get(0);
+
+            makeCardsDirectory();
         }
 
         return validBaseDirectory;
@@ -329,6 +327,22 @@ public class Model {
 
     public String getOutputDirectory() {
         return baseDirectory + "\\cards\\" + getOutputName();
+    }
+
+    private boolean makeOutputDirectory() {
+        File dir = new File(getOutputDirectory());
+        if (dir.exists())
+            return true;
+
+        return dir.mkdir();
+    }
+
+    private boolean makeCardsDirectory() {
+        File dir = new File(baseDirectory + "\\cards");
+        if (dir.exists())
+            return true;
+
+        return dir.mkdir();
     }
 
     /**
@@ -1482,14 +1496,7 @@ public class Model {
     public void generate() {
 
         // Ensure that the output directory exists.
-        try {
-            Path outputDir = Paths.get(getOutputDirectory());
-            if (notExists(outputDir, LinkOption.NOFOLLOW_LINKS)) {
-                Files.createDirectories(outputDir);
-            }
-        } catch (IOException e) {
-            // e.printStackTrace();
-        }
+        makeOutputDirectory();
 
         for (int s = 0; s < suits.length; ++s) {
             Image[] images = new Image[6];
@@ -1541,6 +1548,7 @@ public class Model {
         // System.out.println("init()");
 
         initializeCardItemPayloads();
+        makeCardsDirectory();
 
         // Add handle to the group last so that it is displayed on top.
         group.getChildren().add(box);
