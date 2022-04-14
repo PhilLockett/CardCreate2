@@ -52,6 +52,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import phillockett65.CardCreate2.sample.Default;
 import phillockett65.CardCreate2.sample.Handle;
+import phillockett65.CardCreate2.sample.ImagePayload;
 import phillockett65.CardCreate2.sample.Item;
 import phillockett65.CardCreate2.sample.Payload;
 
@@ -826,7 +827,7 @@ public class Model {
     private Payload index = null;
     private Payload cornerPip = null;
     private Payload standardPip = null;
-    private Payload face = null;
+    private ImagePayload face = null;
     private Payload facePip = null;
     private Payload current = null;
     private Payload[] payloadSlider;
@@ -1053,7 +1054,7 @@ public class Model {
     private void initializeCardItemPayloads() {
         // System.out.println("initializeCardItemPayloads()");
 
-        face		= new Payload(this, Item.FACE);
+        face		= new ImagePayload(this);
 
         index		= new Payload(this, Item.INDEX);
 

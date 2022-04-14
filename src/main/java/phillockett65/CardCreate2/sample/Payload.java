@@ -102,7 +102,7 @@ public class Payload {
      * @param imageIndex for the ImageView in views[].
      * @return the indicated ImageView.
      */
-    private ImageView getImageView(int imageIndex) {
+    protected ImageView getImageView(int imageIndex) {
         return views[imageIndex];
     }
 
@@ -144,7 +144,7 @@ public class Payload {
         return flags[pattern][imageIndex] == 1;
     }
 
-    private class Real {
+    protected class Real {
         private final boolean height;
         private double percent = 0;
         
@@ -188,23 +188,22 @@ public class Payload {
 
     // "image" refers to the image in the file, 
     // "sprite" refers to the image on screen.
-    private Model model;
+    protected Model model;
 
     private int pattern = 0;
     private final Item item;
-    private String path;
+    protected String path;
     private Group group;
     private Image image = null;
-    private double imageWidthPX = 0;
-    private double imageHeightPX = 0;
-    private double cardWidthPX;
-    private double cardHeightPX;
+    protected double imageWidthPX = 0;
+    protected double imageHeightPX = 0;
+    protected double cardWidthPX;
+    protected double cardHeightPX;
 
     private boolean display = true;
-    private boolean keepAspectRatio = true;
-    private final Real centreX;
-    private final Real centreY;
-    private final Real spriteHeight;
+    protected final Real centreX;
+    protected final Real centreY;
+    protected final Real spriteHeight;
     private final Real spriteWidth;
 
 
@@ -245,16 +244,15 @@ public class Payload {
     private void initImageViews() {
         // System.out.println("initImageViews() :: " + item);
         
-        if (item == Item.FACE) {
-            paintImage();
-        } else {
-            for (int i = 0; i < getImageCount(); ++i) {
-                final boolean visible = isImageViewVisible(i);
-                ImageView view = getImageView(i);
-                view.setVisible(visible);
+        if (item == Item.FACE)
+            return;
 
-                paintIcon(view, getLocation(i));
-            }
+        for (int i = 0; i < getImageCount(); ++i) {
+            final boolean visible = isImageViewVisible(i);
+            ImageView view = getImageView(i);
+            view.setVisible(visible);
+
+            paintIcon(view, getLocation(i));
         }
     }
 
@@ -291,25 +289,22 @@ public class Payload {
      * 
      * @return true if the image file was found, false otherwise.
      */
-    private boolean loadNewImageFile() {
+    protected boolean loadNewImageFile() {
         // System.out.println("loadNewImageFile(" + path + ")");
 
         image = loadImage(path);
 
-        if (image != null) {
-            imageWidthPX = image.getWidth();
-            imageHeightPX = image.getHeight();
-            spriteWidth.setPixels(spriteHeight.getPixels() * imageWidthPX / imageHeightPX);
-            // System.out.println("image size(" + imageWidthPX + ", " + imageHeightPX+ ")  scale = " + spriteScale);
+        if (image == null)
+            return false;
 
-            setImages(image);
-            syncPattern();
-            setPatterns();
+        imageWidthPX = image.getWidth();
+        imageHeightPX = image.getHeight();
+        spriteWidth.setPixels(spriteHeight.getPixels() * imageWidthPX / imageHeightPX);
+        // System.out.println("image size(" + imageWidthPX + ", " + imageHeightPX+ ")  scale = " + spriteScale);
 
-            return true;
-        }
+        setImages(image);
 
-        return false;
+        return true;
     }
 
     /**
@@ -324,63 +319,14 @@ public class Payload {
         if (path.equals(""))
             return false;
 
-        return loadNewImageFile();
-    }
+        if (loadNewImageFile()) {
+            syncPattern();
+            setPatterns();
 
-    private void paintImage() {
-        // System.out.println("paintImage(" + generate + ")");
-
-        final double pX = centreX.getPixels();
-        final double pY = centreY.getPixels();
-        final double winX = cardWidthPX - (2*pX);
-
-        double dX = 0;
-        double dY = 0;
-
-        if (isLandscape()) {
-            final double winY = (cardHeightPX / 2) - pY;
-
-            if (keepAspectRatio) {
-                double scaleX = winX / imageWidthPX;
-                double scaleY = winY / imageHeightPX;
-                if (scaleX < scaleY) {
-                    dY = (winY - (imageHeightPX * scaleX));
-                } else {
-                    dX = (winX - (imageWidthPX * scaleY)) / 2;
-                }
-            }
-
-            ImageView view = getImageView(0);
-            view.relocate(pX + dX, pY + dY);
-            view.setFitWidth(winX);
-            view.setFitHeight(winY);
-    
-            view = getImageView(1);
-            view.relocate(pX + dX, cardHeightPX/2);
-            view.setFitWidth(winX);
-            view.setFitHeight(winY);
-        } else {
-            final double winY = cardHeightPX - (2*pY);
-
-            if (keepAspectRatio) {
-                double scaleX = winX / imageWidthPX;
-                double scaleY = winY / imageHeightPX;
-                if (scaleX < scaleY) {
-                    dY = (winY - (imageHeightPX * scaleX)) / 2;
-                } else {
-                    dX = (winX - (imageWidthPX * scaleY)) / 2;
-                }
-            } 
-
-            ImageView view = getImageView(0);
-            view.relocate(pX + dX, pY + dY);
-            view.setFitWidth(winX);
-            view.setFitHeight(winY);
-
-            view = getImageView(1);
-            view.setVisible(false);
+            return true;
         }
 
+        return false;
     }
 
     private void paintIcon(ImageView view, Loc location) {
@@ -407,18 +353,19 @@ public class Payload {
         // System.out.println("setPatterns()");
 
         if (item == Item.FACE) {
-            if (image != null)
-                paintImage();
-        } else {
-            for (int i = 0; i < getImageCount(); ++i) {
-                final boolean visible = isImageViewVisible(i);
-                ImageView view = getImageView(i);
-                view.setVisible(visible);
-                // System.out.println(i + " visible = " + visible + " display = " + display);
+            System.err.println("Payload.setPatterns() called for face image");
 
-                if (visible)
-                    paintIcon(view, getLocation(i));
-            }
+            return;
+        }
+
+        for (int i = 0; i < getImageCount(); ++i) {
+            final boolean visible = isImageViewVisible(i);
+            ImageView view = getImageView(i);
+            view.setVisible(visible);
+            // System.out.println(i + " visible = " + visible + " display = " + display);
+
+            if (visible)
+                paintIcon(view, getLocation(i));
         }
     }
 
@@ -450,7 +397,7 @@ public class Payload {
         setPatterns();
     }
 
-    private void resizePercentages() {
+    protected void resizePercentages() {
         if (image == null)
             return;
 
@@ -458,9 +405,9 @@ public class Payload {
     }
     
     public void resizeCard(double w, double h) {
-        if (image == null) {
+        if (image == null)
             return;
-        }
+
 //        System.out.printf("resizeCard() Width = %d,  Height = %d\n", w, h);
 
         cardWidthPX = w;
@@ -618,20 +565,6 @@ public class Payload {
         return display;
     }
 
-    /**
-     * Flag whether the Payload image should maintain it's aspect ratio.
-     * @param keepAspectRatio when displaying the image if true.
-     */
-    public void setKeepAspectRatio(boolean keepAspectRatio) {
-        this.keepAspectRatio = keepAspectRatio;
-
-        if (item == Item.FACE) {
-            setPatterns();
-            getImageView(0).setPreserveRatio(keepAspectRatio);
-            getImageView(1).setPreserveRatio(keepAspectRatio);
-        }
-    }
-
 
 
     /************************************************************************
@@ -671,61 +604,6 @@ public class Payload {
         }
      }
 
-     /**
-      * Draw the image card image -- work in progress.
-      * @param gc
-      * @param image
-      */
-     private void drawImage(GraphicsContext gc, Image iconImage, Image rotatedImage) {
-        // System.out.println("drawImage()");
-        final double imageWidthPX = iconImage.getWidth();
-        final double imageHeightPX = iconImage.getHeight();
-
-        final double pixelsX = centreX.getPixels();
-        final double pixelsY = centreY.getPixels();
-        double winX = cardWidthPX - (2*pixelsX);
-        double winY = cardHeightPX - (2*pixelsY);
-
-        double dX = 0;
-        double dY = 0;
-
-        if (imageHeightPX < imageWidthPX) {
-            // System.out.println("landscape");
-
-            winY = (cardHeightPX / 2) - pixelsY;
-
-            if (keepAspectRatio) {
-                double scaleX = winX / imageWidthPX;
-                double scaleY = winY / imageHeightPX;
-                if (scaleX < scaleY) {
-                    dY = (winY - (imageHeightPX * scaleX));
-                    winY = imageHeightPX * scaleX;
-                } else {
-                    dX = (winX - (imageWidthPX * scaleY)) / 2;
-                    winX = imageWidthPX * scaleY;
-                }
-            }
-
-            gc.drawImage(rotatedImage, pixelsX + dX, cardHeightPX/2, winX, winY);
-            gc.drawImage(iconImage, pixelsX + dX, pixelsY + dY, winX, winY);
-        } else {
-            // System.out.println("portrait");
-
-            if (keepAspectRatio) {
-                double scaleX = winX / imageWidthPX;
-                double scaleY = winY / imageHeightPX;
-                if (scaleX < scaleY) {
-                    dY = (winY - (imageHeightPX * scaleX)) / 2;
-                    winY = imageHeightPX * scaleX;
-                } else {
-                    dX = (winX - (imageWidthPX * scaleY)) / 2;
-                    winX = imageWidthPX * scaleY;
-                }
-            }
-
-            gc.drawImage(iconImage, pixelsX + dX, pixelsY + dY, winX, winY);
-        }
-    }
 
     /**
      * Draw icons to a given graphics context using the user specification.
@@ -740,23 +618,19 @@ public class Payload {
         if (iconImage == null)
             return false;
 
-        if (item == Item.FACE) {
-            drawImage(gc, iconImage, rotatedImage);
-        } else {
-            final Data data = new Data(iconImage);
+        final Data data = new Data(iconImage);
 
-            for (int i = 0; i < getImageCount(); ++i) {
-                if (isIconVisible(pattern, i)) {
-                    final Loc location = getLocation(i);
+        for (int i = 0; i < getImageCount(); ++i) {
+            if (isIconVisible(pattern, i)) {
+                final Loc location = getLocation(i);
 
-                    final double posX = data.originX + (location.getXOffset() * data.winX);
-                    final double posY = data.originY + (location.getYOffset() * data.winY);
-                    
-                    if (location.getRotate())
-                        gc.drawImage(rotatedImage, posX, posY, data.width, data.height);
-                    else
-                        gc.drawImage(iconImage, posX, posY, data.width, data.height);
-                }
+                final double posX = data.originX + (location.getXOffset() * data.winX);
+                final double posY = data.originY + (location.getYOffset() * data.winY);
+                
+                if (location.getRotate())
+                    gc.drawImage(rotatedImage, posX, posY, data.width, data.height);
+                else
+                    gc.drawImage(iconImage, posX, posY, data.width, data.height);
             }
         }
 
