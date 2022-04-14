@@ -130,7 +130,7 @@ public class ImagePayload extends Payload {
      * Synchronise to the current card size.
      */
     public void syncCardSize() {
-        // System.out.println("syncCardSize(" + item + ") :: " + item);
+        // System.out.println("syncCardSize(" + item + ") :: image");
 
         cardWidthPX = model.getCalculatedWidth();
         cardHeightPX = model.getHeight();
@@ -171,7 +171,7 @@ public class ImagePayload extends Payload {
         if ((size < 0D) || (size > 100D))
             return;
 
-        // System.out.println("setSize(" + size + ") :: " + item);
+        // System.out.println("setSize(" + size + ") :: image");
 
         spriteHeight.setPercent(size);
         resizePercentages();
