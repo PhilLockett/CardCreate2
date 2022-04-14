@@ -542,34 +542,12 @@ public class Payload {
         return size;
     }
 
-    public long getX() {
-        return Math.round(getXOriginPX());
-    }
-
-    public long getY() {
-        return Math.round(getYOriginPX());
-    }
-
     public double getCentreX() {
         return centreX.getPixels();
     }
 
     public double getCentreY() {
         return centreY.getPixels();
-    }
-
-    /**
-     * @return the width of the image on disc.
-     */
-    public double getWidthPX() {
-        return imageWidthPX;
-    } 
-
-    /**
-     * @return the height of the image on disc.
-     */
-    public double getHeightPX() {
-        return imageHeightPX;
     }
 
     /**
@@ -587,13 +565,6 @@ public class Payload {
     }
 
     /**
-     * @return the width of the sprite as a percentage of the card width.
-     */
-    public double getSpriteW() {
-        return spriteWidth.getPercent();
-    }
-
-    /**
      * @return the height of the sprite as a percentage of the card height.
      */
     public double getSpriteH() {
@@ -601,38 +572,10 @@ public class Payload {
     }
 
     /**
-     * @return the width of the sprite in pixels.
-     */
-    public long getSpriteWidthPX() {
-        return spriteWidth.getIntPixels();
-    }
-
-    /**
-     * @return the height of the sprite in pixels.
-     */
-    public long getSpriteHeightPX() {
-        return spriteHeight.getIntPixels();
-    }
-
-    /**
-     * @return the pattern being used for this Payload.
-     */
-    public int getPattern() {
-        return pattern;
-    }
-
-    /**
      * @return the Item this Payload represents.
      */
     public Item getItem() {
         return item;
-    }
-
-    /**
-     * @return the path to the image file used for this Payload.
-     */
-    public String getPath() {
-        return path;
     }
 
     /**
@@ -653,14 +596,6 @@ public class Payload {
         }
 
         return false;
-    }
-
-    /**
-     * Set the arrangement of the standard pips to use for this payload.
-     * @param pattern indicating the arrangement to use.
-     */
-    public void setPattern(int pattern) {
-        this.pattern = pattern;
     }
 
     /**
