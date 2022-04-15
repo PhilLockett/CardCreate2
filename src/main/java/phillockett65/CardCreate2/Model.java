@@ -50,10 +50,13 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+
 import phillockett65.CardCreate2.sample.Default;
+import phillockett65.CardCreate2.sample.DoublePayload;
 import phillockett65.CardCreate2.sample.Handle;
 import phillockett65.CardCreate2.sample.ImagePayload;
 import phillockett65.CardCreate2.sample.Item;
+import phillockett65.CardCreate2.sample.MultiPayload;
 import phillockett65.CardCreate2.sample.Payload;
 
 public class Model {
@@ -824,11 +827,11 @@ public class Model {
      * Support code for "Modify Selected Card Item" panel.
      */
 
-    private Payload index = null;
-    private Payload cornerPip = null;
-    private Payload standardPip = null;
+    private DoublePayload index = null;
+    private DoublePayload cornerPip = null;
+    private MultiPayload standardPip = null;
     private ImagePayload face = null;
-    private Payload facePip = null;
+    private DoublePayload facePip = null;
     private Payload current = null;
     private Payload[] payloadSlider;
     
@@ -1056,12 +1059,12 @@ public class Model {
 
         face		= new ImagePayload(this);
 
-        index		= new Payload(this, Item.INDEX);
+        index		= new DoublePayload(this, Item.INDEX);
 
-        standardPip	= new Payload(this, Item.STANDARD_PIP);
-        facePip		= new Payload(this, Item.FACE_PIP);
+        standardPip	= new MultiPayload(this);
+        facePip		= new DoublePayload(this, Item.FACE_PIP);
 
-        cornerPip	= new Payload(this, Item.CORNER_PIP);
+        cornerPip	= new DoublePayload(this, Item.CORNER_PIP);
 
         // Set up payload slider used to determine next item.
         final int CARDITEMCOUNT = 5;
@@ -1414,24 +1417,24 @@ public class Model {
             Image image = loadImage(getIndexImagePath(suit, card));
             Image rotatedImage = rotateImage(image);
 
-            index.drawCard(gc, image, rotatedImage, 0);
+            index.drawCard(gc, image, rotatedImage);
         }
 
         if (shouldCornerPipBeDisplayed())
-            cornerPip.drawCard(gc, images[2], images[3], 0);
+            cornerPip.drawCard(gc, images[2], images[3]);
 
         if (shouldFaceImageBeDisplayed(suit, card)) {
             Image image = loadImage(getFaceImagePath(suit, card));
             Image rotatedImage = rotateImage(image);
 
-            face.drawCard(gc, image, rotatedImage, 0);
+            face.drawCard(gc, image, rotatedImage);
         }
 
         if (shouldStandardPipBeDisplayed(suit, card))
             standardPip.drawCard(gc, images[0], images[1], card);
 
         if (shouldFacePipBeDisplayed(card))
-            facePip.drawCard(gc, images[4], images[5], 0);
+            facePip.drawCard(gc, images[4], images[5]);
 
         String outputPath = getOutputDirectory() + "\\" + suits[suit] + cards[card] + ".png";
         // System.out.println(outputPath);

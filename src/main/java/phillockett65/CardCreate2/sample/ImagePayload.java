@@ -26,17 +26,43 @@ package phillockett65.CardCreate2.sample;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+
 import phillockett65.CardCreate2.Model;
 
 public class ImagePayload extends Payload {
+
+
+    /************************************************************************
+     * Support code for the ImagePayload class.
+     */
 
     protected boolean keepAspectRatio = true;
 
     public ImagePayload(Model mainModel) {
 		super(mainModel, Item.FACE);
 
-		paintImage();
+        // Set up the image views.
+        createImageViews();
+
+        // Set up image dependent values.
+        initImageViews();
 	}
+
+    /**
+     * Initialize the Image Views based on item.
+     */
+    protected void initImageViews() {
+        setPath(Item.FACE);
+        // System.out.println("initImageViews(" + path + ") :: image");
+
+        if (path.equals(""))
+            return;
+
+        if (loadNewImageFile()) {
+            setImages();
+            paintImage();
+        }
+    }
 
     private void paintImage() {
         // System.out.println("paintImage() :: ImagePayload");
@@ -103,13 +129,14 @@ public class ImagePayload extends Payload {
      * @return true if the new file was loaded, false otherwise.
      */
     public boolean syncImageFile() {
-        path = model.getImagePath(Item.FACE);
+        setPath(Item.FACE);
         // System.out.println("syncImageFile() :: image");
 
         if (path.equals(""))
             return false;
 
         if (loadNewImageFile()) {
+            setImages();
             paintImage();
 
             return true;
@@ -183,9 +210,24 @@ public class ImagePayload extends Payload {
     public void setKeepAspectRatio(boolean keepAspectRatio) {
         this.keepAspectRatio = keepAspectRatio;
 
-        paintImage();
         getImageView(0).setPreserveRatio(keepAspectRatio);
         getImageView(1).setPreserveRatio(keepAspectRatio);
+        paintImage();
+    }
+
+    /**
+     * Hide/display all locations of icons for this item.
+     * @param state if true, display the icons, hide them otherwise.
+     */
+    public void setVisible(boolean state) {
+        // System.out.println("setVisible(" + state + ") :: face");
+        display = state;
+
+        getImageView(0).setVisible(display);
+        if (isLandscape())
+            getImageView(1).setVisible(display);
+        else
+            getImageView(1).setVisible(false);
     }
 
 
@@ -194,25 +236,32 @@ public class ImagePayload extends Payload {
      * Support code for Playing Card Generation.
      */
 
-     /**
-      * Draw the image card image -- work in progress.
-      * @param gc
-      * @param image
-      */
-      private void drawImage(GraphicsContext gc, Image iconImage, Image rotatedImage) {
+    /**
+     * Draw icons to a given graphics context using the user specification.
+     * 
+     * @param gc graphics context to draw on.
+     * @param iconImage used for the icons.
+     * @param rotatedImage rotated version of the image used for the icons.
+     * @return true if the icons are drawn, false otherwise.
+     */
+    public boolean drawCard(GraphicsContext gc, Image iconImage, Image rotatedImage) {
+        if (iconImage == null)
+            return false;
+
         // System.out.println("drawImage()");
         final double imageWidthPX = iconImage.getWidth();
         final double imageHeightPX = iconImage.getHeight();
+        final boolean landscape = imageHeightPX < imageWidthPX;
 
         final double pixelsX = centreX.getPixels();
         final double pixelsY = centreY.getPixels();
         double winX = cardWidthPX - (2*pixelsX);
-        double winY = cardHeightPX - (2*pixelsY);
+        double winY;
 
         double dX = 0;
         double dY = 0;
 
-        if (imageHeightPX < imageWidthPX) {
+        if (landscape) {
             // System.out.println("landscape");
 
             winY = (cardHeightPX / 2) - pixelsY;
@@ -234,6 +283,8 @@ public class ImagePayload extends Payload {
         } else {
             // System.out.println("portrait");
 
+            winY = cardHeightPX - (2*pixelsY);
+
             if (keepAspectRatio) {
                 double scaleX = winX / imageWidthPX;
                 double scaleY = winY / imageHeightPX;
@@ -248,23 +299,6 @@ public class ImagePayload extends Payload {
 
             gc.drawImage(iconImage, pixelsX + dX, pixelsY + dY, winX, winY);
         }
-    }
-
-
-    /**
-     * Draw icons to a given graphics context using the user specification.
-     * 
-     * @param gc graphics context to draw on.
-     * @param iconImage used for the icons.
-     * @param rotatedImage rotated version of the image used for the icons.
-     * @param pattern indicating the arrangement of icons.
-     * @return true if the icons are drawn, false otherwise.
-     */
-    public boolean drawCard(GraphicsContext gc, Image iconImage, Image rotatedImage, int pattern) {
-        if (iconImage == null)
-            return false;
-
-        drawImage(gc, iconImage, rotatedImage);
 
         return true;
     }

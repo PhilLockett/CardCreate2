@@ -32,68 +32,43 @@ import javafx.scene.Group;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+
 import phillockett65.CardCreate2.Model;
 
 public class Payload {
 
 
-    private final static int[][] flags = {
-        { 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-        { 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-        { 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-        { 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-        { 1, 1, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-        { 1, 1, 1, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-        { 1, 1, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0 },
-        { 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0 },
-        { 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0 },
-        { 1, 1, 1, 0, 0, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0 },
-        { 1, 1, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1 },
-        { 1, 1, 1, 0, 0, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 0, 0 },
-        { 1, 1, 0, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 0, 0 },
-        { 1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 0, 0 }
-    };
-
-    private final static Loc[] locationList = {
-        Loc.L_0, Loc.L_1, Loc.L_2, Loc.L_3,
-        Loc.L_4, Loc.L_5, Loc.L_6, Loc.L_7,
-        Loc.L_8, Loc.L_9, Loc.L10, Loc.L11,
-        Loc.L12, Loc.L13, Loc.L14, Loc.L15,
-        Loc.L16 
-    };
+    /************************************************************************
+     * Support code for ImageView array management.
+     */
 
     private ImageView[] views;
 
     /**
-     * Get the corresponding Loc for the indexed ImageView.
+     * Create the ImageView array to hold the image for this Payload.
      * 
-     * @param imageIndex for the ImageView in views[].
-     * @return the corresponding Loc for the indicated ImageView.
+     * @param group node to add the ImageViews to.
      */
-    private Loc getLocation(int imageIndex) {
-        return locationList[imageIndex];
+    private void createImageViewArray(Group group) {
+
+        views = new ImageView[2];
+
+        views[0] = new ImageView();
+        views[0].setPreserveRatio(true);
+
+        views[1] = new ImageView();
+        views[1].setPreserveRatio(true);
+        views[1].setRotate(180);
+
+        group.getChildren().add(views[0]);
+        group.getChildren().add(views[1]);
     }
 
     /**
      * Create the ImageView array to hold the image for this Payload.
-     * 
-     * @param pattern of icons/sprite for this Payload.
-     * @param group node to add the ImageViews to.
-     * @return the ImageView array.
      */
-    private void createImageViewArray(int pattern, Group group) {
-        int icons = (pattern > 1) ? 17 : 2;
-        views = new ImageView[icons];
-
-        for (int i = 0; i < views.length; ++i) {
-            views[i] = new ImageView();
-
-            views[i].setPreserveRatio(true);
-            if (getLocation(i).getRotate())
-                views[i].setRotate(180);
-            
-            group.getChildren().add(views[i]);
-        }
+    protected void createImageViews() {
+        createImageViewArray(model.getGroup());
     }
 
     /**
@@ -107,41 +82,20 @@ public class Payload {
     }
 
     /**
-     * set the image in all ImageViews.
+     * Set the image in all ImageViews.
      * 
-     * @param imageIndex for the ImageView in views[].
-     * @return the indicated ImageView.
+     * @param image to be set in each ImageView in views[].
      */
     private void setImages(Image image) {
-        for (int i = 0; i < views.length; ++i)
-            getImageView(i).setImage(image);
+        views[0].setImage(image);
+        views[1].setImage(image);
     }
 
     /**
-     * @return the active ImageView count.
+     * Set the image in all ImageViews.
      */
-    private int getImageCount() {
-        if ((item == Item.FACE) && (!isLandscape()))
-            return 1;
-
-        return views.length;
-    }
-
-    /**
-     * Indicates whether the indexed ImageView should be visible.
-     * 
-     * @param imageIndex for the ImageView in views[].
-     * @return true if the image should be visible, false otherwise.
-     */
-    private boolean isImageViewVisible(int imageIndex) {
-        if (!display)
-            return false;
-
-        return isIconVisible(pattern, imageIndex);
-    }
-
-    private boolean isIconVisible(int pattern, int imageIndex) {
-        return flags[pattern][imageIndex] == 1;
+    protected void setImages() {
+        setImages(image);
     }
 
     protected class Real {
@@ -178,33 +132,36 @@ public class Payload {
 
     }
 
-    private double getXOriginPX() {
-            return (centreX.getPixels()) - (spriteWidth.getPixels()/2);
+    protected double getXOriginPX() {
+        return (centreX.getPixels()) - (spriteWidth.getPixels()/2);
     }
-    private double getYOriginPX() {
-            return (centreY.getPixels()) - (spriteHeight.getPixels()/2);
+    protected double getYOriginPX() {
+        return (centreY.getPixels()) - (spriteHeight.getPixels()/2);
     }
 
+
+
+    /************************************************************************
+     * Support code for the Payload class.
+     */
 
     // "image" refers to the image in the file, 
-    // "sprite" refers to the image on screen.
+    // "sprite" refers to the image on screen (AKA icon).
     protected Model model;
 
-    private int pattern = 0;
     private final Item item;
     protected String path;
-    private Group group;
     private Image image = null;
     protected double imageWidthPX = 0;
     protected double imageHeightPX = 0;
     protected double cardWidthPX;
     protected double cardHeightPX;
 
-    private boolean display = true;
+    protected boolean display = true;
     protected final Real centreX;
     protected final Real centreY;
     protected final Real spriteHeight;
-    private final Real spriteWidth;
+    protected final Real spriteWidth;
 
 
     public Payload(Model mainModel, Item it) {
@@ -212,12 +169,10 @@ public class Payload {
 
         model = mainModel;
 
-        group = model.getGroup();
         cardWidthPX = model.getCalculatedWidth();
         cardHeightPX = model.getHeight();
 
         item = it;
-        syncPattern();
 
         centreX = new Real(false);
         centreY = new Real(true);
@@ -228,31 +183,27 @@ public class Payload {
         spriteHeight.setPercent(item.getH());
         centreX.setPercent(item.getX());
         centreY.setPercent(item.getY());
-
-        // Set up the image views.
-        createImageViewArray(pattern, group);
-
-        // Set up image dependent values.
-        syncImageFile();
-        initImageViews();
     }
-
 
     /**
      * Initialize the Image Views based on item.
      */
-    private void initImageViews() {
-        // System.out.println("initImageViews() :: " + item);
-        
-        if (item == Item.FACE)
+    protected void initImageViews() {
+        setPath(item);
+        // System.out.println("initImageViews(" + path + ") :: " + item);
+
+        if (path.equals(""))
             return;
 
-        for (int i = 0; i < getImageCount(); ++i) {
-            final boolean visible = isImageViewVisible(i);
-            ImageView view = getImageView(i);
-            view.setVisible(visible);
+        if (loadNewImageFile()) {
+            setImages();
 
-            paintIcon(view, getLocation(i));
+            final boolean visible = isVisible();
+            
+            getImageView(0).setVisible(visible);
+            getImageView(1).setVisible(visible);
+            
+            paintIcons();
         }
     }
 
@@ -302,9 +253,11 @@ public class Payload {
         spriteWidth.setPixels(spriteHeight.getPixels() * imageWidthPX / imageHeightPX);
         // System.out.println("image size(" + imageWidthPX + ", " + imageHeightPX+ ")  scale = " + spriteScale);
 
-        setImages(image);
-
         return true;
+    }
+
+    protected void setPath(Item item) {
+        path = model.getImagePath(item);
     }
 
     /**
@@ -313,14 +266,14 @@ public class Payload {
      * @return true if the new file was loaded, false otherwise.
      */
     public boolean syncImageFile() {
-        path = model.getImagePath(item);
+        setPath(item);
         // System.out.println("syncImageFile(" + path + ") :: " + item);
 
         if (path.equals(""))
             return false;
 
         if (loadNewImageFile()) {
-            syncPattern();
+            setImages();
             setPatterns();
 
             return true;
@@ -329,19 +282,22 @@ public class Payload {
         return false;
     }
 
-    private void paintIcon(ImageView view, Loc location) {
+    private void paintIcons() {
         // System.out.println("paintIcon()");
 
-        final double winX = cardWidthPX - (2*centreX.getPixels());
-        final double offX = location.getXOffset() * winX;
-        double pX = getXOriginPX() + offX;
-
-        final double winY = cardHeightPX - (2*centreY.getPixels());
-        final double offY = location.getYOffset() * winY;
-        double pY = getYOriginPX() + offY;
+        ImageView view = getImageView(0);
+        double pX = getXOriginPX();
+        double pY = getYOriginPX();
 
         view.relocate(pX, pY);
+        view.setFitWidth(spriteWidth.getPixels());
+        view.setFitHeight(spriteHeight.getPixels());
 
+        view = getImageView(1);
+        pX += cardWidthPX - (2*centreX.getPixels());
+        pY += cardHeightPX - (2*centreY.getPixels());
+
+        view.relocate(pX, pY);
         view.setFitWidth(spriteWidth.getPixels());
         view.setFitHeight(spriteHeight.getPixels());
     }
@@ -349,40 +305,16 @@ public class Payload {
     /**
      * Paint the icons associated with this payload.
      */
-    private void setPatterns() {
-        // System.out.println("setPatterns()");
+    protected void setPatterns() {
+        // System.out.println("setPatterns() :: " + item);
 
-        if (item == Item.FACE) {
-            System.err.println("Payload.setPatterns() called for face image");
+        final boolean visible = isVisible();
 
-            return;
-        }
+        getImageView(0).setVisible(visible);
+        getImageView(1).setVisible(visible);
 
-        for (int i = 0; i < getImageCount(); ++i) {
-            final boolean visible = isImageViewVisible(i);
-            ImageView view = getImageView(i);
-            view.setVisible(visible);
-            // System.out.println(i + " visible = " + visible + " display = " + display);
-
-            if (visible)
-                paintIcon(view, getLocation(i));
-        }
-    }
-
-    /**
-     * Change pattern of a standard pip item to match the current card or set
-     *  it to 0 if this is not a standard pip card item.
-     * 
-     * @return true if pattern was changed, false otherwise.
-     */
-    private boolean syncPattern() {
-        final boolean change = (item == Item.STANDARD_PIP);
-
-        pattern = (change) ? model.getCard() : 0;
-
-        // System.out.println("syncPattern(" + pattern + ")");
-
-        return change;
+        if (visible)
+            paintIcons();
     }
 
     /**
@@ -593,10 +525,18 @@ public class Payload {
     }
 
     /**
+     * @return the Payload image.
+     */
+    protected Image getImage() {
+        return image;
+    }
+
+    /**
      * Indicates if the associated image file has a landscape aspect ratio.
      * @return true if the image file is landscape.
      */
     public boolean isLandscape() {
+        // System.out.println("isLandscape(" + (imageHeightPX < imageWidthPX) + ") :: " + item);
         if (image != null) {
             return imageHeightPX < imageWidthPX;
         }
@@ -612,8 +552,8 @@ public class Payload {
         // System.out.println("setVisible(" + state + ") :: " + item);
         display = state;
 
-        for (int i = 0; i < getImageCount(); ++i) 
-            getImageView(i).setVisible(isImageViewVisible(i));
+        getImageView(0).setVisible(display);
+        getImageView(1).setVisible(display);
     }
 
     /**
@@ -633,14 +573,14 @@ public class Payload {
     /**
      * Class to build the data needed to render the icons.
      */
-    private class Data {
-        public final double iconWidthPX;
-        public final double iconHeightPX;
+    protected class Data {
+        private final double iconWidthPX;
+        private final double iconHeightPX;
         public final double width;
         public final double height;
 
-        public final double pixelsX;
-        public final double pixelsY;
+        private final double pixelsX;
+        private final double pixelsY;
         public final double winX;
         public final double winY;
 
@@ -670,32 +610,24 @@ public class Payload {
      * @param gc graphics context to draw on.
      * @param iconImage used for the icons.
      * @param rotatedImage rotated version of the image used for the icons.
-     * @param pattern indicating the arrangement of icons.
      * @return true if the icons are drawn, false otherwise.
      */
-    public boolean drawCard(GraphicsContext gc, Image iconImage, Image rotatedImage, int pattern) {
+    public boolean drawCard(GraphicsContext gc, Image iconImage, Image rotatedImage) {
         if (iconImage == null)
             return false;
 
         final Data data = new Data(iconImage);
 
-        for (int i = 0; i < getImageCount(); ++i) {
-            if (isIconVisible(pattern, i)) {
-                final Loc location = getLocation(i);
+        double posX = data.originX;
+        double posY = data.originY;
+        gc.drawImage(iconImage, posX, posY, data.width, data.height);
 
-                final double posX = data.originX + (location.getXOffset() * data.winX);
-                final double posY = data.originY + (location.getYOffset() * data.winY);
-                
-                if (location.getRotate())
-                    gc.drawImage(rotatedImage, posX, posY, data.width, data.height);
-                else
-                    gc.drawImage(iconImage, posX, posY, data.width, data.height);
-            }
-        }
+        posX += data.winX;
+        posY += data.winY;
+        gc.drawImage(rotatedImage, posX, posY, data.width, data.height);
 
         return true;
     }
-
 
 
 }
