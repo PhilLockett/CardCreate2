@@ -33,15 +33,19 @@ public class DoublePayload extends Payload {
      * Support code for the DoublePayload class.
      */
 
+    /**
+     * Basic constructor.
+     * @param mainModel common model.
+     * @param item card item
+     */
     public DoublePayload(Model mainModel, Item item) {
-    		super(mainModel, item);
+        super(mainModel, item);
 
         // Set up the image views.
         createImageViews();
 
         // Set up image dependent values.
         initImageViews();
-	  }
-
+    }
 
 }

@@ -149,14 +149,14 @@ public class MultiPayload extends Payload {
     private int pattern = 0;
 
     public MultiPayload(Model mainModel) {
-		super(mainModel, Item.STANDARD_PIP);
+        super(mainModel, Item.STANDARD_PIP);
 
         // Set up the image views.
         createImageViewArray(model.getGroup());
 
         // Set up image dependent values.
-		initMultiImageViews();
-	}
+        initMultiImageViews();
+    }
 
     /**
      * Initialize the Image Views based on item.

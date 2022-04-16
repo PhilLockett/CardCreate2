@@ -39,14 +39,14 @@ public class ImagePayload extends Payload {
     protected boolean keepAspectRatio = true;
 
     public ImagePayload(Model mainModel) {
-		super(mainModel, Item.FACE);
+        super(mainModel, Item.FACE);
 
         // Set up the image views.
         createImageViews();
 
         // Set up image dependent values.
         initImageViews();
-	}
+    }
 
     /**
      * Initialize the Image Views based on item.
