@@ -1502,17 +1502,17 @@ public class Model {
         // Ensure that the output directory exists.
         makeOutputDirectory();
 
-        for (int s = 0; s < suits.length; ++s) {
+        for (int suit = 0; suit < suits.length; ++suit) {
             Image[] images = new Image[6];
-            images[0] = loadImage(getStandardPipImagePath(s));
+            images[0] = loadImage(getStandardPipImagePath(suit));
             images[1] = rotateImage(images[0]);
-            images[2] = loadImage(getCornerPipImagePath(s));
+            images[2] = loadImage(getCornerPipImagePath(suit));
             images[3] = rotateImage(images[2]);
-            images[4] = loadImage(getFacePipImagePath(s));
+            images[4] = loadImage(getFacePipImagePath(suit));
             images[5] = rotateImage(images[4]);
 
-            for (int c = 0; c < cards.length; ++c) {
-                save(s, c, images);
+            for (int card = 0; card < cards.length; ++card) {
+                save(suit, card, images);
             }
         }
     }
