@@ -1405,6 +1405,50 @@ public class Model {
      */
 
     /**
+     * Load an image file from disc.
+     * 
+     * @param path to the image file.
+     * @return the Image, or null if the file is not found.
+     */
+    private Image loadImage(String path) {
+        // System.out.println("loadImage(" + path + ")");
+        File file = new File(path);
+
+        if (!file.exists()) {
+            // System.out.println("File does not exist!");
+
+                return null;
+        }
+
+        Image loadedImage = null;
+        try {
+            loadedImage = new Image(new FileInputStream(file));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        return loadedImage;
+    }
+
+    /**
+     * Rotate the given image by 189 degrees.
+     * 
+     * @param image to rotate.
+     * @return the rotated Image.
+     */
+    private Image rotateImage(Image image) {
+        // System.out.println("rotateImage()");
+
+        ImageView view = new ImageView(image);
+        view.setRotate(180);
+        SnapshotParameters params = new SnapshotParameters();
+        params.setFill(Color.TRANSPARENT);
+
+        return view.snapshot(params, null);
+    }
+
+
+    /**
      * Draw a blank card, add the icons using the Payloads then write the 
      * image to disc.
      * 
@@ -1470,50 +1514,6 @@ public class Model {
         }
 
     }
-
-    /**
-     * Load an image file from disc.
-     * 
-     * @param path to the image file.
-     * @return the Image, or null if the file is not found.
-     */
-    private Image loadImage(String path) {
-        // System.out.println("loadImage(" + path + ")");
-        File file = new File(path);
-
-        if (!file.exists()) {
-            // System.out.println("File does not exist!");
-
-                return null;
-        }
-
-        Image loadedImage = null;
-        try {
-            loadedImage = new Image(new FileInputStream(file));
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-
-        return loadedImage;
-    }
-
-    /**
-     * Rotate the given image by 189 degrees.
-     * 
-     * @param image to rotate.
-     * @return the rotated Image.
-     */
-    private Image rotateImage(Image image) {
-        // System.out.println("rotateImage()");
-
-        ImageView view = new ImageView(image);
-        view.setRotate(180);
-        SnapshotParameters params = new SnapshotParameters();
-        params.setFill(Color.TRANSPARENT);
-
-        return view.snapshot(params, null);
-    }
-
 
     /**
      * Generate the card images and save them to disc.
