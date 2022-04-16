@@ -629,5 +629,35 @@ public class Payload {
         return true;
     }
 
+    /**
+     * Draw single portrait image to a given graphics context using hard coded 
+     * specification.
+     * 
+     * @param gc graphics context to draw on.
+     * @param iconImage used for the icons.
+     * @param rotatedImage rotated version of the image used for the icons.
+     * @return true if the icons are drawn, false otherwise.
+     */
+    public boolean drawJoker(GraphicsContext gc, Image iconImage, Image rotatedImage) {
+        if (image == null)
+            return false;
+
+        final double iconWidthPX = iconImage.getWidth();
+        final double iconHeightPX = iconImage.getHeight();
+        final double radius = model.getRadiusPX();
+
+        final double width = cardWidthPX * 0.07;
+        final double height = width * iconHeightPX / iconWidthPX;
+        
+        double posX = cardWidthPX * 0.02;
+        double posY = radius/4;
+        gc.drawImage(iconImage, posX, posY, width, height);
+
+        posX = cardWidthPX - posX - width;
+        posY = cardHeightPX - posY - height;
+        gc.drawImage(rotatedImage, posX, posY, width, height);
+
+        return true;
+    }
 
 }

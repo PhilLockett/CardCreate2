@@ -1516,6 +1516,63 @@ public class Model {
     }
 
     /**
+     * Draw a blank card, add the joker images then write to disc.
+     * 
+     * @param suit of joker to generate.
+     */
+    private void joker(int suit) {
+
+        final double xMax = getCalculatedWidth();
+        final double yMax = getHeight();
+        final double radius = getRadiusPX();
+
+        Group root = new Group();
+        // We need this Scene otherwise the canvas gets default background colour.
+        Scene s = new Scene(root, xMax, yMax, Color.TRANSPARENT);
+        final Canvas canvas = new Canvas(xMax, yMax);
+        GraphicsContext gc = canvas.getGraphicsContext2D();
+
+        // We add the canvas to the root otherwise the snapshot gets default background colour.
+        root.getChildren().add(canvas);
+
+        gc.setFill(backgroundColour);
+        gc.setStroke(Color.BLACK);
+        gc.setLineWidth(1);
+
+        gc.fillRoundRect(0, 0, xMax, yMax, radius, radius);
+        gc.strokeRoundRect(0, 0, xMax, yMax, radius, radius);
+
+        // Draw indices specific to the suit.
+        String pathToImage = getIndexDirectory() + "\\" + suits[suit] + cards[0] + ".png";
+        Image indexImage = loadImage(pathToImage);
+        if (indexImage != null) {
+            Image rotatedImage = rotateImage(indexImage);
+
+            index.drawJoker(gc, indexImage, rotatedImage);
+        }
+
+        // Draw face image specific to the suit.
+        Image faceImage = loadImage(getFaceImagePath(suit, 0));
+        if (faceImage == null) {
+            faceImage = loadImage(baseDirectory + "\\boneyard\\Back.png");
+        }
+        face.drawJoker(gc, faceImage);
+
+        String outputPath = getOutputDirectory() + "\\" + suits[suit] + cards[0] + ".png";
+        // System.out.println(outputPath);
+
+        try {
+            Image snapshot = canvas.snapshot(null, null);
+            BufferedImage image = SwingFXUtils.fromFXImage(snapshot, null);
+            
+            ImageIO.write(image, "png", new File(outputPath));
+        } catch (Exception e) {
+            System.out.println("Failed saving image: " + e);
+        }
+
+    }
+
+    /**
      * Generate the card images and save them to disc.
      */
     public void generate() {
@@ -1523,6 +1580,7 @@ public class Model {
         // Ensure that the output directory exists.
         makeOutputDirectory();
 
+        // Generate the cards.
         for (int suit = 0; suit < suits.length; ++suit) {
             Image[] images = new Image[6];
             images[0] = loadImage(getStandardPipImagePath(suit));
@@ -1532,9 +1590,14 @@ public class Model {
             images[4] = loadImage(getFacePipImagePath(suit));
             images[5] = rotateImage(images[4]);
 
-            for (int card = 0; card < cards.length; ++card) {
+            for (int card = 1; card < cards.length; ++card) {
                 save(suit, card, images);
             }
+        }
+
+        // Generate the jokers.
+        for (int suit = 0; suit < suits.length; ++suit) {
+            joker(suit);
         }
     }
 

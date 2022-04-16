@@ -303,4 +303,42 @@ public class ImagePayload extends Payload {
         return true;
     }
 
+    /**
+     * Draw single portrait image to a given graphics context using hard coded 
+     * specification.
+     * 
+     * @param gc graphics context to draw on.
+     * @param image used for the icons.
+     * @return true if the icons are drawn, false otherwise.
+     */
+    public boolean drawJoker(GraphicsContext gc, Image image) {
+        if (image == null)
+            return false;
+
+        final double imageWidthPX = image.getWidth();
+        final double imageHeightPX = image.getHeight();
+
+        final double pixelsX = cardWidthPX * 0.07;
+        final double pixelsY = cardHeightPX * 0.05;
+        double winX = cardWidthPX - (2*pixelsX);
+        double winY = cardHeightPX - (2*pixelsY);
+
+        double dX = 0;
+        double dY = 0;
+
+        double scaleX = winX / imageWidthPX;
+        double scaleY = winY / imageHeightPX;
+        if (scaleX < scaleY) {
+            dY = (winY - (imageHeightPX * scaleX)) / 2;
+            winY = imageHeightPX * scaleX;
+        } else {
+            dX = (winX - (imageWidthPX * scaleY)) / 2;
+            winX = imageWidthPX * scaleY;
+        }
+
+        gc.drawImage(image, pixelsX + dX, pixelsY + dY, winX, winY);
+
+        return true;
+    }
+
 }
