@@ -25,9 +25,6 @@
 package phillockett65.CardCreate2.sample;
 
 import javafx.application.Platform;
-// import javafx.beans.value.ChangeListener;
-// import javafx.beans.value.ObservableValue;
-// import javafx.geometry.Point2D;
 import javafx.scene.Group;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
@@ -43,7 +40,6 @@ public class CardSample extends Stage {
     private Controller controller;
     private Model model;
 
-    // private Stage stage;
     private Scene scene;
     private Group group;
     private Rectangle card;
@@ -65,7 +61,6 @@ public class CardSample extends Stage {
     public CardSample(Controller mainController, Model mainModel, String title) {
 //		System.out.println("CardSample constructed: " + title);
 
-        // stage = this;
         resizableProperty().setValue(false);
         setOnCloseRequest(e -> Platform.exit());
         initStyle(StageStyle.TRANSPARENT);
@@ -139,35 +134,6 @@ public class CardSample extends Stage {
         group.getChildren().add(card);
     }
 
-    // Stage stage;
-    // private void addChangeListener() {
-    //     stage = this;
-
-    //     ChangeListener<Number> listener = new ChangeListener<Number>() {
-    //         private Point2D stageSize = null ;
-    //         private Point2D previousStageSize = new Point2D(stage.getWidth(), stage.getHeight());
-
-    //         @Override
-    //         public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-
-    //             if (stageSize == null) {
-    //                 Platform.runLater(() -> {
-    //                     System.out.printf("Old: (%.1f, %.1f); new: (%.1f, %.1f)%n", 
-    //                             previousStageSize.getX(), previousStageSize.getY(), 
-    //                             stageSize.getX(), stageSize.getY());
-    //                     previousStageSize = stageSize;
-    //                     stageSize = null;
-    //                 });
-    //             }
-    //             stageSize = new Point2D(stage.getWidth(), stage.getHeight());
-    //         }
-
-    //     };
-
-    //     this.widthProperty().addListener(listener);
-    //     this.heightProperty().addListener(listener);
-    // }
-
     /**
      * Initialization after a base directory has been selected.
      */
@@ -200,9 +166,9 @@ public class CardSample extends Stage {
         });
     }
 
-/************************************************************************
- * Synchronize interface.
- */
+    /************************************************************************
+     * Synchronize interface.
+     */
 
     /**
      * Synchronise to the current background colour.
