@@ -851,7 +851,11 @@ public class Model {
     }
 
     /**
-     * @return true if the face image file exits.
+     * Check if the face image file exists.
+     * 
+     * @param s suit of card to generate.
+     * @param c card number of card to generate.
+     * @return true if the face image file exists.
      */
     private boolean isFaceImageExists(int s, int c) {
         File file = new File(getFaceImagePath(s, c));
@@ -860,6 +864,10 @@ public class Model {
     }
 
     /**
+     * Generate the file path for the face image.
+     * 
+     * @param s suit of card to generate.
+     * @param c card number of card to generate.
      * @return the file path for the face image of the specified card in the 
      * current style.
      */
@@ -868,6 +876,10 @@ public class Model {
     }
 
     /**
+     * Generate the file path for the index image.
+     * 
+     * @param s suit of card to generate.
+     * @param c card number of card to generate.
      * @return the file path for the index image of the specified card in the 
      * current style.
      */
@@ -881,6 +893,9 @@ public class Model {
     }
 
     /**
+     * Generate the file path for the standard pip image.
+     * 
+     * @param s suit of card to generate.
      * @return the file path for the standard pip image of the specified card 
      * in the current style.
      */
@@ -889,6 +904,9 @@ public class Model {
     }
 
     /**
+     * Generate the file path for the face pip image.
+     * 
+     * @param s suit of card to generate.
      * @return the file path for the face pip image of the specified card in 
      * the current style.
      */
@@ -902,6 +920,9 @@ public class Model {
     }
 
     /**
+     * Generate the file path for the corner pip image.
+     * 
+     * @param s suit of card to generate.
      * @return the file path for the corner pip image of the specified card in 
      * the current style.
      */
