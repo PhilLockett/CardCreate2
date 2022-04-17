@@ -1520,7 +1520,7 @@ public class Model {
      * 
      * @param suit of joker to generate.
      */
-    private void joker(int suit) {
+    private int joker(int suit, int errors) {
 
         final double xMax = getCalculatedWidth();
         final double yMax = getHeight();
@@ -1553,8 +1553,12 @@ public class Model {
 
         // Draw face image specific to the suit.
         Image faceImage = loadImage(getFaceImagePath(suit, 0));
+        
         if (faceImage == null) {
-            faceImage = loadImage(baseDirectory + "\\boneyard\\Back.png");
+            errors++;
+            if (errors % 2 == 1) {
+                faceImage = loadImage(baseDirectory + "\\boneyard\\Back.png");
+            }
         }
         face.drawJoker(gc, faceImage);
 
@@ -1570,6 +1574,7 @@ public class Model {
             System.out.println("Failed saving image: " + e);
         }
 
+        return errors;
     }
 
     /**
@@ -1596,9 +1601,10 @@ public class Model {
         }
 
         // Generate the jokers.
-        for (int suit = 0; suit < suits.length; ++suit) {
-            joker(suit);
-        }
+        int errors = 0;
+        for (int suit = 0; suit < suits.length; ++suit)
+            errors = joker(suit, errors);
+
     }
 
 
