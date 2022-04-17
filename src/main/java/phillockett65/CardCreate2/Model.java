@@ -1456,7 +1456,7 @@ public class Model {
      * @param card number of card to generate.
      * @param images list of pip Images to use (so they are only read once).
      */
-    private void save(int suit, int card, Image[] images) {
+    private void generateCard(int suit, int card, Image[] images) {
 
         final double xMax = getCalculatedWidth();
         final double yMax = getHeight();
@@ -1519,8 +1519,11 @@ public class Model {
      * Draw a blank card, add the joker images then write to disc.
      * 
      * @param suit of joker to generate.
+     * @param errors number of times no joker image file was found, used to 
+     * vary default joker generation.
+     * @return the number of times no joker image file was found.
      */
-    private int joker(int suit, int errors) {
+    private int generateJoker(int suit, int errors) {
 
         final double xMax = getCalculatedWidth();
         final double yMax = getHeight();
@@ -1596,14 +1599,14 @@ public class Model {
             images[5] = rotateImage(images[4]);
 
             for (int card = 1; card < cards.length; ++card) {
-                save(suit, card, images);
+                generateCard(suit, card, images);
             }
         }
 
         // Generate the jokers.
         int errors = 0;
         for (int suit = 0; suit < suits.length; ++suit)
-            errors = joker(suit, errors);
+            errors = generateJoker(suit, errors);
 
     }
 
