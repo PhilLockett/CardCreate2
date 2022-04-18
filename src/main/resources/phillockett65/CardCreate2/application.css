@@ -1,7 +1,7 @@
 /* JavaFX CSS - Leave this comment until you have at least create one rule which uses -fx-Property */
 
 .root{
-    -fx-background-color: #141414;
+    -fx-background-color: #303030;
 }
 .label, .check-box, .radio-button{
     -fx-text-fill: #e8e8e8;
@@ -10,11 +10,19 @@
 .titled-pane{
     -fx-text-fill: black;
 }
+.title{
+    -fx-background-color: #e8e8e8;
+}
 
 .text-field:readonly{
     -fx-text-fill: #e8e8e8;
     -fx-font-weight: bold;
     -fx-background-color: #808080;
+}
+.combo-box{
+    -fx-text-fill: green;
+    -fx-font-weight: bold;
+    -fx-background-color: #e8e8e8;
 }
 .text-field{
     -fx-text-fill: #808080;
@@ -22,14 +30,13 @@
     -fx-background-color: #e8e8e8;
 }
 .text-area{
-    -fx-text-fill: e8e8e8;
+    -fx-text-fill: #e8e8e8;
 }
 .content{
-    -fx-background-color: #282828;
+    -fx-background-color: #080808;
 	-fx-border-color: #808080;
 	-fx-border-insets: 1;
 }
-
 .spinner{
     -fx-background-color: #282828;
 }
@@ -59,8 +66,8 @@
     -fx-background-color: #e8e8e8;
 }
 
-.imagejButton{
-    -fx-background-color: #282828;
-    -fx-text-fill: #282828;
+.imageButton{
+    -fx-background-color: #080808;
+    -fx-text-fill: #080808;
 }
 

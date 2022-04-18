@@ -22,7 +22,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane fx:id="userGUI" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="540.0" prefWidth="780.0" stylesheets="@application.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="phillockett65.CardCreate2.Controller">
+<BorderPane fx:id="userGUI" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="540.0" prefWidth="762.0" stylesheets="@application.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="phillockett65.CardCreate2.Controller">
    <bottom>
       <VBox BorderPane.alignment="CENTER">
          <children>
@@ -153,7 +153,7 @@
                <content>
                   <VBox alignment="CENTER" prefHeight="97.0" prefWidth="119.0">
                      <children>
-                        <Button fx:id="generateButton" mnemonicParsing="false" onAction="#generateButtonActionPerformed" styleClass="imagejButton" text="Gen" />
+                        <Button fx:id="generateButton" mnemonicParsing="false" onAction="#generateButtonActionPerformed" styleClass="imageButton" text="Gen" />
                      </children>
                   </VBox>
                </content>
@@ -181,10 +181,10 @@
                       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                      <children>
-                        <Button fx:id="previousCardButton" mnemonicParsing="false" onAction="#previousCardButtonActionPerformed" styleClass="imagejButton" text="Left" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
-                        <Button fx:id="nextCardButton" mnemonicParsing="false" onAction="#nextCardButtonActionPerformed" styleClass="imagejButton" text="Right" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
-                        <Button fx:id="previousSuitButton" mnemonicParsing="false" onAction="#previousSuitButtonActionPerformed" styleClass="imagejButton" text="Up" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
-                        <Button fx:id="nextSuitButton" mnemonicParsing="false" onAction="#nextSuitButtonActionPerformed" styleClass="imagejButton" text="Down" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
+                        <Button fx:id="previousCardButton" mnemonicParsing="false" onAction="#previousCardButtonActionPerformed" styleClass="imageButton" text="Left" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+                        <Button fx:id="nextCardButton" mnemonicParsing="false" onAction="#nextCardButtonActionPerformed" styleClass="imageButton" text="Right" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+                        <Button fx:id="previousSuitButton" mnemonicParsing="false" onAction="#previousSuitButtonActionPerformed" styleClass="imageButton" text="Up" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+                        <Button fx:id="nextSuitButton" mnemonicParsing="false" onAction="#nextSuitButtonActionPerformed" styleClass="imageButton" text="Down" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
                      </children>
                   </GridPane>
                </content>
@@ -198,7 +198,7 @@
    <left>
       <VBox prefHeight="195.0" prefWidth="590.0" spacing="8.0" BorderPane.alignment="CENTER">
          <children>
-            <HBox spacing="10.0">
+            <HBox spacing="8.0">
                <children>
                   <TitledPane animated="false" collapsible="false" text="Output Directory">
                     <content>
@@ -213,6 +213,7 @@
                         </HBox>
                     </content>
                   </TitledPane>
+                  <Region HBox.hgrow="ALWAYS" />
                   <TitledPane collapsible="false" text="Background Colour">
                      <content>
                         <HBox spacing="8.0">
