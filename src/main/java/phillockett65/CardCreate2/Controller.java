@@ -74,6 +74,30 @@ public class Controller {
         statusLabel.setText(Message);
     }
 
+    /**
+     * Show increase size of current card item message on status line.
+     */
+    public void increaseSize() {
+        final String name = model.getCurrentCardItemName();
+        if (!name.equals(""))
+            setStatusMessage("Click on Sample to increase size of card " + name + ".");
+    }
+
+    /**
+     * Show decrease size of current card item message on status line.
+     */
+    public void decreaseSize() {
+        final String name = model.getCurrentCardItemName();
+        if (!name.equals(""))
+            setStatusMessage("Click on Sample to decrease size of card " + name + ".");
+    }
+
+    /**
+     * Clear status line on key release.
+     */
+    public void release() {
+        setStatusMessage("Ready.");
+    }
 
     /**
      * Constructor.

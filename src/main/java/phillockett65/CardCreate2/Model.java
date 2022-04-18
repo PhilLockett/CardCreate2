@@ -851,6 +851,28 @@ public class Model {
     }
 
     /**
+     * @return the name of the currently Selected Card Item.
+     */
+    public String getCurrentCardItemName() {
+        final Item item = current.getItem();
+
+        if (item == Item.INDEX)
+            return "indices";
+
+        if (item == Item.STANDARD_PIP)
+            return "standard pips";
+
+        if (item == Item.FACE_PIP)
+            return "face pips";
+
+        if (item == Item.CORNER_PIP)
+            return "corner pips";
+
+        return "";
+    }
+
+
+    /**
      * Check if the face image file exists.
      * 
      * @param s suit of card to generate.

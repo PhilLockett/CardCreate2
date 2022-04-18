@@ -26,10 +26,12 @@ package phillockett65.CardCreate2;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
+import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -59,6 +61,25 @@ public class App extends Application {
         stage.setScene(scene);
 
         Controller controller = fxmlLoader.getController();
+
+        scene.setOnKeyPressed(event -> {
+            switch (event.getCode()) {
+            case ALT:
+                controller.decreaseSize();
+                break;
+
+            case CONTROL: 
+                controller.increaseSize();
+                break;
+
+            default:
+                break;
+            }
+        });
+
+        scene.setOnKeyReleased(event -> {
+            controller.release();
+        });
 
         stage.show();
 

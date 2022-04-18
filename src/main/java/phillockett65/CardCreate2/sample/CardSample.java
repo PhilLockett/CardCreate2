@@ -74,8 +74,7 @@ public class CardSample extends Stage {
     }
 
     /**
-     * Calls the grid constructor, initializes some globals and adds the nodes 
-     * of the cells to the model. 
+     * Initializes the stage and adds some handlers to the scene.
      */
     private void initializeCardSample() {
 
@@ -100,7 +99,6 @@ public class CardSample extends Stage {
         this.setMaxHeight(Default.MAX_HEIGHT.getFloat() + dy);
 
         scene.setOnMouseClicked(event -> {
-            // System.out.println("setOnMouseClicked(" + event.getButton() + ") on scene");
             if (event.isAltDown()) {
                 if (!event.isControlDown())
                     model.decCurrent();
@@ -113,6 +111,25 @@ public class CardSample extends Stage {
                 model.setNextPayload();
                 controller.syncToCurrentCardItem();
             }
+        });
+
+        scene.setOnKeyPressed(event -> {
+            switch (event.getCode()) {
+            case ALT:
+                controller.decreaseSize();
+                break;
+
+            case CONTROL: 
+                controller.increaseSize();
+                break;
+
+            default:
+                break;
+            }
+        });
+
+        scene.setOnKeyReleased(event -> {
+            controller.release();
         });
 
     }
@@ -141,12 +158,10 @@ public class CardSample extends Stage {
         handle = model.getHandle();
 
         handle.setOnMouseClicked(event -> {
-            // System.out.println("setOnMouseClicked(" + event.getButton() + ") on handle");
             event.consume();
         });
 
         handle.setOnMousePressed(event -> {
-            // System.out.println("setOnMousePressed(" + event.getButton() + ") on handle");
             dx = event.getSceneX() - model.getCurrentX();
             dy = event.getSceneY() - model.getCurrentY();
             xScale = 100 / model.getCalculatedWidth();
@@ -154,17 +169,17 @@ public class CardSample extends Stage {
         });
 
         handle.setOnMouseReleased(event -> {
-            // System.out.println("setOnMouseReleased(" + event.getButton() + ") on handle");
         });
 
         handle.setOnMouseDragged(event -> {
-            // System.out.println("setOnMouseDragged(" + event.getButton() + ") on handle");
             double xPos = (event.getSceneX() - dx) * xScale;
             double yPos = (event.getSceneY() - dy) * yScale;
             model.setCurrentX(xPos, true);
             model.setCurrentY(yPos, true);
         });
     }
+
+
 
     /************************************************************************
      * Synchronize interface.
