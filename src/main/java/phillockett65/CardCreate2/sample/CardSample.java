@@ -25,7 +25,6 @@
 package phillockett65.CardCreate2.sample;
 
 import javafx.application.Platform;
-import javafx.scene.Group;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.Scene;
@@ -41,9 +40,7 @@ public class CardSample extends Stage {
     private Model model;
 
     private Scene scene;
-    private Group group;
     private Rectangle card;
-    private Handle handle;
 
     private double dx;	// Difference between the size of the stage and the size of the scene.
     private double dy;
@@ -81,9 +78,7 @@ public class CardSample extends Stage {
         final float WIDTH = Default.WIDTH.getFloat();
         final float HEIGHT = Default.HEIGHT.getFloat();
 
-        group = model.getGroup();
-
-        scene = new Scene(group, WIDTH, HEIGHT, Color.TRANSPARENT);
+        scene = new Scene(model.getGroup(), WIDTH, HEIGHT, Color.TRANSPARENT);
         drawBlankCard();
 
         this.setScene(scene);
@@ -148,14 +143,14 @@ public class CardSample extends Stage {
         card.setArcHeight(radius);
         card.setStroke(Color.BLACK);
         card.setStrokeWidth(1);
-        group.getChildren().add(card);
+        model.getGroup().getChildren().add(card);
     }
 
     /**
      * Initialization after a base directory has been selected.
      */
     public void init() {
-        handle = model.getHandle();
+        Handle handle = model.getHandle();
 
         handle.setOnMouseClicked(event -> {
             event.consume();
