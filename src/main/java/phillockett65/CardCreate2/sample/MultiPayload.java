@@ -172,33 +172,27 @@ public class MultiPayload extends Payload {
             setImages(getImage());
             pattern = model.getCard();
 
+            final double cardWidthPX = model.getCalculatedWidth();
+            final double cardHeightPX = model.getHeight();
+            final double winX = cardWidthPX - (2*centreX.getPixels());
+            final double winY = cardHeightPX - (2*centreY.getPixels());
+
             for (int i = 0; i < getImageCount(); ++i) {
                 ImageView view = getImageView(i);
                 view.setVisible(isImageViewVisible(i));
-                
-                paintIcon(view, getLocation(i));
+
+                Loc location = getLocation(i);
+                final double offX = location.getXOffset() * winX;
+                final double pX = getXOriginPX() + offX;
+                final double offY = location.getYOffset() * winY;
+                final double pY = getYOriginPX() + offY;
+
+                view.relocate(pX, pY);
+
+                view.setFitWidth(spriteWidth.getPixels());
+                view.setFitHeight(spriteHeight.getPixels());
             }
         }
-    }
-
-    private void paintIcon(ImageView view, Loc location) {
-        // System.out.println("paintIcon()");
-
-        final double cardWidthPX = model.getCalculatedWidth();
-        final double cardHeightPX = model.getHeight();
-
-        final double winX = cardWidthPX - (2*centreX.getPixels());
-        final double offX = location.getXOffset() * winX;
-        double pX = getXOriginPX() + offX;
-
-        final double winY = cardHeightPX - (2*centreY.getPixels());
-        final double offY = location.getYOffset() * winY;
-        double pY = getYOriginPX() + offY;
-
-        view.relocate(pX, pY);
-
-        view.setFitWidth(spriteWidth.getPixels());
-        view.setFitHeight(spriteHeight.getPixels());
     }
 
     /**
@@ -207,13 +201,28 @@ public class MultiPayload extends Payload {
     private void setMultiPatterns() {
         // System.out.println("setMultiPatterns()");
 
+        final double cardWidthPX = model.getCalculatedWidth();
+        final double cardHeightPX = model.getHeight();
+        final double winX = cardWidthPX - (2*centreX.getPixels());
+        final double winY = cardHeightPX - (2*centreY.getPixels());
+
         for (int i = 0; i < getImageCount(); ++i) {
             final boolean visible = isImageViewVisible(i);
             ImageView view = getImageView(i);
             view.setVisible(visible);
 
-            if (visible)
-                paintIcon(view, getLocation(i));
+            if (visible) {
+                Loc location = getLocation(i);
+                final double offX = location.getXOffset() * winX;
+                double pX = getXOriginPX() + offX;
+                final double offY = location.getYOffset() * winY;
+                double pY = getYOriginPX() + offY;
+
+                view.relocate(pX, pY);
+
+                view.setFitWidth(spriteWidth.getPixels());
+                view.setFitHeight(spriteHeight.getPixels());
+            }
         }
     }
 
