@@ -340,12 +340,12 @@ public class MultiPayload extends Payload {
 
         for (int i = 0; i < getImageCount(); ++i) {
             if (isIconVisible(pattern, i)) {
-                final Loc location = getLocation(i);
+                final Loc loc = getLocation(i);
 
-                final double posX = data.originX + (location.getXOffset() * data.winX);
-                final double posY = data.originY + (location.getYOffset() * data.winY);
+                final double posX = data.originX + (loc.getXOffset() * data.winX);
+                final double posY = data.originY + (loc.getYOffset() * data.winY);
                 
-                if (location.getRotate())
+                if (loc.getRotate())
                     gc.drawImage(rotatedImage, posX, posY, data.width, data.height);
                 else
                     gc.drawImage(iconImage, posX, posY, data.width, data.height);
