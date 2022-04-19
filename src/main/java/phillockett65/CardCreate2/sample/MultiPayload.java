@@ -184,6 +184,9 @@ public class MultiPayload extends Payload {
     private void paintIcon(ImageView view, Loc location) {
         // System.out.println("paintIcon()");
 
+        final double cardWidthPX = model.getCalculatedWidth();
+        final double cardHeightPX = model.getHeight();
+
         final double winX = cardWidthPX - (2*centreX.getPixels());
         final double offX = location.getXOffset() * winX;
         double pX = getXOriginPX() + offX;
@@ -242,9 +245,6 @@ public class MultiPayload extends Payload {
      */
     public void syncCardSize() {
         // System.out.println("syncCardSize(" + item + ") :: number");
-
-        cardWidthPX = model.getCalculatedWidth();
-        cardHeightPX = model.getHeight();
 
         setMultiPatterns();
     }

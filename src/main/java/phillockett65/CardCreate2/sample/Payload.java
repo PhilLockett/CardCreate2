@@ -107,7 +107,7 @@ public class Payload {
         }
 
         private double getScale() {
-            return height ? cardHeightPX : cardWidthPX;
+            return height ? model.getHeight() : model.getCalculatedWidth();
         }
 
         public void setPercent(double value) {
@@ -154,8 +154,6 @@ public class Payload {
     private Image image = null;
     protected double imageWidthPX = 0;
     protected double imageHeightPX = 0;
-    protected double cardWidthPX;
-    protected double cardHeightPX;
 
     protected boolean display = true;
     protected final Real centreX;
@@ -168,9 +166,6 @@ public class Payload {
         // System.out.println("Payload()");
 
         model = mainModel;
-
-        cardWidthPX = model.getCalculatedWidth();
-        cardHeightPX = model.getHeight();
 
         item = it;
 
@@ -285,6 +280,9 @@ public class Payload {
     private void paintIcons() {
         // System.out.println("paintIcon()");
 
+        final double cardWidthPX = model.getCalculatedWidth();
+        final double cardHeightPX = model.getHeight();
+
         ImageView view = getImageView(0);
         double pX = getXOriginPX();
         double pY = getYOriginPX();
@@ -323,9 +321,6 @@ public class Payload {
     public void syncCardSize() {
         // System.out.println("syncCardSize(" + item + ") :: " + item);
 
-        cardWidthPX = model.getCalculatedWidth();
-        cardHeightPX = model.getHeight();
-
         setPatterns();
     }
 
@@ -334,16 +329,6 @@ public class Payload {
             return;
 
         spriteWidth.setPixels(spriteHeight.getPixels() * imageWidthPX / imageHeightPX);
-    }
-    
-    public void resizeCard(double w, double h) {
-        if (image == null)
-            return;
-
-//        System.out.printf("resizeCard() Width = %d,  Height = %d\n", w, h);
-
-        cardWidthPX = w;
-        cardHeightPX = h;
     }
 
     private boolean isValidPercentage(double value) {
@@ -574,6 +559,8 @@ public class Payload {
      * Class to build the data needed to render the icons.
      */
     protected class Data {
+        public final double cardWidthPX;
+        public final double cardHeightPX;
         private final double iconWidthPX;
         private final double iconHeightPX;
         public final double width;
@@ -588,6 +575,9 @@ public class Payload {
         public final double originY;
 
         public Data(Image iconImage) {
+            cardWidthPX = model.getCalculatedWidth();
+            cardHeightPX = model.getHeight();
+
             iconWidthPX = iconImage.getWidth();
             iconHeightPX = iconImage.getHeight();
             height = spriteHeight.getPixels();
@@ -642,6 +632,9 @@ public class Payload {
         if (image == null)
             return false;
 
+        final double cardWidthPX = model.getCalculatedWidth();
+        final double cardHeightPX = model.getHeight();
+    
         final double iconWidthPX = iconImage.getWidth();
         final double iconHeightPX = iconImage.getHeight();
         final double radius = model.getRadiusPX();

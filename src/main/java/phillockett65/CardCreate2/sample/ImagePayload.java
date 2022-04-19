@@ -70,6 +70,9 @@ public class ImagePayload extends Payload {
         if (!hasImage())
             return;
 
+        final double cardWidthPX = model.getCalculatedWidth();
+        final double cardHeightPX = model.getHeight();
+    
         final double pX = centreX.getPixels();
         final double pY = centreY.getPixels();
         final double winX = cardWidthPX - (2*pX);
@@ -150,9 +153,6 @@ public class ImagePayload extends Payload {
      */
     public void syncCardSize() {
         // System.out.println("syncCardSize(" + item + ") :: image");
-
-        cardWidthPX = model.getCalculatedWidth();
-        cardHeightPX = model.getHeight();
 
         paintImage();
     }
@@ -248,6 +248,9 @@ public class ImagePayload extends Payload {
         if (iconImage == null)
             return false;
 
+        final double cardWidthPX = model.getCalculatedWidth();
+        final double cardHeightPX = model.getHeight();
+    
         // System.out.println("drawImage()");
         final double imageWidthPX = iconImage.getWidth();
         final double imageHeightPX = iconImage.getHeight();
@@ -315,6 +318,9 @@ public class ImagePayload extends Payload {
         if (image == null)
             return false;
 
+        final double cardWidthPX = model.getCalculatedWidth();
+        final double cardHeightPX = model.getHeight();
+    
         final double imageWidthPX = image.getWidth();
         final double imageHeightPX = image.getHeight();
 
