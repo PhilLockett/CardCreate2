@@ -47,6 +47,8 @@ public class CardSample extends Stage {
     private double xScale = 1D;
     private double yScale = 1D;
 
+    private boolean resize = false;
+
 
     /**
      * Constructor.
@@ -153,7 +155,8 @@ public class CardSample extends Stage {
         Handle handle = model.getHandle();
 
         handle.setOnMouseClicked(event -> {
-            event.consume();
+            if (!resize)
+                event.consume();
         });
 
         handle.setOnMousePressed(event -> {
@@ -179,6 +182,10 @@ public class CardSample extends Stage {
     /************************************************************************
      * Synchronize interface.
      */
+
+    public void setResize(boolean state) {
+        resize = state;
+    }
 
     /**
      * Synchronise to the current background colour.

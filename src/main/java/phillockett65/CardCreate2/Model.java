@@ -1307,7 +1307,7 @@ public class Model {
      */
     private void initCurrentCardItemAndSyncSpinners(Payload item) {
         current = item;
-        handle = new Handle(handleImage, current);
+        handle = new Handle(handleImages, current);
         handle.setPayload(current);
         SyncSpinners();
     }
@@ -1349,7 +1349,7 @@ public class Model {
      */
 
     private Group group;
-    private Image handleImage;
+    private Image handleImages[];
     private Handle handle;
     private Rectangle box;
 
@@ -1396,6 +1396,27 @@ public class Model {
     }
 
     /**
+     * Set the move Handle in the "Sample" panel.
+     */
+    public void setMoveHandle() {
+        handle.setHandleImage(0);
+    }
+
+    /**
+     * Set the expand Handle in the "Sample" panel.
+     */
+    public void setGrowHandle() {
+        handle.setHandleImage(1);
+    }
+
+    /**
+     * Set the contract Handle in the "Sample" panel.
+     */
+    public void setShrinkHandle() {
+        handle.setHandleImage(2);
+    }
+
+    /**
      * Increase the size of the current card item.
      */
     public void incCurrent() {
@@ -1416,7 +1437,10 @@ public class Model {
      */
     private void initializeSample() {
         group = new Group();
-        handleImage = new Image(getClass().getResourceAsStream("Handle.png"));
+        handleImages = new Image[3];
+        handleImages[0] = new Image(getClass().getResourceAsStream("icon-move.png"));
+        handleImages[1] = new Image(getClass().getResourceAsStream("icon-expand.png"));
+        handleImages[2] = new Image(getClass().getResourceAsStream("icon-contract.png"));
         buildImageBox();
     }
 

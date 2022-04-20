@@ -79,8 +79,11 @@ public class Controller {
      */
     public void increaseSize() {
         final String name = model.getCurrentCardItemName();
-        if (!name.equals(""))
+        if (!name.equals("")) {
             setStatusMessage("Click on Sample to increase size of card " + name + ".");
+            model.setGrowHandle();
+            sample.setResize(true);
+        }
     }
 
     /**
@@ -88,8 +91,11 @@ public class Controller {
      */
     public void decreaseSize() {
         final String name = model.getCurrentCardItemName();
-        if (!name.equals(""))
+        if (!name.equals("")) {
             setStatusMessage("Click on Sample to decrease size of card " + name + ".");
+            model.setShrinkHandle();
+            sample.setResize(true);
+        }
     }
 
     /**
@@ -97,6 +103,8 @@ public class Controller {
      */
     public void release() {
         setStatusMessage("Ready.");
+        model.setMoveHandle();
+        sample.setResize(false);
     }
 
     /**
