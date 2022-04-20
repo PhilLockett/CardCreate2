@@ -32,6 +32,7 @@ public enum Default {
     POKER_ASPECT ((5F / 7F)),
     BRIDGE_ASPECT ((9F / 14F)),
 
+    CARD_ITEM_COUNT (5F),
     INDEX_HEIGHT (10.5F),
     INDEX_CENTRE_X (8.07F),
     INDEX_CENTRE_Y (9.84F),

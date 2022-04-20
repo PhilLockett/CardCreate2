@@ -1110,18 +1110,18 @@ public class Model {
         cornerPip	= new DoublePayload(this, Item.CORNER_PIP);
 
         // Set up payload slider used to determine next item.
-        final int CARDITEMCOUNT = 5;
-        payloadSlider = new Payload[CARDITEMCOUNT * 2];
+        final int ITEMS = Default.CARD_ITEM_COUNT.getInt();
+        payloadSlider = new Payload[ITEMS * 2];
         payloadSlider[Item.FACE.index()] = face;
-        payloadSlider[Item.FACE.index() + CARDITEMCOUNT] = face;
+        payloadSlider[Item.FACE.index() + ITEMS] = face;
         payloadSlider[Item.INDEX.index()] = index;
-        payloadSlider[Item.INDEX.index() + CARDITEMCOUNT] = index;
+        payloadSlider[Item.INDEX.index() + ITEMS] = index;
         payloadSlider[Item.STANDARD_PIP.index()] = standardPip;
-        payloadSlider[Item.STANDARD_PIP.index() + CARDITEMCOUNT] = standardPip;
+        payloadSlider[Item.STANDARD_PIP.index() + ITEMS] = standardPip;
         payloadSlider[Item.FACE_PIP.index()] = facePip;
-        payloadSlider[Item.FACE_PIP.index() + CARDITEMCOUNT] = facePip;
+        payloadSlider[Item.FACE_PIP.index() + ITEMS] = facePip;
         payloadSlider[Item.CORNER_PIP.index()] = cornerPip;
-        payloadSlider[Item.CORNER_PIP.index() + CARDITEMCOUNT] = cornerPip;
+        payloadSlider[Item.CORNER_PIP.index() + ITEMS] = cornerPip;
 
         initCurrentCardItemAndSyncSpinners(index);
         updateCardItemDisplayStatus();
