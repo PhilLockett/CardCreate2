@@ -31,8 +31,8 @@ public class Handle extends ImageView {
 
     private Image[] images;
 
-    private final double width = 20;
-    private final double height = 20;
+    private final double width = 32;
+    private final double height = 32;
     private Payload payload;
 
     public Handle(Image[] handleImages, Payload payload) {
