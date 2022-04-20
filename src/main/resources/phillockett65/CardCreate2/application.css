@@ -33,7 +33,7 @@
 }
 .content{
     -fx-background-color: #080808;
-	-fx-border-color: #808080;
+	-fx-border-color: yellow;
 	-fx-border-insets: 1;
 }
 .spinner{
@@ -63,6 +63,9 @@
 }
 .increment-arrow, .decrement-arrow{
     -fx-background-color: #e8e8e8;
+}
+.arrow{
+    -fx-background-color: black;
 }
 
 .imageButton{
