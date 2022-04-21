@@ -55,11 +55,11 @@ public enum Item {
     public int index() {
         if (this == INDEX)
             return 0;
-        if (this == CORNER_PIP)
-            return 1;
         if (this == STANDARD_PIP)
-            return 2;
+            return 1;
         if (this == FACE)
+            return 2;
+        if (this == CORNER_PIP)
             return 3;
 
         return 4;
