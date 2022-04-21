@@ -186,6 +186,29 @@ public class ImagePayload extends Payload {
     }
 
     /**
+     * Set the position of the centre of the sprite and the size.
+     * @param x co-ordinate as a percentage of the card width.
+     * @param y co-ordinate as a percentage of the card height.
+     * @param size as a percentage of the card height.
+     */
+    public void update(double x, double y, double size) {
+        // System.out.println("update(" + x + ", " + y + ", " + size + ") :: image");
+        boolean valid = true;
+
+        if (!setSpriteCentreX(x))
+            valid = false;
+
+        if (!setSpriteCentreY(y))
+            valid = false;
+
+        if (!setSpriteSize(size))
+            valid = false;
+
+        if (valid)
+            paintImage();
+    }
+
+    /**
      * Increase the size of the sprite.
      * @return the new size as a percentage of the card height.
      */

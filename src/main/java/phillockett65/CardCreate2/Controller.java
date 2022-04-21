@@ -944,17 +944,17 @@ public class Controller {
 
         itemHeightSpinner.valueProperty().addListener( (v, oldValue, newValue) -> {
             // System.out.println("itemHeightSpinner.valueProperty().Listener());");
-            model.setCurrentH(newValue, false);
+            model.setCurrentH(newValue);
         });
 
         itemCentreXSpinner.valueProperty().addListener( (v, oldValue, newValue) -> {
             // System.out.println("itemCentreXSpinner.valueProperty().Listener());");
-            model.setCurrentX(newValue, false);
+            model.setCurrentX(newValue);
         });
 
         itemCentreYSpinner.valueProperty().addListener( (v, oldValue, newValue) -> {
             // System.out.println("itemCentreYSpinner.valueProperty().Listener());");
-            model.setCurrentY(newValue, false);
+            model.setCurrentY(newValue);
         });
 
     }

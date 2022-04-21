@@ -132,13 +132,6 @@ public class Payload {
 
     }
 
-    protected double getXOriginPX() {
-        return (centreX.getPixels()) - (spriteWidth.getPixels()/2);
-    }
-    protected double getYOriginPX() {
-        return (centreY.getPixels()) - (spriteHeight.getPixels()/2);
-    }
-
 
 
     /************************************************************************
@@ -159,7 +152,6 @@ public class Payload {
     protected final Real centreX;
     protected final Real centreY;
     protected final Real spriteHeight;
-    protected final Real spriteWidth;
 
 
     public Payload(Model mainModel, Item it) {
@@ -171,7 +163,6 @@ public class Payload {
 
         centreX = new Real(false);
         centreY = new Real(true);
-        spriteWidth = new Real(false);
         spriteHeight = new Real(true);
 
         // Set up default percentages.
@@ -245,7 +236,6 @@ public class Payload {
 
         imageWidthPX = image.getWidth();
         imageHeightPX = image.getHeight();
-        spriteWidth.setPixels(spriteHeight.getPixels() * imageWidthPX / imageHeightPX);
         // System.out.println("image size(" + imageWidthPX + ", " + imageHeightPX+ ")  scale = " + spriteScale);
 
         return true;
@@ -278,26 +268,29 @@ public class Payload {
     }
 
     private void paintIcons() {
-        // System.out.println("paintIcon()");
+        // System.out.println("paintIcon() :: " + item);
 
         final double cardWidthPX = model.getCalculatedWidth();
         final double cardHeightPX = model.getHeight();
 
         ImageView view = getImageView(0);
-        double pX = getXOriginPX();
-        double pY = getYOriginPX();
+        final double height = spriteHeight.getPixels();
+        final double width = height * imageWidthPX / imageHeightPX;
+
+        double pX = (centreX.getPixels()) - (width/2);
+        double pY = (centreY.getPixels()) - (height/2);
 
         view.relocate(pX, pY);
-        view.setFitWidth(spriteWidth.getPixels());
-        view.setFitHeight(spriteHeight.getPixels());
+        view.setFitWidth(width);
+        view.setFitHeight(height);
 
         view = getImageView(1);
         pX += cardWidthPX - (2*centreX.getPixels());
         pY += cardHeightPX - (2*centreY.getPixels());
 
         view.relocate(pX, pY);
-        view.setFitWidth(spriteWidth.getPixels());
-        view.setFitHeight(spriteHeight.getPixels());
+        view.setFitWidth(width);
+        view.setFitHeight(height);
     }
 
     /**
@@ -319,16 +312,9 @@ public class Payload {
      * Synchronise to the current card size.
      */
     public void syncCardSize() {
-        // System.out.println("syncCardSize(" + item + ") :: " + item);
+        // System.out.println("syncCardSize() :: " + item);
 
         setPatterns();
-    }
-
-    protected void resizePercentages() {
-        if (image == null)
-            return;
-
-        spriteWidth.setPixels(spriteHeight.getPixels() * imageWidthPX / imageHeightPX);
     }
 
     private boolean isValidPercentage(double value) {
@@ -357,6 +343,7 @@ public class Payload {
      * @param value as a percentage of the card width.
      */
     public void setX(double value) {
+        // System.out.println("setX(" + value + ") :: " + item);
         if (setSpriteCentreX(value))
             setPatterns();
     }
@@ -380,6 +367,7 @@ public class Payload {
      * @param value as a percentage of the card height.
      */
     public void setY(double value) {
+        // System.out.println("setY(" + value + ") :: " + item);
         if (setSpriteCentreY(value))
             setPatterns();
     }
@@ -396,7 +384,6 @@ public class Payload {
         // System.out.println("setSpriteSize(" + size + ") :: " + item);
 
         spriteHeight.setPercent(size);
-        resizePercentages();
 
         return true;
     }
@@ -410,6 +397,30 @@ public class Payload {
         if (setSpriteSize(size))
             setPatterns();
     }
+
+    /**
+     * Set the position of the centre of the sprite and the size.
+     * @param x co-ordinate as a percentage of the card width.
+     * @param y co-ordinate as a percentage of the card height.
+     * @param size as a percentage of the card height.
+     */
+    public void update(double x, double y, double size) {
+        // System.out.println("update(" + x + ", " + y + ", " + size + ") :: " + item);
+        boolean valid = true;
+
+        if (!setSpriteCentreX(x))
+            valid = false;
+
+        if (!setSpriteCentreY(y))
+            valid = false;
+
+        if (!setSpriteSize(size))
+            valid = false;
+
+        if (valid)
+            setPatterns();
+    }
+
 
     /**
      * Increase the size of the sprite.

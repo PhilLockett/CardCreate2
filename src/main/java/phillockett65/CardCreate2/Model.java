@@ -1240,48 +1240,49 @@ public class Model {
      * Set the height of the currently selected card item.
      * 
      * @param value as a percentage of the card height.
-     * @param updateSVF flag indicating if itemHeightSVF should be updated.
      */
-    public void setCurrentH(double value, boolean updateSVF) {
+    public void setCurrentH(double value) {
         // System.out.println("model.setCurrentH(" + value + ");");
 
         current.setSize(value);
-        if (updateSVF)
-            itemHeightSVF.setValue(roundPercentage(value));
     }
 
     /**
      * Set the X co-ordinate of the centre of the currently selected card item.
      * 
      * @param value as a percentage of the card width.
-     * @param updateSVF flag indicating if itemCentreXSVF should be updated.
      */
-    public void setCurrentX(double value, boolean updateSVF) {
-        // System.out.println("model.setCurrentX(" + value + ");");
+    public void setCurrentX(double value) {
+        // System.out.println("model.setCurrentX(" + value + "); :: " + current.getItem());
 
         current.setX(value);
         showImageBox();
         handle.syncPosition();
-
-        if (updateSVF)
-            itemCentreXSVF.setValue(roundPercentage(value));
     }
 
     /**
      * Set the Y co-ordinate of the centre of the currently selected card item.
      * 
      * @param value as a percentage of the card height.
-     * @param updateSVF flag indicating if itemCentreYSVF should be updated.
      */
-    public void setCurrentY(double value, boolean updateSVF) {
-        // System.out.println("model.setCurrentY(" + value + ");");
+    public void setCurrentY(double value) {
+        // System.out.println("model.setCurrentY(" + value + "); :: " + current.getItem());
 
         current.setY(value);
         showImageBox();
         handle.syncPosition();
+    }
 
-        if (updateSVF)
-            itemCentreYSVF.setValue(roundPercentage(value));
+    public void setCurrentPos(double xPos, double yPos) {
+        // System.out.println("model.setCurrentPos(" + xPos + ", " + yPos + "); :: " + current.getItem());
+
+        current.setX(xPos);
+        current.setY(yPos);
+        showImageBox();
+        handle.syncPosition();
+
+        itemCentreXSVF.setValue(roundPercentage(xPos));
+        itemCentreYSVF.setValue(roundPercentage(yPos));
     }
 
     /**
@@ -1309,7 +1310,7 @@ public class Model {
         current = item;
         handle = new Handle(handleImages, current);
         handle.setPayload(current);
-        SyncSpinners();
+        syncSpinners();
     }
 
     /**
@@ -1321,16 +1322,26 @@ public class Model {
     private void changeCurrentCardItemAndSyncSpinners(Payload item) {
         current = item;
         handle.setPayload(current);
-        SyncSpinners();
+        syncSpinners();
     }
 
     /**
      * Sync the Card Item spinners to the current payload.
      */
-    private void SyncSpinners() {
-        itemHeightSVF.setValue(roundPercentage(current.getSpriteH()));
-        itemCentreXSVF.setValue(roundPercentage(current.getSpriteX()));
-        itemCentreYSVF.setValue(roundPercentage(current.getSpriteY()));
+    private void syncSpinners() {
+        // System.out.println("syncSpinners() :: " + current.getItem());
+
+        final double h = current.getSpriteH();
+        final double x = current.getSpriteX();
+        final double y = current.getSpriteY();
+
+        itemHeightSVF.setValue(roundPercentage(h));
+        itemCentreXSVF.setValue(roundPercentage(x));
+        itemCentreYSVF.setValue(roundPercentage(y));
+
+        current.update(x, y, h);
+        showImageBox();
+        handle.syncPosition();
     }
 
     /**
@@ -1421,7 +1432,7 @@ public class Model {
      */
     public void incCurrent() {
         current.incSize();
-        SyncSpinners();
+        syncSpinners();
     }
 
     /**
@@ -1429,7 +1440,7 @@ public class Model {
      */
     public void decCurrent() {
         current.decSize();
-        SyncSpinners();
+        syncSpinners();
     }
 
     /**
