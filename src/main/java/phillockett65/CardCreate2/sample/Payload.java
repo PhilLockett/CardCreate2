@@ -393,12 +393,12 @@ public class Payload {
         if (!isValidPercentage(size))
             return false;
 
-        // System.out.println("setSize(" + size + ") :: " + item);
+        // System.out.println("setSpriteSize(" + size + ") :: " + item);
 
         spriteHeight.setPercent(size);
         resizePercentages();
 
-        return false;
+        return true;
     }
 
     /**
