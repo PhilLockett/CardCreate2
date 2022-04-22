@@ -121,7 +121,7 @@ public class CardSample extends Stage {
         });
 
         scene.setOnScroll(event -> {
-            scale += event.getDeltaX() + event.getDeltaY();
+            scale += event.getTextDeltaX() + event.getTextDeltaY();
             int inc = (int)scale;
             if (inc != 0) {
                 scale -= inc;
