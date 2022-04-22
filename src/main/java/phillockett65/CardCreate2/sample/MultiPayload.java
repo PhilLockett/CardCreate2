@@ -324,7 +324,6 @@ public class MultiPayload extends Payload {
 
     /**
      * Increase the size of the sprite.
-     * @return the new size as a percentage of the card height.
      */
     public void incSize() {
         if (incSpriteSize(Default.STEP_COUNT.getInt()))
@@ -333,7 +332,6 @@ public class MultiPayload extends Payload {
 
     /**
      * Decrease the size of the sprite.
-     * @return the new size as a percentage of the card height.
      */
     public void decSize() {
         if (decSpriteSize(Default.STEP_COUNT.getInt()))
