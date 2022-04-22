@@ -180,6 +180,25 @@ public class ImagePayload extends Payload {
     }
 
     /**
+     * Set the position of the centre of the sprite and the size.
+     * @param x co-ordinate as a percentage of the card width.
+     * @param y co-ordinate as a percentage of the card height.
+     */
+    public void setPos(double x, double y) {
+        // System.out.println("setPos(" + x + ", " + y + ") :: " + item);
+        boolean valid = true;
+
+        if (!setSpriteCentreX(x))
+            valid = false;
+
+        if (!setSpriteCentreY(y))
+            valid = false;
+
+        if (valid)
+            paintImage();
+    }
+
+    /**
      * Set the size of the sprite.
      * @param size as a percentage of the card height.
      */
@@ -216,7 +235,7 @@ public class ImagePayload extends Payload {
      * @return the new size as a percentage of the card height.
      */
     public void incSize() {
-        if (incSpriteSize())
+        if (incSpriteSize(Default.STEP_COUNT.getInt()))
             paintImage();
     }
 
@@ -225,8 +244,22 @@ public class ImagePayload extends Payload {
      * @return the new size as a percentage of the card height.
      */
     public void decSize() {
-        if (decSpriteSize())
+        if (decSpriteSize(Default.STEP_COUNT.getInt()))
             paintImage();
+    }
+
+    /**
+     * Resize of the sprite.
+     * @param steps number of Default.STEP_SIZE steps to resize by.
+     */
+    public void resize(int steps) {
+        if (steps > 0) {
+            if (incSpriteSize(steps))
+                paintImage();
+        } else {
+            if (decSpriteSize(-steps))
+                paintImage();
+        }
     }
 
     /**
@@ -350,8 +383,8 @@ public class ImagePayload extends Payload {
         final double imageWidthPX = image.getWidth();
         final double imageHeightPX = image.getHeight();
 
-        final double pixelsX = cardWidthPX * 0.07;
-        final double pixelsY = cardHeightPX * 0.05;
+        final double pixelsX = cardWidthPX * 0.07D;
+        final double pixelsY = cardHeightPX * 0.05D;
         double winX = cardWidthPX - (2*pixelsX);
         double winY = cardHeightPX - (2*pixelsY);
 

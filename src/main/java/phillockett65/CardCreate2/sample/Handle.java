@@ -29,27 +29,20 @@ import javafx.scene.image.ImageView;
 
 public class Handle extends ImageView {
 
-    private Image[] images;
+    private Image image;
 
-    private final double width = 32;
-    private final double height = 32;
+    private final double size = 24;
+    private final double width = size;
+    private final double height = size;
     private Payload payload;
 
-    public Handle(Image[] handleImages, Payload payload) {
-        images = handleImages;
-        this.setImage(images[0]);
+    public Handle(Image handleImage, Payload payload) {
+        image = handleImage;
+        this.setImage(image);
 
         this.setFitWidth(width);
         this.setFitHeight(height);
         setPayload(payload);
-    }
-
-    /**
-     * Display the indexed handle image.
-     * @param index of image to display.
-     */
-    public void setHandleImage(int index) {
-        this.setImage(images[index]);
     }
 
     /**

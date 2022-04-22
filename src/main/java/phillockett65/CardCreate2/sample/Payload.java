@@ -363,6 +363,25 @@ public class Payload {
     }
 
     /**
+     * Set the position of the centre of the sprite and the size.
+     * @param x co-ordinate as a percentage of the card width.
+     * @param y co-ordinate as a percentage of the card height.
+     */
+    public void setPos(double x, double y) {
+        // System.out.println("setPos(" + x + ", " + y + ") :: " + item);
+        boolean valid = true;
+
+        if (!setSpriteCentreX(x))
+            valid = false;
+
+        if (!setSpriteCentreY(y))
+            valid = false;
+
+        if (valid)
+            setPatterns();
+    }
+
+    /**
      * Set the size of the sprite.
      * @param size as a percentage of the card height.
      * @return true if size is valid, false otherwise.
@@ -414,15 +433,16 @@ public class Payload {
 
     /**
      * Increase the size of the sprite.
+     * @param steps number of Default.STEP_SIZE steps to increase by.
      * @return true if size is increased, false otherwise.
      */
-    protected boolean incSpriteSize() {
+    protected boolean incSpriteSize(int steps) {
         double size = spriteHeight.getPercent();
 
         if (size == 100D)
             return false;
 
-        size += 0.5D;
+        size += Default.STEP_SIZE.getFloat() * steps;
         if (size > 100D)
             size = 100D;
 
@@ -435,21 +455,22 @@ public class Payload {
      * Increase the size of the sprite.
      */
     public void incSize() {
-        if (incSpriteSize())
+        if (incSpriteSize(Default.STEP_COUNT.getInt()))
             setPatterns();
     }
 
     /**
      * Decrease the size of the sprite.
+     * @param steps number of Default.STEP_SIZE steps to decrease by.
      * @return true if size is decreased, false otherwise.
      */
-    protected boolean decSpriteSize() {
+    protected boolean decSpriteSize(int steps) {
         double size = spriteHeight.getPercent();
 
         if (size == 0D)
         return false;
 
-        size -= 0.5D;
+        size -= Default.STEP_SIZE.getFloat() * steps;
         if (size < 0D)
             size = 0D;
 
@@ -462,8 +483,22 @@ public class Payload {
      * Decrease the size of the sprite.
      */
     public void decSize() {
-        if (decSpriteSize())
+        if (decSpriteSize(Default.STEP_COUNT.getInt()))
             setPatterns();
+    }
+
+    /**
+     * Resize of the sprite.
+     * @param steps number of Default.STEP_SIZE steps to resize by.
+     */
+    public void resize(int steps) {
+        if (steps > 0) {
+            if (incSpriteSize(steps))
+                setPatterns();
+        } else {
+            if (decSpriteSize(-steps))
+                setPatterns();
+        }
     }
 
     public double getCentreX() {

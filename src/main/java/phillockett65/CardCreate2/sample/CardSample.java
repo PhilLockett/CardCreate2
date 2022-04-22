@@ -27,6 +27,7 @@ package phillockett65.CardCreate2.sample;
 import javafx.application.Platform;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.Cursor;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -42,10 +43,15 @@ public class CardSample extends Stage {
     private Scene scene;
     private Rectangle card;
 
+    private double mx;
+    private double my;
+
     private double dx;	// Difference between the size of the stage and the size of the scene.
     private double dy;
     private double xScale = 1D;
     private double yScale = 1D;
+
+    private double scale = 0D;
 
     private boolean resize = false;
 
@@ -53,9 +59,9 @@ public class CardSample extends Stage {
     /**
      * Constructor.
      * 
-     * @param mainController	- used to call the centralized controller.
-     * @param mainModel			- used to call the centralized data model.
-     * @param title				- string displayed as the heading of the Stage.
+     * @param mainController    - used to call the centralized controller.
+     * @param mainModel         - used to call the centralized data model.
+     * @param title             - string displayed as the heading of the Stage.
      */
     public CardSample(Controller mainController, Model mainModel, String title) {
 //		System.out.println("CardSample constructed: " + title);
@@ -110,6 +116,19 @@ public class CardSample extends Stage {
             }
         });
 
+        scene.setOnMouseEntered(event -> {
+            scale = 0D;
+        });
+
+        scene.setOnScroll(event -> {
+            scale += event.getDeltaX() + event.getDeltaY();
+            int inc = (int)scale;
+            if (inc != 0) {
+                scale -= inc;
+                model.resizeCurrent(inc);
+            }
+        });
+
         scene.setOnKeyPressed(event -> {
             switch (event.getCode()) {
             case ALT:
@@ -160,21 +179,31 @@ public class CardSample extends Stage {
         });
 
         handle.setOnMousePressed(event -> {
-            dx = event.getSceneX() - model.getCurrentX();
-            dy = event.getSceneY() - model.getCurrentY();
+            mx = event.getSceneX() - model.getCurrentX();
+            my = event.getSceneY() - model.getCurrentY();
             xScale = 100 / model.getCalculatedWidth();
             yScale = 100 / model.getHeight();
+            scene.setCursor(Cursor.CLOSED_HAND);
         });
 
         handle.setOnMouseReleased(event -> {
+            scene.setCursor(Cursor.OPEN_HAND);
         });
 
         handle.setOnMouseDragged(event -> {
-            double xPos = (event.getSceneX() - dx) * xScale;
-            double yPos = (event.getSceneY() - dy) * yScale;
-            model.setCurrentX(xPos, true);
-            model.setCurrentY(yPos, true);
+            double xPos = (event.getSceneX() - mx) * xScale;
+            double yPos = (event.getSceneY() - my) * yScale;
+            model.setCurrentPos(xPos, yPos);
         });
+
+        handle.setOnMouseEntered(event -> {
+            scene.setCursor(Cursor.OPEN_HAND);
+        });
+
+        handle.setOnMouseExited(event -> {
+            scene.setCursor(Cursor.DEFAULT);
+        });
+
     }
 
 

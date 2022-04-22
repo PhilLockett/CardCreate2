@@ -272,6 +272,25 @@ public class MultiPayload extends Payload {
     }
 
     /**
+     * Set the position of the centre of the sprite and the size.
+     * @param x co-ordinate as a percentage of the card width.
+     * @param y co-ordinate as a percentage of the card height.
+     */
+    public void setPos(double x, double y) {
+        // System.out.println("setPos(" + x + ", " + y + ") :: " + item);
+        boolean valid = true;
+
+        if (!setSpriteCentreX(x))
+            valid = false;
+
+        if (!setSpriteCentreY(y))
+            valid = false;
+
+        if (valid)
+            setMultiPatterns();
+    }
+
+    /**
      * Set the size of the sprite.
      * @param size as a percentage of the card height.
      */
@@ -308,7 +327,7 @@ public class MultiPayload extends Payload {
      * @return the new size as a percentage of the card height.
      */
     public void incSize() {
-        if (incSpriteSize())
+        if (incSpriteSize(Default.STEP_COUNT.getInt()))
             setMultiPatterns();
     }
 
@@ -317,10 +336,23 @@ public class MultiPayload extends Payload {
      * @return the new size as a percentage of the card height.
      */
     public void decSize() {
-        if (decSpriteSize())
+        if (decSpriteSize(Default.STEP_COUNT.getInt()))
             setMultiPatterns();
     }
 
+    /**
+     * Resize of the sprite.
+     * @param steps number of Default.STEP_SIZE steps to resize by.
+     */
+    public void resize(int steps) {
+        if (steps > 0) {
+            if (incSpriteSize(steps))
+                setMultiPatterns();
+        } else {
+            if (decSpriteSize(-steps))
+                setMultiPatterns();
+        }
+    }
     /**
      * Hide/display all locations of icons for this item.
      * @param state if true, display the icons, hide them otherwise.

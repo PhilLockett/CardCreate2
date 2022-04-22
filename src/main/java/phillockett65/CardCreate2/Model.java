@@ -1200,14 +1200,14 @@ public class Model {
     }
 
     /**
-     * Round a value to the nearest 0.05.
+     * Round a value to the nearest Default.STEP_SIZE.
      * 
      * @param value to be rounded.
      * @return rounded value.
      */
     private double roundPercentage(double value) {
-        long round = Math.round(value * 20);
-        value = (double)round / 20;
+        long round = Math.round(value / Default.STEP_SIZE.getFloat());
+        value = (double)round * Default.STEP_SIZE.getFloat();
 
         return value;
     }
@@ -1276,8 +1276,7 @@ public class Model {
     public void setCurrentPos(double xPos, double yPos) {
         // System.out.println("model.setCurrentPos(" + xPos + ", " + yPos + "); :: " + current.getItem());
 
-        current.setX(xPos);
-        current.setY(yPos);
+        current.setPos(xPos, yPos);
         showImageBox();
         handle.syncPosition();
 
@@ -1308,7 +1307,7 @@ public class Model {
      */
     private void initCurrentCardItemAndSyncSpinners(Payload item) {
         current = item;
-        handle = new Handle(handleImages, current);
+        handle = new Handle(handleImage, current);
         handle.setPayload(current);
         syncSpinners();
     }
@@ -1348,9 +1347,9 @@ public class Model {
      * Initialize "Modify Selected Card Item" panel.
      */
     private void initializeModifySelectedCardItem() {
-        itemHeightSVF = new SpinnerValueFactory.DoubleSpinnerValueFactory(0, 100, 10, 0.05);
-        itemCentreXSVF = new SpinnerValueFactory.DoubleSpinnerValueFactory(0, 100, 10, 0.05);
-        itemCentreYSVF = new SpinnerValueFactory.DoubleSpinnerValueFactory(0, 100, 10, 0.05);
+        itemHeightSVF = new SpinnerValueFactory.DoubleSpinnerValueFactory(0, 100, 10, Default.STEP_SIZE.getFloat());
+        itemCentreXSVF = new SpinnerValueFactory.DoubleSpinnerValueFactory(0, 100, 10, Default.STEP_SIZE.getFloat());
+        itemCentreYSVF = new SpinnerValueFactory.DoubleSpinnerValueFactory(0, 100, 10, Default.STEP_SIZE.getFloat());
     }
 
 
@@ -1360,7 +1359,7 @@ public class Model {
      */
 
     private Group group;
-    private Image handleImages[];
+    private Image handleImage;
     private Handle handle;
     private Rectangle box;
 
@@ -1407,27 +1406,6 @@ public class Model {
     }
 
     /**
-     * Set the move Handle in the "Sample" panel.
-     */
-    public void setMoveHandle() {
-        handle.setHandleImage(0);
-    }
-
-    /**
-     * Set the expand Handle in the "Sample" panel.
-     */
-    public void setGrowHandle() {
-        handle.setHandleImage(1);
-    }
-
-    /**
-     * Set the contract Handle in the "Sample" panel.
-     */
-    public void setShrinkHandle() {
-        handle.setHandleImage(2);
-    }
-
-    /**
      * Increase the size of the current card item.
      */
     public void incCurrent() {
@@ -1444,14 +1422,19 @@ public class Model {
     }
 
     /**
+     * Resize of the current card item.
+     */
+    public void resizeCurrent(int steps) {
+        current.resize(steps);
+        syncSpinners();
+    }
+
+    /**
      * Initialize "Sample" panel.
      */
     private void initializeSample() {
         group = new Group();
-        handleImages = new Image[3];
-        handleImages[0] = new Image(getClass().getResourceAsStream("icon-move.png"));
-        handleImages[1] = new Image(getClass().getResourceAsStream("icon-expand.png"));
-        handleImages[2] = new Image(getClass().getResourceAsStream("icon-contract.png"));
+        handleImage = new Image(getClass().getResourceAsStream("Handle.png"));
         buildImageBox();
     }
 
