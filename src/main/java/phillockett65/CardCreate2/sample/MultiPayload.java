@@ -172,29 +172,22 @@ public class MultiPayload extends Payload {
             setImages(getImage());
             pattern = model.getCard();
 
-            final double cardWidthPX = model.getCalculatedWidth();
-            final double cardHeightPX = model.getHeight();
-            final double winX = cardWidthPX - (2*centreX.getPixels());
-            final double winY = cardHeightPX - (2*centreY.getPixels());
+            final Data data = new Data(getImage());
 
-            final double height = spriteHeight.getPixels();
-            final double width = height * imageWidthPX / imageHeightPX;
-    
-            double pX = (centreX.getPixels()) - (width/2);
-            double pY = (centreY.getPixels()) - (height/2);
+            final double pX = data.originX;
+            final double pY = data.originY;
 
             for (int i = 0; i < getImageCount(); ++i) {
                 ImageView view = getImageView(i);
                 view.setVisible(isImageViewVisible(i));
 
                 Loc location = getLocation(i);
-                final double offX = location.getXOffset() * winX;
-                final double offY = location.getYOffset() * winY;
+                final double offX = location.getXOffset() * data.winX;
+                final double offY = location.getYOffset() * data.winY;
 
                 view.relocate(pX + offX, pY + offY);
-
-                view.setFitWidth(width);
-                view.setFitHeight(height);
+                view.setFitWidth(data.width);
+                view.setFitHeight(data.height);
             }
         }
     }
@@ -205,16 +198,10 @@ public class MultiPayload extends Payload {
     private void setMultiPatterns() {
         // System.out.println("setMultiPatterns()");
 
-        final double cardWidthPX = model.getCalculatedWidth();
-        final double cardHeightPX = model.getHeight();
-        final double winX = cardWidthPX - (2*centreX.getPixels());
-        final double winY = cardHeightPX - (2*centreY.getPixels());
+        final Data data = new Data(getImage());
 
-        final double height = spriteHeight.getPixels();
-        final double width = height * imageWidthPX / imageHeightPX;
-
-        double pX = (centreX.getPixels()) - (width/2);
-        double pY = (centreY.getPixels()) - (height/2);
+        final double pX = data.originX;
+        final double pY = data.originY;
 
         for (int i = 0; i < getImageCount(); ++i) {
             final boolean visible = isImageViewVisible(i);
@@ -223,13 +210,12 @@ public class MultiPayload extends Payload {
 
             if (visible) {
                 Loc location = getLocation(i);
-                final double offX = location.getXOffset() * winX;
-                final double offY = location.getYOffset() * winY;
+                final double offX = location.getXOffset() * data.winX;
+                final double offY = location.getYOffset() * data.winY;
 
                 view.relocate(pX + offX, pY + offY);
-
-                view.setFitWidth(width);
-                view.setFitHeight(height);
+                view.setFitWidth(data.width);
+                view.setFitHeight(data.height);
             }
         }
     }

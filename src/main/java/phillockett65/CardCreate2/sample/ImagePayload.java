@@ -73,6 +73,9 @@ public class ImagePayload extends Payload {
         final double cardWidthPX = model.getCalculatedWidth();
         final double cardHeightPX = model.getHeight();
     
+        final double imageWidthPX = getImage().getWidth();
+        final double imageHeightPX = getImage().getHeight();
+
         final double pX = centreX.getPixels();
         final double pY = centreY.getPixels();
         final double winX = cardWidthPX - (2*pX);

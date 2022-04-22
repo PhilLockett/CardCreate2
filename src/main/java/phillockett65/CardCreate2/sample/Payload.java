@@ -145,8 +145,6 @@ public class Payload {
     private final Item item;
     protected String path;
     private Image image = null;
-    protected double imageWidthPX = 0;
-    protected double imageHeightPX = 0;
 
     protected boolean display = true;
     protected final Real centreX;
@@ -231,14 +229,7 @@ public class Payload {
 
         image = loadImage(path);
 
-        if (image == null)
-            return false;
-
-        imageWidthPX = image.getWidth();
-        imageHeightPX = image.getHeight();
-        // System.out.println("image size(" + imageWidthPX + ", " + imageHeightPX+ ")  scale = " + spriteScale);
-
-        return true;
+        return image != null;
     }
 
     protected void setPath(Item item) {
@@ -267,34 +258,33 @@ public class Payload {
         return false;
     }
 
+    /**
+     * Paint both icons associated with this payload.
+     */
     private void paintIcons() {
         // System.out.println("paintIcon() :: " + item);
 
-        final double cardWidthPX = model.getCalculatedWidth();
-        final double cardHeightPX = model.getHeight();
+        final Data data = new Data(image);
 
         ImageView view = getImageView(0);
-        final double height = spriteHeight.getPixels();
-        final double width = height * imageWidthPX / imageHeightPX;
+        double posX = data.originX;
+        double posY = data.originY;
 
-        double pX = (centreX.getPixels()) - (width/2);
-        double pY = (centreY.getPixels()) - (height/2);
-
-        view.relocate(pX, pY);
-        view.setFitWidth(width);
-        view.setFitHeight(height);
+        view.relocate(posX, posY);
+        view.setFitWidth(data.width);
+        view.setFitHeight(data.height);
 
         view = getImageView(1);
-        pX += cardWidthPX - (2*centreX.getPixels());
-        pY += cardHeightPX - (2*centreY.getPixels());
+        posX += data.winX;
+        posY += data.winY;
 
-        view.relocate(pX, pY);
-        view.setFitWidth(width);
-        view.setFitHeight(height);
+        view.relocate(posX, posY);
+        view.setFitWidth(data.width);
+        view.setFitHeight(data.height);
     }
 
     /**
-     * Paint the icons associated with this payload.
+     * Paint the icons associated with this payload if visible.
      */
     protected void setPatterns() {
         // System.out.println("setPatterns() :: " + item);
@@ -533,9 +523,8 @@ public class Payload {
      */
     public boolean isLandscape() {
         // System.out.println("isLandscape(" + (imageHeightPX < imageWidthPX) + ") :: " + item);
-        if (image != null) {
-            return imageHeightPX < imageWidthPX;
-        }
+        if (image != null)
+            return image.getHeight() < image.getWidth();
 
         return false;
     }
