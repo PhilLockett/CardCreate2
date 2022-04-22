@@ -351,6 +351,40 @@ public class MultiPayload extends Payload {
                 setMultiPatterns();
         }
     }
+
+    /**
+     * Move the sprite up.
+     */
+    public void moveUp() {
+        if (moveSpriteUp(Default.STEP_COUNT.getInt()))
+            setMultiPatterns();
+    }
+
+    /**
+     * Move the sprite down.
+     */
+    public void moveDown() {
+        if (moveSpriteDown(Default.STEP_COUNT.getInt()))
+            setMultiPatterns();
+    }
+
+    /**
+     * Move the sprite left.
+     */
+    public void moveLeft() {
+        if (moveSpriteLeft(Default.STEP_COUNT.getInt()))
+            setMultiPatterns();
+    }
+
+    /**
+     * Move the sprite right.
+     */
+    public void moveRight() {
+        if (moveSpriteRight(Default.STEP_COUNT.getInt()))
+            setMultiPatterns();
+    }
+
+
     /**
      * Hide/display all locations of icons for this item.
      * @param state if true, display the icons, hide them otherwise.

@@ -468,7 +468,7 @@ public class Payload {
         double size = spriteHeight.getPercent();
 
         if (size == 0D)
-        return false;
+            return false;
 
         size -= Default.STEP_SIZE.getFloat() * steps;
         if (size < 0D)
@@ -500,6 +500,99 @@ public class Payload {
                 setPatterns();
         }
     }
+
+    protected boolean moveSpriteUp(int steps) {
+        double value = centreY.getPercent();
+
+        if (value == 0D)
+            return false;
+
+        value -= Default.STEP_SIZE.getFloat() * steps;
+        if (value < 0D)
+            value = 0D;
+
+        setY(value);
+        
+        return true;
+    }
+
+    /**
+     * Move the sprite up.
+     */
+    public void moveUp() {
+        if (moveSpriteUp(Default.STEP_COUNT.getInt()))
+            setPatterns();
+    }
+
+    protected boolean moveSpriteDown(int steps) {
+        double value = centreY.getPercent();
+
+        if (value == 100D)
+            return false;
+
+        value += Default.STEP_SIZE.getFloat() * steps;
+        if (value > 100D)
+            value = 100D;
+
+        setY(value);
+
+        return true;
+    }
+
+    /**
+     * Move the sprite down.
+     */
+    public void moveDown() {
+        if (moveSpriteDown(Default.STEP_COUNT.getInt()))
+            setPatterns();
+    }
+
+    protected boolean moveSpriteLeft(int steps) {
+        double value = centreX.getPercent();
+
+        if (value == 0D)
+            return false;
+
+        value -= Default.STEP_SIZE.getFloat() * steps;
+        if (value < 0D)
+            value = 0D;
+
+        setX(value);
+        
+        return true;
+    }
+
+    /**
+     * Move the sprite left.
+     */
+    public void moveLeft() {
+        if (moveSpriteLeft(Default.STEP_COUNT.getInt()))
+            setPatterns();
+    }
+
+    protected boolean moveSpriteRight(int steps) {
+        double value = centreX.getPercent();
+
+        if (value == 100D)
+            return false;
+
+        value += Default.STEP_SIZE.getFloat() * steps;
+        if (value > 100D)
+            value = 100D;
+
+        setX(value);
+
+        return true;
+    }
+
+    /**
+     * Move the sprite right.
+     */
+    public void moveRight() {
+        if (moveSpriteRight(Default.STEP_COUNT.getInt()))
+            setPatterns();
+    }
+
 
     public double getCentreX() {
         return centreX.getPixels();

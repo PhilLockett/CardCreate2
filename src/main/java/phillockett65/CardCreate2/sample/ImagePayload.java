@@ -261,6 +261,39 @@ public class ImagePayload extends Payload {
     }
 
     /**
+     * Move the sprite up.
+     */
+    public void moveUp() {
+        if (moveSpriteUp(Default.STEP_COUNT.getInt()))
+            paintImage();
+    }
+
+    /**
+     * Move the sprite down.
+     */
+    public void moveDown() {
+        if (moveSpriteDown(Default.STEP_COUNT.getInt()))
+            paintImage();
+    }
+
+    /**
+     * Move the sprite left.
+     */
+    public void moveLeft() {
+        if (moveSpriteLeft(Default.STEP_COUNT.getInt()))
+            paintImage();
+    }
+
+    /**
+     * Move the sprite right.
+     */
+    public void moveRight() {
+        if (moveSpriteRight(Default.STEP_COUNT.getInt()))
+            paintImage();
+    }
+
+
+    /**
      * Flag whether the Payload image should maintain it's aspect ratio.
      * @param keepAspectRatio when displaying the image if true.
      */

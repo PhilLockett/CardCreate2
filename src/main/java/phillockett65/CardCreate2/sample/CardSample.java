@@ -129,6 +129,21 @@ public class CardSample extends Stage {
             }
         });
 
+        scene.setOnKeyTyped(event -> {
+            switch (event.getCharacter()) {
+            case "+":
+                model.incCurrent();
+                break;
+
+            case "-":
+                model.decCurrent();
+                break;
+
+            default:
+                break;
+            }
+        });
+
         scene.setOnKeyPressed(event -> {
             switch (event.getCode()) {
             case ALT:
@@ -137,6 +152,27 @@ public class CardSample extends Stage {
 
             case CONTROL: 
                 controller.increaseSize();
+                break;
+
+            case TAB: 
+                model.setNextPayload();
+                controller.syncToCurrentCardItem();
+                break;
+
+            case UP: 
+                model.moveCurrentUp();
+                break;
+
+            case DOWN: 
+                model.moveCurrentDown();
+                break;
+
+            case LEFT: 
+                model.moveCurrentLeft();
+                break;
+
+            case RIGHT: 
+                model.moveCurrentRight();
                 break;
 
             default:
