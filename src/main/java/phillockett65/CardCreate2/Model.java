@@ -1024,6 +1024,7 @@ public class Model {
     }
 
     private void setFaceCardItemPayload() {
+        setWatermark();
         face.syncImageFile();
     }
 
@@ -1362,6 +1363,8 @@ public class Model {
     private Image handleImage;
     private Handle handle;
     private Rectangle box;
+    private ImageView watermarkView;
+    private Image watermarkImage;
 
     private void buildImageBox() {
         box = new Rectangle();
@@ -1369,6 +1372,25 @@ public class Model {
         box.setStrokeWidth(2);
         box.setStroke(Color.GREY);
         box.setVisible(false);
+    }
+
+    private void setWatermark() {
+        final String path = getFaceDirectory() + "\\Watermark.png";
+        File file = new File(path);
+
+        if (!file.exists()) {
+            watermarkView.setImage(null);
+
+            return;
+        }
+
+        try {
+            watermarkImage = new Image(new FileInputStream(file));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        watermarkView.setImage(watermarkImage);
     }
 
     private void showImageBox() {
@@ -1550,6 +1572,8 @@ public class Model {
         gc.fillRoundRect(0, 0, xMax, yMax, radius, radius);
         gc.strokeRoundRect(0, 0, xMax, yMax, radius, radius);
 
+        gc.drawImage(watermarkImage, 0, 0, xMax, yMax);
+
         if (shouldIndexBeDisplayed()) {
             Image image = loadImage(getIndexImagePath(suit, card));
             Image rotatedImage = rotateImage(image);
@@ -1715,6 +1739,11 @@ public class Model {
      */
     public void init() {
         // System.out.println("init()");
+
+        watermarkView = new ImageView();
+        group.getChildren().add(watermarkView);
+        
+        setWatermark();
 
         initializeCardItemPayloads();
         makeCardsDirectory();
