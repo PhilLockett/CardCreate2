@@ -69,7 +69,7 @@
 }
 
 .imageButton{
-    -fx-background-color: #080808;
-    -fx-text-fill: #080808;
+    -fx-background-color: null;
+    -fx-text-fill: null;
 }
 
