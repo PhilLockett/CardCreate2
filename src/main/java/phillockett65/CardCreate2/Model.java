@@ -1567,7 +1567,7 @@ public class Model {
 
         gc.setFill(backgroundColour);
         gc.setStroke(Color.BLACK);
-        gc.setLineWidth(1);
+        gc.setLineWidth(2);
 
         gc.fillRoundRect(0, 0, xMax, yMax, radius, radius);
         gc.strokeRoundRect(0, 0, xMax, yMax, radius, radius);
@@ -1636,7 +1636,7 @@ public class Model {
 
         gc.setFill(backgroundColour);
         gc.setStroke(Color.BLACK);
-        gc.setLineWidth(1);
+        gc.setLineWidth(2);
 
         gc.fillRoundRect(0, 0, xMax, yMax, radius, radius);
         gc.strokeRoundRect(0, 0, xMax, yMax, radius, radius);
