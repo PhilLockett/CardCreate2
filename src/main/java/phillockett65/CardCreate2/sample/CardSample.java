@@ -125,7 +125,7 @@ public class CardSample extends Stage {
             int inc = (int)scale;
             if (inc != 0) {
                 scale -= inc;
-                model.resizeCurrent(inc);
+                model.resizeCurrent(-inc);
             }
         });
 
