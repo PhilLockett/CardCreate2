@@ -67,13 +67,6 @@ public class Controller {
     @FXML
     private BorderPane userGUI;
 
-    @FXML
-    private Label statusLabel;
-
-    private void setStatusMessage(String Message) {
-        statusLabel.setText(Message);
-    }
-
     /**
      * Show increase size of current card item message on status line.
      */
@@ -956,5 +949,17 @@ public class Controller {
 
     }
 
+
+
+    /************************************************************************
+     * Support code for "Status" panel. 
+     */
+
+    @FXML
+    private Label statusLabel;
+
+    private void setStatusMessage(String Message) {
+        statusLabel.setText(Message);
+    }
 
 }
