@@ -144,6 +144,7 @@ public class Controller {
         initializeDisplayCardItems();
         initializeSelectCardItem();
         initializeModifySelectedCardItem();
+        initializeStatus();
     }
 
     /**
@@ -961,5 +962,14 @@ public class Controller {
     private void setStatusMessage(String Message) {
         statusLabel.setText(Message);
     }
+
+
+    /**
+     * Initialize "Status" panel.
+     */
+    private void initializeStatus() {
+        setStatusMessage("Ready.");
+    }
+
 
 }
