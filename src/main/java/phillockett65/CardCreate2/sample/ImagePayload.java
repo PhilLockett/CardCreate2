@@ -70,7 +70,7 @@ public class ImagePayload extends Payload {
         if (!hasImage())
             return;
 
-        final double cardWidthPX = model.getCalculatedWidth();
+        final double cardWidthPX = model.getWidth();
         final double cardHeightPX = model.getHeight();
     
         final double imageWidthPX = getImage().getWidth();
@@ -338,7 +338,7 @@ public class ImagePayload extends Payload {
         if (iconImage == null)
             return false;
 
-        final double cardWidthPX = model.getCalculatedWidth();
+        final double cardWidthPX = model.getWidth();
         final double cardHeightPX = model.getHeight();
     
         // System.out.println("drawImage()");
@@ -408,7 +408,7 @@ public class ImagePayload extends Payload {
         if (image == null)
             return false;
 
-        final double cardWidthPX = model.getCalculatedWidth();
+        final double cardWidthPX = model.getWidth();
         final double cardHeightPX = model.getHeight();
     
         final double imageWidthPX = image.getWidth();

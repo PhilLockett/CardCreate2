@@ -107,7 +107,7 @@ public class Payload {
         }
 
         private double getScale() {
-            return height ? model.getHeight() : model.getCalculatedWidth();
+            return height ? model.getHeight() : model.getWidth();
         }
 
         public void setPercent(double value) {
@@ -703,7 +703,7 @@ public class Payload {
         public final double originY;
 
         public Data(Image iconImage) {
-            cardWidthPX = model.getCalculatedWidth();
+            cardWidthPX = model.getWidth();
             cardHeightPX = model.getHeight();
 
             iconWidthPX = iconImage.getWidth();
@@ -760,7 +760,7 @@ public class Payload {
         if (image == null)
             return false;
 
-        final double cardWidthPX = model.getCalculatedWidth();
+        final double cardWidthPX = model.getWidth();
         final double cardHeightPX = model.getHeight();
     
         final double iconWidthPX = iconImage.getWidth();

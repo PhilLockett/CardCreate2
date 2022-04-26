@@ -483,9 +483,9 @@ public class Model {
     public boolean isAutoCardWidth() { return cardSize != CardSize.FREE; }
 
     /**
-     * @return the freely set card width in pixels.
+     * @return the user set card width in pixels.
      */
-    public double getWidth() {
+    public double getUserWidth() {
         return cardWidthPX;
     }
 
@@ -493,7 +493,7 @@ public class Model {
      * @return the calculated card width in pixels for Poker and Bridge, or 
      * the freely set width.
      */
-    public double getCalculatedWidth() {
+    public double getWidth() {
         if (cardSize == CardSize.POKER)
             return cardHeightPX * 5 / 7;
 
@@ -1403,7 +1403,7 @@ public class Model {
 
         final double pX = current.getCentreX();
         final double pY = current.getCentreY();
-        final double winX = getCalculatedWidth() - (2*pX);
+        final double winX = getWidth() - (2*pX);
         final double winY = cardHeightPX - (2*pY);
 
         box.setX(pX);
@@ -1552,7 +1552,7 @@ public class Model {
      */
     private void generateCard(int suit, int card, Image[] images) {
 
-        final double xMax = getCalculatedWidth();
+        final double xMax = getWidth();
         final double yMax = getHeight();
         final double radius = getRadiusPX();
 
@@ -1621,7 +1621,7 @@ public class Model {
      */
     private int generateJoker(int suit, int errors) {
 
-        final double xMax = getCalculatedWidth();
+        final double xMax = getWidth();
         final double yMax = getHeight();
         final double radius = getRadiusPX();
 

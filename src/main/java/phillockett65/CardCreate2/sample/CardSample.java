@@ -190,7 +190,7 @@ public class CardSample extends Stage {
      * Called on initialization to set up the blank card.
      */
     private void drawBlankCard() {
-        final double width = model.getCalculatedWidth();
+        final double width = model.getWidth();
         final double height = model.getHeight();
         final Color color = model.getBackgroundColour();
         card = new Rectangle(width, height, color);
@@ -217,7 +217,7 @@ public class CardSample extends Stage {
         handle.setOnMousePressed(event -> {
             mx = event.getSceneX() - model.getCurrentX();
             my = event.getSceneY() - model.getCurrentY();
-            xScale = 100 / model.getCalculatedWidth();
+            xScale = 100 / model.getWidth();
             yScale = 100 / model.getHeight();
             scene.setCursor(Cursor.CLOSED_HAND);
         });
@@ -263,7 +263,7 @@ public class CardSample extends Stage {
      * Synchronise to the current card size.
      */
     public void syncCardSize() {
-        final double width = model.getCalculatedWidth();
+        final double width = model.getWidth();
         final double height = model.getHeight();
 
         this.setWidth(width + dx);
