@@ -958,7 +958,6 @@ public class Controller {
             stage.setTitle("Additional Settings");
             stage.resizableProperty().setValue(false);
             stage.setScene(scene);
-            // stage.setOnCloseRequest(e -> model.setSettingsWindowLaunched(false));
             stage.setOnCloseRequest(e -> Platform.exit());
 
             SettingsController controller = fxmlLoader.getController();
