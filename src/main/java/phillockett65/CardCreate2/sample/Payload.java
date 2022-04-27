@@ -765,7 +765,7 @@ public class Payload {
     
         final double iconWidthPX = iconImage.getWidth();
         final double iconHeightPX = iconImage.getHeight();
-        final double radius = model.getRadiusPX();
+        final double radius = model.getArcWidthPX();
 
         final double width = cardWidthPX * 0.07;
         final double height = width * iconHeightPX / iconWidthPX;

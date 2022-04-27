@@ -382,6 +382,7 @@ public class Model {
         if (++suit >= suits.length)
             suit = 0;
 
+        showCurrentWatermark();
         updateCardItemDisplayStatus();
         setCardItemPayloads();
         updateHandleState();
@@ -393,6 +394,7 @@ public class Model {
         if (++card >= cards.length)
             card = 1;
 
+        showCurrentWatermark();
         updateCardItemDisplayStatus();
         setCardItemPayloads();
         updateHandleState();
@@ -404,6 +406,7 @@ public class Model {
         if (--suit < 0)
             suit = suits.length - 1;
 
+        showCurrentWatermark();
         updateCardItemDisplayStatus();
         setCardItemPayloads();
         updateHandleState();
@@ -415,6 +418,7 @@ public class Model {
         if (--card <= 0)
             card = cards.length - 1;
 
+        showCurrentWatermark();
         updateCardItemDisplayStatus();
         setCardItemPayloads();
         updateHandleState();
@@ -530,24 +534,6 @@ public class Model {
     public void setHeight(double height) {
         // System.out.println("setHeight(" + height + ")");
         cardHeightPX = height;
-
-        syncCardItemsWithCardSize();
-    }
-
-    /**
-     * @return the corner radius in pixels.
-     */
-    public double getRadiusPX() {
-        return cardHeightPX * cornerRadius / 100;
-    }
-
-    /**
-     * Set the corner radius as a percentage of the card height.
-     * 
-     * @param radius value as a percentage of the card height.
-     */
-    public void setRadius(double radius) {
-        cornerRadius = radius;
 
         syncCardItemsWithCardSize();
     }
@@ -840,7 +826,6 @@ public class Model {
     private SpinnerValueFactory<Double> itemCentreYSVF;
 
     private boolean keepAspectRatio = true;
-    private boolean showGuideBox = false;
 
 
     /**
@@ -1155,11 +1140,6 @@ public class Model {
         face.setKeepAspectRatio(keepAspectRatio);
     }
 
-    public void setShowGuideBox(boolean state) {
-        showGuideBox = state;
-        showImageBox();
-    }
-
 
     public Tooltip getCurrentHButtonTip() { return new Tooltip(current.getItem().getHButtonTip()); }
     public Tooltip getCurrentXButtonTip() { return new Tooltip(current.getItem().getXButtonTip()); }
@@ -1257,6 +1237,12 @@ public class Model {
         // System.out.println("model.setCurrentX(" + value + "); :: " + current.getItem());
 
         current.setX(value);
+        if (lockX) {
+            if (current.getItem() == Item.INDEX)
+                cornerPip.setX(value);
+            else if (current.getItem() == Item.CORNER_PIP)
+                index.setX(value);
+        }
         showImageBox();
         handle.syncPosition();
     }
@@ -1541,6 +1527,19 @@ public class Model {
         return view.snapshot(params, null);
     }
 
+    private boolean showWatermark(int s, int c) {
+        if (isFaceCard(c))
+            return displayCourtWatermark;
+
+        if (isImageCard(s, c))
+            return displayImageWatermark;
+
+        return displayNumberWatermark;
+    }
+
+    private void showCurrentWatermark() {
+        watermarkView.setVisible(showWatermark(suit, card));
+    }
 
     /**
      * Draw a blank card, add the icons using the Payloads then write the 
@@ -1554,7 +1553,8 @@ public class Model {
 
         final double xMax = getWidth();
         final double yMax = getHeight();
-        final double radius = getRadiusPX();
+        final double arcWidth = getArcWidthPX();
+        final double arcHeight = getArcHeightPX();
 
         Group root = new Group();
         // We need this Scene otherwise the canvas gets default background colour.
@@ -1569,10 +1569,11 @@ public class Model {
         gc.setStroke(Color.BLACK);
         gc.setLineWidth(2);
 
-        gc.fillRoundRect(0, 0, xMax, yMax, radius, radius);
-        gc.strokeRoundRect(0, 0, xMax, yMax, radius, radius);
+        gc.fillRoundRect(0, 0, xMax, yMax, arcWidth, arcHeight);
+        gc.strokeRoundRect(0, 0, xMax, yMax, arcWidth, arcHeight);
 
-        gc.drawImage(watermarkImage, 0, 0, xMax, yMax);
+        if (showWatermark(suit, card))
+            gc.drawImage(watermarkImage, 0, 0, xMax, yMax);
 
         if (shouldIndexBeDisplayed()) {
             Image image = loadImage(getIndexImagePath(suit, card));
@@ -1623,7 +1624,8 @@ public class Model {
 
         final double xMax = getWidth();
         final double yMax = getHeight();
-        final double radius = getRadiusPX();
+        final double arcWidth = getArcWidthPX();
+        final double arcHeight = getArcHeightPX();
 
         Group root = new Group();
         // We need this Scene otherwise the canvas gets default background colour.
@@ -1638,8 +1640,8 @@ public class Model {
         gc.setStroke(Color.BLACK);
         gc.setLineWidth(2);
 
-        gc.fillRoundRect(0, 0, xMax, yMax, radius, radius);
-        gc.strokeRoundRect(0, 0, xMax, yMax, radius, radius);
+        gc.fillRoundRect(0, 0, xMax, yMax, arcWidth, arcHeight);
+        gc.strokeRoundRect(0, 0, xMax, yMax, arcWidth, arcHeight);
 
         // Draw indices specific to the suit.
         String pathToImage = getIndexDirectory() + "\\" + suits[suit] + cards[0] + ".png";
@@ -1732,6 +1734,7 @@ public class Model {
         initializeSelectCardItem();
         initializeModifySelectedCardItem();
         initializeSample();
+        initializeSettingsPanel();
     }
 
     /**
@@ -1751,6 +1754,179 @@ public class Model {
         // Add handle to the group last so that it is displayed on top.
         group.getChildren().add(box);
         group.getChildren().add(handle);
+    }
+
+
+
+
+    /************************************************************************
+     * Support code for "Settings" panel.
+     */
+
+     private boolean settingsWindowLaunched = false;
+
+     public boolean isSettingsWindowLaunched() { return settingsWindowLaunched; }
+     public void setSettingsWindowLaunched(boolean state) { settingsWindowLaunched = state; }
+
+    /**
+     * Called by the controller to initialize the settings controller.
+     */
+    public void initializeSettingsPanel() {
+//		System.out.println("Settings Controller initialized.");
+
+        initializeCardCorners();
+        initializeDisplayWatermark();
+        initializeModifyCardItem();
+    }
+
+
+    /************************************************************************
+     * Support code for "Card Corners" panel. 
+     */
+
+    private boolean independentlySetCornerRadii = false;
+
+    private double arcWidth = Default.RADIUS.getFloat();
+    private double arcHeight = Default.RADIUS.getFloat();
+
+    private SpinnerValueFactory<Double>  arcWidthSpinner;
+    private SpinnerValueFactory<Double>  arcHeightSpinner;
+
+
+    /**
+     * @return the user defined corner arc width radius in pixels.
+     */
+    public double getUserArcWidthPX() {
+        return cardWidthPX * arcWidth / 100;
+    }
+
+    /**
+     * @return the corner arc width radius in pixels.
+     */
+    public double getArcWidthPX() {
+        if (independentlySetCornerRadii)
+            return getUserArcWidthPX();
+
+        return getArcHeightPX();
+    }
+
+    /**
+     * @return the corner arc height radius in pixels.
+     */
+    public double getArcHeightPX() {
+        return cardHeightPX * arcHeight / 100;
+    }
+
+    /**
+     * Set the corner arc width radius as a percentage of the card width.
+     * 
+     * @param radius value as a percentage of the card width.
+     */
+    public void setArcWidth(double radius) {
+        arcWidth = radius;
+
+        syncCardItemsWithCardSize();
+    }
+    /**
+     * Set the corner arc height radius as a percentage of the card height.
+     * 
+     * @param radius value as a percentage of the card height.
+     */
+    public void setArcHeight(double radius) {
+        arcHeight = radius;
+
+        syncCardItemsWithCardSize();
+    }
+
+    public boolean isSetCornerRadiiIndependently() { return independentlySetCornerRadii; }
+    public void setCornerRadiiIndependently(boolean state) { independentlySetCornerRadii = state; }
+
+    public SpinnerValueFactory<Double>  getArcWidthSVF()  { return arcWidthSpinner; }
+    public SpinnerValueFactory<Double>  getArcHeightSVF()  { return arcHeightSpinner; }
+
+    public void resetArcWidthSVF()    { arcWidthSpinner.setValue((double)Default.RADIUS.getFloat()); }
+    public void resetArcHeightSVF()   { arcHeightSpinner.setValue((double)Default.RADIUS.getFloat()); }
+
+
+    /**
+     * Initialize "Card Corners" panel.
+     */
+    private void initializeCardCorners() {
+        final double RADIUS = Default.RADIUS.getFloat();
+        final double MIN_RADIUS = Default.MIN_RADIUS.getFloat();
+        final double MAX_RADIUS = Default.MAX_RADIUS.getFloat();
+
+        arcWidthSpinner = new SpinnerValueFactory.DoubleSpinnerValueFactory(MIN_RADIUS, MAX_RADIUS, RADIUS, 0.2);
+        arcHeightSpinner = new SpinnerValueFactory.DoubleSpinnerValueFactory(MIN_RADIUS, MAX_RADIUS, RADIUS, 0.2);
+    }
+
+
+
+    /************************************************************************
+     * Support code for "Display Watermark" panel. 
+     */
+
+    private boolean displayCourtWatermark = true;
+    private boolean displayImageWatermark = true;
+    private boolean displayNumberWatermark = true;
+
+    public boolean isDisplayCourtWatermark() { return displayCourtWatermark; }
+    public void setDisplayCourtWatermark(boolean state) {
+        displayCourtWatermark = state;
+        showCurrentWatermark();
+    }
+
+    public boolean isDisplayImageWatermark() { return displayImageWatermark; }
+    public void setDisplayImageWatermark(boolean state) {
+        displayImageWatermark = state;
+        showCurrentWatermark();
+    }
+
+    public boolean isDisplayNumberWatermark() { return displayNumberWatermark; }
+    public void setDisplayNumberWatermark(boolean state) { 
+        displayNumberWatermark = state;
+        showCurrentWatermark();
+    }
+
+
+    /**
+     * Initialize "Display Watermark" panel.
+     */
+    private void initializeDisplayWatermark() {
+    }
+
+
+
+    /************************************************************************
+     * Support code for "Modify Selected Card Item" panel. 
+     */
+
+    private boolean lockX = false;
+    private boolean showGuideBox = false;
+
+    public boolean isLockX() { return lockX; }
+
+    public void setLockX(boolean state) {
+        lockX = state;
+
+        if (lockX)
+        cornerPip.setX(index.getSpriteX());
+
+        showImageBox();
+        handle.syncPosition();
+    }
+
+    public boolean isShowGuideBox() { return showGuideBox; }
+
+    public void setShowGuideBox(boolean state) {
+        showGuideBox = state;
+        showImageBox();
+    }
+
+    /**
+     * Initialize "Modify Selected Card Item" panel.
+     */
+    private void initializeModifyCardItem() {
     }
 
 

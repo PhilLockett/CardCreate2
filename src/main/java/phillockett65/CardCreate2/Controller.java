@@ -24,11 +24,16 @@
  */
 package phillockett65.CardCreate2;
 
+import javafx.application.Platform;
 import java.io.File;
+import java.io.IOException;
 import java.util.Optional;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
@@ -134,6 +139,7 @@ public class Controller {
         setUpImageButton(previousCardButton, "icon-left.png");
         setUpImageButton(nextCardButton, "icon-right.png");
         setUpImageButton(nextSuitButton, "icon-down.png");
+        setUpImageButton(settingsButton, "Windows-icon.png");
 
         initializeInputDirectories();
         initializeGenerate();
@@ -518,25 +524,16 @@ public class Controller {
     private Label heightLabel;
 
     @FXML
-    private Label radiusLabel;
-
-    @FXML
     private Spinner<Integer> widthSpinner;
 
     @FXML
     private Spinner<Integer> heightSpinner;
 
     @FXML
-    private Spinner<Double> radiusSpinner;
-
-    @FXML
     private Button widthButton;
 
     @FXML
     private Button heightButton;
-
-    @FXML
-    private Button radiusButton;
 
     @FXML
     void cardSizeRadioButtonActionPerformed(ActionEvent event) {
@@ -586,19 +583,15 @@ public class Controller {
 
         widthLabel.setTooltip(new Tooltip("Card width in pixels (default: 380)"));
         heightLabel.setTooltip(new Tooltip("Card height in pixels (default: 532)"));
-        radiusLabel.setTooltip(new Tooltip("Corner radius as a percentage of card height (default: 10)"));
 
         widthSpinner.setTooltip(new Tooltip("Select card width in pixels"));
         heightSpinner.setTooltip(new Tooltip("Select card height in pixels"));
-        radiusSpinner.setTooltip(new Tooltip("Select corner radius as a percentage of card height"));
 
         widthButton.setTooltip(new Tooltip("Reset Card Width to default value of 380 pixels"));
         heightButton.setTooltip(new Tooltip("Reset Card Height to default value of 532 pixels"));
-        radiusButton.setTooltip(new Tooltip("Reset Corner radius to default value of 10 percent"));
 
         widthSpinner.setValueFactory(model.getWidthSVF());
         heightSpinner.setValueFactory(model.getHeightSVF());
-        radiusSpinner.setValueFactory(model.getRadiusSVF());
 
         widthSpinner.valueProperty().addListener( (v, oldValue, newValue) -> {
             model.setWidth(newValue);
@@ -607,11 +600,6 @@ public class Controller {
 
         heightSpinner.valueProperty().addListener( (v, oldValue, newValue) -> {
             model.setHeight(newValue);
-            sample.syncCardSize();
-        });
-
-        radiusSpinner.valueProperty().addListener( (v, oldValue, newValue) -> {
-            model.setRadius(newValue);
             sample.syncCardSize();
         });
 
@@ -839,9 +827,6 @@ public class Controller {
     @FXML
     private CheckBox keepAspectRatioCheckBox;
 
-    @FXML
-    private CheckBox showGuideBoxCheckBox;
-
     /**
      * Fix the disabled state of the "Modify Card Item" controls based on the 
      * card items being displayed.
@@ -916,18 +901,12 @@ public class Controller {
         model.setKeepImageAspectRatio(keepAspectRatioCheckBox.isSelected());
     }
 
-    @FXML
-    void showGuideBoxCheckBoxActionPerformed(ActionEvent event) {
-        model.setShowGuideBox(showGuideBoxCheckBox.isSelected());
-    }
-
     /**
      * Initialize "Modify Selected Card Item" panel.
      */
     private void initializeModifySelectedCardItem() {
 
         keepAspectRatioCheckBox.setTooltip(new Tooltip("Keep Aspect Ratio of image's from the faces directory"));
-        showGuideBoxCheckBox.setTooltip(new Tooltip("Display guide to aid Card Item positioning."));
 
         itemHeightSpinner.setValueFactory(model.getItemHeightSVF());
         itemCentreXSpinner.setValueFactory(model.getItemCentreXSVF());
@@ -959,8 +938,47 @@ public class Controller {
     @FXML
     private Label statusLabel;
 
+
+    @FXML
+    private Button settingsButton;
+
     private void setStatusMessage(String Message) {
         statusLabel.setText(Message);
+    }
+
+    private boolean launchSettingsWindow() {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("Settings.fxml"));
+            Parent root = fxmlLoader.load();
+
+            Scene scene = new Scene(root);
+            scene.getStylesheets().add(App.class.getResource("application.css").toExternalForm());
+
+            Stage stage = new Stage();
+            stage.setTitle("Additional Settings");
+            stage.resizableProperty().setValue(false);
+            stage.setScene(scene);
+            // stage.setOnCloseRequest(e -> model.setSettingsWindowLaunched(false));
+            stage.setOnCloseRequest(e -> Platform.exit());
+
+            SettingsController controller = fxmlLoader.getController();
+
+            stage.show();
+
+            controller.init(stage, model, sample);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+
+        return true;
+    }
+
+
+    @FXML
+    void settingsButtonActionPerformed(ActionEvent event) {
+        if (!model.isSettingsWindowLaunched())
+            launchSettingsWindow();
     }
 
 
@@ -969,7 +987,7 @@ public class Controller {
      */
     private void initializeStatus() {
         setStatusMessage("Ready.");
+        settingsButton.setTooltip(new Tooltip("Launch Additional Configuraton window"));
     }
-
 
 }
