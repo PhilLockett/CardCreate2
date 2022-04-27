@@ -553,6 +553,7 @@ public class Controller {
         }
 
         final boolean autoWidth = model.isAutoCardWidth();
+        widthLabel.setDisable(autoWidth);
         widthSpinner.setDisable(autoWidth);
         widthButton.setDisable(autoWidth);
     }

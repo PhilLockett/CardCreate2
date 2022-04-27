@@ -259,7 +259,7 @@
                             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                           </rowConstraints>
                            <children>
-                              <Label fx:id="widthLabel" text="Card width (pixels):" GridPane.halignment="RIGHT" />
+                              <Label fx:id="widthLabel" disable="true" text="Card width (pixels):" GridPane.halignment="RIGHT" />
                               <Label fx:id="heightLabel" text="Card height (pixels):" GridPane.halignment="RIGHT" GridPane.rowIndex="1" />
                               <Button fx:id="widthButton" disable="true" mnemonicParsing="false" onAction="#widthButtonActionPerformed" text="Reset" GridPane.columnIndex="2" />
                               <Button fx:id="heightButton" mnemonicParsing="false" onAction="#heightButtonActionPerformed" text="Reset" GridPane.columnIndex="2" GridPane.rowIndex="1" />
