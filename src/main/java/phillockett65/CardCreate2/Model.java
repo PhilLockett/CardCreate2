@@ -1256,6 +1256,12 @@ public class Model {
         // System.out.println("model.setCurrentY(" + value + "); :: " + current.getItem());
 
         current.setY(value);
+        if (lockY) {
+            if (current.getItem() == Item.INDEX)
+                cornerPip.setY(value + deltaY);
+            else if (current.getItem() == Item.CORNER_PIP)
+                index.setY(value - deltaY);
+        }
         showImageBox();
         handle.syncPosition();
     }
@@ -1902,15 +1908,28 @@ public class Model {
      */
 
     private boolean lockX = false;
+    private boolean lockY = false;
+    private double deltaY = 0;
     private boolean showGuideBox = false;
 
     public boolean isLockX() { return lockX; }
+    public boolean isLockY() { return lockY; }
 
     public void setLockX(boolean state) {
         lockX = state;
 
         if (lockX)
-        cornerPip.setX(index.getSpriteX());
+            cornerPip.setX(index.getSpriteX());
+
+        showImageBox();
+        handle.syncPosition();
+    }
+
+    public void setLockY(boolean state) {
+        lockY = state;
+
+        if (lockY)
+            deltaY = cornerPip.getSpriteY() - index.getSpriteY();
 
         showImageBox();
         handle.syncPosition();

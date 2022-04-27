@@ -215,11 +215,19 @@ public class SettingsController {
     private CheckBox lockXCheckBox;
 
     @FXML
+    private CheckBox lockYCheckBox;
+
+    @FXML
     private CheckBox showGuideBoxCheckBox;
 
     @FXML
     void lockXCheckBoxActionPerformed(ActionEvent event) {
         model.setLockX(lockXCheckBox.isSelected());
+    }
+
+    @FXML
+    void lockYCheckBoxActionPerformed(ActionEvent event) {
+        model.setLockY(lockYCheckBox.isSelected());
     }
 
     @FXML
@@ -232,9 +240,11 @@ public class SettingsController {
      */
     private void initializeModifySelectedCardItem() {
         lockXCheckBox.setSelected(model.isLockX());
+        lockYCheckBox.setSelected(model.isLockY());
         showGuideBoxCheckBox.setSelected(model.isShowGuideBox());
 
         lockXCheckBox.setTooltip(new Tooltip("Lock X coordinate of Index and Corner pip together"));
+        lockYCheckBox.setTooltip(new Tooltip("Lock Y separation of Index and Corner pip"));
         showGuideBoxCheckBox.setTooltip(new Tooltip("Display guide box to aid Card Item positioning."));
     }
 
