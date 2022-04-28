@@ -264,6 +264,9 @@ public class Payload {
     private void paintIcons() {
         // System.out.println("paintIcon() :: " + item);
 
+        if (!hasImage())
+            return;
+
         final Data data = new Data(image);
 
         ImageView view = getImageView(0);

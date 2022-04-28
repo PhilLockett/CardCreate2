@@ -198,6 +198,9 @@ public class MultiPayload extends Payload {
     private void setMultiPatterns() {
         // System.out.println("setMultiPatterns()");
 
+        if (!hasImage())
+            return;
+
         final Data data = new Data(getImage());
 
         final double pX = data.originX;
