@@ -1127,6 +1127,8 @@ public class Model {
 
         showImageBox();
         handle.syncPosition();
+        watermarkView.setFitWidth(getWidth());
+        watermarkView.setFitHeight(getHeight());
     }
 
 
