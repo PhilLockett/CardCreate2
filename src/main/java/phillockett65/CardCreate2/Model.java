@@ -1373,6 +1373,7 @@ public class Model {
 
         if (!file.exists()) {
             watermarkView.setImage(null);
+            watermarkImage = null;
 
             return;
         }
@@ -1535,6 +1536,9 @@ public class Model {
     }
 
     private boolean showWatermark(int s, int c) {
+        if (watermarkImage == null)
+            return false;
+
         if (isFaceCard(c))
             return displayCourtWatermark;
 
