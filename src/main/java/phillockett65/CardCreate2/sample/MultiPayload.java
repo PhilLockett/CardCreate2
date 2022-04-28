@@ -393,8 +393,13 @@ public class MultiPayload extends Payload {
         // System.out.println("setVisible(" + state + ") :: " + number);
         display = state;
 
-        for (int i = 0; i < getImageCount(); ++i) 
-            getImageView(i).setVisible(isImageViewVisible(i));
+        for (int i = 0; i < getImageCount(); ++i) {
+            final boolean visible = isImageViewVisible(i);
+            getImageView(i).setVisible(visible);
+
+            if (visible)
+                setMultiPatterns();
+        }
     }
 
 

@@ -667,6 +667,9 @@ public class Payload {
 
         getImageView(0).setVisible(display);
         getImageView(1).setVisible(display);
+
+        if (display)
+            paintIcons();
     }
 
     /**
