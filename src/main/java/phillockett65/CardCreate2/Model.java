@@ -1340,9 +1340,10 @@ public class Model {
      * Initialize "Modify Selected Card Item" panel.
      */
     private void initializeModifySelectedCardItem() {
-        itemHeightSVF = new SpinnerValueFactory.DoubleSpinnerValueFactory(0, 100, 10, Default.STEP_SIZE.getFloat());
-        itemCentreXSVF = new SpinnerValueFactory.DoubleSpinnerValueFactory(0, 100, 10, Default.STEP_SIZE.getFloat());
-        itemCentreYSVF = new SpinnerValueFactory.DoubleSpinnerValueFactory(0, 100, 10, Default.STEP_SIZE.getFloat());
+        final double step = Default.STEP_SIZE.getFloat();
+        itemHeightSVF = new SpinnerValueFactory.DoubleSpinnerValueFactory(step, 100, 10, step);
+        itemCentreXSVF = new SpinnerValueFactory.DoubleSpinnerValueFactory(0, 100, 10, step);
+        itemCentreYSVF = new SpinnerValueFactory.DoubleSpinnerValueFactory(0, 100, 10, step);
     }
 
 

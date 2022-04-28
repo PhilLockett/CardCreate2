@@ -471,8 +471,8 @@ public class Payload {
             return false;
 
         size -= Default.STEP_SIZE.getFloat() * steps;
-        if (size < 0D)
-            size = 0D;
+        if (size <= 0D)
+            size = Default.STEP_SIZE.getFloat();
 
         setSpriteSize(size);
         
