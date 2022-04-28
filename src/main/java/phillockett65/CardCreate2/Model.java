@@ -459,7 +459,6 @@ public class Model {
 
     private double cardWidthPX = Default.WIDTH.getInt();
     private double cardHeightPX = Default.HEIGHT.getInt();
-    private double cornerRadius = Default.RADIUS.getFloat();
 
     private SpinnerValueFactory<Integer> widthSVF;
     private SpinnerValueFactory<Integer> heightSVF;
