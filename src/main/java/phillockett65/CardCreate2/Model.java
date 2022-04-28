@@ -116,6 +116,7 @@ public class Model {
     public void setFaceStyle(String style) {
         faceStyle = style;
         setFaceCardItemPayload();
+        showCurrentWatermark();
         updateCardItemDisplayStatus();
         updateHandleState();
     }
