@@ -1,0 +1,75 @@
+/* JavaFX CSS - Leave this comment until you have at least create one rule which uses -fx-Property */
+
+.root{
+    -fx-background-color: #303030;
+}
+.label, .check-box, .radio-button{
+    -fx-text-fill: #e8e8e8;
+}
+
+.titled-pane{
+    -fx-text-fill: black;
+}
+.title{
+    -fx-background-color: #e8e8e8;
+}
+
+.text-field:readonly{
+    -fx-text-fill: #e8e8e8;
+    -fx-font-weight: bold;
+    -fx-background-color: #808080;
+}
+.combo-box{
+    -fx-font-weight: bold;
+    -fx-background-color: #e8e8e8;
+}
+.text-field{
+    -fx-text-fill: #808080;
+    -fx-font-weight: bold;
+    -fx-background-color: #e8e8e8;
+}
+.text-area{
+    -fx-text-fill: #e8e8e8;
+}
+.content{
+    -fx-background-color: #080808;
+	-fx-border-color: yellow;
+	-fx-border-insets: 1;
+}
+.spinner{
+    -fx-background-color: #282828;
+}
+
+.choice-box, .color-picker, .button, .toggle-button:selected{
+    -fx-background-color: #9B4642;
+    -fx-text-fill: #e8e8e8;
+    -fx-font-weight: bold;
+    -fx-background-radius: 12;
+}
+.toggle-button{
+    -fx-background-color: #808080;
+    -fx-text-fill: #e8e8e8;
+    -fx-font-weight: bold;
+    -fx-background-radius: 12;
+}
+.context-menu{
+    -fx-background-color: #9B4642;
+    -fx-text-fill: #e8e8e8;
+    -fx-font-weight: bold;
+}
+
+.increment-arrow-button, .decrement-arrow-button{
+    -fx-background-color: #9B4642;
+}
+.increment-arrow, .decrement-arrow{
+    -fx-background-color: #e8e8e8;
+}
+.arrow{
+    -fx-background-color: black;
+}
+
+.imageButton{
+    -fx-background-color: null;
+    -fx-text-fill: null;
+}
+
