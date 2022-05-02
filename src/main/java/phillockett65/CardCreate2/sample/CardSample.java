@@ -146,6 +146,10 @@ public class CardSample extends Stage {
 
         scene.setOnKeyPressed(event -> {
             switch (event.getCode()) {
+            case SHIFT:
+                controller.moveSample(true);
+                break;
+
             case ALT:
                 controller.decreaseSize();
                 break;
@@ -160,19 +164,31 @@ public class CardSample extends Stage {
                 break;
 
             case UP: 
-                model.moveCurrentUp();
+                if (event.isShiftDown())
+                    moveUp();
+                else
+                    model.moveCurrentUp();
                 break;
 
             case DOWN: 
-                model.moveCurrentDown();
+                if (event.isShiftDown())
+                    moveDown();
+                else
+                    model.moveCurrentDown();
                 break;
 
             case LEFT: 
-                model.moveCurrentLeft();
+                if (event.isShiftDown())
+                    moveLeft();
+                else
+                    model.moveCurrentLeft();
                 break;
 
             case RIGHT: 
-                model.moveCurrentRight();
+                if (event.isShiftDown())
+                    moveRight();
+                else
+                    model.moveCurrentRight();
                 break;
 
             default:
@@ -184,6 +200,30 @@ public class CardSample extends Stage {
             controller.release();
         });
 
+    }
+
+    private void moveUp() {
+        double pos = this.getY() - Default.STEP_COUNT.getFloat();
+        if (pos < 0)
+            pos = 0;
+        this.setY(pos);
+    }
+
+    private void moveDown() {
+        double pos = this.getY() + Default.STEP_COUNT.getFloat();
+        this.setY(pos);
+    }
+
+    private void moveLeft() {
+        double pos = this.getX() - Default.STEP_COUNT.getFloat();
+        if (pos < 0)
+            pos = 0;
+        this.setX(pos);
+    }
+
+    private void moveRight() {
+        double pos = this.getX() + Default.STEP_COUNT.getFloat();
+        this.setX(pos);
     }
 
     /**

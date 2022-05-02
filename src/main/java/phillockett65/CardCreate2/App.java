@@ -62,6 +62,10 @@ public class App extends Application {
 
         scene.setOnKeyPressed(event -> {
             switch (event.getCode()) {
+            case SHIFT:
+                controller.moveSample(false);
+                break;
+
             case ALT:
                 controller.decreaseSize();
                 break;

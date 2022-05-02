@@ -95,6 +95,17 @@ public class Controller {
     }
 
     /**
+     * Show move sample message.
+     * @param sample true if call originates from Sample, false otherwise.
+     */
+    public void moveSample(boolean sample) {
+        if (sample)
+            setStatusMessage("Use cursor keys to move Sample.");
+        else
+            setStatusMessage("Switch focus to Sample then use cursor keys to move Sample.");
+    }
+
+    /**
      * Clear status line on key release.
      */
     public void release() {
@@ -184,8 +195,6 @@ public class Controller {
 
     /**
      * Called by Sample when the mouse changes the selected Item.
-     * 
-     * @param item now selected.
      */
     public void syncToCurrentCardItem() {
 
