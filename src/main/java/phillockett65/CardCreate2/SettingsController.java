@@ -71,6 +71,7 @@ public class SettingsController {
         initializeCardCorners();
         initializeDisplayWatermark();
         initializeModifySelectedCardItem();
+        initializeJokers();
         initializeStatus();
     }
 
@@ -259,6 +260,27 @@ public class SettingsController {
     }
 
 
+
+    /************************************************************************
+     * Support code for "Jokers" panel. 
+     */
+
+    @FXML
+    private CheckBox borderlessCheckBox;
+
+    @FXML
+    void borderlessCheckBoxActionPerformed(ActionEvent event) {
+        model.setBorderlessJokers(borderlessCheckBox.isSelected());
+    }
+
+    /**
+     * Initialize "Jokers" panel.
+     */
+    private void initializeJokers() {
+        borderlessCheckBox.setSelected(model.isBorderlessJokers());
+
+        borderlessCheckBox.setTooltip(new Tooltip("Don't use borders on Joker images"));
+    }
 
     /************************************************************************
      * Support code for "Status" panel. 

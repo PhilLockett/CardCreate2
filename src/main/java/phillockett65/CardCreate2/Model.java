@@ -1790,6 +1790,7 @@ public class Model {
         initializeCardCorners();
         initializeDisplayWatermark();
         initializeModifyCardItem();
+        initializeJokers();
     }
 
 
@@ -1953,6 +1954,25 @@ public class Model {
      * Initialize "Modify Selected Card Item" panel.
      */
     private void initializeModifyCardItem() {
+    }
+
+
+    /************************************************************************
+     * Support code for "Jokers" panel. 
+     */
+
+    private boolean borderlessJokers = false;
+
+    public boolean isBorderlessJokers() { return borderlessJokers; }
+
+    public void setBorderlessJokers(boolean state) {
+        borderlessJokers = state;
+    }
+
+    /**
+     * Initialize "Jokers" panel.
+     */
+    private void initializeJokers() {
     }
 
 

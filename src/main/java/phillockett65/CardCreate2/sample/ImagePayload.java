@@ -414,10 +414,16 @@ public class ImagePayload extends Payload {
         final double imageWidthPX = image.getWidth();
         final double imageHeightPX = image.getHeight();
 
-        final double pixelsX = cardWidthPX * 0.07D;
-        final double pixelsY = cardHeightPX * 0.05D;
-        double winX = cardWidthPX - (2*pixelsX);
-        double winY = cardHeightPX - (2*pixelsY);
+        final boolean borderless = model.isBorderlessJokers();
+        final double pixelsX = borderless ? 0 : cardWidthPX * 0.07D;
+        final double pixelsY = borderless ? 0 : cardHeightPX * 0.05D;
+        double winX = cardWidthPX;
+        double winY = cardHeightPX;
+
+        if (!borderless) {
+            winX -= 2 * pixelsX;
+            winY -= 2 * pixelsY;
+        }
 
         double dX = 0;
         double dY = 0;
