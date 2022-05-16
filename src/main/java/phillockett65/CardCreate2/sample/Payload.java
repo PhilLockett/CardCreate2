@@ -183,10 +183,10 @@ public class Payload {
             setImages();
 
             final boolean visible = isVisible();
-            
+
             getImageView(0).setVisible(visible);
             getImageView(1).setVisible(visible);
-            
+
             paintIcons();
         }
     }

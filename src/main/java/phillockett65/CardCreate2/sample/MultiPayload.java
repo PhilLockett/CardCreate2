@@ -78,7 +78,6 @@ public class MultiPayload extends Payload {
      * Create the ImageView array to hold the image for this Payload.
      * 
      * @param group node to add the ImageViews to.
-     * @return the ImageView array.
      */
     private void createImageViewArray(Group group) {
         int icons = 17;
@@ -250,7 +249,7 @@ public class MultiPayload extends Payload {
      * Synchronise to the current card size.
      */
     public void syncCardSize() {
-        // System.out.println("syncCardSize(" + item + ") :: number");
+        // System.out.println("syncCardSize() :: number");
 
         setMultiPatterns();
     }
