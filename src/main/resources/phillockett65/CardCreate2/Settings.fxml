@@ -14,7 +14,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane fx:id="settingsGUI" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="371.0" prefWidth="553.0" stylesheets="@application.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="phillockett65.CardCreate2.SettingsController">
+<BorderPane fx:id="settingsGUI" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="370.0" prefWidth="600.0" stylesheets="@application.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="phillockett65.CardCreate2.SettingsController">
    <bottom>
       <HBox spacing="8.0">
          <children>
@@ -34,11 +34,14 @@
          <children>
             <TitledPane animated="false" collapsible="false" text="Card Corners">
                <content>
-                  <HBox prefHeight="78.0" prefWidth="559.0" spacing="8.0">
+                  <HBox spacing="8.0">
                      <children>
                         <VBox prefHeight="53.0" prefWidth="240.0" spacing="4.0">
                            <children>
-                              <CheckBox fx:id="independentRadiiCheckBox" mnemonicParsing="false" onAction="#independentRadiiCheckBoxActionPerformed" text="Set Corner Radii independently" />
+                              <CheckBox fx:id="independentRadiiCheckBox" mnemonicParsing="false" onAction="#independentRadiiCheckBoxActionPerformed" text="Set Corner Radii independently">
+                                 <VBox.margin>
+                                    <Insets right="8.0" />
+                                 </VBox.margin></CheckBox>
                            </children>
                         </VBox>
                         <GridPane hgap="4.0" prefHeight="60.0" prefWidth="387.0" vgap="4.0">
@@ -52,8 +55,14 @@
                             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                           </rowConstraints>
                            <children>
-                              <Label fx:id="arcWidthLabel" disable="true" text="Corner Radius Arc Width (%)" GridPane.halignment="RIGHT" />
-                              <Label fx:id="arcHeightLabel" text="Corner Radius (%)" GridPane.halignment="RIGHT" GridPane.rowIndex="1" />
+                              <Label fx:id="arcWidthLabel" disable="true" text="Corner Radius Arc Width (%)" GridPane.halignment="RIGHT">
+                                 <GridPane.margin>
+                                    <Insets left="8.0" />
+                                 </GridPane.margin></Label>
+                              <Label fx:id="arcHeightLabel" text="Corner Radius (%)" GridPane.halignment="RIGHT" GridPane.rowIndex="1">
+                                 <GridPane.margin>
+                                    <Insets left="8.0" />
+                                 </GridPane.margin></Label>
                               <Button fx:id="arcWidthButton" disable="true" mnemonicParsing="false" onAction="#arcWidthButtonActionPerformed" text="Reset" GridPane.columnIndex="2" />
                               <Button fx:id="arcHeightButton" mnemonicParsing="false" onAction="#arcHeightButtonActionPerformed" text="Reset" GridPane.columnIndex="2" GridPane.rowIndex="1" />
                               <Spinner fx:id="arcWidthSpinner" disable="true" GridPane.columnIndex="1" />
@@ -80,10 +89,22 @@
                <content>
                   <VBox spacing="8.0">
                      <children>
-                        <CheckBox fx:id="lockXCheckBox" mnemonicParsing="false" onAction="#lockXCheckBoxActionPerformed" text="Lock X coordinate of Index and Corner pip together" />
-                        <CheckBox fx:id="lockYCheckBox" mnemonicParsing="false" onAction="#lockYCheckBoxActionPerformed" text="Lock Y separation of Index and Corner pip" />
-                        <CheckBox fx:id="leftHandedCheckBox" mnemonicParsing="false" onAction="#leftHandedCheckBoxActionPerformed" text="Left handed Index and Corner Pips" />
-                        <CheckBox fx:id="showGuideBoxCheckBox" mnemonicParsing="false" onAction="#showGuideBoxCheckBoxActionPerformed" text="Show Guide Box" />
+                        <CheckBox fx:id="lockXCheckBox" mnemonicParsing="false" onAction="#lockXCheckBoxActionPerformed" text="Lock X coordinate of Index and Corner pip together">
+                           <VBox.margin>
+                              <Insets right="8.0" />
+                           </VBox.margin></CheckBox>
+                        <CheckBox fx:id="lockYCheckBox" mnemonicParsing="false" onAction="#lockYCheckBoxActionPerformed" text="Lock Y separation of Index and Corner pip">
+                           <VBox.margin>
+                              <Insets right="8.0" />
+                           </VBox.margin></CheckBox>
+                        <CheckBox fx:id="leftHandedCheckBox" mnemonicParsing="false" onAction="#leftHandedCheckBoxActionPerformed" text="Left handed Index and Corner Pips">
+                           <VBox.margin>
+                              <Insets right="8.0" />
+                           </VBox.margin></CheckBox>
+                        <CheckBox fx:id="showGuideBoxCheckBox" mnemonicParsing="false" onAction="#showGuideBoxCheckBoxActionPerformed" text="Show Guide Box">
+                           <VBox.margin>
+                              <Insets right="8.0" />
+                           </VBox.margin></CheckBox>
                      </children>
                   </VBox>
                </content>
@@ -98,9 +119,18 @@
                <content>
                   <VBox spacing="8.0">
                      <children>
-                        <CheckBox fx:id="courtWatermarkCheckBox" mnemonicParsing="false" onAction="#courtWatermarkCheckBoxActionPerformed" selected="true" text="Display on Court Cards" />
-                        <CheckBox fx:id="imageWatermarkCheckBox" mnemonicParsing="false" onAction="#imageWatermarkCheckBoxActionPerformed" selected="true" text="Display on Image Cards" />
-                        <CheckBox fx:id="numberWatermarkCheckBox" mnemonicParsing="false" onAction="#numberWatermarkCheckBoxActionPerformed" selected="true" text="Display on Number Cards" />
+                        <CheckBox fx:id="courtWatermarkCheckBox" mnemonicParsing="false" onAction="#courtWatermarkCheckBoxActionPerformed" selected="true" text="Display on Court Cards">
+                           <VBox.margin>
+                              <Insets right="8.0" />
+                           </VBox.margin></CheckBox>
+                        <CheckBox fx:id="imageWatermarkCheckBox" mnemonicParsing="false" onAction="#imageWatermarkCheckBoxActionPerformed" selected="true" text="Display on Image Cards">
+                           <VBox.margin>
+                              <Insets right="8.0" />
+                           </VBox.margin></CheckBox>
+                        <CheckBox fx:id="numberWatermarkCheckBox" mnemonicParsing="false" onAction="#numberWatermarkCheckBoxActionPerformed" selected="true" text="Display on Number Cards">
+                           <VBox.margin>
+                              <Insets right="8.0" />
+                           </VBox.margin></CheckBox>
                      </children>
                   </VBox>
                </content>
@@ -109,7 +139,10 @@
               <content>
                   <VBox>
                      <children>
-                        <CheckBox fx:id="borderlessCheckBox" mnemonicParsing="false" onAction="#borderlessCheckBoxActionPerformed" text="Borderless Images" />
+                        <CheckBox fx:id="borderlessCheckBox" mnemonicParsing="false" onAction="#borderlessCheckBoxActionPerformed" text="Borderless Images">
+                           <VBox.margin>
+                              <Insets right="8.0" />
+                           </VBox.margin></CheckBox>
                      </children>
                   </VBox>
               </content>
