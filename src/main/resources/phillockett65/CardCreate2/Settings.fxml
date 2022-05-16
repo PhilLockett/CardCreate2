@@ -82,6 +82,7 @@
                      <children>
                         <CheckBox fx:id="lockXCheckBox" mnemonicParsing="false" onAction="#lockXCheckBoxActionPerformed" text="Lock X coordinate of Index and Corner pip together" />
                         <CheckBox fx:id="lockYCheckBox" mnemonicParsing="false" onAction="#lockYCheckBoxActionPerformed" text="Lock Y separation of Index and Corner pip" />
+                        <CheckBox fx:id="leftHandedCheckBox" mnemonicParsing="false" onAction="#leftHandedCheckBoxActionPerformed" text="Left handed Index and Corner Pips" />
                         <CheckBox fx:id="showGuideBoxCheckBox" mnemonicParsing="false" onAction="#showGuideBoxCheckBoxActionPerformed" text="Show Guide Box" />
                      </children>
                   </VBox>

@@ -58,6 +58,7 @@ import phillockett65.CardCreate2.sample.ImagePayload;
 import phillockett65.CardCreate2.sample.Item;
 import phillockett65.CardCreate2.sample.MultiPayload;
 import phillockett65.CardCreate2.sample.Payload;
+import phillockett65.CardCreate2.sample.QuadPayload;
 
 public class Model {
 
@@ -813,8 +814,8 @@ public class Model {
      * Support code for "Modify Selected Card Item" panel.
      */
 
-    private DoublePayload index = null;
-    private DoublePayload cornerPip = null;
+    private QuadPayload index = null;
+    private QuadPayload cornerPip = null;
     private MultiPayload standardPip = null;
     private ImagePayload face = null;
     private DoublePayload facePip = null;
@@ -1088,12 +1089,12 @@ public class Model {
 
         face		= new ImagePayload(this);
 
-        index		= new DoublePayload(this, Item.INDEX);
+        index		= new QuadPayload(this, Item.INDEX);
 
         standardPip	= new MultiPayload(this);
         facePip		= new DoublePayload(this, Item.FACE_PIP);
 
-        cornerPip	= new DoublePayload(this, Item.CORNER_PIP);
+        cornerPip	= new QuadPayload(this, Item.CORNER_PIP);
 
         // Set up payload slider used to determine next item.
         final int ITEMS = Default.CARD_ITEM_COUNT.getInt();
@@ -1918,6 +1919,8 @@ public class Model {
     private boolean lockX = false;
     private boolean lockY = false;
     private double deltaY = 0;
+
+    private boolean leftHanded = false;
     private boolean showGuideBox = false;
 
     public boolean isLockX() { return lockX; }
@@ -1943,7 +1946,14 @@ public class Model {
         handle.syncPosition();
     }
 
+    public boolean isLeftHanded() { return leftHanded; }
     public boolean isShowGuideBox() { return showGuideBox; }
+
+    public void setLeftHanded(boolean state) {
+        leftHanded = state;
+        index.syncQuadState();
+        cornerPip.syncQuadState();
+    }
 
     public void setShowGuideBox(boolean state) {
         showGuideBox = state;
