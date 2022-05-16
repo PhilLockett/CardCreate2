@@ -771,13 +771,26 @@ public class Payload {
     
         final double iconWidthPX = iconImage.getWidth();
         final double iconHeightPX = iconImage.getHeight();
-        final double radius = model.getArcWidthPX();
+        final boolean landscape = iconHeightPX < iconWidthPX;
 
-        final double width = cardWidthPX * 0.07;
-        final double height = width * iconHeightPX / iconWidthPX;
-        
-        double posX = cardWidthPX * 0.02;
-        double posY = radius/4;
+        double width;
+        double height;
+        double posX;
+        double posY;
+
+        if (landscape) {
+            height = cardHeightPX * 0.05;
+            width = height * iconWidthPX / iconHeightPX;
+
+            posX = cardHeightPX * 0.02;
+            posY = model.getArcWidthPX()/4;
+        } else {
+            width = cardWidthPX * 0.07;
+            height = width * iconHeightPX / iconWidthPX;
+
+            posX = cardWidthPX * 0.02;
+            posY = model.getArcHeightPX()/4;
+        }
         gc.drawImage(iconImage, posX, posY, width, height);
 
         posX = cardWidthPX - posX - width;
