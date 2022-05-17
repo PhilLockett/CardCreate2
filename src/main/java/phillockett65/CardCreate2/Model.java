@@ -64,6 +64,194 @@ public class Model {
 
 
     /************************************************************************
+     * Support code for the Initialization of the Model.
+     */
+
+    /**
+     * Default Constructor, called by the Controller.
+     */
+    public Model() {
+		// System.out.println("Model constructed.");
+
+        /**
+         * Initialize "Playing Card Generator" panel.
+         */
+
+        initializeInputDirectories();
+        initializeGenerate();
+        initializeOutputDirectory();
+        initializeSampleNavigation();
+        initializeCardSize();
+        initializeBackgroundColour();
+        initializeDisplayCardItems();
+        initializeSelectCardItem();
+        initializeModifySelectedCardItem();
+        initializeSample();
+        initializeSettingsPanel();
+    }
+
+    /**
+     * Initialization after a base directory has been selected.
+     */
+    public void init() {
+        // System.out.println("init()");
+
+        watermarkView = new ImageView();
+        group.getChildren().add(watermarkView);
+        
+        setWatermark();
+
+        initializeCardItemPayloads();
+        makeCardsDirectory();
+
+        // Add handle to the group last so that it is displayed on top.
+        group.getChildren().add(box);
+        group.getChildren().add(handle);
+    }
+
+
+
+    /************************************************************************
+     * Support code for "Sample" panel.
+     */
+
+    private Group group;
+    private Image handleImage;
+    private Handle handle;
+    private Rectangle box;
+    private ImageView watermarkView;
+    private Image watermarkImage;
+
+    private void buildImageBox() {
+        box = new Rectangle();
+        box.setFill(null);
+        box.setStrokeWidth(2);
+        box.setStroke(Color.GREY);
+        box.setVisible(false);
+    }
+
+    private void setWatermark() {
+        final String path = getFaceDirectory() + "\\Watermark.png";
+        File file = new File(path);
+
+        if (!file.exists()) {
+            watermarkView.setImage(null);
+            watermarkImage = null;
+
+            return;
+        }
+
+        try {
+            watermarkImage = new Image(new FileInputStream(file));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        watermarkView.setImage(watermarkImage);
+    }
+
+    private void showImageBox() {
+        // System.out.println("showImageBox(" + display + "); keepAspectRatio = " + keepAspectRatio);
+        if (!showGuideBox) {
+            box.setVisible(false);
+
+            return;
+        }
+
+        final double pX = current.getCentreX();
+        final double pY = current.getCentreY();
+        final double winX = getWidth() - (2*pX);
+        final double winY = cardHeightPX - (2*pY);
+
+        box.setX(pX);
+        box.setY(pY);
+        box.setWidth(winX);
+        box.setHeight(winY);
+        box.setVisible(true);
+    }
+
+    /**
+     * @return the Group used by the "Sample" panel.
+     */
+    public Group getGroup() {
+        return group;
+    }
+
+    /**
+     * @return the Handle used by the "Sample" panel.
+     */
+    public Handle getHandle() {
+        return handle;
+    }
+
+    /**
+     * Increase the size of the current card item.
+     */
+    public void incCurrent() {
+        current.incSize();
+        syncSpinners();
+    }
+
+    /**
+     * Decrease the size of the current card item.
+     */
+    public void decCurrent() {
+        current.decSize();
+        syncSpinners();
+    }
+
+    /**
+     * Move the current card item up.
+     */
+    public void moveCurrentUp() {
+        current.moveUp();
+        syncSpinners();
+    }
+
+    /**
+     * Move the current card item down.
+     */
+    public void moveCurrentDown() {
+        current.moveDown();
+        syncSpinners();
+    }
+
+    /**
+     * Move the current card item left.
+     */
+    public void moveCurrentLeft() {
+        current.moveLeft();
+        syncSpinners();
+    }
+
+    /**
+     * Move the current card item right.
+     */
+    public void moveCurrentRight() {
+        current.moveRight();
+        syncSpinners();
+    }
+
+    /**
+     * Resize of the current card item.
+     */
+    public void resizeCurrent(int steps) {
+        current.resize(steps);
+        syncSpinners();
+    }
+
+    /**
+     * Initialize "Sample" panel.
+     */
+    private void initializeSample() {
+        group = new Group();
+        handleImage = new Image(getClass().getResourceAsStream("Handle.png"));
+        buildImageBox();
+    }
+
+
+
+    /************************************************************************
      * Support code for "Input Directories" panel.
      */
 
@@ -300,6 +488,233 @@ public class Model {
     /************************************************************************
      * Support code for "Generate" panel.
      */
+
+    /**
+     * Load an image file from disc.
+     * 
+     * @param path to the image file.
+     * @return the Image, or null if the file is not found.
+     */
+    private Image loadImage(String path) {
+        // System.out.println("loadImage(" + path + ")");
+        File file = new File(path);
+
+        if (!file.exists()) {
+            // System.out.println("File does not exist!");
+
+                return null;
+        }
+
+        Image loadedImage = null;
+        try {
+            loadedImage = new Image(new FileInputStream(file));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        return loadedImage;
+    }
+
+    /**
+     * Rotate the given image by 180 degrees.
+     * 
+     * @param image to rotate.
+     * @return the rotated Image.
+     */
+    private Image rotateImage(Image image) {
+        // System.out.println("rotateImage()");
+
+        ImageView view = new ImageView(image);
+        view.setRotate(180);
+        SnapshotParameters params = new SnapshotParameters();
+        params.setFill(Color.TRANSPARENT);
+
+        return view.snapshot(params, null);
+    }
+
+    private boolean showWatermark(int s, int c) {
+        if (watermarkImage == null)
+            return false;
+
+        if (isFaceCard(c))
+            return displayCourtWatermark;
+
+        if (isImageCard(s, c))
+            return displayImageWatermark;
+
+        return displayNumberWatermark;
+    }
+
+    private void showCurrentWatermark() {
+        watermarkView.setVisible(showWatermark(suit, card));
+    }
+
+    private class CardContext {
+        private final double xMax;
+        private final double yMax;
+        private final double arcWidth;
+        private final double arcHeight;
+        private Group root;
+        private final Canvas canvas;
+        private final GraphicsContext gc;
+
+        public CardContext() {
+            xMax = getWidth();
+            yMax = getHeight();
+            arcWidth = getArcWidthPX();
+            arcHeight = getArcHeightPX();
+
+            root = new Group();
+
+            // We need this Scene otherwise the canvas gets default background colour.
+            Scene s = new Scene(root, xMax, yMax, Color.TRANSPARENT);
+            canvas = new Canvas(xMax, yMax);
+            gc = canvas.getGraphicsContext2D();
+
+            // Add the canvas to the root otherwise the snapshot gets default background colour.
+            root.getChildren().add(canvas);
+
+            gc.setFill(backgroundColour);
+            gc.setStroke(Color.GREY);
+            gc.setLineWidth(3);
+
+            gc.fillRoundRect(0, 0, xMax, yMax, arcWidth, arcHeight);
+            gc.strokeRoundRect(0, 0, xMax, yMax, arcWidth, arcHeight);
+        }
+
+        public GraphicsContext getGraphicsContext() { return gc; }
+        public double getXMax() { return xMax; }
+        public double getYMax() { return yMax; }
+
+        public boolean write(int s, int c) {
+            boolean success = false;
+            try {
+                final Image snapshot = canvas.snapshot(null, null);
+                final BufferedImage image = SwingFXUtils.fromFXImage(snapshot, null);
+                
+                final String outputPath = getOutputDirectory() + "\\" + suits[s] + cards[c] + ".png";
+
+                ImageIO.write(image, "png", new File(outputPath));
+                success = true;
+            } catch (Exception e) {
+                System.out.println("Failed saving image: " + e);
+            }
+    
+            return success;
+        }
+    }
+
+    /**
+     * Generate the indicated card to disc using the current settings.
+     * 
+     * @param suit of card to generate.
+     * @param card number of card to generate.
+     * @param images list of pip Images to use (so they are only read once).
+     */
+    private void generateCard(int suit, int card, Image[] images) {
+
+        // Create blank card.
+        CardContext cc = new CardContext();
+        GraphicsContext gc = cc.getGraphicsContext();
+
+        // Add the icons using the Payloads.
+        if (showWatermark(suit, card))
+            gc.drawImage(watermarkImage, 0, 0, cc.getXMax(), cc.getYMax());
+
+        if (shouldIndexBeDisplayed()) {
+            Image image = loadImage(getIndexImagePath(suit, card));
+            Image rotatedImage = rotateImage(image);
+
+            index.drawCard(gc, image, rotatedImage);
+        }
+
+        if (shouldCornerPipBeDisplayed())
+            cornerPip.drawCard(gc, images[2], images[3]);
+
+        if (shouldFaceImageBeDisplayed(suit, card)) {
+            Image image = loadImage(getFaceImagePath(suit, card));
+            Image rotatedImage = rotateImage(image);
+
+            face.drawCard(gc, image, rotatedImage);
+        }
+
+        if (shouldStandardPipBeDisplayed(suit, card))
+            standardPip.drawCard(gc, images[0], images[1], card);
+
+        if (shouldFacePipBeDisplayed(card))
+            facePip.drawCard(gc, images[4], images[5]);
+
+        // Write the image to disc.
+        cc.write(suit, card);
+    }
+
+    /**
+     * Generate the indicated joker card to disc using the current settings.
+     * 
+     * @param suit of joker to generate.
+     * @param defaults number of times no joker image file was found, used to 
+     * vary default joker generation.
+     * @return the number of times no joker image file was found.
+     */
+    private int generateJoker(int suit, int defaults) {
+
+        // Create blank card.
+        CardContext cc = new CardContext();
+        GraphicsContext gc = cc.getGraphicsContext();
+
+        // Draw Joker indices specific to the suit.
+        String pathToImage = getIndexDirectory() + "\\" + suits[suit] + cards[0] + ".png";
+        Image indexImage = loadImage(pathToImage);
+        if (indexImage != null) {
+            Image rotatedImage = rotateImage(indexImage);
+
+            index.drawJoker(gc, indexImage, rotatedImage);
+        }
+
+        // Draw Joker image specific to the suit.
+        Image faceImage = loadImage(getFaceImagePath(suit, 0));
+        
+        if (faceImage == null) {
+            defaults++;
+            if (defaults % 2 == 1) {
+                faceImage = loadImage(baseDirectory + "\\boneyard\\Back.png");
+            }
+        }
+        face.drawJoker(gc, faceImage);
+
+        // Write the image to disc.
+        cc.write(suit, 0);
+
+        return defaults;
+    }
+
+    /**
+     * Generate the card images and save them to disc.
+     */
+    public void generate() {
+
+        // Ensure that the output directory exists.
+        makeOutputDirectory();
+
+        // Generate the cards.
+        Image[] images = new Image[6];
+        for (int suit = 0; suit < suits.length; ++suit) {
+            images[0] = loadImage(getStandardPipImagePath(suit));
+            images[1] = rotateImage(images[0]);
+            images[2] = loadImage(getCornerPipImagePath(suit));
+            images[3] = rotateImage(images[2]);
+            images[4] = loadImage(getFacePipImagePath(suit));
+            images[5] = rotateImage(images[4]);
+
+            for (int card = 1; card < cards.length; ++card)
+                generateCard(suit, card, images);
+        }
+
+        // Generate the jokers.
+        int defaults = 0;
+        for (int suit = 0; suit < suits.length; ++suit)
+            defaults = generateJoker(suit, defaults);
+    }
 
     /**
      * Initialize"Generate" panel.
@@ -1348,428 +1763,6 @@ public class Model {
         itemCentreXSVF = new SpinnerValueFactory.DoubleSpinnerValueFactory(0, 100, 10, step);
         itemCentreYSVF = new SpinnerValueFactory.DoubleSpinnerValueFactory(0, 100, 10, step);
     }
-
-
-
-    /************************************************************************
-     * Support code for "Sample" panel.
-     */
-
-    private Group group;
-    private Image handleImage;
-    private Handle handle;
-    private Rectangle box;
-    private ImageView watermarkView;
-    private Image watermarkImage;
-
-    private void buildImageBox() {
-        box = new Rectangle();
-        box.setFill(null);
-        box.setStrokeWidth(2);
-        box.setStroke(Color.GREY);
-        box.setVisible(false);
-    }
-
-    private void setWatermark() {
-        final String path = getFaceDirectory() + "\\Watermark.png";
-        File file = new File(path);
-
-        if (!file.exists()) {
-            watermarkView.setImage(null);
-            watermarkImage = null;
-
-            return;
-        }
-
-        try {
-            watermarkImage = new Image(new FileInputStream(file));
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-
-        watermarkView.setImage(watermarkImage);
-    }
-
-    private void showImageBox() {
-        // System.out.println("showImageBox(" + display + "); keepAspectRatio = " + keepAspectRatio);
-        if (!showGuideBox) {
-            box.setVisible(false);
-
-            return;
-        }
-
-        final double pX = current.getCentreX();
-        final double pY = current.getCentreY();
-        final double winX = getWidth() - (2*pX);
-        final double winY = cardHeightPX - (2*pY);
-
-        box.setX(pX);
-        box.setY(pY);
-        box.setWidth(winX);
-        box.setHeight(winY);
-        box.setVisible(true);
-    }
-
-    /**
-     * @return the Group used by the "Sample" panel.
-     */
-    public Group getGroup() {
-        return group;
-    }
-
-    /**
-     * @return the Handle used by the "Sample" panel.
-     */
-    public Handle getHandle() {
-        return handle;
-    }
-
-    /**
-     * Increase the size of the current card item.
-     */
-    public void incCurrent() {
-        current.incSize();
-        syncSpinners();
-    }
-
-    /**
-     * Decrease the size of the current card item.
-     */
-    public void decCurrent() {
-        current.decSize();
-        syncSpinners();
-    }
-
-    /**
-     * Move the current card item up.
-     */
-    public void moveCurrentUp() {
-        current.moveUp();
-        syncSpinners();
-    }
-
-    /**
-     * Move the current card item down.
-     */
-    public void moveCurrentDown() {
-        current.moveDown();
-        syncSpinners();
-    }
-
-    /**
-     * Move the current card item left.
-     */
-    public void moveCurrentLeft() {
-        current.moveLeft();
-        syncSpinners();
-    }
-
-    /**
-     * Move the current card item right.
-     */
-    public void moveCurrentRight() {
-        current.moveRight();
-        syncSpinners();
-    }
-
-    /**
-     * Resize of the current card item.
-     */
-    public void resizeCurrent(int steps) {
-        current.resize(steps);
-        syncSpinners();
-    }
-
-    /**
-     * Initialize "Sample" panel.
-     */
-    private void initializeSample() {
-        group = new Group();
-        handleImage = new Image(getClass().getResourceAsStream("Handle.png"));
-        buildImageBox();
-    }
-
-
-
-    /************************************************************************
-     * Support code for Playing Card Generation.
-     */
-
-    /**
-     * Load an image file from disc.
-     * 
-     * @param path to the image file.
-     * @return the Image, or null if the file is not found.
-     */
-    private Image loadImage(String path) {
-        // System.out.println("loadImage(" + path + ")");
-        File file = new File(path);
-
-        if (!file.exists()) {
-            // System.out.println("File does not exist!");
-
-                return null;
-        }
-
-        Image loadedImage = null;
-        try {
-            loadedImage = new Image(new FileInputStream(file));
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-
-        return loadedImage;
-    }
-
-    /**
-     * Rotate the given image by 189 degrees.
-     * 
-     * @param image to rotate.
-     * @return the rotated Image.
-     */
-    private Image rotateImage(Image image) {
-        // System.out.println("rotateImage()");
-
-        ImageView view = new ImageView(image);
-        view.setRotate(180);
-        SnapshotParameters params = new SnapshotParameters();
-        params.setFill(Color.TRANSPARENT);
-
-        return view.snapshot(params, null);
-    }
-
-    private boolean showWatermark(int s, int c) {
-        if (watermarkImage == null)
-            return false;
-
-        if (isFaceCard(c))
-            return displayCourtWatermark;
-
-        if (isImageCard(s, c))
-            return displayImageWatermark;
-
-        return displayNumberWatermark;
-    }
-
-    private void showCurrentWatermark() {
-        watermarkView.setVisible(showWatermark(suit, card));
-    }
-
-    private class CardContext {
-        private final double xMax;
-        private final double yMax;
-        private final double arcWidth;
-        private final double arcHeight;
-        private Group root;
-        private final Canvas canvas;
-        private final GraphicsContext gc;
-
-        public CardContext() {
-            xMax = getWidth();
-            yMax = getHeight();
-            arcWidth = getArcWidthPX();
-            arcHeight = getArcHeightPX();
-
-            root = new Group();
-
-            // We need this Scene otherwise the canvas gets default background colour.
-            Scene s = new Scene(root, xMax, yMax, Color.TRANSPARENT);
-            canvas = new Canvas(xMax, yMax);
-            gc = canvas.getGraphicsContext2D();
-
-            // Add the canvas to the root otherwise the snapshot gets default background colour.
-            root.getChildren().add(canvas);
-
-            gc.setFill(backgroundColour);
-            gc.setStroke(Color.GREY);
-            gc.setLineWidth(3);
-
-            gc.fillRoundRect(0, 0, xMax, yMax, arcWidth, arcHeight);
-            gc.strokeRoundRect(0, 0, xMax, yMax, arcWidth, arcHeight);
-        }
-
-        public GraphicsContext getGraphicsContext() { return gc; }
-        public double getXMax() { return xMax; }
-        public double getYMax() { return yMax; }
-
-        public boolean write(int s, int c) {
-            boolean success = false;
-            try {
-                final Image snapshot = canvas.snapshot(null, null);
-                final BufferedImage image = SwingFXUtils.fromFXImage(snapshot, null);
-                
-                final String outputPath = getOutputDirectory() + "\\" + suits[s] + cards[c] + ".png";
-
-                ImageIO.write(image, "png", new File(outputPath));
-                success = true;
-            } catch (Exception e) {
-                System.out.println("Failed saving image: " + e);
-            }
-    
-            return success;
-        }
-    }
-
-    /**
-     * Generate the indicated card to disc using the current settings.
-     * 
-     * @param suit of card to generate.
-     * @param card number of card to generate.
-     * @param images list of pip Images to use (so they are only read once).
-     */
-    private void generateCard(int suit, int card, Image[] images) {
-
-        // Create blank card.
-        CardContext cc = new CardContext();
-        GraphicsContext gc = cc.getGraphicsContext();
-
-        // Add the icons using the Payloads.
-        if (showWatermark(suit, card))
-            gc.drawImage(watermarkImage, 0, 0, cc.getXMax(), cc.getYMax());
-
-        if (shouldIndexBeDisplayed()) {
-            Image image = loadImage(getIndexImagePath(suit, card));
-            Image rotatedImage = rotateImage(image);
-
-            index.drawCard(gc, image, rotatedImage);
-        }
-
-        if (shouldCornerPipBeDisplayed())
-            cornerPip.drawCard(gc, images[2], images[3]);
-
-        if (shouldFaceImageBeDisplayed(suit, card)) {
-            Image image = loadImage(getFaceImagePath(suit, card));
-            Image rotatedImage = rotateImage(image);
-
-            face.drawCard(gc, image, rotatedImage);
-        }
-
-        if (shouldStandardPipBeDisplayed(suit, card))
-            standardPip.drawCard(gc, images[0], images[1], card);
-
-        if (shouldFacePipBeDisplayed(card))
-            facePip.drawCard(gc, images[4], images[5]);
-
-        // Write the image to disc.
-        cc.write(suit, card);
-    }
-
-    /**
-     * Generate the indicated joker card to disc using the current settings.
-     * 
-     * @param suit of joker to generate.
-     * @param defaults number of times no joker image file was found, used to 
-     * vary default joker generation.
-     * @return the number of times no joker image file was found.
-     */
-    private int generateJoker(int suit, int defaults) {
-
-        // Create blank card.
-        CardContext cc = new CardContext();
-        GraphicsContext gc = cc.getGraphicsContext();
-
-        // Draw Joker indices specific to the suit.
-        String pathToImage = getIndexDirectory() + "\\" + suits[suit] + cards[0] + ".png";
-        Image indexImage = loadImage(pathToImage);
-        if (indexImage != null) {
-            Image rotatedImage = rotateImage(indexImage);
-
-            index.drawJoker(gc, indexImage, rotatedImage);
-        }
-
-        // Draw Joker image specific to the suit.
-        Image faceImage = loadImage(getFaceImagePath(suit, 0));
-        
-        if (faceImage == null) {
-            defaults++;
-            if (defaults % 2 == 1) {
-                faceImage = loadImage(baseDirectory + "\\boneyard\\Back.png");
-            }
-        }
-        face.drawJoker(gc, faceImage);
-
-        // Write the image to disc.
-        cc.write(suit, 0);
-
-        return defaults;
-    }
-
-    /**
-     * Generate the card images and save them to disc.
-     */
-    public void generate() {
-
-        // Ensure that the output directory exists.
-        makeOutputDirectory();
-
-        // Generate the cards.
-        Image[] images = new Image[6];
-        for (int suit = 0; suit < suits.length; ++suit) {
-            images[0] = loadImage(getStandardPipImagePath(suit));
-            images[1] = rotateImage(images[0]);
-            images[2] = loadImage(getCornerPipImagePath(suit));
-            images[3] = rotateImage(images[2]);
-            images[4] = loadImage(getFacePipImagePath(suit));
-            images[5] = rotateImage(images[4]);
-
-            for (int card = 1; card < cards.length; ++card)
-                generateCard(suit, card, images);
-        }
-
-        // Generate the jokers.
-        int defaults = 0;
-        for (int suit = 0; suit < suits.length; ++suit)
-            defaults = generateJoker(suit, defaults);
-    }
-
-
-
-    /************************************************************************
-     * Support code for the Initialization of the Model.
-     */
-
-    /**
-     * Default Constructor.
-     */
-    public Model() {
-//		System.out.println("Model constructed.");
-
-        /**
-         * Initialize "Playing Card Generator" panel.
-         */
-
-        initializeInputDirectories();
-        initializeGenerate();
-        initializeOutputDirectory();
-        initializeSampleNavigation();
-        initializeCardSize();
-        initializeBackgroundColour();
-        initializeDisplayCardItems();
-        initializeSelectCardItem();
-        initializeModifySelectedCardItem();
-        initializeSample();
-        initializeSettingsPanel();
-    }
-
-    /**
-     * Initialization after a base directory has been selected.
-     */
-    public void init() {
-        // System.out.println("init()");
-
-        watermarkView = new ImageView();
-        group.getChildren().add(watermarkView);
-        
-        setWatermark();
-
-        initializeCardItemPayloads();
-        makeCardsDirectory();
-
-        // Add handle to the group last so that it is displayed on top.
-        group.getChildren().add(box);
-        group.getChildren().add(handle);
-    }
-
 
 
 
