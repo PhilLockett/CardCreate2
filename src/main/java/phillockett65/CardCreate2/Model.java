@@ -48,6 +48,9 @@ import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.image.PixelReader;
+import javafx.scene.image.PixelWriter;
+import javafx.scene.image.WritableImage;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
@@ -550,6 +553,37 @@ public class Model {
     }
 
     private final Color border = Color.GREY;
+    private final Color opaque = Color.BLACK;
+    private final Color transparent = Color.WHITE;
+
+    private WritableImage createMask() {
+
+        final double xMax = getWidth();
+        final double yMax = getHeight();
+        final double arcWidth = getArcWidthPX();
+        final double arcHeight = getArcHeightPX();
+
+        // Create mask.
+        Canvas canvas = new Canvas(xMax, yMax);
+        GraphicsContext gc = canvas.getGraphicsContext2D();
+
+        gc.setFill(transparent);
+        gc.fillRect(0, 0, xMax, yMax);
+        gc.setFill(opaque);
+        gc.fillRoundRect(0, 0, xMax, yMax, arcWidth, arcHeight);
+
+        gc.setStroke(opaque);
+        gc.setLineWidth(Default.BORDER_WIDTH.getInt());
+        gc.strokeRoundRect(0, 0, xMax, yMax, arcWidth, arcHeight);
+
+        // get image from mask
+        WritableImage mask = new WritableImage((int)xMax, (int)yMax);
+        mask = canvas.snapshot(null, mask);
+
+        return mask;
+    }
+
+
     private class CardContext {
         private final double xMax;
         private final double yMax;
@@ -558,8 +592,11 @@ public class Model {
         private Group root;
         private final Canvas canvas;
         private final GraphicsContext gc;
+        private Image mask;
 
-        public CardContext() {
+        public CardContext(Image mask) {
+            this.mask = mask;
+
             xMax = getWidth();
             yMax = getHeight();
             arcWidth = getArcWidthPX();
@@ -587,12 +624,44 @@ public class Model {
         public double getXMax() { return xMax; }
         public double getYMax() { return yMax; }
 
+        private WritableImage applyMask(Image input) {
+
+            PixelReader maskReader = mask.getPixelReader();
+            PixelReader reader = input.getPixelReader();
+    
+            int width = (int)input.getWidth();
+            int height = (int)input.getHeight();
+    
+            WritableImage output = new WritableImage(width, height);
+            PixelWriter writer = output.getPixelWriter();
+    
+            // Blend image and mask.
+            for (int x = 0; x < width; x++) {
+                for (int y = 0; y < height; y++) {
+                    final Color color = reader.getColor(x, y);
+                    final boolean show = maskReader.getColor(x, y).equals(opaque);
+                    
+                    if (show)
+                        writer.setColor(x, y, color);
+                }
+            }
+    
+            return output;
+        }
+    
         public boolean write(int s, int c) {
             boolean success = false;
             try {
-                final Image snapshot = canvas.snapshot(null, null);
-                final BufferedImage image = SwingFXUtils.fromFXImage(snapshot, null);
-                
+                final WritableImage snapshot = canvas.snapshot(null, null);
+                final BufferedImage image;
+
+                if (mask == null) {
+                    image = SwingFXUtils.fromFXImage(snapshot, null);
+                } else {
+                    Image cropped = applyMask(snapshot);
+                    image = SwingFXUtils.fromFXImage(cropped, null);
+                }
+
                 final String outputPath = getOutputImagePath(s, c);
 
                 ImageIO.write(image, "png", new File(outputPath));
@@ -612,10 +681,10 @@ public class Model {
      * @param card number of card to generate.
      * @param images list of pip Images to use (so they are only read once).
      */
-    private void generateCard(int suit, int card, Image[] images) {
+    private void generateCard(int suit, int card, Image[] images, Image mask) {
 
         // Create blank card.
-        CardContext cc = new CardContext();
+        CardContext cc = new CardContext(mask);
         GraphicsContext gc = cc.getGraphicsContext();
 
         // Add the icons using the Payloads.
@@ -657,10 +726,10 @@ public class Model {
      * vary default joker generation.
      * @return the number of times no joker image file was found.
      */
-    private int generateJoker(int suit, int defaults) {
+    private int generateJoker(int suit, int defaults, Image mask) {
 
         // Create blank card.
-        CardContext cc = new CardContext();
+        CardContext cc = new CardContext(mask);
         GraphicsContext gc = cc.getGraphicsContext();
 
         // Draw Joker indices specific to the suit.
@@ -698,6 +767,7 @@ public class Model {
         makeOutputDirectory();
 
         // Generate the cards.
+        final Image mask = cropCorners ? createMask() : null;
         Image[] images = new Image[6];
         for (int suit = 0; suit < suits.length; ++suit) {
             images[0] = loadImage(getStandardPipImagePath(suit));
@@ -708,13 +778,13 @@ public class Model {
             images[5] = rotateImage(images[4]);
 
             for (int card = 1; card < cards.length; ++card)
-                generateCard(suit, card, images);
+                generateCard(suit, card, images, mask);
         }
 
         // Generate the jokers.
         int defaults = 0;
         for (int suit = 0; suit < suits.length; ++suit)
-            defaults = generateJoker(suit, defaults);
+            defaults = generateJoker(suit, defaults, mask);
     }
 
     /**
@@ -1793,7 +1863,7 @@ public class Model {
 
 
     /************************************************************************
-     * Support code for "Card Corners" panel. 
+     * Support code for "Card Corners and Cropping" panel. 
      */
 
     private boolean independentlySetCornerRadii = false;
@@ -1803,6 +1873,8 @@ public class Model {
 
     private SpinnerValueFactory<Double>  arcWidthSpinner;
     private SpinnerValueFactory<Double>  arcHeightSpinner;
+
+    private boolean cropCorners = false;
 
 
     /**
@@ -1859,6 +1931,9 @@ public class Model {
 
     public void resetArcWidthSVF()    { arcWidthSpinner.setValue((double)Default.RADIUS.getFloat()); }
     public void resetArcHeightSVF()   { arcHeightSpinner.setValue((double)Default.RADIUS.getFloat()); }
+
+    public boolean isCropCorners() { return cropCorners; }
+    public void setCropCorners(boolean state) { cropCorners = state; }
 
 
     /**

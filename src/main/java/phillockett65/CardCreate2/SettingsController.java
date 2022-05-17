@@ -78,11 +78,14 @@ public class SettingsController {
 
 
     /************************************************************************
-     * Support code for "Card Corners" panel. 
+     * Support code for "Card Corners and Cropping" panel. 
      */
 
     @FXML
     private CheckBox independentRadiiCheckBox;
+
+    @FXML
+    private CheckBox cropCornersCheckBox;
 
     @FXML
     private Label arcWidthLabel;
@@ -125,6 +128,13 @@ public class SettingsController {
         sample.syncCardSize();
     }
 
+    @FXML
+    void cropCornersCheckBoxActionPerformed(ActionEvent event) {
+        final boolean crop = cropCornersCheckBox.isSelected();
+
+        model.setCropCorners(crop);
+    }
+
     private void setArcLabelsAndToolsTips(boolean indy) {
 
         if (indy) {
@@ -150,7 +160,7 @@ public class SettingsController {
     private void initializeCardCorners() {
         final boolean indy = model.isSetCornerRadiiIndependently();
         independentRadiiCheckBox.setSelected(indy);
-        independentRadiiCheckBox.setTooltip(new Tooltip("independently set card corner radius width and height"));
+        independentRadiiCheckBox.setTooltip(new Tooltip("Independently set card corner radius width and height"));
 
         arcWidthLabel.setTooltip(new Tooltip("Card arc width radius as a percentage of card width (default: 10)"));
         arcWidthSpinner.setTooltip(new Tooltip("Set card arc width corner radius as a percentage of card width"));
@@ -171,6 +181,8 @@ public class SettingsController {
             sample.syncCardSize();
         });
 
+        cropCornersCheckBox.setSelected(model.isCropCorners());
+        cropCornersCheckBox.setTooltip(new Tooltip("Crop the card corners, useful when the image overruns at the corners"));
     }
 
 

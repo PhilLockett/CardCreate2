@@ -32,11 +32,11 @@
             <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
          </padding>
          <children>
-            <TitledPane animated="false" collapsible="false" text="Card Corners">
+            <TitledPane animated="false" collapsible="false" text="Card Corners and Cropping">
                <content>
                   <HBox spacing="8.0">
                      <children>
-                        <VBox spacing="4.0">
+                        <VBox spacing="16.0">
                            <children>
                               <CheckBox fx:id="independentRadiiCheckBox" mnemonicParsing="false" onAction="#independentRadiiCheckBoxActionPerformed" text="Set Corner Radii Independently">
                                  <VBox.margin>
@@ -45,6 +45,11 @@
                                  <padding>
                                     <Insets right="16.0" />
                                  </padding></CheckBox>
+                              <CheckBox fx:id="cropCornersCheckBox" mnemonicParsing="false" onAction="#cropCornersCheckBoxActionPerformed" text="Crop Image Corners">
+                                 <padding>
+                                    <Insets right="16.0" />
+                                 </padding>
+                              </CheckBox>
                            </children>
                         </VBox>
                         <GridPane hgap="4.0" vgap="4.0">
@@ -89,7 +94,7 @@
       </HBox>
    </top>
    <right>
-      <VBox spacing="8.0" BorderPane.alignment="CENTER">
+      <VBox spacing="4.0" BorderPane.alignment="CENTER">
          <padding>
             <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
          </padding>
