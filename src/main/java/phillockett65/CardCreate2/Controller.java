@@ -73,47 +73,6 @@ public class Controller {
     private BorderPane userGUI;
 
     /**
-     * Show increase size of current card item message on status line.
-     */
-    public void increaseSize() {
-        final String name = model.getCurrentCardItemName();
-        if (!name.equals("")) {
-            setStatusMessage("Click on Sample to increase size of card " + name + ".");
-            sample.setResize(true);
-        }
-    }
-
-    /**
-     * Show decrease size of current card item message on status line.
-     */
-    public void decreaseSize() {
-        final String name = model.getCurrentCardItemName();
-        if (!name.equals("")) {
-            setStatusMessage("Click on Sample to decrease size of card " + name + ".");
-            sample.setResize(true);
-        }
-    }
-
-    /**
-     * Show move sample message.
-     * @param sample true if call originates from Sample, false otherwise.
-     */
-    public void moveSample(boolean sample) {
-        if (sample)
-            setStatusMessage("Use cursor keys to move Sample.");
-        else
-            setStatusMessage("Switch focus to Sample then use cursor keys to move Sample.");
-    }
-
-    /**
-     * Clear status line on key release.
-     */
-    public void release() {
-        setStatusMessage("Ready.");
-        sample.setResize(false);
-    }
-
-    /**
      * Constructor.
      * 
      * Responsible for creating the Model.
@@ -948,12 +907,52 @@ public class Controller {
     @FXML
     private Label statusLabel;
 
-
     @FXML
     private Button settingsButton;
 
     private void setStatusMessage(String Message) {
         statusLabel.setText(Message);
+    }
+
+    /**
+     * Show increase size of current card item message on status line.
+     */
+    public void increaseSize() {
+        final String name = model.getCurrentCardItemName();
+        if (!name.equals("")) {
+            setStatusMessage("Click on Sample to increase size of card " + name + ".");
+            sample.setResize(true);
+        }
+    }
+
+    /**
+     * Show decrease size of current card item message on status line.
+     */
+    public void decreaseSize() {
+        final String name = model.getCurrentCardItemName();
+        if (!name.equals("")) {
+            setStatusMessage("Click on Sample to decrease size of card " + name + ".");
+            sample.setResize(true);
+        }
+    }
+
+    /**
+     * Show move sample message.
+     * @param sample true if call originates from Sample, false otherwise.
+     */
+    public void moveSample(boolean sample) {
+        if (sample)
+            setStatusMessage("Use cursor keys to move Sample.");
+        else
+            setStatusMessage("Switch focus to Sample then use cursor keys to move Sample.");
+    }
+
+    /**
+     * Clear status line on key release.
+     */
+    public void release() {
+        setStatusMessage("Ready.");
+        sample.setResize(false);
     }
 
     private boolean launchSettingsWindow() {
@@ -983,13 +982,11 @@ public class Controller {
         return true;
     }
 
-
     @FXML
     void settingsButtonActionPerformed(ActionEvent event) {
         if (!model.isSettingsWindowLaunched())
             launchSettingsWindow();
     }
-
 
     /**
      * Initialize "Status" panel.
