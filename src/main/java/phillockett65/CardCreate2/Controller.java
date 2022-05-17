@@ -79,7 +79,7 @@ public class Controller {
      * Responsible for creating the Model, called by the FXMLLoader().
      */
     public Controller() {
-		// System.out.println("Controller constructed.");
+        // System.out.println("Controller constructed.");
         model = new Model();
     }
 
@@ -97,7 +97,7 @@ public class Controller {
      * images on the buttons and initialises all the controls.
      */
     @FXML public void initialize() {
-		// System.out.println("Controller initialized.");
+        // System.out.println("Controller initialized.");
 
         /**
          * Initialize "Playing Card Generator" panel.

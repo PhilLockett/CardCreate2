@@ -71,7 +71,7 @@ public class Model {
      * Default Constructor, called by the Controller.
      */
     public Model() {
-		// System.out.println("Model constructed.");
+        // System.out.println("Model constructed.");
 
         /**
          * Initialize "Playing Card Generator" panel.
@@ -1779,7 +1779,7 @@ public class Model {
      * Called by the controller to initialize the settings controller.
      */
     public void initializeSettingsPanel() {
-		// System.out.println("Settings Controller initialized.");
+        // System.out.println("Settings Controller initialized.");
 
         initializeCardCorners();
         initializeDisplayWatermark();
