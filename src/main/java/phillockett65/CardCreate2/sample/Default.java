@@ -34,6 +34,7 @@ public enum Default {
 
     STEP_SIZE (0.05F),
     STEP_COUNT (10F),
+
     CARD_ITEM_COUNT (5F),
     INDEX_HEIGHT (10.5F),
     INDEX_CENTRE_X (8.07F),
@@ -51,6 +52,7 @@ public enum Default {
     FACE_PIPCENTRE_X (14.54F+12.63F),
     FACE_PIPCENTRE_Y (10.14F+9.77F),
 
+    BORDER_WIDTH (3F),
     WIDTH (380F),
     MIN_WIDTH (38F),
     MAX_WIDTH (3800F),

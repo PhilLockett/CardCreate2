@@ -549,6 +549,7 @@ public class Model {
         watermarkView.setVisible(showWatermark(suit, card));
     }
 
+    private final Color border = Color.GREY;
     private class CardContext {
         private final double xMax;
         private final double yMax;
@@ -575,8 +576,8 @@ public class Model {
             root.getChildren().add(canvas);
 
             gc.setFill(backgroundColour);
-            gc.setStroke(Color.GREY);
-            gc.setLineWidth(3);
+            gc.setStroke(border);
+            gc.setLineWidth(Default.BORDER_WIDTH.getInt());
 
             gc.fillRoundRect(0, 0, xMax, yMax, arcWidth, arcHeight);
             gc.strokeRoundRect(0, 0, xMax, yMax, arcWidth, arcHeight);
