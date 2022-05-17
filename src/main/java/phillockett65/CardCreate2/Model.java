@@ -593,7 +593,7 @@ public class Model {
                 final Image snapshot = canvas.snapshot(null, null);
                 final BufferedImage image = SwingFXUtils.fromFXImage(snapshot, null);
                 
-                final String outputPath = getOutputDirectory() + "\\" + suits[s] + cards[c] + ".png";
+                final String outputPath = getOutputImagePath(s, c);
 
                 ImageIO.write(image, "png", new File(outputPath));
                 success = true;
@@ -749,6 +749,10 @@ public class Model {
 
     public String getOutputDirectory() {
         return baseDirectory + "\\cards\\" + getOutputName();
+    }
+
+    private String getOutputImagePath(int s, int c) {
+        return getOutputDirectory() + "\\" + suits[s] + cards[c] + ".png";
     }
 
     private boolean makeOutputDirectory() {
