@@ -342,13 +342,13 @@ public class Model {
      * @return
      */
     private boolean readBaseDirectoryFilePathsFromDisc() {
-//      System.out.println("readBaseDirectoryFilePathsFromDisc()");
+        // System.out.println("readBaseDirectoryFilePathsFromDisc()");
 
         // Check if PATHSFILE exists.
         File file = new File(PATHSFILE);
         if (!file.exists()) {
             file = new File(".");
-//          samplejPanel.setIndexDirectory(file.getPath());
+
             return false;
         }
 
@@ -358,11 +358,11 @@ public class Model {
             String line;
             while ((line = br.readLine()) != null) {
                 baseList.add(line);
-//              System.out.println(line);
+                // System.out.println(line);
             }
             br.close();
         } catch (IOException e) {
-//          e.printStackTrace();
+            // e.printStackTrace();
         }
 
         // If array is not empty use it to fill in baseDirectoryjComboBox.
@@ -383,7 +383,7 @@ public class Model {
      * @return
      */
     private boolean writeBaseDirectoryFilePathsToDisc() {
-//		System.out.println("writeBaseDirectoryFilePathsToDisc()");
+        // System.out.println("writeBaseDirectoryFilePathsToDisc()");
 
         try (FileWriter writer = new FileWriter(PATHSFILE); BufferedWriter bw = new BufferedWriter(writer)) {
             bw.write(baseDirectory + System.lineSeparator());
@@ -394,7 +394,7 @@ public class Model {
             }
             bw.close();
         } catch (IOException e) {
-//          e.printStackTrace();
+            // e.printStackTrace();
         }
 
         return true;
@@ -409,7 +409,7 @@ public class Model {
         styleList.clear();
         for (final File styleEntry : style.listFiles()) {
             if (styleEntry.isDirectory()) {
-//                System.out.println(directoryName + "\\" + styleEntry.getName());
+                // System.out.println(directoryName + "\\" + styleEntry.getName());
                 styleList.add(styleEntry.getName());
             }
         }
@@ -425,7 +425,7 @@ public class Model {
      * @return true if base is a valid base directory, false otherwise.
      */
     public boolean setBaseDirectory(String base) {
-//		System.out.println("model.setBaseDirectory(" + base + ")");
+        // System.out.println("model.setBaseDirectory(" + base + ")");
 
         if (base.equals(""))
             return false;
@@ -445,7 +445,7 @@ public class Model {
             if (fileEntry.isDirectory()) {
                 final String directoryName = directory.getPath();
                 final String item = fileEntry.getName();
-//                System.out.println(directoryName);
+                // System.out.println(directoryName);
                 switch (fileEntry.getName()) {
                 case "faces":
                     faces = fillDirectoryList(faceList, directoryName, item);
@@ -502,7 +502,7 @@ public class Model {
         if (!file.exists()) {
             // System.out.println("File does not exist!");
 
-                return null;
+            return null;
         }
 
         Image loadedImage = null;
@@ -786,7 +786,6 @@ public class Model {
     private final String[] cards = { "Joker", "A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K" };
 
     
-
     public int getSuit() {
         return suit;
     }
@@ -1835,6 +1834,7 @@ public class Model {
 
         syncCardItemsWithCardSize();
     }
+
     /**
      * Set the corner arc height radius as a percentage of the card height.
      * 

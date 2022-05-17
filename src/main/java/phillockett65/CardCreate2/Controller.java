@@ -220,7 +220,7 @@ public class Controller {
      * selected.
      */
     private void setInitialBaseDirectory() {
-//		System.out.println("setInitialBaseDirectory(" + model.getBaseDirectory() + ")");
+        // System.out.println("setInitialBaseDirectory(" + model.getBaseDirectory() + ")");
 
         baseDirectoryComboBox.setItems(model.getBaseList());
         baseDirectoryComboBox.setValue(model.getBaseDirectory());
@@ -241,7 +241,7 @@ public class Controller {
 
 
     private boolean setBaseDirectory(String base) {
-//		System.out.println("setBaseDirectory(" + base + ")");
+        // System.out.println("setBaseDirectory(" + base + ")");
 
         if (!model.setBaseDirectory(base))
             return false;
@@ -263,7 +263,7 @@ public class Controller {
         File directory = choice.showDialog(stage);
 
         if (directory != null) {
-//        	System.out.println("Selected: " + directory.getAbsolutePath());
+        // System.out.println("Selected: " + directory.getAbsolutePath());
 
             if (setBaseDirectory(directory.getPath()))
                 return true;
@@ -294,7 +294,7 @@ public class Controller {
 
     @FXML
     void baseDirectoryButtonActionPerformed(ActionEvent event) {
-//    	System.out.println("baseDirectoryButtonActionPerformed()");
+    // System.out.println("baseDirectoryButtonActionPerformed()");
 
         if (!selectBaseDirectory()) {
             if (!selectValidBaseDirectory()) {
@@ -306,7 +306,7 @@ public class Controller {
 
     @FXML
     void baseDirectoryComboBoxActionPerformed(ActionEvent event) {
-//    	System.out.println("baseDirectoryComboBoxActionPerformed()" + event.toString());
+    // System.out.println("baseDirectoryComboBoxActionPerformed()" + event.toString());
 
         if (!model.setBaseDirectory(baseDirectoryComboBox.getValue()))
             return;
@@ -393,13 +393,13 @@ public class Controller {
 
     @FXML
     void outputTextFieldKeyTyped(KeyEvent event) {
-//    	System.out.println("outputjTextFieldKeyTyped()" + event.toString());
+    // System.out.println("outputjTextFieldKeyTyped()" + event.toString());
         model.setOutputName(outputTextField.getText());
     }
 
     @FXML
     void outputToggleButtonActionPerformed(ActionEvent event) {
-//    	System.out.println("outputjToggleButtonActionPerformed()" + event.toString());
+    // System.out.println("outputjToggleButtonActionPerformed()" + event.toString());
 
         final boolean manual = outputToggleButton.isSelected(); 
 
@@ -802,7 +802,7 @@ public class Controller {
      * card items being displayed.
      */
     private void setSelectCardItemPrompts() {
-//    	System.out.println("setSelectCardItemPrompts()");
+        // System.out.println("setSelectCardItemPrompts()");
 
         setDisabledStateOfCurrentCardItem();
 
@@ -813,7 +813,7 @@ public class Controller {
      * Fix the disable state of the "Modify Card Item" controls.
      */
     private void setDisabledStateOfCurrentCardItem() {
-//    	System.out.println("setDisabledStateOfCurrentCardItem()");
+        // System.out.println("setDisabledStateOfCurrentCardItem()");
 
         boolean disabled = !model.isCurrentHeightChangable();
         itemHeightButton.setDisable(disabled);
@@ -836,7 +836,7 @@ public class Controller {
      * "Modify Card Item" controls.
      */
     private void setCurrentCardItemLabelAndTooltips() {
-//    	System.out.println("setCurrentCardItemLabelAndTooltips()");
+        // System.out.println("setCurrentCardItemLabelAndTooltips()");
 
         itemHeightLabel.setText(model.getCurrentHLabel());
         itemCentreXLabel.setText(model.getCurrentXLabel());
