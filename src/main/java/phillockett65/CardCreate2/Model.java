@@ -1555,9 +1555,63 @@ public class Model {
         watermarkView.setVisible(showWatermark(suit, card));
     }
 
+    private class CardContext {
+        private final double xMax;
+        private final double yMax;
+        private final double arcWidth;
+        private final double arcHeight;
+        private Group root;
+        private final Canvas canvas;
+        private final GraphicsContext gc;
+
+        public CardContext() {
+            xMax = getWidth();
+            yMax = getHeight();
+            arcWidth = getArcWidthPX();
+            arcHeight = getArcHeightPX();
+
+            root = new Group();
+
+            // We need this Scene otherwise the canvas gets default background colour.
+            Scene s = new Scene(root, xMax, yMax, Color.TRANSPARENT);
+            canvas = new Canvas(xMax, yMax);
+            gc = canvas.getGraphicsContext2D();
+
+            // Add the canvas to the root otherwise the snapshot gets default background colour.
+            root.getChildren().add(canvas);
+
+            gc.setFill(backgroundColour);
+            gc.setStroke(Color.GREY);
+            gc.setLineWidth(3);
+
+            gc.fillRoundRect(0, 0, xMax, yMax, arcWidth, arcHeight);
+            gc.strokeRoundRect(0, 0, xMax, yMax, arcWidth, arcHeight);
+        }
+
+        public GraphicsContext getGraphicsContext() { return gc; }
+        public double getXMax() { return xMax; }
+        public double getYMax() { return yMax; }
+
+        public boolean write(int s, int c) {
+            boolean success = false;
+            try {
+                final Image snapshot = canvas.snapshot(null, null);
+                final BufferedImage image = SwingFXUtils.fromFXImage(snapshot, null);
+                
+                final String outputPath = getOutputDirectory() + "\\" + suits[s] + cards[c] + ".png";
+
+                ImageIO.write(image, "png", new File(outputPath));
+                success = true;
+            } catch (Exception e) {
+                System.out.println("Failed saving image: " + e);
+            }
+    
+            return success;
+        }
+    }
+
     /**
-     * Draw a blank card, add the icons using the Payloads then write the 
-     * image to disc.
+     * Generate the indicated card to disc using the current settings.
      * 
      * @param suit of card to generate.
      * @param card number of card to generate.
@@ -1565,29 +1619,13 @@ public class Model {
      */
     private void generateCard(int suit, int card, Image[] images) {
 
-        final double xMax = getWidth();
-        final double yMax = getHeight();
-        final double arcWidth = getArcWidthPX();
-        final double arcHeight = getArcHeightPX();
+        // Create blank card.
+        CardContext cc = new CardContext();
+        GraphicsContext gc = cc.getGraphicsContext();
 
-        Group root = new Group();
-        // We need this Scene otherwise the canvas gets default background colour.
-        Scene s = new Scene(root, xMax, yMax, Color.TRANSPARENT);
-        final Canvas canvas = new Canvas(xMax, yMax);
-        GraphicsContext gc = canvas.getGraphicsContext2D();
-
-        // We add the canvas to the root otherwise the snapshot gets default background colour.
-        root.getChildren().add(canvas);
-
-        gc.setFill(backgroundColour);
-        gc.setStroke(Color.BLACK);
-        gc.setLineWidth(2);
-
-        gc.fillRoundRect(0, 0, xMax, yMax, arcWidth, arcHeight);
-        gc.strokeRoundRect(0, 0, xMax, yMax, arcWidth, arcHeight);
-
+        // Add the icons using the Payloads.
         if (showWatermark(suit, card))
-            gc.drawImage(watermarkImage, 0, 0, xMax, yMax);
+            gc.drawImage(watermarkImage, 0, 0, cc.getXMax(), cc.getYMax());
 
         if (shouldIndexBeDisplayed()) {
             Image image = loadImage(getIndexImagePath(suit, card));
@@ -1612,52 +1650,25 @@ public class Model {
         if (shouldFacePipBeDisplayed(card))
             facePip.drawCard(gc, images[4], images[5]);
 
-        String outputPath = getOutputDirectory() + "\\" + suits[suit] + cards[card] + ".png";
-        // System.out.println(outputPath);
-
-        try {
-            Image snapshot = canvas.snapshot(null, null);
-            BufferedImage image = SwingFXUtils.fromFXImage(snapshot, null);
-            
-            ImageIO.write(image, "png", new File(outputPath));
-        } catch (Exception e) {
-            System.out.println("Failed saving image: " + e);
-        }
-
+        // Write the image to disc.
+        cc.write(suit, card);
     }
 
     /**
-     * Draw a blank card, add the joker images then write to disc.
+     * Generate the indicated joker card to disc using the current settings.
      * 
      * @param suit of joker to generate.
-     * @param errors number of times no joker image file was found, used to 
+     * @param defaults number of times no joker image file was found, used to 
      * vary default joker generation.
      * @return the number of times no joker image file was found.
      */
-    private int generateJoker(int suit, int errors) {
+    private int generateJoker(int suit, int defaults) {
 
-        final double xMax = getWidth();
-        final double yMax = getHeight();
-        final double arcWidth = getArcWidthPX();
-        final double arcHeight = getArcHeightPX();
+        // Create blank card.
+        CardContext cc = new CardContext();
+        GraphicsContext gc = cc.getGraphicsContext();
 
-        Group root = new Group();
-        // We need this Scene otherwise the canvas gets default background colour.
-        Scene s = new Scene(root, xMax, yMax, Color.TRANSPARENT);
-        final Canvas canvas = new Canvas(xMax, yMax);
-        GraphicsContext gc = canvas.getGraphicsContext2D();
-
-        // We add the canvas to the root otherwise the snapshot gets default background colour.
-        root.getChildren().add(canvas);
-
-        gc.setFill(backgroundColour);
-        gc.setStroke(Color.BLACK);
-        gc.setLineWidth(2);
-
-        gc.fillRoundRect(0, 0, xMax, yMax, arcWidth, arcHeight);
-        gc.strokeRoundRect(0, 0, xMax, yMax, arcWidth, arcHeight);
-
-        // Draw indices specific to the suit.
+        // Draw Joker indices specific to the suit.
         String pathToImage = getIndexDirectory() + "\\" + suits[suit] + cards[0] + ".png";
         Image indexImage = loadImage(pathToImage);
         if (indexImage != null) {
@@ -1666,30 +1677,21 @@ public class Model {
             index.drawJoker(gc, indexImage, rotatedImage);
         }
 
-        // Draw face image specific to the suit.
+        // Draw Joker image specific to the suit.
         Image faceImage = loadImage(getFaceImagePath(suit, 0));
         
         if (faceImage == null) {
-            errors++;
-            if (errors % 2 == 1) {
+            defaults++;
+            if (defaults % 2 == 1) {
                 faceImage = loadImage(baseDirectory + "\\boneyard\\Back.png");
             }
         }
         face.drawJoker(gc, faceImage);
 
-        String outputPath = getOutputDirectory() + "\\" + suits[suit] + cards[0] + ".png";
-        // System.out.println(outputPath);
+        // Write the image to disc.
+        cc.write(suit, 0);
 
-        try {
-            Image snapshot = canvas.snapshot(null, null);
-            BufferedImage image = SwingFXUtils.fromFXImage(snapshot, null);
-            
-            ImageIO.write(image, "png", new File(outputPath));
-        } catch (Exception e) {
-            System.out.println("Failed saving image: " + e);
-        }
-
-        return errors;
+        return defaults;
     }
 
     /**
