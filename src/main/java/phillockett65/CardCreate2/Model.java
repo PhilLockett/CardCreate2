@@ -1701,8 +1701,8 @@ public class Model {
         makeOutputDirectory();
 
         // Generate the cards.
+        Image[] images = new Image[6];
         for (int suit = 0; suit < suits.length; ++suit) {
-            Image[] images = new Image[6];
             images[0] = loadImage(getStandardPipImagePath(suit));
             images[1] = rotateImage(images[0]);
             images[2] = loadImage(getCornerPipImagePath(suit));
@@ -1710,16 +1710,14 @@ public class Model {
             images[4] = loadImage(getFacePipImagePath(suit));
             images[5] = rotateImage(images[4]);
 
-            for (int card = 1; card < cards.length; ++card) {
+            for (int card = 1; card < cards.length; ++card)
                 generateCard(suit, card, images);
-            }
         }
 
         // Generate the jokers.
-        int errors = 0;
+        int defaults = 0;
         for (int suit = 0; suit < suits.length; ++suit)
-            errors = generateJoker(suit, errors);
-
+            defaults = generateJoker(suit, defaults);
     }
 
 
@@ -1777,16 +1775,16 @@ public class Model {
      * Support code for "Settings" panel.
      */
 
-     private boolean settingsWindowLaunched = false;
+    private boolean settingsWindowLaunched = false;
 
-     public boolean isSettingsWindowLaunched() { return settingsWindowLaunched; }
-     public void setSettingsWindowLaunched(boolean state) { settingsWindowLaunched = state; }
+    public boolean isSettingsWindowLaunched() { return settingsWindowLaunched; }
+    public void setSettingsWindowLaunched(boolean state) { settingsWindowLaunched = state; }
 
     /**
      * Called by the controller to initialize the settings controller.
      */
     public void initializeSettingsPanel() {
-//		System.out.println("Settings Controller initialized.");
+		// System.out.println("Settings Controller initialized.");
 
         initializeCardCorners();
         initializeDisplayWatermark();
