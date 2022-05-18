@@ -492,48 +492,6 @@ public class Model {
      * Support code for "Generate" panel.
      */
 
-    /**
-     * Load an image file from disc.
-     * 
-     * @param path to the image file.
-     * @return the Image, or null if the file is not found.
-     */
-    private Image loadImage(String path) {
-        // System.out.println("loadImage(" + path + ")");
-        File file = new File(path);
-
-        if (!file.exists()) {
-            // System.out.println("File does not exist!");
-
-            return null;
-        }
-
-        Image loadedImage = null;
-        try {
-            loadedImage = new Image(new FileInputStream(file));
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-
-        return loadedImage;
-    }
-
-    /**
-     * Rotate the given image by 180 degrees.
-     * 
-     * @param image to rotate.
-     * @return the rotated Image.
-     */
-    private Image rotateImage(Image image) {
-        // System.out.println("rotateImage()");
-
-        ImageView view = new ImageView(image);
-        view.setRotate(180);
-        SnapshotParameters params = new SnapshotParameters();
-        params.setFill(Color.TRANSPARENT);
-
-        return view.snapshot(params, null);
-    }
 
     private boolean showWatermark(int s, int c) {
         if (watermarkImage == null)
@@ -692,8 +650,8 @@ public class Model {
             gc.drawImage(watermarkImage, 0, 0, cc.getXMax(), cc.getYMax());
 
         if (shouldIndexBeDisplayed()) {
-            Image image = loadImage(getIndexImagePath(suit, card));
-            Image rotatedImage = rotateImage(image);
+            Image image = Utils.loadImage(getIndexImagePath(suit, card));
+            Image rotatedImage = Utils.rotateImage(image);
 
             index.drawCard(gc, image, rotatedImage);
         }
@@ -702,8 +660,8 @@ public class Model {
             cornerPip.drawCard(gc, images[2], images[3]);
 
         if (shouldFaceImageBeDisplayed(suit, card)) {
-            Image image = loadImage(getFaceImagePath(suit, card));
-            Image rotatedImage = rotateImage(image);
+            Image image = Utils.loadImage(getFaceImagePath(suit, card));
+            Image rotatedImage = Utils.rotateImage(image);
 
             face.drawCard(gc, image, rotatedImage);
         }
@@ -734,20 +692,20 @@ public class Model {
 
         // Draw Joker indices specific to the suit.
         String pathToImage = getIndexDirectory() + "\\" + suits[suit] + cards[0] + ".png";
-        Image indexImage = loadImage(pathToImage);
+        Image indexImage = Utils.loadImage(pathToImage);
         if (indexImage != null) {
-            Image rotatedImage = rotateImage(indexImage);
+            Image rotatedImage = Utils.rotateImage(indexImage);
 
             index.drawJoker(gc, indexImage, rotatedImage);
         }
 
         // Draw Joker image specific to the suit.
-        Image faceImage = loadImage(getFaceImagePath(suit, 0));
+        Image faceImage = Utils.loadImage(getFaceImagePath(suit, 0));
         
         if (faceImage == null) {
             defaults++;
             if (defaults % 2 == 1) {
-                faceImage = loadImage(baseDirectory + "\\boneyard\\Back.png");
+                faceImage = Utils.loadImage(baseDirectory + "\\boneyard\\Back.png");
             }
         }
         face.drawJoker(gc, faceImage);
@@ -770,21 +728,24 @@ public class Model {
         final Image mask = cropCorners ? createMask() : null;
         Image[] images = new Image[6];
         for (int suit = 0; suit < suits.length; ++suit) {
-            images[0] = loadImage(getStandardPipImagePath(suit));
-            images[1] = rotateImage(images[0]);
-            images[2] = loadImage(getCornerPipImagePath(suit));
-            images[3] = rotateImage(images[2]);
-            images[4] = loadImage(getFacePipImagePath(suit));
-            images[5] = rotateImage(images[4]);
+            images[0] = Utils.loadImage(getStandardPipImagePath(suit));
+            images[1] = Utils.rotateImage(images[0]);
+            images[2] = Utils.loadImage(getCornerPipImagePath(suit));
+            images[3] = Utils.rotateImage(images[2]);
+            images[4] = Utils.loadImage(getFacePipImagePath(suit));
+            images[5] = Utils.rotateImage(images[4]);
 
-            for (int card = 1; card < cards.length; ++card)
+            for (int card = 1; card < cards.length; ++card) {
                 generateCard(suit, card, images, mask);
+            }
         }
 
         // Generate the jokers.
         int defaults = 0;
-        for (int suit = 0; suit < suits.length; ++suit)
+        for (int suit = 0; suit < suits.length; ++suit) {
             defaults = generateJoker(suit, defaults, mask);
+        }
+
     }
 
     /**

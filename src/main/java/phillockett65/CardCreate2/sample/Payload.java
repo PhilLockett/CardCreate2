@@ -34,6 +34,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 import phillockett65.CardCreate2.Model;
+import phillockett65.CardCreate2.Utils;
 
 public class Payload {
 
@@ -193,32 +194,6 @@ public class Payload {
 
 
     /**
-     * Load an image file from disc.
-     * 
-     * @param path to the image file.
-     * @return the Image, or null if the file is not found.
-     */
-    private Image loadImage(String path) {
-    // System.out.println("loadImage(" + path + ")");
-        File file = new File(path);
-
-        if (!file.exists()) {
-            // System.out.println("File does not exist!");
-
-             return null;
-        }
-
-        Image loadedImage = null;
-        try {
-            loadedImage = new Image(new FileInputStream(file));
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-
-        return loadedImage;
-    }
-
-    /**
      * Load an image into this payload and set up the attributes for the image 
      * width and height.
      * 
@@ -227,7 +202,7 @@ public class Payload {
     protected boolean loadNewImageFile() {
         // System.out.println("loadNewImageFile(" + path + ")");
 
-        image = loadImage(path);
+        image = Utils.loadImage(path);
 
         return image != null;
     }
