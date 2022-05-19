@@ -27,13 +27,15 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
-import javafx.scene.SnapshotParameters;
+import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.image.PixelReader;
 import javafx.scene.image.PixelWriter;
 import javafx.scene.image.WritableImage;
 import javafx.scene.paint.Color;
+
+import phillockett65.CardCreate2.sample.Default;
 
 public class Utils {
 
@@ -94,6 +96,37 @@ public class Utils {
         }
 
         return output;
+    }
+
+
+    public static final Color opaque = Color.BLACK;
+    public static final Color transparent = Color.WHITE;
+
+    public static WritableImage createMask(double width, double height, double arcWidth, double arcHeight) {
+
+        // Create mask.
+        Canvas canvas = new Canvas(width, height);
+        GraphicsContext gc = canvas.getGraphicsContext2D();
+
+        gc.setFill(transparent);
+        gc.fillRect(0, 0, width, height);
+        gc.setFill(opaque);
+        gc.fillRoundRect(0, 0, width, height, arcWidth, arcHeight);
+
+        gc.setStroke(opaque);
+        gc.setLineWidth(Default.BORDER_WIDTH.getInt());
+        gc.strokeRoundRect(0, 0, width, height, arcWidth, arcHeight);
+
+        // get image from mask
+        WritableImage mask = new WritableImage((int)width, (int)height);
+        
+        try {
+            canvas.snapshot(null, mask);
+        } catch (IllegalStateException e) {
+            e.printStackTrace();
+        }
+
+        return mask;
     }
 
 }

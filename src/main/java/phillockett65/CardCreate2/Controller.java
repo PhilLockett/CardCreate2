@@ -372,9 +372,20 @@ public class Controller {
     }
 
     private void invokeGenerateTask() {
-        Generate task = new Generate(model);
-
+        Image mask = null;
+        if (model.isCropCorners()) {
+            final double xMax = model.getWidth();
+            final double yMax = model.getHeight();
+            final double arcWidth = model.getArcWidthPX();
+            final double arcHeight = model.getArcHeightPX();
+            
+            mask = Utils.createMask(xMax, yMax, arcWidth, arcHeight);
+        }
+        Generate task = new Generate(model, mask);
+        
         task.call();
+
+        setStatusMessage("Output sent to: " + model.getOutputDirectory());
     }
 
     /**

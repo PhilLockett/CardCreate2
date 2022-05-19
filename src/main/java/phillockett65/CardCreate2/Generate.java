@@ -43,48 +43,13 @@ import phillockett65.CardCreate2.sample.Default;
 
 public class Generate {
 
-    private final Color opaque = Color.BLACK;
-    private final Color transparent = Color.WHITE;
-
-    private Model model;
+    private final Model model;
+    private final Image mask;
     
-    public Generate(Model model) {
+    public Generate(Model model, Image mask) {
         this.model = model;
+        this.mask = mask;
     }
-
-    private WritableImage createMask() {
-
-        final double xMax = model.getWidth();
-        final double yMax = model.getHeight();
-        final double arcWidth = model.getArcWidthPX();
-        final double arcHeight = model.getArcHeightPX();
-
-        // Create mask.
-        Canvas canvas = new Canvas(xMax, yMax);
-        GraphicsContext gc = canvas.getGraphicsContext2D();
-
-        gc.setFill(transparent);
-        gc.fillRect(0, 0, xMax, yMax);
-        gc.setFill(opaque);
-        gc.fillRoundRect(0, 0, xMax, yMax, arcWidth, arcHeight);
-
-        gc.setStroke(opaque);
-        gc.setLineWidth(Default.BORDER_WIDTH.getInt());
-        gc.strokeRoundRect(0, 0, xMax, yMax, arcWidth, arcHeight);
-
-        // get image from mask
-        WritableImage mask = new WritableImage((int)xMax, (int)yMax);
-        // mask = canvas.snapshot(null, mask);
-        
-        try {
-            canvas.snapshot(null, mask);
-        } catch (IllegalStateException e) {
-            e.printStackTrace();
-        }
-
-        return mask;
-    }
-
 
     private class CardContext {
         private final double xMax;
@@ -94,10 +59,8 @@ public class Generate {
         private Group root;
         private final Canvas canvas;
         private final GraphicsContext gc;
-        private Image mask;
 
-        public CardContext(Image mask) {
-            this.mask = mask;
+        public CardContext() {
 
             xMax = model.getWidth();
             yMax = model.getHeight();
@@ -107,7 +70,7 @@ public class Generate {
             root = new Group();
 
             // We need this Scene otherwise the canvas gets default background colour.
-            Scene s = new Scene(root, xMax, yMax, Color.TRANSPARENT);
+            new Scene(root, xMax, yMax, Color.TRANSPARENT);
             canvas = new Canvas(xMax, yMax);
             gc = canvas.getGraphicsContext2D();
 
@@ -141,7 +104,7 @@ public class Generate {
             for (int x = 0; x < width; x++) {
                 for (int y = 0; y < height; y++) {
                     final Color color = reader.getColor(x, y);
-                    final boolean show = maskReader.getColor(x, y).equals(opaque);
+                    final boolean show = maskReader.getColor(x, y).equals(Utils.opaque);
                     
                     if (show)
                         writer.setColor(x, y, color);
@@ -185,10 +148,10 @@ public class Generate {
      * @param card number of card to generate.
      * @param images list of pip Images to use (so they are only read once).
      */
-    private void generateCard(int suit, int card, Image[] images, Image mask) {
+    private void generateCard(int suit, int card, Image[] images) {
 
         // Create blank card.
-        CardContext cc = new CardContext(mask);
+        CardContext cc = new CardContext();
         GraphicsContext gc = cc.getGraphicsContext();
 
         // Add the icons using the Payloads.
@@ -230,10 +193,10 @@ public class Generate {
      * vary default joker generation.
      * @return the number of times no joker image file was found.
      */
-    private int generateJoker(int suit, int defaults, Image mask) {
+    private int generateJoker(int suit, int defaults) {
 
         // Create blank card.
-        CardContext cc = new CardContext(mask);
+        CardContext cc = new CardContext();
         GraphicsContext gc = cc.getGraphicsContext();
 
         // Draw Joker indices specific to the suit.
@@ -274,7 +237,6 @@ public class Generate {
         model.makeOutputDirectory();
 
         // Generate the cards.
-        final Image mask = model.isCropCorners() ? createMask() : null;
         Image[] images = new Image[6];
         final int suits = model.lastSuit();
         final int cards = model.lastCard();
@@ -287,13 +249,13 @@ public class Generate {
             images[5] = Utils.rotateImage(images[4]);
 
             for (int card = 1; card < cards; ++card)
-                generateCard(suit, card, images, mask);
+                generateCard(suit, card, images);
         }
 
         // Generate the jokers.
         int defaults = 0;
         for (int suit = 0; suit < suits; ++suit)
-            defaults = generateJoker(suit, defaults, mask);
+            defaults = generateJoker(suit, defaults);
     }
 
 }
