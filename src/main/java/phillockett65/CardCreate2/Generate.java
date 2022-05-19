@@ -30,8 +30,6 @@ import java.io.File;
 import javax.imageio.ImageIO;
 
 import javafx.embed.swing.SwingFXUtils;
-import javafx.scene.Group;
-import javafx.scene.Scene;
 import javafx.scene.SnapshotParameters;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;

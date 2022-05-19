@@ -27,6 +27,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
+import javafx.scene.SnapshotParameters;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
@@ -117,11 +118,11 @@ public class Utils {
         gc.setLineWidth(Default.BORDER_WIDTH.getInt());
         gc.strokeRoundRect(0, 0, width, height, arcWidth, arcHeight);
 
-        // get image from mask
-        WritableImage mask = new WritableImage((int)width, (int)height);
-        
+        WritableImage mask = null;
+        SnapshotParameters parameters = new SnapshotParameters();
+
         try {
-            canvas.snapshot(null, mask);
+            mask = canvas.snapshot(parameters, null);
         } catch (IllegalStateException e) {
             e.printStackTrace();
         }
