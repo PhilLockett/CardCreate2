@@ -110,10 +110,10 @@ public class Generate {
                         writer.setColor(x, y, color);
                 }
             }
-    
+
             return output;
         }
-    
+
         public boolean write(int s, int c) {
             boolean success = false;
             try {
@@ -134,7 +134,7 @@ public class Generate {
             } catch (Exception e) {
                 System.out.println("Failed saving image: " + e);
             }
-    
+
             return success;
         }
     }
