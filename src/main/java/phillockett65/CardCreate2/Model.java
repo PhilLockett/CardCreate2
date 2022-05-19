@@ -24,7 +24,6 @@
  */
 package phillockett65.CardCreate2;
 
-import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -34,23 +33,14 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 
-import javax.imageio.ImageIO;
-
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.Group;
-import javafx.scene.Scene;
-import javafx.scene.SnapshotParameters;
-import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.image.PixelReader;
-import javafx.scene.image.PixelWriter;
-import javafx.scene.image.WritableImage;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
@@ -151,6 +141,10 @@ public class Model {
         }
 
         watermarkView.setImage(watermarkImage);
+    }
+
+    public Image getWatermark() {
+        return watermarkImage;
     }
 
     private void showImageBox() {
@@ -288,7 +282,7 @@ public class Model {
         return baseDirectory + "\\faces\\" + faceStyle;
     }
 
-    private String getIndexDirectory() {
+    public String getIndexDirectory() {
         return baseDirectory + "\\indices\\" + indexStyle;
     }
 
@@ -492,8 +486,9 @@ public class Model {
      * Support code for "Generate" panel.
      */
 
+    public final Color border = Color.GREY;
 
-    private boolean showWatermark(int s, int c) {
+    public boolean showWatermark(int s, int c) {
         if (watermarkImage == null)
             return false;
 
@@ -510,243 +505,35 @@ public class Model {
         watermarkView.setVisible(showWatermark(suit, card));
     }
 
-    private final Color border = Color.GREY;
-    private final Color opaque = Color.BLACK;
-    private final Color transparent = Color.WHITE;
 
-    private WritableImage createMask() {
-
-        final double xMax = getWidth();
-        final double yMax = getHeight();
-        final double arcWidth = getArcWidthPX();
-        final double arcHeight = getArcHeightPX();
-
-        // Create mask.
-        Canvas canvas = new Canvas(xMax, yMax);
-        GraphicsContext gc = canvas.getGraphicsContext2D();
-
-        gc.setFill(transparent);
-        gc.fillRect(0, 0, xMax, yMax);
-        gc.setFill(opaque);
-        gc.fillRoundRect(0, 0, xMax, yMax, arcWidth, arcHeight);
-
-        gc.setStroke(opaque);
-        gc.setLineWidth(Default.BORDER_WIDTH.getInt());
-        gc.strokeRoundRect(0, 0, xMax, yMax, arcWidth, arcHeight);
-
-        // get image from mask
-        WritableImage mask = new WritableImage((int)xMax, (int)yMax);
-        mask = canvas.snapshot(null, mask);
-
-        return mask;
+    public void drawCardIndex(GraphicsContext gc, Image image, Image rotatedImage) {
+        index.drawCard(gc, image, rotatedImage);
     }
 
-
-    private class CardContext {
-        private final double xMax;
-        private final double yMax;
-        private final double arcWidth;
-        private final double arcHeight;
-        private Group root;
-        private final Canvas canvas;
-        private final GraphicsContext gc;
-        private Image mask;
-
-        public CardContext(Image mask) {
-            this.mask = mask;
-
-            xMax = getWidth();
-            yMax = getHeight();
-            arcWidth = getArcWidthPX();
-            arcHeight = getArcHeightPX();
-
-            root = new Group();
-
-            // We need this Scene otherwise the canvas gets default background colour.
-            Scene s = new Scene(root, xMax, yMax, Color.TRANSPARENT);
-            canvas = new Canvas(xMax, yMax);
-            gc = canvas.getGraphicsContext2D();
-
-            // Add the canvas to the root otherwise the snapshot gets default background colour.
-            root.getChildren().add(canvas);
-
-            gc.setFill(backgroundColour);
-            gc.setStroke(border);
-            gc.setLineWidth(Default.BORDER_WIDTH.getInt());
-
-            gc.fillRoundRect(0, 0, xMax, yMax, arcWidth, arcHeight);
-            gc.strokeRoundRect(0, 0, xMax, yMax, arcWidth, arcHeight);
-        }
-
-        public GraphicsContext getGraphicsContext() { return gc; }
-        public double getXMax() { return xMax; }
-        public double getYMax() { return yMax; }
-
-        private WritableImage applyMask(Image input) {
-
-            PixelReader maskReader = mask.getPixelReader();
-            PixelReader reader = input.getPixelReader();
-    
-            int width = (int)input.getWidth();
-            int height = (int)input.getHeight();
-    
-            WritableImage output = new WritableImage(width, height);
-            PixelWriter writer = output.getPixelWriter();
-    
-            // Blend image and mask.
-            for (int x = 0; x < width; x++) {
-                for (int y = 0; y < height; y++) {
-                    final Color color = reader.getColor(x, y);
-                    final boolean show = maskReader.getColor(x, y).equals(opaque);
-                    
-                    if (show)
-                        writer.setColor(x, y, color);
-                }
-            }
-    
-            return output;
-        }
-    
-        public boolean write(int s, int c) {
-            boolean success = false;
-            try {
-                final WritableImage snapshot = canvas.snapshot(null, null);
-                final BufferedImage image;
-
-                if (mask == null) {
-                    image = SwingFXUtils.fromFXImage(snapshot, null);
-                } else {
-                    Image cropped = applyMask(snapshot);
-                    image = SwingFXUtils.fromFXImage(cropped, null);
-                }
-
-                final String outputPath = getOutputImagePath(s, c);
-
-                ImageIO.write(image, "png", new File(outputPath));
-                success = true;
-            } catch (Exception e) {
-                System.out.println("Failed saving image: " + e);
-            }
-    
-            return success;
-        }
+    public void drawCardCornerPip(GraphicsContext gc, Image image, Image rotatedImage) {
+        cornerPip.drawCard(gc, image, rotatedImage);
     }
 
-    /**
-     * Generate the indicated card to disc using the current settings.
-     * 
-     * @param suit of card to generate.
-     * @param card number of card to generate.
-     * @param images list of pip Images to use (so they are only read once).
-     */
-    private void generateCard(int suit, int card, Image[] images, Image mask) {
-
-        // Create blank card.
-        CardContext cc = new CardContext(mask);
-        GraphicsContext gc = cc.getGraphicsContext();
-
-        // Add the icons using the Payloads.
-        if (showWatermark(suit, card))
-            gc.drawImage(watermarkImage, 0, 0, cc.getXMax(), cc.getYMax());
-
-        if (shouldIndexBeDisplayed()) {
-            Image image = Utils.loadImage(getIndexImagePath(suit, card));
-            Image rotatedImage = Utils.rotateImage(image);
-
-            index.drawCard(gc, image, rotatedImage);
-        }
-
-        if (shouldCornerPipBeDisplayed())
-            cornerPip.drawCard(gc, images[2], images[3]);
-
-        if (shouldFaceImageBeDisplayed(suit, card)) {
-            Image image = Utils.loadImage(getFaceImagePath(suit, card));
-            Image rotatedImage = Utils.rotateImage(image);
-
-            face.drawCard(gc, image, rotatedImage);
-        }
-
-        if (shouldStandardPipBeDisplayed(suit, card))
-            standardPip.drawCard(gc, images[0], images[1], card);
-
-        if (shouldFacePipBeDisplayed(card))
-            facePip.drawCard(gc, images[4], images[5]);
-
-        // Write the image to disc.
-        cc.write(suit, card);
+    public void drawCardFace(GraphicsContext gc, Image image, Image rotatedImage) {
+        face.drawCard(gc, image, rotatedImage);
     }
 
-    /**
-     * Generate the indicated joker card to disc using the current settings.
-     * 
-     * @param suit of joker to generate.
-     * @param defaults number of times no joker image file was found, used to 
-     * vary default joker generation.
-     * @return the number of times no joker image file was found.
-     */
-    private int generateJoker(int suit, int defaults, Image mask) {
-
-        // Create blank card.
-        CardContext cc = new CardContext(mask);
-        GraphicsContext gc = cc.getGraphicsContext();
-
-        // Draw Joker indices specific to the suit.
-        String pathToImage = getIndexDirectory() + "\\" + suits[suit] + cards[0] + ".png";
-        Image indexImage = Utils.loadImage(pathToImage);
-        if (indexImage != null) {
-            Image rotatedImage = Utils.rotateImage(indexImage);
-
-            index.drawJoker(gc, indexImage, rotatedImage);
-        }
-
-        // Draw Joker image specific to the suit.
-        Image faceImage = Utils.loadImage(getFaceImagePath(suit, 0));
-        
-        if (faceImage == null) {
-            defaults++;
-            if (defaults % 2 == 1) {
-                faceImage = Utils.loadImage(baseDirectory + "\\boneyard\\Back.png");
-            }
-        }
-        face.drawJoker(gc, faceImage);
-
-        // Write the image to disc.
-        cc.write(suit, 0);
-
-        return defaults;
+    public void drawCardStandardPip(GraphicsContext gc, Image image, Image rotatedImage, int pattern) {
+        standardPip.drawCard(gc, image, rotatedImage, pattern);
     }
 
-    /**
-     * Generate the card images and save them to disc.
-     */
-    public void generate() {
-
-        // Ensure that the output directory exists.
-        makeOutputDirectory();
-
-        // Generate the cards.
-        final Image mask = cropCorners ? createMask() : null;
-        Image[] images = new Image[6];
-        for (int suit = 0; suit < suits.length; ++suit) {
-            images[0] = Utils.loadImage(getStandardPipImagePath(suit));
-            images[1] = Utils.rotateImage(images[0]);
-            images[2] = Utils.loadImage(getCornerPipImagePath(suit));
-            images[3] = Utils.rotateImage(images[2]);
-            images[4] = Utils.loadImage(getFacePipImagePath(suit));
-            images[5] = Utils.rotateImage(images[4]);
-
-            for (int card = 1; card < cards.length; ++card) {
-                generateCard(suit, card, images, mask);
-            }
-        }
-
-        // Generate the jokers.
-        int defaults = 0;
-        for (int suit = 0; suit < suits.length; ++suit) {
-            defaults = generateJoker(suit, defaults, mask);
-        }
-
+    public void drawCardFacePip(GraphicsContext gc, Image image, Image rotatedImage) {
+           facePip.drawCard(gc, image, rotatedImage);
     }
+
+    public void drawJokerIndex(GraphicsContext gc, Image image, Image rotatedImage) {
+        index.drawJoker(gc, image, rotatedImage);
+    }
+
+    public void drawJokerFace(GraphicsContext gc, Image image) {
+        face.drawJoker(gc, image);
+    }
+
 
     /**
      * Initialize"Generate" panel.
@@ -782,11 +569,11 @@ public class Model {
         return baseDirectory + "\\cards\\" + getOutputName();
     }
 
-    private String getOutputImagePath(int s, int c) {
+    public String getOutputImagePath(int s, int c) {
         return getOutputDirectory() + "\\" + suits[s] + cards[c] + ".png";
     }
 
-    private boolean makeOutputDirectory() {
+    public boolean makeOutputDirectory() {
         File dir = new File(getOutputDirectory());
         if (dir.exists())
             return true;
@@ -822,13 +609,11 @@ public class Model {
     private final String[] cards = { "Joker", "A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K" };
 
     
-    public int getSuit() {
-        return suit;
-    }
+    public int lastSuit() { return suits.length; }
+    public int lastCard() { return cards.length; }
 
-    public int getCard() {
-        return card;
-    }
+    public int getSuit() { return suit; }
+    public int getCard() { return card; }
 
     public int nextSuit() {
         if (++suit >= suits.length)
@@ -1120,7 +905,7 @@ public class Model {
      * @return true if the standard pip Item should be displayed for the given 
      * card, false otherwise.
      */
-    private boolean shouldStandardPipBeDisplayed(int s, int c) {
+    public boolean shouldStandardPipBeDisplayed(int s, int c) {
         if (!isImageCard(s, c))
             return displayStandardPip;
         
@@ -1131,7 +916,7 @@ public class Model {
      * @return true if the face image Item should be displayed for the given 
      * card, false otherwise.
      */
-    private boolean shouldFaceImageBeDisplayed(int s, int c) {
+    public boolean shouldFaceImageBeDisplayed(int s, int c) {
         if (isImageCard(s, c))
             return displayFaceImage;
 
@@ -1142,7 +927,7 @@ public class Model {
      * @return true if the face pip Item should be displayed for the given 
      * card, false otherwise.
      */
-    private boolean shouldFacePipBeDisplayed(int c) {
+    public boolean shouldFacePipBeDisplayed(int c) {
         if (isFaceCard(c))
             return displayFacePip;
 
@@ -1329,7 +1114,7 @@ public class Model {
      * @return the file path for the face image of the specified card in the 
      * current style.
      */
-    private String getFaceImagePath(int s, int c) {
+    public String getFaceImagePath(int s, int c) {
         return getFaceDirectory() + "\\" + suits[s] + cards[c] + ".png";
     }
 
@@ -1341,13 +1126,17 @@ public class Model {
      * @return the file path for the index image of the specified card in the 
      * current style.
      */
-    private String getIndexImagePath(int s, int c) {
+    public String getIndexImagePath(int s, int c) {
         String pathToImage = getIndexDirectory() + "\\" + suits[s] + cards[c] + ".png";
         File file = new File(pathToImage);
         if (!file.exists())
             pathToImage = getIndexDirectory() + "\\" + alts[s] + cards[c] + ".png";
 
         return pathToImage;
+    }
+
+    public String getJokerIndexImagePath(int s) {
+        return getIndexDirectory() + "\\" + suits[s] + cards[0] + ".png";
     }
 
     /**
@@ -1357,7 +1146,7 @@ public class Model {
      * @return the file path for the standard pip image of the specified card 
      * in the current style.
      */
-    private String getStandardPipImagePath(int s) {
+    public String getStandardPipImagePath(int s) {
         return getPipDirectory() + "\\" + suits[s] + ".png";
     }
 
@@ -1368,7 +1157,7 @@ public class Model {
      * @return the file path for the face pip image of the specified card in 
      * the current style.
      */
-    private String getFacePipImagePath(int s) {
+    public String getFacePipImagePath(int s) {
         String pathToImage = getPipDirectory() + "\\" + suits[s] + "F.png";
         File file = new File(pathToImage);
         if (file.exists())
@@ -1384,7 +1173,7 @@ public class Model {
      * @return the file path for the corner pip image of the specified card in 
      * the current style.
      */
-    private String getCornerPipImagePath(int s) {
+    public String getCornerPipImagePath(int s) {
         String pathToImage = getPipDirectory() + "\\" + suits[s] + "S.png";
         File file = new File(pathToImage);
         if (file.exists())

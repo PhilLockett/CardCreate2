@@ -25,6 +25,7 @@
 package phillockett65.CardCreate2;
 
 import javafx.application.Platform;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.Optional;
@@ -367,8 +368,13 @@ public class Controller {
 
     @FXML
     void generateButtonActionPerformed(ActionEvent event) {
-        model.generate();
-        setStatusMessage("Output sent to: " + model.getOutputDirectory());
+        invokeGenerateTask();
+    }
+
+    private void invokeGenerateTask() {
+        Generate task = new Generate(model);
+
+        task.call();
     }
 
     /**
