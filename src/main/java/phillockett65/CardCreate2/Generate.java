@@ -32,6 +32,7 @@ import javax.imageio.ImageIO;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.SnapshotParameters;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
@@ -56,7 +57,6 @@ public class Generate {
         private final double yMax;
         private final double arcWidth;
         private final double arcHeight;
-        private Group root;
         private final Canvas canvas;
         private final GraphicsContext gc;
 
@@ -67,15 +67,8 @@ public class Generate {
             arcWidth = model.getArcWidthPX();
             arcHeight = model.getArcHeightPX();
 
-            root = new Group();
-
-            // We need this Scene otherwise the canvas gets default background colour.
-            new Scene(root, xMax, yMax, Color.TRANSPARENT);
             canvas = new Canvas(xMax, yMax);
             gc = canvas.getGraphicsContext2D();
-
-            // Add the canvas to the root otherwise the snapshot gets default background colour.
-            root.getChildren().add(canvas);
 
             gc.setFill(model.getBackgroundColour());
             gc.setStroke(model.border);
@@ -117,9 +110,12 @@ public class Generate {
         public boolean write(int s, int c) {
             boolean success = false;
 
+            SnapshotParameters parameters = new SnapshotParameters();
+            parameters.setFill(Color.TRANSPARENT);
+
             WritableImage snapshot = new WritableImage((int)xMax, (int)yMax);
             try {
-                canvas.snapshot(null, snapshot);
+                canvas.snapshot(parameters, snapshot);
             } catch (IllegalStateException e) {
                 System.out.println("CardContext.write() - Failed to take snapshot: " + e);
             }
