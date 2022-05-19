@@ -30,6 +30,9 @@ import java.io.FileNotFoundException;
 import javafx.scene.SnapshotParameters;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.image.PixelReader;
+import javafx.scene.image.PixelWriter;
+import javafx.scene.image.WritableImage;
 import javafx.scene.paint.Color;
 
 public class Utils {
@@ -40,7 +43,7 @@ public class Utils {
      * @param path to the image file.
      * @return the Image, or null if the file is not found.
      */
-	public static Image loadImage(String path) {
+    public static Image loadImage(String path) {
         // System.out.println("loadImage(" + path + ")");
         File file = new File(path);
 
@@ -66,15 +69,31 @@ public class Utils {
      * @param image to rotate.
      * @return the rotated Image.
      */
-	public static Image rotateImage(Image image) {
-        // System.out.println("rotateImage()");
+    public static Image rotateImage(Image input) {
 
-        ImageView view = new ImageView(image);
-        view.setRotate(180);
-        SnapshotParameters params = new SnapshotParameters();
-        params.setFill(Color.TRANSPARENT);
+        PixelReader reader = input.getPixelReader();
 
-        return view.snapshot(params, null);
+        int width = (int)input.getWidth();
+        int height = (int)input.getHeight();
+
+        WritableImage output = new WritableImage(width, height);
+        PixelWriter writer = output.getPixelWriter();
+
+        // Hand draw rotated image.
+        int a = width-1;
+        int b = height-1;
+        for (int y = 0; y < height; y++) {
+            for (int x = 0; x < width; x++) {
+                final Color color = reader.getColor(x, y);
+                
+                writer.setColor(a, b, color);
+                a--;
+            }
+            a = width-1;
+            b--;
+        }
+
+        return output;
     }
 
 }
