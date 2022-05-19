@@ -116,10 +116,16 @@ public class Generate {
 
         public boolean write(int s, int c) {
             boolean success = false;
-            try {
-                final WritableImage snapshot = canvas.snapshot(null, null);
-                final BufferedImage image;
 
+            WritableImage snapshot = new WritableImage((int)xMax, (int)yMax);
+            try {
+                canvas.snapshot(null, snapshot);
+            } catch (IllegalStateException e) {
+                System.out.println("CardContext.write() - Failed to take snapshot: " + e);
+            }
+
+            try {
+                final BufferedImage image;
                 if (mask == null) {
                     image = SwingFXUtils.fromFXImage(snapshot, null);
                 } else {
