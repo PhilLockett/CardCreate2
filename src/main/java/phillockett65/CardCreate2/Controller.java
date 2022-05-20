@@ -422,7 +422,7 @@ public class Controller {
 
     /**
      * Step 2: take snapshots of all the canvasses and produce a list of 
-     * images. This has to be done in the Application thread.
+     * images. Must be run from the Application thread.
      */
     private void takeSnapshots() {
         final int width = (int)model.getWidth();

@@ -103,6 +103,16 @@ public class Utils {
     public static final Color opaque = Color.BLACK;
     public static final Color transparent = Color.WHITE;
 
+    /**
+     * Create a mask that is suitable for cropping cards. Must be run from the 
+     * Application thread.
+     * 
+     * @param width of the card.
+     * @param height of the card.
+     * @param arcWidth of the corner of the card.
+     * @param arcHeight of the corner of the card.
+     * @return the created mask.
+     */
     public static WritableImage createMask(double width, double height, double arcWidth, double arcHeight) {
 
         // Create mask.
