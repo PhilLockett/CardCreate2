@@ -19,35 +19,29 @@
  */
 
 /*
- * Generate is a concurrent task used to generate the card images and save 
- * them to disc. 
+ * Generate is a concurrent task used to generate the card images. 
  */
 package phillockett65.CardCreate2;
 
-import java.awt.image.BufferedImage;
-import java.io.File;
-
-import javax.imageio.ImageIO;
-
-import javafx.embed.swing.SwingFXUtils;
-import javafx.scene.SnapshotParameters;
+import javafx.collections.ObservableList;
+import javafx.concurrent.Task;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
-import javafx.scene.image.PixelReader;
-import javafx.scene.image.PixelWriter;
-import javafx.scene.image.WritableImage;
-import javafx.scene.paint.Color;
+
 import phillockett65.CardCreate2.sample.Default;
 
-public class Generate {
+public class Generate extends Task<Long> {
 
     private final Model model;
-    private final Image mask;
-    
-    public Generate(Model model, Image mask) {
+    private Long progress;
+    private ObservableList<Canvas> canvasses;
+    private int defaults = 0;
+
+    public Generate(Model model, ObservableList<Canvas> canvasses) {
         this.model = model;
-        this.mask = mask;
+        this.canvasses = canvasses;
+        this.progress = 0L;
     }
 
     private class CardContext {
@@ -76,69 +70,11 @@ public class Generate {
             gc.strokeRoundRect(0, 0, xMax, yMax, arcWidth, arcHeight);
         }
 
+        public Canvas getCanvas() { return canvas; }
         public GraphicsContext getGraphicsContext() { return gc; }
         public double getXMax() { return xMax; }
         public double getYMax() { return yMax; }
-
-        private WritableImage applyMask(Image input) {
-
-            PixelReader maskReader = mask.getPixelReader();
-            PixelReader reader = input.getPixelReader();
-    
-            int width = (int)input.getWidth();
-            int height = (int)input.getHeight();
-    
-            WritableImage output = new WritableImage(width, height);
-            PixelWriter writer = output.getPixelWriter();
-    
-            // Blend image and mask.
-            for (int x = 0; x < width; x++) {
-                for (int y = 0; y < height; y++) {
-                    final Color color = reader.getColor(x, y);
-                    final boolean show = maskReader.getColor(x, y).equals(Utils.opaque);
-                    
-                    if (show)
-                        writer.setColor(x, y, color);
-                }
-            }
-
-            return output;
-        }
-
-        public boolean write(int s, int c) {
-            boolean success = false;
-
-            SnapshotParameters parameters = new SnapshotParameters();
-            parameters.setFill(Color.TRANSPARENT);
-
-            WritableImage snapshot = new WritableImage((int)xMax, (int)yMax);
-            try {
-                canvas.snapshot(parameters, snapshot);
-            } catch (IllegalStateException e) {
-                System.out.println("CardContext.write() - Failed to take snapshot: " + e);
-            }
-
-            try {
-                final BufferedImage image;
-                if (mask == null) {
-                    image = SwingFXUtils.fromFXImage(snapshot, null);
-                } else {
-                    Image cropped = applyMask(snapshot);
-                    image = SwingFXUtils.fromFXImage(cropped, null);
-                }
-
-                final String outputPath = model.getOutputImagePath(s, c);
-
-                ImageIO.write(image, "png", new File(outputPath));
-                success = true;
-            } catch (Exception e) {
-                System.out.println("Failed saving image: " + e);
-            }
-
-            return success;
-        }
-    }
-
+   }
 
 
     /**
@@ -148,7 +84,7 @@ public class Generate {
      * @param card number of card to generate.
      * @param images list of pip Images to use (so they are only read once).
      */
-    private void generateCard(int suit, int card, Image[] images) {
+    private Canvas generateCard(int suit, int card, Image[] images) {
 
         // Create blank card.
         CardContext cc = new CardContext();
@@ -181,8 +117,7 @@ public class Generate {
         if (model.shouldFacePipBeDisplayed(card))
             model.drawCardFacePip(gc, images[4], images[5]);
 
-        // Write the image to disc.
-        cc.write(suit, card);
+        return cc.getCanvas();
     }
 
     /**
@@ -193,7 +128,7 @@ public class Generate {
      * vary default joker generation.
      * @return the number of times no joker image file was found.
      */
-    private int generateJoker(int suit, int defaults) {
+    private Canvas generateJoker(int suit) {
 
         // Create blank card.
         CardContext cc = new CardContext();
@@ -219,17 +154,15 @@ public class Generate {
         }
         model.drawJokerFace(gc, faceImage);
 
-        // Write the image to disc.
-        cc.write(suit, 0);
-
-        return defaults;
+        return cc.getCanvas();
     }
 
-    
+
     /**
-     * Generate the card images and save them to disc.
+     * Generate the card images and add them to the observable list.
      */
-    public void call() {
+    @Override
+    protected Long call() throws Exception {
 
         // System.out.println("Generate called");
 
@@ -240,22 +173,37 @@ public class Generate {
         Image[] images = new Image[6];
         final int suits = model.lastSuit();
         final int cards = model.lastCard();
+        Canvas canvas;
+
         for (int suit = 0; suit < suits; ++suit) {
+
+            canvas = generateJoker(suit);
+            canvasses.add(canvas);
+            ++progress;
+            updateProgress(progress, Default.GENERATE_STEPS.getInt());
+
             images[0] = Utils.loadImage(model.getStandardPipImagePath(suit));
             images[1] = Utils.rotateImage(images[0]);
             images[2] = Utils.loadImage(model.getCornerPipImagePath(suit));
             images[3] = Utils.rotateImage(images[2]);
             images[4] = Utils.loadImage(model.getFacePipImagePath(suit));
             images[5] = Utils.rotateImage(images[4]);
+            for (int card = 1; card < cards; ++card) {
+                if (isCancelled()) {
+                    break;
+                }
 
-            for (int card = 1; card < cards; ++card)
-                generateCard(suit, card, images);
+                canvas = generateCard(suit, card, images);
+                canvasses.add(canvas);
+                ++progress;
+                updateProgress(progress, Default.GENERATE_STEPS.getInt());
+            }
+
         }
 
-        // Generate the jokers.
-        int defaults = 0;
-        for (int suit = 0; suit < suits; ++suit)
-            defaults = generateJoker(suit, defaults);
+        updateValue(progress);
+
+        return progress;
     }
 
 }

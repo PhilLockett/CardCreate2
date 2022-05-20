@@ -35,7 +35,9 @@ public enum Default {
     STEP_SIZE (0.05F),
     STEP_COUNT (10F),
 
+    GENERATE_STEPS (56*2F + 1),
     CARD_ITEM_COUNT (5F),
+
     INDEX_HEIGHT (10.5F),
     INDEX_CENTRE_X (8.07F),
     INDEX_CENTRE_Y (9.84F),

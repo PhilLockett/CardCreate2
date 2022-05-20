@@ -68,6 +68,10 @@
     -fx-background-color: black;
 }
 
+.progress-bar{
+    -fx-accent: #9B4642;
+}
+
 .imageButton{
     -fx-background-color: null;
     -fx-text-fill: null;

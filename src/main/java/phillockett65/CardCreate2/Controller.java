@@ -25,16 +25,23 @@
 package phillockett65.CardCreate2;
 
 import javafx.application.Platform;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.Optional;
+import java.util.concurrent.ExecutionException;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.SnapshotParameters;
+import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
@@ -44,6 +51,7 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.ProgressBar;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.TextField;
@@ -52,12 +60,15 @@ import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.image.WritableImage;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.paint.Color;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
 
 import phillockett65.CardCreate2.sample.CardSample;
+import phillockett65.CardCreate2.sample.Default;
 import phillockett65.CardCreate2.sample.Item;
 
 public class Controller {
@@ -366,26 +377,127 @@ public class Controller {
     @FXML
     private Button generateButton;
 
+    private ObservableList<Canvas> canvasses = FXCollections.observableArrayList();
+    private Generate generateTask;
+
+    private ObservableList<Image> images = FXCollections.observableArrayList();
+    private Write writeTask;
+
+    private Long progress = 0L;
+
     @FXML
     void generateButtonActionPerformed(ActionEvent event) {
         invokeGenerateTask();
     }
 
+    /**
+     * Step 1: use the Generate task to draw all the cards onto canvasses. 
+     * When completed the changed() handler is called.
+     */
     private void invokeGenerateTask() {
+
+        if (generateTask != null && generateTask.isRunning())
+            return;
+
+        progress = 0L;
+        showProgress();
+
+        generateTask = new Generate(model, canvasses);
+        generateTask.valueProperty().addListener(new ChangeListener<Long>() {
+
+            @Override
+            public void changed(ObservableValue<? extends Long> observable, Long oldValue, Long newValue) {
+                Platform.runLater(() -> {
+                    invokeSaveTask();
+                });
+            }
+
+        });
+        progressBar.progressProperty().bind(generateTask.progressProperty());
+
+        Thread th = new Thread(generateTask);
+        th.setDaemon(true);
+        th.start();
+    }
+
+    /**
+     * Step 2: take snapshots of all the canvasses and produce a list of 
+     * images. This has to be done in the Application thread.
+     */
+    private void takeSnapshots() {
+        final int width = (int)model.getWidth();
+        final int height = (int)model.getHeight();
+
+        for (Canvas canvas : canvasses) {
+
+            SnapshotParameters parameters = new SnapshotParameters();
+            parameters.setFill(Color.TRANSPARENT);
+
+            WritableImage snapshot = new WritableImage(width, height);
+            try {
+                canvas.snapshot(parameters, snapshot);
+            } catch (IllegalStateException e) {
+                System.out.println("takeSnapshots() - Failed to take snapshot: " + e);
+            }
+
+            images.add(snapshot);
+        }
+
+        canvasses.clear();
+
+        try {
+            progress = generateTask.get();
+        } catch (InterruptedException | ExecutionException e) {
+            e.printStackTrace();
+        }
+        ++progress;
+    }
+
+    /**
+     * Step 3: takeSnapshots() then use the Write task to save all the images 
+     * to disc. When completed the changed() handler is called.
+     */
+    private void invokeSaveTask() {
+        
+        if (writeTask != null && writeTask.isRunning())
+            return;
+
+        takeSnapshots();
+
         Image mask = null;
         if (model.isCropCorners()) {
-            final double xMax = model.getWidth();
-            final double yMax = model.getHeight();
+            final double width = model.getWidth();
+            final double height = model.getHeight();
             final double arcWidth = model.getArcWidthPX();
             final double arcHeight = model.getArcHeightPX();
             
-            mask = Utils.createMask(xMax, yMax, arcWidth, arcHeight);
+            mask = Utils.createMask(width, height, arcWidth, arcHeight);
         }
-        Generate task = new Generate(model, mask);
-        
-        task.call();
+        writeTask = new Write(model, mask, progress, images);
+        writeTask.valueProperty().addListener(new ChangeListener<Long>() {
 
+            @Override
+            public void changed(ObservableValue<? extends Long> observable, Long oldValue, Long newValue) {
+                Platform.runLater(() -> {
+                    generationFinished();
+                });
+            }
+
+        });
+        progressBar.progressProperty().bind(writeTask.progressProperty());
+
+        Thread th = new Thread(writeTask);
+        th.setDaemon(true);
+        th.start();
+    }
+
+    /**
+     * Step 4: final clean up.
+     */
+    private void generationFinished() {
+        hideProgress();
         setStatusMessage("Output sent to: " + model.getOutputDirectory());
+        images.clear();
     }
 
     /**
@@ -928,6 +1040,9 @@ public class Controller {
     @FXML
     private Button settingsButton;
 
+    @FXML
+    private ProgressBar progressBar;
+
     private void setStatusMessage(String Message) {
         statusLabel.setText(Message);
     }
@@ -1007,11 +1122,35 @@ public class Controller {
     }
 
     /**
+     * Show the progress bar, but also hide the status and disable the 
+     * generate button.
+     */
+    private void showProgress() {
+        generateButton.setDisable(true);
+        statusLabel.setVisible(false);
+        settingsButton.setVisible(false);
+        progressBar.setVisible(true);
+    }
+
+    /**
+     * Hide the progress bar, but also show the status and enable the generate 
+     * button.
+     */
+    private void hideProgress() {
+        generateButton.setDisable(false);
+        statusLabel.setVisible(true);
+        settingsButton.setVisible(true);
+        progressBar.setVisible(false);
+    }
+
+    /**
      * Initialize "Status" panel.
      */
     private void initializeStatus() {
         setStatusMessage("Ready.");
         settingsButton.setTooltip(new Tooltip("Launch Additional Configuraton window"));
+
+        hideProgress();
     }
 
 }
