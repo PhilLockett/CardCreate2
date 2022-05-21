@@ -1630,7 +1630,7 @@ public class Model {
     /**
      * @return the user defined corner arc width radius in pixels.
      */
-    public double getUserArcWidthPX() {
+    private double getUserArcWidthPX() {
         return getWidth() * arcWidth / 100;
     }
 
