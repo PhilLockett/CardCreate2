@@ -392,7 +392,7 @@ public class Controller {
 
     /**
      * Step 1: use the Generate task to draw all the cards onto canvasses. 
-     * When completed the changed() handler is called.
+     * When completed the valueProperty changed() handler is called.
      */
     private void invokeGenerateTask() {
 
@@ -403,15 +403,8 @@ public class Controller {
         showProgress();
 
         generateTask = new Generate(model, canvasses);
-        generateTask.valueProperty().addListener(new ChangeListener<Long>() {
-
-            @Override
-            public void changed(ObservableValue<? extends Long> observable, Long oldValue, Long newValue) {
-                Platform.runLater(() -> {
-                    invokeSaveTask();
-                });
-            }
-
+        generateTask.valueProperty().addListener( (v, oldValue, newValue) -> {
+            Platform.runLater(() -> invokeSaveTask()); 
         });
         progressBar.progressProperty().bind(generateTask.progressProperty());
 
@@ -455,7 +448,7 @@ public class Controller {
 
     /**
      * Step 3: takeSnapshots() then use the Write task to save all the images 
-     * to disc. When completed the changed() handler is called.
+     * to disc. When completed the valueProperty changed() handler is called.
      */
     private void invokeSaveTask() {
         
@@ -474,16 +467,7 @@ public class Controller {
             mask = Utils.createMask(width, height, arcWidth, arcHeight);
         }
         writeTask = new Write(model, mask, progress, images);
-        writeTask.valueProperty().addListener(new ChangeListener<Long>() {
-
-            @Override
-            public void changed(ObservableValue<? extends Long> observable, Long oldValue, Long newValue) {
-                Platform.runLater(() -> {
-                    generationFinished();
-                });
-            }
-
-        });
+        writeTask.valueProperty().addListener( (v, oldValue, newValue) -> Platform.runLater(() -> generationFinished()) );
         progressBar.progressProperty().bind(writeTask.progressProperty());
 
         Thread th = new Thread(writeTask);
