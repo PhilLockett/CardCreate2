@@ -377,10 +377,10 @@ public class Controller {
     @FXML
     private Button generateButton;
 
-    private ObservableList<Canvas> canvasses = FXCollections.observableArrayList();
+    private ObservableList<Canvas> canvasses;
     private Generate generateTask;
 
-    private ObservableList<Image> images = FXCollections.observableArrayList();
+    private ObservableList<Image> images;
     private Write writeTask;
 
     private Long progress = 0L;
@@ -505,6 +505,9 @@ public class Controller {
      */
     private void initializeGenerate() {
         generateButton.setTooltip(new Tooltip("Generate the card images to the selected output directory"));
+
+        canvasses = FXCollections.observableArrayList();
+        images = FXCollections.observableArrayList();
     }
 
 
