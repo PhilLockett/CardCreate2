@@ -422,11 +422,10 @@ public class Controller {
         final int width = (int)model.getWidth();
         final int height = (int)model.getHeight();
 
+        SnapshotParameters parameters = new SnapshotParameters();
+        parameters.setFill(Color.TRANSPARENT);
+
         for (Canvas canvas : canvasses) {
-
-            SnapshotParameters parameters = new SnapshotParameters();
-            parameters.setFill(Color.TRANSPARENT);
-
             WritableImage snapshot = new WritableImage(width, height);
             try {
                 canvas.snapshot(parameters, snapshot);
