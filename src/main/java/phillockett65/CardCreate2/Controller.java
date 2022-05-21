@@ -404,6 +404,7 @@ public class Controller {
 
         generateTask = new Generate(model, canvasses);
         generateTask.valueProperty().addListener( (v, oldValue, newValue) -> {
+            progress = newValue;
             Platform.runLater(() -> invokeSaveTask()); 
         });
         progressBar.progressProperty().bind(generateTask.progressProperty());
@@ -438,11 +439,6 @@ public class Controller {
 
         canvasses.clear();
 
-        try {
-            progress = generateTask.get();
-        } catch (InterruptedException | ExecutionException e) {
-            e.printStackTrace();
-        }
         ++progress;
     }
 
