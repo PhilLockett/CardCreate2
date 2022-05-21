@@ -700,7 +700,8 @@ public class Payload {
 
 
     /**
-     * Draw icons to a given graphics context using the user specification.
+     * Draw top left and rotated bottom right images to a given graphics 
+     * context using hard coded specification.
      * 
      * @param gc graphics context to draw on.
      * @param iconImage used for the icons.
@@ -725,8 +726,8 @@ public class Payload {
     }
 
     /**
-     * Draw single portrait image to a given graphics context using hard coded 
-     * specification.
+     * Draw top left and rotated bottom right images to a given graphics 
+     * context for the Joker indices.
      * 
      * @param gc graphics context to draw on.
      * @param iconImage used for the icons.

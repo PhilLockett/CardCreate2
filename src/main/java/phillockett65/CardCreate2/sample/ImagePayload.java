@@ -327,7 +327,8 @@ public class ImagePayload extends Payload {
      */
 
     /**
-     * Draw icons to a given graphics context using the user specification.
+     * Draw the card image and, if a landscape image, the rotated image to a
+     * given graphics context using the user specification.
      * 
      * @param gc graphics context to draw on.
      * @param iconImage used for the icons.
@@ -398,7 +399,7 @@ public class ImagePayload extends Payload {
 
     /**
      * Draw single portrait image to a given graphics context using hard coded 
-     * specification.
+     * specification for the Joker image.
      * 
      * @param gc graphics context to draw on.
      * @param image used for the icons.
