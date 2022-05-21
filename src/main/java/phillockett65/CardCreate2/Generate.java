@@ -201,8 +201,6 @@ public class Generate extends Task<Long> {
 
         }
 
-        updateValue(progress);
-
         return progress;
     }
 

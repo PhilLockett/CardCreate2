@@ -130,9 +130,6 @@ public class Write extends Task<Long> {
             }
         }
 
-        Long ret = Long.valueOf(index);
-        updateValue(ret);
-
         return progress;
     }
 
