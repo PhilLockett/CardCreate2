@@ -25,15 +25,12 @@
 package phillockett65.CardCreate2;
 
 import javafx.application.Platform;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.Optional;
-import java.util.concurrent.ExecutionException;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -68,7 +65,6 @@ import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
 
 import phillockett65.CardCreate2.sample.CardSample;
-import phillockett65.CardCreate2.sample.Default;
 import phillockett65.CardCreate2.sample.Item;
 
 public class Controller {
