@@ -1631,7 +1631,7 @@ public class Model {
      * @return the user defined corner arc width radius in pixels.
      */
     public double getUserArcWidthPX() {
-        return cardWidthPX * arcWidth / 100;
+        return getWidth() * arcWidth / 100;
     }
 
     /**
@@ -1648,7 +1648,7 @@ public class Model {
      * @return the corner arc height radius in pixels.
      */
     public double getArcHeightPX() {
-        return cardHeightPX * arcHeight / 100;
+        return getHeight() * arcHeight / 100;
     }
 
     /**
