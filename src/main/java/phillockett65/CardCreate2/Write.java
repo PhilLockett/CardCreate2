@@ -85,7 +85,7 @@ public class Write extends Task<Long> {
 
     private boolean save(int s, int c) {
         boolean success = false;
-        final Image snapshot = images.get(index);
+        final Image snapshot = images.get(index++);
 
         try {
             final BufferedImage image;
@@ -117,16 +117,15 @@ public class Write extends Task<Long> {
         final int suits = model.lastSuit();
         final int cards = model.lastCard();
         for (int suit = 0; suit < suits; ++suit) {
+            if (isCancelled())
+                break;
 
             for (int card = 0; card < cards; ++card) {
-                if (isCancelled()) {
+                if (isCancelled())
                     break;
-                }
 
                 save(suit, card);
-                ++progress;
-                ++index;
-                updateProgress(progress, Default.GENERATE_STEPS.getInt());
+                updateProgress(++progress, Default.GENERATE_STEPS.getInt());
             }
         }
 

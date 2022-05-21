@@ -176,11 +176,12 @@ public class Generate extends Task<Long> {
         Canvas canvas;
 
         for (int suit = 0; suit < suits; ++suit) {
+            if (isCancelled())
+                break;
 
             canvas = generateJoker(suit);
             canvasses.add(canvas);
-            ++progress;
-            updateProgress(progress, Default.GENERATE_STEPS.getInt());
+            updateProgress(++progress, Default.GENERATE_STEPS.getInt());
 
             images[0] = Utils.loadImage(model.getStandardPipImagePath(suit));
             images[1] = Utils.rotateImage(images[0]);
@@ -189,14 +190,12 @@ public class Generate extends Task<Long> {
             images[4] = Utils.loadImage(model.getFacePipImagePath(suit));
             images[5] = Utils.rotateImage(images[4]);
             for (int card = 1; card < cards; ++card) {
-                if (isCancelled()) {
+                if (isCancelled())
                     break;
-                }
 
                 canvas = generateCard(suit, card, images);
                 canvasses.add(canvas);
-                ++progress;
-                updateProgress(progress, Default.GENERATE_STEPS.getInt());
+                updateProgress(++progress, Default.GENERATE_STEPS.getInt());
             }
 
         }
