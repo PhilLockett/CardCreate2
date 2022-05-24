@@ -523,7 +523,7 @@ public class Model {
     }
 
     public void drawCardFacePip(GraphicsContext gc, Image image, Image rotatedImage) {
-           facePip.drawCard(gc, image, rotatedImage);
+        facePip.drawCard(gc, image, rotatedImage);
     }
 
     public void drawJokerIndex(GraphicsContext gc, Image image, Image rotatedImage) {
