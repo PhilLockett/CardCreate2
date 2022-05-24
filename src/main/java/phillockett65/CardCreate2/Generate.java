@@ -94,16 +94,6 @@ public class Generate extends Task<Long> {
         if (model.showWatermark(suit, card))
             gc.drawImage(model.getWatermark(), 0, 0, cc.getXMax(), cc.getYMax());
 
-        if (model.shouldIndexBeDisplayed()) {
-            Image image = Utils.loadImage(model.getIndexImagePath(suit, card));
-            Image rotatedImage = Utils.rotateImage(image);
-
-            model.drawCardIndex(gc, image, rotatedImage);
-        }
-
-        if (model.shouldCornerPipBeDisplayed())
-            model.drawCardCornerPip(gc, images[2], images[3]);
-
         if (model.shouldFaceImageBeDisplayed(suit, card)) {
             Image image = Utils.loadImage(model.getFaceImagePath(suit, card));
             Image rotatedImage = Utils.rotateImage(image);
@@ -111,11 +101,21 @@ public class Generate extends Task<Long> {
             model.drawCardFace(gc, image, rotatedImage);
         }
 
+        if (model.shouldFacePipBeDisplayed(card))
+            model.drawCardFacePip(gc, images[4], images[5]);
+
         if (model.shouldStandardPipBeDisplayed(suit, card))
             model.drawCardStandardPip(gc, images[0], images[1], card);
 
-        if (model.shouldFacePipBeDisplayed(card))
-            model.drawCardFacePip(gc, images[4], images[5]);
+        if (model.shouldCornerPipBeDisplayed())
+            model.drawCardCornerPip(gc, images[2], images[3]);
+
+        if (model.shouldIndexBeDisplayed()) {
+            Image image = Utils.loadImage(model.getIndexImagePath(suit, card));
+            Image rotatedImage = Utils.rotateImage(image);
+
+            model.drawCardIndex(gc, image, rotatedImage);
+        }
 
         return cc.getCanvas();
     }

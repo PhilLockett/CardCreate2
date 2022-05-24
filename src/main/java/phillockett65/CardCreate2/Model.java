@@ -1326,14 +1326,13 @@ public class Model {
     private void initializeCardItemPayloads() {
         // System.out.println("initializeCardItemPayloads()");
 
-        face		= new ImagePayload(this);
+        face        = new ImagePayload(this);
+        facePip     = new DoublePayload(this, Item.FACE_PIP);
 
-        index		= new QuadPayload(this, Item.INDEX);
-
-        standardPip	= new MultiPayload(this);
-        facePip		= new DoublePayload(this, Item.FACE_PIP);
-
-        cornerPip	= new QuadPayload(this, Item.CORNER_PIP);
+        standardPip = new MultiPayload(this);
+        
+        cornerPip   = new QuadPayload(this, Item.CORNER_PIP);
+        index       = new QuadPayload(this, Item.INDEX);
 
         // Set up payload slider used to determine next item.
         final int ITEMS = Default.CARD_ITEM_COUNT.getInt();
