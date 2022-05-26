@@ -55,6 +55,12 @@ import phillockett65.CardCreate2.sample.QuadPayload;
 
 public class Model {
 
+    public static final int INDEX_ID = 0;
+    public static final int CORNER_PIP_ID = 1;
+    public static final int STANDARD_PIP_ID = 2;
+    public static final int FACE_PIP_ID = 3;
+    public static final int FACE_ID = 4;
+
 
     /************************************************************************
      * Support code for the Initialization of the Model.

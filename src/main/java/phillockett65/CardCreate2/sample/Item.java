@@ -27,6 +27,8 @@ package phillockett65.CardCreate2.sample;
 
 import java.text.DecimalFormat;
 
+import phillockett65.CardCreate2.Model;
+
 /**
  *
  * @author Phil
@@ -35,8 +37,8 @@ public enum Item {
     INDEX (Default.INDEX_HEIGHT.getFloat(), Default.INDEX_CENTRE_X.getFloat(), Default.INDEX_CENTRE_Y.getFloat(), true, "Index"),
     CORNER_PIP (Default.CORNER_PIPHEIGHT.getFloat(), Default.CORNER_PIPCENTRE_X.getFloat(), Default.CORNER_PIPCENTRE_Y.getFloat(), true, "Corner Pip"),
     STANDARD_PIP (Default.STANDARD_PIPHEIGHT.getFloat(), Default.STANDARD_PIPCENTRE_X.getFloat(), Default.STANDARD_PIPCENTRE_Y.getFloat(), true, "Standard Pip"),
-    FACE (Default.FACE_HEIGHT.getFloat(), Default.FACE_BOARDER_X.getFloat(), Default.FACE_BOARDER_Y.getFloat(), false, "Face"),
-    FACE_PIP (Default.FACE_PIPHEIGHT.getFloat(), Default.FACE_PIPCENTRE_X.getFloat(), Default.FACE_PIPCENTRE_Y.getFloat(), true, "Face Pip");
+    FACE_PIP (Default.FACE_PIPHEIGHT.getFloat(), Default.FACE_PIPCENTRE_X.getFloat(), Default.FACE_PIPCENTRE_Y.getFloat(), true, "Face Pip"),
+    FACE (Default.FACE_HEIGHT.getFloat(), Default.FACE_BOARDER_X.getFloat(), Default.FACE_BOARDER_Y.getFloat(), false, "Face");
 
     private final float height;
     private final float centreX;
@@ -54,15 +56,15 @@ public enum Item {
 
     public int index() {
         if (this == INDEX)
-            return 0;
+            return Model.INDEX_ID;
         if (this == CORNER_PIP)
-            return 1;
+            return Model.CORNER_PIP_ID;
         if (this == STANDARD_PIP)
-            return 2;
-        if (this == FACE)
-            return 3;
+            return Model.STANDARD_PIP_ID;
+        if (this == FACE_PIP)
+            return Model.FACE_PIP_ID;
 
-        return 4;
+        return Model.FACE_ID;
     }
 
     private final DecimalFormat df = new DecimalFormat("#.#");
