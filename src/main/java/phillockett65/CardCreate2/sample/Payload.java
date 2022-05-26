@@ -46,7 +46,7 @@ public class Payload {
      * 
      * @param group node to add the ImageViews to.
      */
-    private void createImageViewArray(Group group) {
+    private void createImageViewArray() {
 
         views = new ImageView[2];
 
@@ -56,16 +56,29 @@ public class Payload {
         views[1] = new ImageView();
         views[1].setPreserveRatio(true);
         views[1].setRotate(180);
+    }
+
+    public void removeFromGroup() {
+        final Group group = model.getGroup();
+
+        group.getChildren().remove(views[0]);
+        group.getChildren().remove(views[1]);
+    }
+
+    public void addToGroup() {
+        final Group group = model.getGroup();
 
         group.getChildren().add(views[0]);
         group.getChildren().add(views[1]);
     }
 
     /**
-     * Create the ImageView array to hold the image for this Payload.
+     * Create the ImageView array to hold the image for this Payload and add 
+     * the ImageViews to the Group.
      */
     protected void createImageViews() {
-        createImageViewArray(model.getGroup());
+        createImageViewArray();
+        addToGroup();
     }
 
     /**

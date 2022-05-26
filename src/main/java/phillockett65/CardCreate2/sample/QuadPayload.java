@@ -47,7 +47,7 @@ public class QuadPayload extends Payload {
      * 
      * @param group node to add the ImageViews to.
      */
-    private void createImageViewArray(Group group) {
+    private void createImageViewArray() {
 
         views = new ImageView[4];
 
@@ -64,9 +64,29 @@ public class QuadPayload extends Payload {
         views[3] = new ImageView();
         views[3].setPreserveRatio(true);
         views[3].setRotate(180);
+    }
+
+    public void removeFromGroup() {
+        final Group group = model.getGroup();
+
+        for (int i = 0; i < views.length; ++i)
+            group.getChildren().remove(views[i]);
+    }
+
+    public void addToGroup() {
+        final Group group = model.getGroup();
 
         for (int i = 0; i < views.length; ++i)
             group.getChildren().add(views[i]);
+    }
+
+    /**
+     * Create the ImageView array to hold the image for this Payload and add 
+     * the ImageViews to the Group.
+     */
+    protected void createImageViews() {
+        createImageViewArray();
+        addToGroup();
     }
 
     /**
@@ -130,7 +150,7 @@ public class QuadPayload extends Payload {
         item = it;
 
         // Set up the image views.
-        createImageViewArray(model.getGroup());
+        createImageViews();
 
         // Set up image dependent values.
         initQuadImageViews();

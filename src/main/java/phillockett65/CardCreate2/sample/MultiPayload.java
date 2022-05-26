@@ -79,7 +79,7 @@ public class MultiPayload extends Payload {
      * 
      * @param group node to add the ImageViews to.
      */
-    private void createImageViewArray(Group group) {
+    private void createImageViewArray() {
         int icons = 17;
         views = new ImageView[icons];
 
@@ -89,9 +89,30 @@ public class MultiPayload extends Payload {
             views[i].setPreserveRatio(true);
             if (getLocation(i).getRotate())
                 views[i].setRotate(180);
-            
-            group.getChildren().add(views[i]);
         }
+    }
+
+    public void removeFromGroup() {
+        final Group group = model.getGroup();
+
+        for (int i = 0; i < views.length; ++i)
+            group.getChildren().remove(views[i]);
+    }
+
+    public void addToGroup() {
+        final Group group = model.getGroup();
+
+        for (int i = 0; i < views.length; ++i)
+            group.getChildren().add(views[i]);
+    }
+
+    /**
+     * Create the ImageView array to hold the image for this Payload and add 
+     * the ImageViews to the Group.
+     */
+    protected void createImageViews() {
+        createImageViewArray();
+        addToGroup();
     }
 
     /**
@@ -151,7 +172,7 @@ public class MultiPayload extends Payload {
         super(mainModel, Item.STANDARD_PIP);
 
         // Set up the image views.
-        createImageViewArray(model.getGroup());
+        createImageViews();
 
         // Set up image dependent values.
         initMultiImageViews();
