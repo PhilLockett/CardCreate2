@@ -24,11 +24,14 @@
  */
 package phillockett65.CardCreate2;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.Tooltip;
 import javafx.scene.layout.BorderPane;
@@ -71,6 +74,7 @@ public class SettingsController {
         initializeCardCorners();
         initializeDisplayWatermark();
         initializeModifySelectedCardItem();
+        initializeCardItemPriority();
         initializeJokers();
         initializeStatus();
     }
@@ -279,6 +283,67 @@ public class SettingsController {
         lockYCheckBox.setTooltip(new Tooltip("Lock Y separation of Index and Corner pip"));
         leftHandedCheckBox.setTooltip(new Tooltip("Show Indices and Corner pips in all four corners"));
         showGuideBoxCheckBox.setTooltip(new Tooltip("Display guide box to aid Card Item positioning"));
+    }
+
+
+
+    /************************************************************************
+     * Support code for "Card Item Priority" panel. 
+     */
+
+    @FXML
+    private ListView<String> cardItemListView;
+    
+    @FXML
+    private Button upItemButton;
+
+    @FXML
+    private Button downItemButton;
+
+    @FXML
+    private Button priorityResetButton;
+
+    @FXML
+    public void upItemButtonActionPerformed(ActionEvent event) {
+        int index = model.moveSelectedCardItemUp();
+        cardItemListView.getSelectionModel().select(index);
+    }
+
+    @FXML
+    public void downItemButtonActionPerformed(ActionEvent event) {
+        int index = model.moveSelectedCardItemDown();
+        cardItemListView.getSelectionModel().select(index);
+    }
+
+    @FXML
+    public void priorityResetButtonActionPerformed(ActionEvent event) {
+        model.resetPriorityList();
+        cardItemListView.getSelectionModel().select(-1);
+    }
+
+    /**
+     * Initialize "Card Item Priority" panel.
+     */
+    private void initializeCardItemPriority() {
+        cardItemListView.setItems(model.getCardItemList());
+        cardItemListView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
+
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                model.setSelectedCardItem(newValue);
+
+                upItemButton.setDisable(!model.isUpAvailable());
+                downItemButton.setDisable(!model.isDownAvailable());
+            }
+        } );
+
+        cardItemListView.setTooltip(new Tooltip("Use Up and Down buttons to change order of Card Items"));
+        upItemButton.setTooltip(new Tooltip("Increase priority of selected Card Items"));
+        downItemButton.setTooltip(new Tooltip("Decrease priority of selected Card Items"));
+        priorityResetButton.setTooltip(new Tooltip("Reset selected Card Items priorities"));
+
+        upItemButton.setDisable(true);
+        downItemButton.setDisable(true);
     }
 
 

@@ -90,31 +90,49 @@ public class Generate extends Task<Long> {
         CardContext cc = new CardContext();
         GraphicsContext gc = cc.getGraphicsContext();
 
-        // Add the icons using the Payloads.
+        // Add the icons using the Payloads in priority order.
         if (model.showWatermark(suit, card))
             gc.drawImage(model.getWatermark(), 0, 0, cc.getXMax(), cc.getYMax());
 
-        if (model.shouldFaceImageBeDisplayed(suit, card)) {
-            Image image = Utils.loadImage(model.getFaceImagePath(suit, card));
-            Image rotatedImage = Utils.rotateImage(image);
+        int[] priorities = model.getPriorityList();
+        for (int i = priorities.length-1; i >= 0; --i) {
 
-            model.drawCardFace(gc, image, rotatedImage);
-        }
+            int priority = priorities[i];
 
-        if (model.shouldFacePipBeDisplayed(card))
-            model.drawCardFacePip(gc, images[4], images[5]);
+            switch (priority) {
+            case Model.INDEX_ID:
+                if (model.shouldIndexBeDisplayed()) {
+                    Image image = Utils.loadImage(model.getIndexImagePath(suit, card));
+                    Image rotatedImage = Utils.rotateImage(image);
+        
+                    model.drawCardIndex(gc, image, rotatedImage);
+                }
+            break;
+        
+            case Model.CORNER_PIP_ID:
+                if (model.shouldCornerPipBeDisplayed())
+                    model.drawCardCornerPip(gc, images[2], images[3]);
+            break;
 
-        if (model.shouldStandardPipBeDisplayed(suit, card))
-            model.drawCardStandardPip(gc, images[0], images[1], card);
+            case Model.STANDARD_PIP_ID:
+                if (model.shouldStandardPipBeDisplayed(suit, card))
+                    model.drawCardStandardPip(gc, images[0], images[1], card);
+            break;
 
-        if (model.shouldCornerPipBeDisplayed())
-            model.drawCardCornerPip(gc, images[2], images[3]);
+            case Model.FACE_PIP_ID:
+                if (model.shouldFacePipBeDisplayed(card))
+                    model.drawCardFacePip(gc, images[4], images[5]);
+            break;
 
-        if (model.shouldIndexBeDisplayed()) {
-            Image image = Utils.loadImage(model.getIndexImagePath(suit, card));
-            Image rotatedImage = Utils.rotateImage(image);
-
-            model.drawCardIndex(gc, image, rotatedImage);
+            case Model.FACE_ID:
+                if (model.shouldFaceImageBeDisplayed(suit, card)) {
+                    Image image = Utils.loadImage(model.getFaceImagePath(suit, card));
+                    Image rotatedImage = Utils.rotateImage(image);
+        
+                    model.drawCardFace(gc, image, rotatedImage);
+                }
+            break;
+            }
         }
 
         return cc.getCanvas();

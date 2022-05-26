@@ -55,6 +55,8 @@ import phillockett65.CardCreate2.sample.QuadPayload;
 
 public class Model {
 
+    private final String[] cardItems = { "Index", "Corner Pip", "Standard Pip", "Face Pip", "Face Image" };
+
     public static final int INDEX_ID = 0;
     public static final int CORNER_PIP_ID = 1;
     public static final int STANDARD_PIP_ID = 2;
@@ -108,6 +110,38 @@ public class Model {
         group.getChildren().add(handle);
     }
 
+    public void rebuildGroup() {
+
+        face.removeFromGroup();
+        facePip.removeFromGroup();
+
+        standardPip.removeFromGroup();
+
+        cornerPip.removeFromGroup();
+        index.removeFromGroup();
+
+        group.getChildren().remove(box);
+        group.getChildren().remove(handle);
+
+        int[] priorities = getPriorityList();
+        for (int i = priorities.length-1; i >= 0; --i) {
+
+            int priority = priorities[i];
+
+            switch (priority) {
+            case INDEX_ID:          index.addToGroup(); break;
+            case CORNER_PIP_ID:     cornerPip.addToGroup(); break;
+
+            case STANDARD_PIP_ID:   standardPip.addToGroup(); break;
+
+            case FACE_PIP_ID:       facePip.addToGroup(); break;
+            case FACE_ID:           face.addToGroup(); break;
+            }
+        }
+
+        group.getChildren().add(box);
+        group.getChildren().add(handle);
+    }
 
 
     /************************************************************************
@@ -1613,6 +1647,7 @@ public class Model {
         initializeCardCorners();
         initializeDisplayWatermark();
         initializeModifyCardItem();
+        initializeCardItemPriority();
         initializeJokers();
     }
 
@@ -1794,6 +1829,70 @@ public class Model {
     private void initializeModifyCardItem() {
     }
 
+
+
+    /************************************************************************
+     * Support code for "Card Item Priority" panel. 
+     */
+
+    private ObservableList<String> cardItemList;
+    private int selectedCardItemListIndex = -1;
+
+    public ObservableList<String> getCardItemList() { return cardItemList; }
+
+    public void setSelectedCardItem(String item) {
+        selectedCardItemListIndex = cardItemList.indexOf(item);
+    }
+
+    public int getSelectedCardItemListIndex() { return selectedCardItemListIndex; }
+    public boolean isUpAvailable() { return selectedCardItemListIndex != 0; }
+    public boolean isDownAvailable() { return selectedCardItemListIndex != 4; }
+
+    public int moveSelectedCardItemUp() {
+        int index = selectedCardItemListIndex;
+        String item = cardItemList.get(index);
+
+        index--;
+        cardItemList.remove(item);
+        cardItemList.add(index, item);
+        selectedCardItemListIndex = index;
+        rebuildGroup();
+
+        return selectedCardItemListIndex;
+    }
+
+    public int moveSelectedCardItemDown() {
+        int index = selectedCardItemListIndex;
+        String item = cardItemList.get(index);
+
+        index++;
+        cardItemList.remove(item);
+        cardItemList.add(index, item);
+        selectedCardItemListIndex = index;
+        rebuildGroup();
+
+        return selectedCardItemListIndex;
+    }
+
+    public void resetPriorityList() {
+        cardItemList.clear();
+        cardItemList.addAll(cardItems);
+        selectedCardItemListIndex = -1;
+        rebuildGroup();
+        }
+
+    public int[] getPriorityList() {
+        int[] priorities = new int[cardItems.length];
+
+        for (int i = 0; i < priorities.length; i++)
+            priorities[cardItemList.indexOf(cardItems[i])] = i;
+
+        return priorities;
+    }
+
+    private void initializeCardItemPriority() {
+        cardItemList = FXCollections.observableArrayList(cardItems);
+    }
 
     /************************************************************************
      * Support code for "Jokers" panel. 

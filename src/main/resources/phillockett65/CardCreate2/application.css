@@ -68,12 +68,34 @@
     -fx-background-color: black;
 }
 
-.progress-bar{
-    -fx-accent: #9B4642;
-}
-
 .imageButton{
     -fx-background-color: null;
     -fx-text-fill: null;
 }
 
+.progress-bar{
+    -fx-accent: #9B4642;
+}
+
+.list-view{
+    -fx-text-fill: black;
+    -fx-font-weight: bold;
+    -fx-accent: #9B4642;
+}
+.list-cell{
+    -fx-font-weight: bold;
+}
+/*
+
+.list-cell:selected{
+    -fx-text-fill: black;
+    -fx-background-color: #9B4642;
+    -fx-accent: #9B4642;
+}
+.list-cell:even{
+    -fx-background-color: #f8f8f8;
+}
+.list-cell:odd{
+    -fx-background-color: #e8e8e8;
+}
+*/
