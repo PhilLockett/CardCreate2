@@ -28,17 +28,17 @@
    <bottom>
       <VBox BorderPane.alignment="CENTER">
          <children>
-            <HBox prefHeight="171.0" prefWidth="773.0" spacing="14.0">
+            <HBox prefHeight="171.0" prefWidth="773.0" spacing="26.0">
                <children>
                   <TitledPane collapsible="false" prefHeight="155.0" prefWidth="181.0" text="Display Card Items">
                      <content>
                         <VBox prefHeight="129.0" prefWidth="177.0" spacing="4.0">
                            <children>
-                              <CheckBox fx:id="indicesCheckBox" mnemonicParsing="false" onAction="#indicesCheckBoxActionPerformed" selected="true" text="Display Indices" />
+                              <CheckBox fx:id="indicesCheckBox" mnemonicParsing="false" onAction="#indicesCheckBoxActionPerformed" selected="true" text="Display Index" />
                               <CheckBox fx:id="cornerPipCheckBox" layoutX="21.0" layoutY="21.0" mnemonicParsing="false" onAction="#cornerPipCheckBoxActionPerformed" selected="true" text="Display Corner Pip" />
                               <CheckBox fx:id="standardPipCheckBox" layoutX="21.0" layoutY="46.0" mnemonicParsing="false" onAction="#standardPipCheckBoxActionPerformed" selected="true" text="Display Standard Pip" />
-                              <CheckBox fx:id="faceCheckBox" layoutX="21.0" layoutY="71.0" mnemonicParsing="false" onAction="#faceCheckBoxActionPerformed" selected="true" text="Display Face Image" />
                               <CheckBox fx:id="facePipCheckBox" layoutX="21.0" layoutY="97.0" mnemonicParsing="false" onAction="#facePipCheckBoxActionPerformed" selected="true" text="Display Face Pip" />
+                              <CheckBox fx:id="faceCheckBox" layoutX="21.0" layoutY="71.0" mnemonicParsing="false" onAction="#faceCheckBoxActionPerformed" selected="true" text="Display Face Image" />
                            </children>
                         </VBox>
                      </content>
@@ -47,14 +47,14 @@
                      <content>
                         <VBox prefHeight="174.0" prefWidth="177.0" spacing="4.0">
                            <children>
-                              <RadioButton fx:id="indicesRadioButton" mnemonicParsing="false" onAction="#cardItemRadioButtonActionPerformed" selected="true" text="Change Indices">
+                              <RadioButton fx:id="indicesRadioButton" mnemonicParsing="false" onAction="#cardItemRadioButtonActionPerformed" selected="true" text="Change Index">
                                  <toggleGroup>
                                     <ToggleGroup fx:id="cardItem" />
                                  </toggleGroup></RadioButton>
                               <RadioButton fx:id="cornerPipRadioButton" layoutX="19.0" layoutY="19.0" mnemonicParsing="false" onAction="#cardItemRadioButtonActionPerformed" text="Change Corner Pip" toggleGroup="$cardItem" />
                               <RadioButton fx:id="standardPipRadioButton" layoutX="19.0" layoutY="37.0" mnemonicParsing="false" onAction="#cardItemRadioButtonActionPerformed" text="Change Standard Pip" toggleGroup="$cardItem" />
-                              <RadioButton fx:id="faceRadioButton" layoutX="19.0" layoutY="54.0" mnemonicParsing="false" onAction="#cardItemRadioButtonActionPerformed" text="Change Face Boarder" toggleGroup="$cardItem" />
                               <RadioButton fx:id="facePipRadioButton" layoutX="19.0" layoutY="71.0" mnemonicParsing="false" onAction="#cardItemRadioButtonActionPerformed" text="Change Face Pip" toggleGroup="$cardItem" />
+                              <RadioButton fx:id="faceRadioButton" layoutX="19.0" layoutY="54.0" mnemonicParsing="false" onAction="#cardItemRadioButtonActionPerformed" text="Change Face Boarder" toggleGroup="$cardItem" />
                            </children>
                         </VBox>
                      </content>
@@ -138,7 +138,7 @@
          <children>
             <TitledPane animated="false" collapsible="false" prefHeight="112.0" prefWidth="605.0" text="Input Directories">
                <content>
-                  <VBox prefHeight="200.0" prefWidth="100.0">
+                  <VBox prefHeight="200.0" prefWidth="100.0" spacing="9.0">
                      <children>
                         <HBox prefHeight="100.0" prefWidth="200.0" spacing="4.0">
                            <children>
