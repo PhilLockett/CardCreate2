@@ -467,6 +467,9 @@ public class Model {
         if (base.equals(""))
             return false;
 
+        if (base.equals(baseDirectory))
+            return false;
+
         File directory = new File(base);
 
         if (!directory.isDirectory())
