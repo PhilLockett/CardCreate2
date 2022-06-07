@@ -271,7 +271,7 @@ public class Controller {
         File directory = choice.showDialog(stage);
 
         if (directory != null) {
-        // System.out.println("Selected: " + directory.getAbsolutePath());
+            // System.out.println("Selected: " + directory.getAbsolutePath());
 
             if (setBaseDirectory(directory.getPath()))
                 return true;
@@ -302,7 +302,7 @@ public class Controller {
 
     @FXML
     void baseDirectoryButtonActionPerformed(ActionEvent event) {
-    // System.out.println("baseDirectoryButtonActionPerformed()");
+        // System.out.println("baseDirectoryButtonActionPerformed()");
 
         if (!selectBaseDirectory()) {
             if (!selectValidBaseDirectory()) {
@@ -314,7 +314,7 @@ public class Controller {
 
     @FXML
     void baseDirectoryComboBoxActionPerformed(ActionEvent event) {
-    // System.out.println("baseDirectoryComboBoxActionPerformed()" + event.toString());
+        // System.out.println("baseDirectoryComboBoxActionPerformed()" + event.toString());
 
         if (!model.setBaseDirectory(baseDirectoryComboBox.getValue()))
             return;

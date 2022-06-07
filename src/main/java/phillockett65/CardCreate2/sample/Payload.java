@@ -28,7 +28,6 @@ import javafx.scene.Group;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-
 import phillockett65.CardCreate2.Model;
 import phillockett65.CardCreate2.Utils;
 

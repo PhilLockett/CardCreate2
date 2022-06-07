@@ -126,7 +126,7 @@ public class Model {
         int[] priorities = getPriorityList();
         for (int i = priorities.length-1; i >= 0; --i) {
 
-            int priority = priorities[i];
+            final int priority = priorities[i];
 
             switch (priority) {
             case INDEX_ID:          index.addToGroup(); break;
@@ -1882,7 +1882,7 @@ public class Model {
         cardItemList.addAll(cardItems);
         selectedCardItemListIndex = -1;
         rebuildGroup();
-        }
+    }
 
     public int[] getPriorityList() {
         int[] priorities = new int[cardItems.length];
