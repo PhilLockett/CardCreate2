@@ -1021,6 +1021,12 @@ public class Controller {
     @FXML
     private ProgressBar progressBar;
 
+    @FXML
+    void settingsButtonActionPerformed(ActionEvent event) {
+        if (!model.isSettingsWindowLaunched())
+            launchSettingsWindow();
+    }
+
     private void setStatusMessage(String Message) {
         statusLabel.setText(Message);
     }
@@ -1093,11 +1099,6 @@ public class Controller {
         return true;
     }
 
-    @FXML
-    void settingsButtonActionPerformed(ActionEvent event) {
-        if (!model.isSettingsWindowLaunched())
-            launchSettingsWindow();
-    }
 
     /**
      * Show the progress bar, but also hide the status and disable the 
