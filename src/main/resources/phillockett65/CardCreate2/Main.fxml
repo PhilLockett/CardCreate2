@@ -143,8 +143,10 @@
                         <HBox prefHeight="100.0" prefWidth="200.0" spacing="4.0">
                            <children>
                               <Label fx:id="baseDirectoryLabel" text="Base:" />
-                              <ComboBox fx:id="baseDirectoryComboBox" onAction="#baseDirectoryComboBoxActionPerformed" prefHeight="25.0" prefWidth="450.0" />
+                              <ComboBox fx:id="baseDirectoryComboBox" onAction="#baseDirectoryComboBoxActionPerformed" prefHeight="25.0" prefWidth="420.0" />
                               <Button fx:id="baseDirectoryButton" mnemonicParsing="false" onAction="#baseDirectoryButtonActionPerformed" text="Browse..." />
+                              <Region HBox.hgrow="ALWAYS" />
+                              <Button fx:id="loadButton" mnemonicParsing="false" onAction="#loadButtonActionPerformed" text="Load" />
                            </children>
                            <padding>
                               <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
@@ -153,11 +155,13 @@
                         <HBox prefHeight="100.0" prefWidth="200.0" spacing="4.0">
                            <children>
                               <Label fx:id="faceLabel" text="Face:" />
-                              <ChoiceBox fx:id="faceChoiceBox" prefWidth="150.0" />
+                              <ChoiceBox fx:id="faceChoiceBox" prefWidth="140.0" />
                               <Label fx:id="indexLabel" text="Index:" />
-                              <ChoiceBox fx:id="indexChoiceBox" prefWidth="150.0" />
+                              <ChoiceBox fx:id="indexChoiceBox" prefWidth="140.0" />
                               <Label fx:id="pipLabel" text="Pip:" />
-                              <ChoiceBox fx:id="pipChoiceBox" prefWidth="150.0" />
+                              <ChoiceBox fx:id="pipChoiceBox" prefWidth="140.0" />
+                              <Region HBox.hgrow="ALWAYS" />
+                              <Button fx:id="saveButton" mnemonicParsing="false" onAction="#saveButtonActionPerformed" text="Save" />
                            </children>
                            <padding>
                               <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />

@@ -79,6 +79,21 @@ public class SettingsController {
         initializeStatus();
     }
 
+    public void syncUI() {
+        independentRadiiCheckBox.setSelected(model.isSetCornerRadiiIndependently());
+        cropCornersCheckBox.setSelected(model.isCropCorners());
+
+        courtWatermarkCheckBox.setSelected(model.isDisplayCourtWatermark());
+        imageWatermarkCheckBox.setSelected(model.isDisplayImageWatermark());
+        numberWatermarkCheckBox.setSelected(model.isDisplayNumberWatermark());
+
+        lockXCheckBox.setSelected(model.isLockX());
+        lockYCheckBox.setSelected(model.isLockY());
+        leftHandedCheckBox.setSelected(model.isLeftHanded());
+        showGuideBoxCheckBox.setSelected(model.isShowGuideBox());
+
+        borderlessCheckBox.setSelected(model.isBorderlessJokers());
+    }
 
 
     /************************************************************************

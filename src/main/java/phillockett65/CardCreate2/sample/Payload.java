@@ -28,6 +28,8 @@ import javafx.scene.Group;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+
+import phillockett65.CardCreate2.CardItemData;
 import phillockett65.CardCreate2.Model;
 import phillockett65.CardCreate2.Utils;
 
@@ -139,6 +141,27 @@ public class Payload {
             return Math.round(getPixels());
         }
 
+    }
+
+    public CardItemData getData() {
+
+        CardItemData data = new CardItemData(item.index(), 
+            spriteHeight.getPercent(), 
+            centreX.getPercent(), 
+            centreY.getPercent());
+
+        return data;
+    }
+
+    public boolean setData(CardItemData data) {
+        if (data.getId() != item.index())
+            return false;
+
+        setSize(data.getHeight());
+        setX(data.getCentreX());
+        setY(data.getCentreY());
+
+        return true;
     }
 
 

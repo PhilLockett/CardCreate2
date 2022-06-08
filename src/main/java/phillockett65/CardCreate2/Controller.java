@@ -205,6 +205,12 @@ public class Controller {
     private Button baseDirectoryButton;
 
     @FXML
+    private Button loadButton;
+
+    @FXML
+    private Button saveButton;
+
+    @FXML
     private Label faceLabel;
 
     @FXML
@@ -242,7 +248,7 @@ public class Controller {
         pipChoiceBox.setItems(model.getPipList());
         pipChoiceBox.setValue(model.getPipStyle());
 
-        outputTextField.setText(model.getOutputName());
+        syncOutputTextField();
 
         userGUI.setDisable(false);
     }
@@ -259,7 +265,7 @@ public class Controller {
         indexChoiceBox.setValue(model.getIndexStyle());
         pipChoiceBox.setValue(model.getPipStyle());
 
-        outputTextField.setText(model.getOutputName());
+        syncOutputTextField();
 
         return true;
     }
@@ -313,6 +319,44 @@ public class Controller {
     }
 
     @FXML
+    void loadButtonActionPerformed(ActionEvent event) {
+        // System.out.println("loadButtonActionPerformed()");
+        DataStore.readData(model);
+
+        // Update UI.
+        faceChoiceBox.setValue(model.getFaceStyle());
+        indexChoiceBox.setValue(model.getIndexStyle());
+        pipChoiceBox.setValue(model.getPipStyle());
+
+        outputToggleButton.setSelected(model.isManual());
+        syncOutputTextField();
+
+        setCardSizeRadioState();
+        sample.syncCardSize();
+
+        sample.syncBackgroundColour();
+        colourTextField.setText(model.getBackgroundColourString());
+        colourPicker.setValue(model.getBackgroundColour());
+
+        indicesCheckBox.setSelected(model.isDisplayIndex());
+        cornerPipCheckBox.setSelected(model.isDisplayCornerPip());
+        standardPipCheckBox.setSelected(model.isDisplayStandardPip());
+        faceCheckBox.setSelected(model.isDisplayFaceImage());
+        facePipCheckBox.setSelected(model.isDisplayFacePip());
+
+        setCardItemRadioState();
+
+        if (model.isSettingsWindowLaunched())
+            controller.syncUI();
+    }
+
+    @FXML
+    void saveButtonActionPerformed(ActionEvent event) {
+        // System.out.println("saveButtonActionPerformed()");
+        DataStore.writeData(model);
+    }
+
+    @FXML
     void baseDirectoryComboBoxActionPerformed(ActionEvent event) {
         // System.out.println("baseDirectoryComboBoxActionPerformed()" + event.toString());
 
@@ -323,7 +367,7 @@ public class Controller {
         indexChoiceBox.setValue(model.getIndexStyle());
         pipChoiceBox.setValue(model.getPipStyle());
 
-        outputTextField.setText(model.getOutputName());
+        syncOutputTextField();
     }
 
     /**
@@ -334,6 +378,9 @@ public class Controller {
         baseDirectoryLabel.setTooltip(new Tooltip("Working directory that contains faces, indices and pips directories"));
         baseDirectoryComboBox.setTooltip(new Tooltip("Select the Base Directory"));
         baseDirectoryButton.setTooltip(new Tooltip("Browse to the Base Directory"));
+        loadButton.setTooltip(new Tooltip("Load previously saved Settings"));
+        saveButton.setTooltip(new Tooltip("Save current Settings to the Output Directory"));
+
         faceLabel.setTooltip(new Tooltip("Subdirectory of face image files to use (default: \"1\")"));
         indexLabel.setTooltip(new Tooltip("Subdirectory of index image files to use (default: \"1\")"));
         pipLabel.setTooltip(new Tooltip("Subdirectory of pip image files to use (default: \"1\")"));
@@ -349,7 +396,7 @@ public class Controller {
     private void initInputDirectoryChoiceBoxHandlers() {
         faceChoiceBox.getSelectionModel().selectedItemProperty().addListener( (v, oldValue, newValue) -> {
             model.setFaceStyle(newValue);
-            outputTextField.setText(model.getOutputName());
+            syncOutputTextField();
             setCardItemRadioState();
         });
 
@@ -502,6 +549,7 @@ public class Controller {
     void outputTextFieldKeyTyped(KeyEvent event) {
     // System.out.println("outputjTextFieldKeyTyped()" + event.toString());
         model.setOutputName(outputTextField.getText());
+        loadButton.setDisable(!model.isSettingsFileExist());
     }
 
     @FXML
@@ -512,7 +560,12 @@ public class Controller {
 
         outputTextField.setEditable(manual);
         model.setOutputNameManually(manual);
+        syncOutputTextField();
+    }
+
+    private void syncOutputTextField() {
         outputTextField.setText(model.getOutputName());
+        loadButton.setDisable(!model.isSettingsFileExist());
     }
 
     /**
@@ -647,6 +700,12 @@ public class Controller {
     @FXML
     void radiusButtonActionPerformed(ActionEvent event) {
         model.resetRadiusSVF();
+    }
+
+    private void setCardSizeRadioState() {
+        pokerRadioButton.setSelected(model.isPokerCardSize());
+        bridgeRadioButton.setSelected(model.isBridgeCardSize());
+        freeRadioButton.setSelected(model.isFreeCardSize());
     }
 
     /**
@@ -1021,6 +1080,8 @@ public class Controller {
     @FXML
     private ProgressBar progressBar;
 
+    private SettingsController controller;
+
     @FXML
     void settingsButtonActionPerformed(ActionEvent event) {
         if (!model.isSettingsWindowLaunched())
@@ -1086,7 +1147,7 @@ public class Controller {
             stage.setScene(scene);
             stage.setOnCloseRequest(e -> Platform.exit());
 
-            SettingsController controller = fxmlLoader.getController();
+            controller = fxmlLoader.getController();
 
             stage.show();
 

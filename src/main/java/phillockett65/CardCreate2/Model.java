@@ -32,6 +32,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -54,6 +55,8 @@ import phillockett65.CardCreate2.sample.Payload;
 import phillockett65.CardCreate2.sample.QuadPayload;
 
 public class Model {
+
+    private final static String DATAFILE = "Settings.dat";
 
     private final String[] cardItems = { "Index", "Corner Pip", "Standard Pip", "Face Pip", "Face Image" };
 
@@ -141,6 +144,55 @@ public class Model {
 
         group.getChildren().add(box);
         group.getChildren().add(handle);
+    }
+
+    public ArrayList<CardItemData> buildCardItemDataList() {
+
+        ArrayList<CardItemData> dataList = new ArrayList<CardItemData>(cardItems.length);
+
+        int[] priorities = getPriorityList();
+        for (int i = priorities.length-1; i >= 0; --i) {
+
+            final int priority = priorities[i];
+
+            switch (priority) {
+            case INDEX_ID:          dataList.add(index.getData()); break;
+            case CORNER_PIP_ID:     dataList.add(cornerPip.getData()); break;
+
+            case STANDARD_PIP_ID:   dataList.add(standardPip.getData()); break;
+
+            case FACE_PIP_ID:       dataList.add(facePip.getData()); break;
+            case FACE_ID:           dataList.add(face.getData()); break;
+            }
+        }
+
+        return dataList;
+    }
+
+
+    public void injectCardItemDataList(ArrayList<CardItemData> dataList) {
+
+        cardItemList.clear();
+        selectedCardItemListIndex = -1;
+
+        for (CardItemData data : dataList) {
+
+            final int id = data.getId();
+
+            cardItemList.add(cardItems[id]);
+
+            switch (id) {
+            case INDEX_ID:          index.setData(data); break;
+            case CORNER_PIP_ID:     cornerPip.setData(data); break;
+
+            case STANDARD_PIP_ID:   standardPip.setData(data); break;
+
+            case FACE_PIP_ID:       facePip.setData(data); break;
+            case FACE_ID:           face.setData(data); break;
+            }
+        }
+
+        rebuildGroup();
     }
 
 
@@ -593,6 +645,9 @@ public class Model {
     private boolean manual = false;
     private String outputName = "";
 
+    public boolean isManual() { return manual; }
+    public String getManualOutputName() { return outputName; }
+
     public void setOutputNameManually(boolean state) {
         manual = state;
     }
@@ -610,6 +665,16 @@ public class Model {
 
     public String getOutputDirectory() {
         return baseDirectory + "\\cards\\" + getOutputName();
+    }
+
+    public String getSettingsFile() {
+        return getOutputDirectory() + "\\" + DATAFILE;
+    }
+
+    public boolean isSettingsFileExist() {
+        File file = new File(getSettingsFile());
+
+        return file.exists();
     }
 
     public String getOutputImagePath(int s, int c) {
@@ -657,6 +722,9 @@ public class Model {
 
     public int getSuit() { return suit; }
     public int getCard() { return card; }
+
+    public void setSuit(int value) { suit = value; }
+    public void setCard(int value) { card = value; }
 
     public int nextSuit() {
         if (++suit >= suits.length)
@@ -744,6 +812,10 @@ public class Model {
     private SpinnerValueFactory<Integer> heightSVF;
     private SpinnerValueFactory<Double>  radiusSVF;
 
+    public boolean isPokerCardSize() { return cardSize == CardSize.POKER; }
+    public boolean isBridgeCardSize() { return cardSize == CardSize.BRIDGE; }
+    public boolean isFreeCardSize() { return cardSize == CardSize.FREE; }
+    public boolean isAutoCardWidth() { return !isFreeCardSize(); }
 
     public void setPokerCardSize() {
         cardSize = CardSize.POKER;
@@ -762,8 +834,6 @@ public class Model {
 
         syncCardItemsWithCardSize();
     }
-
-    public boolean isAutoCardWidth() { return cardSize != CardSize.FREE; }
 
     /**
      * @return the user set card width in pixels.
@@ -903,6 +973,12 @@ public class Model {
     private boolean displayStandardPip = true;
     private boolean displayFaceImage = true;
     private boolean displayFacePip = true;
+
+    public boolean isDisplayIndex() { return displayIndex; }
+    public boolean isDisplayCornerPip() { return displayCornerPip; }
+    public boolean isDisplayStandardPip() { return displayStandardPip; }
+    public boolean isDisplayFaceImage() { return displayFaceImage; }
+    public boolean isDisplayFacePip() { return displayFacePip; }
 
     /**
      * @return true if the index Item for the current card should be 
@@ -1112,6 +1188,28 @@ public class Model {
      */
     public Item getCurrentItem() {
         return current.getItem();
+    }
+
+    /**
+     * @return the current Item id.
+     */
+    public int getCurrentItemId() {
+        return current.getItem().index();
+    }
+
+    /**
+     * Set the current Card Item using an id.
+     */
+    public void setCurrentItemFromId(int id) {
+        switch (id) {
+        case INDEX_ID:          current = index; break;
+        case CORNER_PIP_ID:     current = cornerPip; break;
+
+        case STANDARD_PIP_ID:   current = standardPip; break;
+
+        case FACE_PIP_ID:       current = facePip; break;
+        case FACE_ID:           current = face; break;
+        }
     }
 
     /**
@@ -1669,7 +1767,10 @@ public class Model {
 
     private boolean cropCorners = false;
 
+    public double getArcWidth() { return arcWidth; }
+    public double getArcHeight() { return arcHeight; }
 
+    
     /**
      * @return the user defined corner arc width radius in pixels.
      */
