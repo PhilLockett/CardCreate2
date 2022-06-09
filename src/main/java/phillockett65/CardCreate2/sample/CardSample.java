@@ -167,28 +167,28 @@ public class CardSample extends Stage {
                 if (event.isShiftDown())
                     moveUp();
                 else
-                    model.moveCurrentUp();
+                    model.moveCurrentUp(Default.KEY_STEP_COUNT.getInt());
                 break;
 
             case DOWN: 
                 if (event.isShiftDown())
                     moveDown();
                 else
-                    model.moveCurrentDown();
+                    model.moveCurrentDown(Default.KEY_STEP_COUNT.getInt());
                 break;
 
             case LEFT: 
                 if (event.isShiftDown())
                     moveLeft();
                 else
-                    model.moveCurrentLeft();
+                    model.moveCurrentLeft(Default.KEY_STEP_COUNT.getInt());
                 break;
 
             case RIGHT: 
                 if (event.isShiftDown())
                     moveRight();
                 else
-                    model.moveCurrentRight();
+                    model.moveCurrentRight(Default.KEY_STEP_COUNT.getInt());
                 break;
 
             default:

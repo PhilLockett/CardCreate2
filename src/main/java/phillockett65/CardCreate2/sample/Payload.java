@@ -528,10 +528,11 @@ public class Payload {
     /**
      * Move the sprite up.
      */
-    public void moveUp() {
-        if (moveSpriteUp(Default.STEP_COUNT.getInt()))
+    public void moveUp(int steps) {
+        if (moveSpriteUp(steps))
             setPatterns();
     }
+    public void moveUp() { moveUp(Default.STEP_COUNT.getInt()); }
 
     protected boolean moveSpriteDown(int steps) {
         double value = centreY.getPercent();
@@ -551,10 +552,11 @@ public class Payload {
     /**
      * Move the sprite down.
      */
-    public void moveDown() {
-        if (moveSpriteDown(Default.STEP_COUNT.getInt()))
+    public void moveDown(int steps) {
+        if (moveSpriteDown(steps))
             setPatterns();
     }
+    public void moveDown() { moveDown(Default.STEP_COUNT.getInt()); }
 
     protected boolean moveSpriteLeft(int steps) {
         double value = centreX.getPercent();
@@ -574,10 +576,11 @@ public class Payload {
     /**
      * Move the sprite left.
      */
-    public void moveLeft() {
-        if (moveSpriteLeft(Default.STEP_COUNT.getInt()))
+    public void moveLeft(int steps) {
+        if (moveSpriteLeft(steps))
             setPatterns();
     }
+    public void moveLeft() { moveLeft(Default.STEP_COUNT.getInt()); }
 
     protected boolean moveSpriteRight(int steps) {
         double value = centreX.getPercent();
@@ -597,10 +600,11 @@ public class Payload {
     /**
      * Move the sprite right.
      */
-    public void moveRight() {
-        if (moveSpriteRight(Default.STEP_COUNT.getInt()))
+    public void moveRight(int steps) {
+        if (moveSpriteRight(steps))
             setPatterns();
     }
+    public void moveRight() { moveRight(Default.STEP_COUNT.getInt()); }
 
 
     public double getCentreX() {

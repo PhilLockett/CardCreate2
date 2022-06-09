@@ -378,34 +378,38 @@ public class MultiPayload extends Payload {
     /**
      * Move the sprite up.
      */
-    public void moveUp() {
-        if (moveSpriteUp(Default.STEP_COUNT.getInt()))
+    public void moveUp(int steps) {
+        if (moveSpriteUp(steps))
             setMultiPatterns();
     }
+    public void moveUp() { moveUp(Default.STEP_COUNT.getInt()); }
 
     /**
      * Move the sprite down.
      */
-    public void moveDown() {
-        if (moveSpriteDown(Default.STEP_COUNT.getInt()))
+    public void moveDown(int steps) {
+        if (moveSpriteDown(steps))
             setMultiPatterns();
     }
+    public void moveDown() { moveDown(Default.STEP_COUNT.getInt()); }
 
     /**
      * Move the sprite left.
      */
-    public void moveLeft() {
-        if (moveSpriteLeft(Default.STEP_COUNT.getInt()))
+    public void moveLeft(int steps) {
+        if (moveSpriteLeft(steps))
             setMultiPatterns();
     }
+    public void moveLeft() { moveLeft(Default.STEP_COUNT.getInt()); }
 
     /**
      * Move the sprite right.
      */
-    public void moveRight() {
-        if (moveSpriteRight(Default.STEP_COUNT.getInt()))
+    public void moveRight(int steps) {
+        if (moveSpriteRight(steps))
             setMultiPatterns();
     }
+    public void moveRight() { moveRight(Default.STEP_COUNT.getInt()); }
 
 
     /**

@@ -292,32 +292,32 @@ public class Model {
     /**
      * Move the current card item up.
      */
-    public void moveCurrentUp() {
-        current.moveUp();
+    public void moveCurrentUp(int steps) {
+        current.moveUp(steps);
         syncSpinners();
     }
 
     /**
      * Move the current card item down.
      */
-    public void moveCurrentDown() {
-        current.moveDown();
+    public void moveCurrentDown(int steps) {
+        current.moveDown(steps);
         syncSpinners();
     }
 
     /**
      * Move the current card item left.
      */
-    public void moveCurrentLeft() {
-        current.moveLeft();
+    public void moveCurrentLeft(int steps) {
+        current.moveLeft(steps);
         syncSpinners();
     }
 
     /**
      * Move the current card item right.
      */
-    public void moveCurrentRight() {
-        current.moveRight();
+    public void moveCurrentRight(int steps) {
+        current.moveRight(steps);
         syncSpinners();
     }
 

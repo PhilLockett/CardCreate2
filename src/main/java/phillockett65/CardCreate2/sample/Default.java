@@ -34,6 +34,7 @@ public enum Default {
 
     STEP_SIZE (0.05F),
     STEP_COUNT (10F),
+    KEY_STEP_COUNT (1F),
 
     GENERATE_STEPS (56*2F + 1),
     CARD_ITEM_COUNT (5F),
