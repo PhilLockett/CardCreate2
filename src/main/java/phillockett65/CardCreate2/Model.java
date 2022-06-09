@@ -239,6 +239,24 @@ public class Model {
         return watermarkImage;
     }
 
+    public boolean showWatermark(int s, int c) {
+        if (watermarkImage == null)
+            return false;
+
+        if (isFaceCard(c))
+            return displayCourtWatermark;
+
+        if (isImageCard(s, c))
+            return displayImageWatermark;
+
+        return displayNumberWatermark;
+    }
+
+    private void showCurrentWatermark() {
+        watermarkView.setVisible(showWatermark(suit, card));
+    }
+
+
     private void showImageBox() {
         // System.out.println("showImageBox(" + display + "); keepAspectRatio = " + keepAspectRatio);
         if (!showGuideBox) {
@@ -582,24 +600,6 @@ public class Model {
      */
 
     public final Color border = Color.GREY;
-
-    public boolean showWatermark(int s, int c) {
-        if (watermarkImage == null)
-            return false;
-
-        if (isFaceCard(c))
-            return displayCourtWatermark;
-
-        if (isImageCard(s, c))
-            return displayImageWatermark;
-
-        return displayNumberWatermark;
-    }
-
-    private void showCurrentWatermark() {
-        watermarkView.setVisible(showWatermark(suit, card));
-    }
-
 
     public void drawCardIndex(GraphicsContext gc, Image image, Image rotatedImage) {
         index.drawCard(gc, image, rotatedImage);
