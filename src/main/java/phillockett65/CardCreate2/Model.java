@@ -726,14 +726,22 @@ public class Model {
     public void setSuit(int value) { suit = value; }
     public void setCard(int value) { card = value; }
 
-    public int nextSuit() {
-        if (++suit >= suits.length)
-            suit = 0;
-
+    /**
+     * Synchronize the display status of the card items, the watermark and the 
+     * handle based on the currently selected card.
+     */
+    private void updateDisplayForCurrentCard() {
         showCurrentWatermark();
         updateCardItemDisplayStatus();
         setCardItemPayloads();
         updateHandleState();
+    }
+
+    public int nextSuit() {
+        if (++suit >= suits.length)
+            suit = 0;
+
+        updateDisplayForCurrentCard();
 
         return suit;
     }
@@ -742,10 +750,7 @@ public class Model {
         if (++card >= cards.length)
             card = 1;
 
-        showCurrentWatermark();
-        updateCardItemDisplayStatus();
-        setCardItemPayloads();
-        updateHandleState();
+        updateDisplayForCurrentCard();
 
         return card;
     }
@@ -754,10 +759,7 @@ public class Model {
         if (--suit < 0)
             suit = suits.length - 1;
 
-        showCurrentWatermark();
-        updateCardItemDisplayStatus();
-        setCardItemPayloads();
-        updateHandleState();
+        updateDisplayForCurrentCard();
 
         return suit;
     }
@@ -766,10 +768,7 @@ public class Model {
         if (--card <= 0)
             card = cards.length - 1;
 
-        showCurrentWatermark();
-        updateCardItemDisplayStatus();
-        setCardItemPayloads();
-        updateHandleState();
+        updateDisplayForCurrentCard();
 
         return card;
     }
