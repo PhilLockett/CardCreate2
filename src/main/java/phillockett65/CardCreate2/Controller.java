@@ -547,14 +547,14 @@ public class Controller {
 
     @FXML
     void outputTextFieldKeyTyped(KeyEvent event) {
-    // System.out.println("outputjTextFieldKeyTyped()" + event.toString());
+        // System.out.println("outputjTextFieldKeyTyped()" + event.toString());
         model.setOutputName(outputTextField.getText());
         loadButton.setDisable(!model.isSettingsFileExist());
     }
 
     @FXML
     void outputToggleButtonActionPerformed(ActionEvent event) {
-    // System.out.println("outputjToggleButtonActionPerformed()" + event.toString());
+        // System.out.println("outputjToggleButtonActionPerformed()" + event.toString());
 
         final boolean manual = outputToggleButton.isSelected(); 
 
