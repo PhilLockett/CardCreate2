@@ -38,7 +38,7 @@ public enum Item {
     CORNER_PIP (Default.CORNER_PIPHEIGHT.getFloat(), Default.CORNER_PIPCENTRE_X.getFloat(), Default.CORNER_PIPCENTRE_Y.getFloat(), true, "Corner Pip"),
     STANDARD_PIP (Default.STANDARD_PIPHEIGHT.getFloat(), Default.STANDARD_PIPCENTRE_X.getFloat(), Default.STANDARD_PIPCENTRE_Y.getFloat(), true, "Standard Pip"),
     FACE_PIP (Default.FACE_PIPHEIGHT.getFloat(), Default.FACE_PIPCENTRE_X.getFloat(), Default.FACE_PIPCENTRE_Y.getFloat(), true, "Face Pip"),
-    FACE (Default.FACE_HEIGHT.getFloat(), Default.FACE_BOARDER_X.getFloat(), Default.FACE_BOARDER_Y.getFloat(), false, "Face");
+    FACE (Default.FACE_HEIGHT.getFloat(), Default.FACE_BORDER_X.getFloat(), Default.FACE_BORDER_Y.getFloat(), false, "Face");
 
     private final float height;
     private final float centreX;
@@ -106,7 +106,7 @@ public enum Item {
         if (centre)
             return "Reset X coordinate of the centre of the " + desc + " to " + df.format(centreX) + " % of card width";
 
-        return "Reset X Boarder of the " + desc + " to " + df.format(centreX) + " % of card width";
+        return "Reset X Border of the " + desc + " to " + df.format(centreX) + " % of card width";
     }
 
     /**
@@ -116,7 +116,7 @@ public enum Item {
         if (centre)
             return "Reset Y coordinate of the centre of the " + desc + " to " + df.format(centreY) + " % of card height";
 
-        return "Reset Y Boarder of the " + desc + " to " + df.format(centreY) + " % of card height";
+        return "Reset Y Border of the " + desc + " to " + df.format(centreY) + " % of card height";
     }
 
     /**
@@ -136,7 +136,7 @@ public enum Item {
         if (centre)
             return "X coordinate of the centre of the " + desc + " as a % of card width";
 
-        return "X Boarder of the " + desc + " as a % of card width";
+        return "X Border of the " + desc + " as a % of card width";
     }
 
     /**
@@ -146,7 +146,7 @@ public enum Item {
         if (centre)
             return "Y coordinate of the centre of the " + desc + " as a % of card height";
 
-        return "Y Boarder of the " + desc + " as a % of card height";
+        return "Y Border of the " + desc + " as a % of card height";
     }
 
     /**
@@ -166,7 +166,7 @@ public enum Item {
         if (centre)
             return desc + " X Centre (%):";
 
-        return "Image X Boarder (%):";
+        return "Image X Border (%):";
     }
 
     /**
@@ -176,7 +176,7 @@ public enum Item {
         if (centre)
             return desc + " Y Centre (%):";
 
-        return "Image Y Boarder (%):";
+        return "Image Y Border (%):";
     }
 
     /**

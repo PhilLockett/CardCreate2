@@ -54,7 +54,7 @@
                               <RadioButton fx:id="cornerPipRadioButton" layoutX="19.0" layoutY="19.0" mnemonicParsing="false" onAction="#cardItemRadioButtonActionPerformed" text="Change Corner Pip" toggleGroup="$cardItem" />
                               <RadioButton fx:id="standardPipRadioButton" layoutX="19.0" layoutY="37.0" mnemonicParsing="false" onAction="#cardItemRadioButtonActionPerformed" text="Change Standard Pip" toggleGroup="$cardItem" />
                               <RadioButton fx:id="facePipRadioButton" layoutX="19.0" layoutY="71.0" mnemonicParsing="false" onAction="#cardItemRadioButtonActionPerformed" text="Change Face Pip" toggleGroup="$cardItem" />
-                              <RadioButton fx:id="faceRadioButton" layoutX="19.0" layoutY="54.0" mnemonicParsing="false" onAction="#cardItemRadioButtonActionPerformed" text="Change Face Boarder" toggleGroup="$cardItem" />
+                              <RadioButton fx:id="faceRadioButton" layoutX="19.0" layoutY="54.0" mnemonicParsing="false" onAction="#cardItemRadioButtonActionPerformed" text="Change Face Border" toggleGroup="$cardItem" />
                            </children>
                         </VBox>
                      </content>
