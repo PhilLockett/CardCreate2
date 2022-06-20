@@ -94,7 +94,7 @@ public enum Item {
      */
     public String getHButtonTip() {
         if (centre)
-            return "Reset the " + desc + " Height to " + df.format(height) + " % of card height";
+            return "Reset the " + desc + " Size to " + df.format(height) + " % of card height";
 
         return "Not applicable";
     }
@@ -124,9 +124,9 @@ public enum Item {
      */
     public String getHToolTip() {
         if (centre)
-            return "Height of the " + desc + " as a % of card height";
+            return "Size of the " + desc + " as a % of card height";
 
-        return "Height of the " + desc + " as a % of card height";
+        return "Size of the " + desc + " as a % of card height";
     }
 
     /**
@@ -154,7 +154,7 @@ public enum Item {
      */
     public String getHLabel() {
         if (centre)
-            return desc + " Height (%):";
+            return desc + " Size (%):";
 
         return "Not applicable:";
     }
