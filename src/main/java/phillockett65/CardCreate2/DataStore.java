@@ -85,7 +85,7 @@ public class DataStore implements Serializable {
         
     }
 
-    public boolean pull(Model model) {
+    private boolean pull(Model model) {
         boolean success = true;
 
         faceStyle   = model.getFaceStyle();
@@ -134,7 +134,7 @@ public class DataStore implements Serializable {
         return success;
     }
 
-    public boolean push(Model model) {
+    private boolean push(Model model) {
         boolean success = true;
         
         model.setFaceStyle(faceStyle);
