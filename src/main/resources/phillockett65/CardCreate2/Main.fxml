@@ -3,17 +3,23 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.CheckMenuItem?>
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.ColorPicker?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.ProgressBar?>
 <?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.SeparatorMenuItem?>
 <?import javafx.scene.control.Spinner?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.TitledPane?>
 <?import javafx.scene.control.ToggleButton?>
 <?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.input.KeyCodeCombination?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
@@ -134,58 +140,107 @@
       </VBox>
    </bottom>
    <top>
-      <HBox prefHeight="145.0" spacing="8.0" BorderPane.alignment="CENTER">
+      <VBox BorderPane.alignment="CENTER">
          <children>
-            <TitledPane animated="false" collapsible="false" prefHeight="112.0" prefWidth="605.0" text="Input Directories">
-               <content>
-                  <VBox prefHeight="200.0" prefWidth="100.0" spacing="9.0">
-                     <children>
-                        <HBox prefHeight="100.0" prefWidth="200.0" spacing="4.0">
+            <MenuBar>
+              <menus>
+                <Menu mnemonicParsing="false" text="File">
+                  <items>
+                        <MenuItem mnemonicParsing="false" onAction="#fileOpenOnAction" text="Open Base Directory...">
+                           <accelerator>
+                              <KeyCodeCombination alt="UP" code="O" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                           </accelerator>
+                        </MenuItem>
+                        <SeparatorMenuItem mnemonicParsing="false" />
+                        <MenuItem fx:id="fileLoadMenuItem" mnemonicParsing="false" onAction="#fileLoadOnAction" text="Load Settings">
+                           <accelerator>
+                              <KeyCodeCombination alt="UP" code="L" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                           </accelerator>
+                        </MenuItem>
+                        <MenuItem mnemonicParsing="false" onAction="#fileSaveOnAction" text="Save Settings">
+                           <accelerator>
+                              <KeyCodeCombination alt="UP" code="S" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                           </accelerator>
+                        </MenuItem>
+                        <SeparatorMenuItem mnemonicParsing="false" />
+                    <MenuItem mnemonicParsing="false" onAction="#fileCloseOnAction" text="Close">
+                           <accelerator>
+                              <KeyCodeCombination alt="UP" code="X" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                           </accelerator>
+                        </MenuItem>
+                  </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Edit">
+                  <items>
+                        <CheckMenuItem fx:id="editAdditionalSettingsMenuItem" mnemonicParsing="false" onAction="#editAdditionalSettingsOnAction" text="Additinal Settings...">
+                           <accelerator>
+                              <KeyCodeCombination alt="UP" code="A" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                           </accelerator>
+                        </CheckMenuItem>
+                  </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Help">
+                  <items>
+                    <MenuItem mnemonicParsing="false" onAction="#helpAboutOnAction" text="About" />
+                        <MenuItem mnemonicParsing="false" onAction="#helpHelpOnAction" text="Help" />
+                  </items>
+                </Menu>
+              </menus>
+            </MenuBar>
+            <HBox prefHeight="145.0" spacing="8.0">
+               <children>
+                  <TitledPane animated="false" collapsible="false" prefHeight="112.0" prefWidth="605.0" text="Input Directories">
+                     <content>
+                        <VBox prefHeight="200.0" prefWidth="100.0" spacing="9.0">
                            <children>
-                              <Label fx:id="baseDirectoryLabel" text="Base:" />
-                              <ComboBox fx:id="baseDirectoryComboBox" onAction="#baseDirectoryComboBoxActionPerformed" prefHeight="25.0" prefWidth="420.0" />
-                              <Button fx:id="baseDirectoryButton" mnemonicParsing="false" onAction="#baseDirectoryButtonActionPerformed" text="Browse..." />
-                              <Region HBox.hgrow="ALWAYS" />
-                              <Button fx:id="loadButton" mnemonicParsing="false" onAction="#loadButtonActionPerformed" text="Load" />
+                              <HBox prefHeight="100.0" prefWidth="200.0" spacing="4.0">
+                                 <children>
+                                    <Label fx:id="baseDirectoryLabel" text="Base:" />
+                                    <ComboBox fx:id="baseDirectoryComboBox" onAction="#baseDirectoryComboBoxActionPerformed" prefHeight="25.0" prefWidth="420.0" />
+                                    <Button fx:id="baseDirectoryButton" mnemonicParsing="false" onAction="#baseDirectoryButtonActionPerformed" text="Browse..." />
+                                    <Region HBox.hgrow="ALWAYS" />
+                                    <Button fx:id="loadButton" mnemonicParsing="false" onAction="#loadButtonActionPerformed" text="Load" />
+                                 </children>
+                                 <padding>
+                                    <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
+                                 </padding>
+                              </HBox>
+                              <HBox prefHeight="100.0" prefWidth="200.0" spacing="4.0">
+                                 <children>
+                                    <Label fx:id="faceLabel" text="Face:" />
+                                    <ChoiceBox fx:id="faceChoiceBox" prefWidth="140.0" />
+                                    <Label fx:id="indexLabel" text="Index:" />
+                                    <ChoiceBox fx:id="indexChoiceBox" prefWidth="140.0" />
+                                    <Label fx:id="pipLabel" text="Pip:" />
+                                    <ChoiceBox fx:id="pipChoiceBox" prefWidth="140.0" />
+                                    <Region HBox.hgrow="ALWAYS" />
+                                    <Button fx:id="saveButton" mnemonicParsing="false" onAction="#saveButtonActionPerformed" text="Save" />
+                                 </children>
+                                 <padding>
+                                    <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
+                                 </padding>
+                              </HBox>
                            </children>
-                           <padding>
-                              <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
-                           </padding>
-                        </HBox>
-                        <HBox prefHeight="100.0" prefWidth="200.0" spacing="4.0">
+                        </VBox>
+                     </content>
+                  </TitledPane>
+                  <Region HBox.hgrow="ALWAYS" />
+                  <TitledPane collapsible="false" prefHeight="123.0" prefWidth="115.0" text="Generate">
+                     <content>
+                        <VBox alignment="CENTER">
                            <children>
-                              <Label fx:id="faceLabel" text="Face:" />
-                              <ChoiceBox fx:id="faceChoiceBox" prefWidth="140.0" />
-                              <Label fx:id="indexLabel" text="Index:" />
-                              <ChoiceBox fx:id="indexChoiceBox" prefWidth="140.0" />
-                              <Label fx:id="pipLabel" text="Pip:" />
-                              <ChoiceBox fx:id="pipChoiceBox" prefWidth="140.0" />
-                              <Region HBox.hgrow="ALWAYS" />
-                              <Button fx:id="saveButton" mnemonicParsing="false" onAction="#saveButtonActionPerformed" text="Save" />
+                              <Button fx:id="generateButton" contentDisplay="GRAPHIC_ONLY" graphicTextGap="0.0" mnemonicParsing="false" onAction="#generateButtonActionPerformed" styleClass="imageButton" text="G" />
                            </children>
-                           <padding>
-                              <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
-                           </padding>
-                        </HBox>
-                     </children>
-                  </VBox>
-               </content>
-            </TitledPane>
-            <Region HBox.hgrow="ALWAYS" />
-            <TitledPane collapsible="false" prefHeight="123.0" prefWidth="115.0" text="Generate">
-               <content>
-                  <VBox alignment="CENTER">
-                     <children>
-                        <Button fx:id="generateButton" contentDisplay="GRAPHIC_ONLY" graphicTextGap="0.0" mnemonicParsing="false" onAction="#generateButtonActionPerformed" styleClass="imageButton" text="G" />
-                     </children>
-                  </VBox>
-               </content>
-            </TitledPane>
+                        </VBox>
+                     </content>
+                  </TitledPane>
+               </children>
+               <padding>
+                  <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+               </padding>
+            </HBox>
          </children>
-         <padding>
-            <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
-         </padding>
-      </HBox>
+      </VBox>
    </top>
    <right>
       <VBox prefHeight="295.0" prefWidth="200.0" spacing="8.0" BorderPane.alignment="CENTER">

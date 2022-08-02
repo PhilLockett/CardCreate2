@@ -46,7 +46,7 @@ public class SettingsController {
      * Support code for "Settings" panel. 
      */
 
-    private Stage stage;
+    private Controller mainController;
     private Model model;
     private CardSample sample;
 
@@ -62,11 +62,11 @@ public class SettingsController {
     }
 
     /**
-     * Called by Controller after the stage has been set. Sets up the base 
-     * directory (or aborts) then completes the initialization.
+     * Called by Controller after the stage has been set. Is provided with
+     * fundamental references then completes the initialization.
      */
-    public void init(Stage stage, Model model, CardSample sample) {
-        this.stage = stage;
+    public void init(Controller mainController, Model model, CardSample sample) {
+        this.mainController = mainController;
         this.model = model;
         this.sample = sample;
         model.setSettingsWindowLaunched(true);
@@ -393,9 +393,9 @@ public class SettingsController {
 
     @FXML
     void closeSettingsButtonActionPerformed(ActionEvent event) {
-        model.setSettingsWindowLaunched(false);
-        stage.close();
+        mainController.closeSettingsWindow();
     }
+
 
     /**
      * Initialize "Status" panel.

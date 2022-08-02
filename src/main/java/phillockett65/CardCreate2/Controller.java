@@ -44,10 +44,12 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.CheckMenuItem;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.Spinner;
@@ -65,7 +67,6 @@ import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
 
 import phillockett65.CardCreate2.sample.CardSample;
-import phillockett65.CardCreate2.sample.Default;
 import phillockett65.CardCreate2.sample.Item;
 
 public class Controller {
@@ -121,6 +122,7 @@ public class Controller {
         setUpImageButton(nextSuitButton, "icon-down.png");
         setUpImageButton(settingsButton, "Windows-icon.png");
 
+        initializeMenu();
         initializeInputDirectories();
         initializeGenerate();
         initializeOutputDirectory();
@@ -154,6 +156,124 @@ public class Controller {
         setCurrentCardItemLabelAndTooltips();
         initInputDirectoryChoiceBoxHandlers();
         setCardItemRadioState();
+    }
+
+
+
+    /************************************************************************
+     * Support code for "Playing Card Generator" Menu. 
+     */
+
+    @FXML
+    private MenuItem fileLoadMenuItem;
+
+    @FXML
+    private CheckMenuItem editAdditionalSettingsMenuItem;
+
+    @FXML
+    private void fileOpenOnAction() {
+        openBaseDirectory();
+    }
+
+    @FXML
+    private void fileLoadOnAction() {
+        loadSettings();
+    }
+
+    @FXML
+    private void fileSaveOnAction() {
+        saveSettings();
+    }
+
+    @FXML
+    private void fileCloseOnAction() {
+        sample.close();
+        stage.close();
+    }
+
+    @FXML
+    private void editAdditionalSettingsOnAction() {
+        if (model.isSettingsWindowLaunched())
+            closeSettingsWindow();
+        else
+            launchSettingsWindow();
+    }
+
+
+    @FXML
+    private void helpAboutOnAction() {
+        Alert alert = new Alert(AlertType.INFORMATION);
+        alert.setTitle("About CardCreate");
+        alert.setHeaderText("CardCreate 2.0");
+        alert.setContentText("CardCreate is a prototype playing card generator.");
+
+        alert.showAndWait();
+    }
+
+    @FXML
+    private void helpHelpOnAction() {
+        Alert alert = new Alert(AlertType.INFORMATION);
+        alert.setTitle("CardCreate Help");
+        alert.setHeaderText("CardCreate User Guide Documentation");
+        alert.setContentText("A complete guide to CardCreate is given in:\n 'Card Generator User Guide.pdf'.");
+
+        alert.showAndWait();
+    }
+
+    void openBaseDirectory() {
+        if (!selectBaseDirectory()) {
+            if (!selectValidBaseDirectory()) {
+                // Put original base directory back.
+                setBaseDirectory(model.getBaseDirectory());
+            }
+        }
+    }
+
+    void loadSettings() {
+        // System.out.println("loadSettings()");
+        DataStore.readData(model);
+
+        // Update UI.
+        faceChoiceBox.setValue(model.getFaceStyle());
+        indexChoiceBox.setValue(model.getIndexStyle());
+        pipChoiceBox.setValue(model.getPipStyle());
+
+        outputToggleButton.setSelected(model.isManual());
+        syncOutputTextField();
+
+        setCardSizeRadioState();
+        sample.syncCardSize();
+
+        sample.syncBackgroundColour();
+        colourTextField.setText(model.getBackgroundColourString());
+        colourPicker.setValue(model.getBackgroundColour());
+
+        indicesCheckBox.setSelected(model.isDisplayIndex());
+        cornerPipCheckBox.setSelected(model.isDisplayCornerPip());
+        standardPipCheckBox.setSelected(model.isDisplayStandardPip());
+        faceCheckBox.setSelected(model.isDisplayFaceImage());
+        facePipCheckBox.setSelected(model.isDisplayFacePip());
+
+        setCardItemRadioState();
+
+        if (model.isSettingsWindowLaunched())
+            settingsController.syncUI();
+
+        setStatusMessage("Settings loaded from: " + model.getSettingsFile());
+    }
+    
+    private void saveSettings() {
+        DataStore.writeData(model);
+
+        setStatusMessage("Settings saved as: " + model.getSettingsFile());
+    }
+
+    /**
+     * Initialize menu bar.
+     */
+    private void initializeMenu() {
+        fileLoadMenuItem.setDisable(true);
+        editAdditionalSettingsMenuItem.setSelected(false);
     }
 
 
@@ -311,50 +431,19 @@ public class Controller {
     void baseDirectoryButtonActionPerformed(ActionEvent event) {
         // System.out.println("baseDirectoryButtonActionPerformed()");
 
-        if (!selectBaseDirectory()) {
-            if (!selectValidBaseDirectory()) {
-                // Put original base directory back.
-                setBaseDirectory(model.getBaseDirectory());
-            }
-        }
+        openBaseDirectory();
     }
 
     @FXML
     void loadButtonActionPerformed(ActionEvent event) {
         // System.out.println("loadButtonActionPerformed()");
-        DataStore.readData(model);
-
-        // Update UI.
-        faceChoiceBox.setValue(model.getFaceStyle());
-        indexChoiceBox.setValue(model.getIndexStyle());
-        pipChoiceBox.setValue(model.getPipStyle());
-
-        outputToggleButton.setSelected(model.isManual());
-        syncOutputTextField();
-
-        setCardSizeRadioState();
-        sample.syncCardSize();
-
-        sample.syncBackgroundColour();
-        colourTextField.setText(model.getBackgroundColourString());
-        colourPicker.setValue(model.getBackgroundColour());
-
-        indicesCheckBox.setSelected(model.isDisplayIndex());
-        cornerPipCheckBox.setSelected(model.isDisplayCornerPip());
-        standardPipCheckBox.setSelected(model.isDisplayStandardPip());
-        faceCheckBox.setSelected(model.isDisplayFaceImage());
-        facePipCheckBox.setSelected(model.isDisplayFacePip());
-
-        setCardItemRadioState();
-
-        if (model.isSettingsWindowLaunched())
-            controller.syncUI();
+        loadSettings();
     }
 
     @FXML
     void saveButtonActionPerformed(ActionEvent event) {
         // System.out.println("saveButtonActionPerformed()");
-        DataStore.writeData(model);
+        saveSettings();
     }
 
     @FXML
@@ -565,6 +654,7 @@ public class Controller {
     void outputTextFieldKeyTyped(KeyEvent event) {
         // System.out.println("outputjTextFieldKeyTyped()" + event.toString());
         model.setOutputName(outputTextField.getText());
+        fileLoadMenuItem.setDisable(!model.isSettingsFileExist());
         loadButton.setDisable(!model.isSettingsFileExist());
     }
 
@@ -581,6 +671,7 @@ public class Controller {
 
     private void syncOutputTextField() {
         outputTextField.setText(model.getOutputName());
+        fileLoadMenuItem.setDisable(!model.isSettingsFileExist());
         loadButton.setDisable(!model.isSettingsFileExist());
     }
 
@@ -1112,12 +1203,12 @@ public class Controller {
     @FXML
     private ProgressBar progressBar;
 
-    private SettingsController controller;
+    private SettingsController settingsController;
+    private Stage settingsStage;
 
     @FXML
     void settingsButtonActionPerformed(ActionEvent event) {
-        if (!model.isSettingsWindowLaunched())
-            launchSettingsWindow();
+        launchSettingsWindow();
     }
 
     private void setStatusMessage(String Message) {
@@ -1166,6 +1257,12 @@ public class Controller {
     }
 
     private boolean launchSettingsWindow() {
+        // System.out.println("launchSettingsWindow() " + model.isSettingsWindowLaunched());
+        if (model.isSettingsWindowLaunched())
+            return false;
+
+        editAdditionalSettingsMenuItem.setSelected(true);
+
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("Settings.fxml"));
             Parent root = fxmlLoader.load();
@@ -1173,21 +1270,35 @@ public class Controller {
             Scene scene = new Scene(root);
             scene.getStylesheets().add(App.class.getResource("application.css").toExternalForm());
 
-            Stage stage = new Stage();
-            stage.setTitle("Additional Settings");
-            stage.resizableProperty().setValue(false);
-            stage.setScene(scene);
-            stage.setOnCloseRequest(e -> Platform.exit());
+            settingsStage = new Stage();
+            settingsStage.setTitle("Additional Settings");
+            settingsStage.resizableProperty().setValue(false);
+            settingsStage.setScene(scene);
+            settingsStage.setOnCloseRequest(e -> Platform.exit());
 
-            controller = fxmlLoader.getController();
+            settingsController = fxmlLoader.getController();
 
-            stage.show();
+            settingsStage.show();
 
-            controller.init(stage, model, sample);
+            settingsController.init(this, model, sample);
         } catch (IOException e) {
             e.printStackTrace();
             return false;
         }
+
+        return true;
+    }
+
+    public boolean closeSettingsWindow() {
+        // System.out.println("closeSettingsWindow() " + model.isSettingsWindowLaunched());
+        if (!model.isSettingsWindowLaunched())
+            return false;
+
+        model.setSettingsWindowLaunched(false);
+
+        settingsStage.close();
+        editAdditionalSettingsMenuItem.setSelected(false);
+        settingsController = null;
 
         return true;
     }
