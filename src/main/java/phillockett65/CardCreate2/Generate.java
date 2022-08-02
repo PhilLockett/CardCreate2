@@ -165,18 +165,8 @@ public class Generate extends Task<Long> {
         CardContext cc = new CardContext();
         GraphicsContext gc = cc.getGraphicsContext();
 
-        // Draw Joker indices specific to the suit.
-        String pathToImage = model.getJokerIndexImagePath(suit);
-        Image indexImage = Utils.loadImage(pathToImage);
-        if (indexImage != null) {
-            Image rotatedImage = Utils.rotateImage(indexImage);
-
-            model.drawJokerIndex(gc, indexImage, rotatedImage);
-        }
-    
         // Draw Joker image specific to the suit.
         Image faceImage = Utils.loadImage(model.getFaceImagePath(suit, 0));
-        
         if (faceImage == null) {
             defaults++;
             if (defaults % 2 == 1) {
@@ -184,6 +174,14 @@ public class Generate extends Task<Long> {
             }
         }
         model.drawJokerFace(gc, faceImage);
+
+        // Draw Joker indices specific to the suit.
+        Image indexImage = Utils.loadImage(model.getJokerIndexImagePath(suit));
+        if (indexImage != null) {
+            Image rotatedImage = Utils.rotateImage(indexImage);
+
+            model.drawJokerIndex(gc, indexImage, rotatedImage);
+        }
 
         return cc.getCanvas();
     }
