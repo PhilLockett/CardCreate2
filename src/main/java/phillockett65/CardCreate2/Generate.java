@@ -45,36 +45,49 @@ public class Generate extends Task<Long> {
     }
 
     private class CardContext {
-        private final double xMax;
-        private final double yMax;
-        private final double arcWidth;
-        private final double arcHeight;
+        private final double width;
+        private final double height;
+        private final double xOffset;
+        private final double yOffset;
         private final Canvas canvas;
         private final GraphicsContext gc;
 
         public CardContext() {
 
-            xMax = model.getWidth();
-            yMax = model.getHeight();
-            arcWidth = model.getArcWidthPX();
-            arcHeight = model.getArcHeightPX();
+            width = model.getWidth();
+            height = model.getHeight();
+            xOffset = model.getMpcBorderWidth();
+            yOffset = model.getMpcBorderHeight();
+
+            final double xMax = width + (xOffset * 2);
+            final double yMax = height + (yOffset * 2);
 
             canvas = new Canvas(xMax, yMax);
             gc = canvas.getGraphicsContext2D();
 
             gc.setFill(model.getBackgroundColour());
-            gc.setStroke(model.border);
-            gc.setLineWidth(Default.BORDER_WIDTH.getInt());
+            
+            if (!model.isMpcCardSize()) {
+                final double arcWidth = model.getArcWidthPX();
+                final double arcHeight = model.getArcHeightPX();
 
-            gc.fillRoundRect(0, 0, xMax, yMax, arcWidth, arcHeight);
-            gc.strokeRoundRect(0, 0, xMax, yMax, arcWidth, arcHeight);
+                gc.fillRoundRect(0, 0, xMax, yMax, arcWidth, arcHeight);
+                gc.setStroke(model.border);
+                gc.setLineWidth(Default.BORDER_WIDTH.getInt());
+                gc.strokeRoundRect(0, 0, xMax, yMax, arcWidth, arcHeight);
+            } else {
+                gc.fillRect(0, 0, xMax, yMax);
+            }
         }
 
         public Canvas getCanvas() { return canvas; }
         public GraphicsContext getGraphicsContext() { return gc; }
-        public double getXMax() { return xMax; }
-        public double getYMax() { return yMax; }
-   }
+        public double getWidth() { return width; }
+        public double getHeight() { return height; }
+        public double getXOffset() { return xOffset; }
+        public double getYOffset() { return yOffset; }
+
+    }
 
 
     /**
@@ -92,7 +105,7 @@ public class Generate extends Task<Long> {
 
         // Add the icons using the Payloads in priority order.
         if (model.showWatermark(suit, card))
-            gc.drawImage(model.getWatermark(), 0, 0, cc.getXMax(), cc.getYMax());
+            gc.drawImage(model.getWatermark(), cc.getXOffset(), cc.getYOffset(), cc.getWidth(), cc.getHeight());
 
         int[] priorities = model.getPriorityList();
         for (int i = priorities.length-1; i >= 0; --i) {

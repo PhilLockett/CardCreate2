@@ -599,6 +599,11 @@ public class Model {
      * Support code for "Generate" panel.
      */
 
+    private boolean generating = false;
+
+    public boolean isGenerating() { return generating; }
+    public void setGenerating(boolean state) { generating = state; }
+
     public final Color border = Color.GREY;
 
     public void drawCardIndex(GraphicsContext gc, Image image, Image rotatedImage) {
@@ -800,7 +805,7 @@ public class Model {
      * Support code for "Card Size" panel.
      */
 
-    private enum CardSize { POKER, BRIDGE, FREE };
+    private enum CardSize { POKER, BRIDGE, FREE, MPC };
     
     private CardSize cardSize = CardSize.POKER;
 
@@ -814,7 +819,10 @@ public class Model {
     public boolean isPokerCardSize() { return cardSize == CardSize.POKER; }
     public boolean isBridgeCardSize() { return cardSize == CardSize.BRIDGE; }
     public boolean isFreeCardSize() { return cardSize == CardSize.FREE; }
+    public boolean isMpcCardSize() { return cardSize == CardSize.MPC; }
     public boolean isAutoCardWidth() { return !isFreeCardSize(); }
+    public boolean isAutoCardHeight() { return isMpcCardSize(); }
+    public boolean isAutoCorners() { return isMpcCardSize(); }
 
     public void setPokerCardSize() {
         cardSize = CardSize.POKER;
@@ -834,6 +842,12 @@ public class Model {
         syncCardItemsWithCardSize();
     }
 
+    public void setMpcCardSize() {
+        cardSize = CardSize.MPC;
+
+        syncCardItemsWithCardSize();
+    }
+
     /**
      * @return the user set card width in pixels.
      */
@@ -846,6 +860,9 @@ public class Model {
      * the freely set width.
      */
     public double getWidth() {
+        if (cardSize == CardSize.MPC)
+            return Default.MPC_WIDTH.getFloat();
+
         if (cardSize == CardSize.POKER)
             return cardHeightPX * 5 / 7;
 
@@ -871,6 +888,9 @@ public class Model {
      * @return the card height in pixels.
      */
     public double getHeight() {
+        if (cardSize == CardSize.MPC)
+            return Default.MPC_HEIGHT.getFloat();
+
         return cardHeightPX;
     }
 
@@ -884,6 +904,26 @@ public class Model {
         cardHeightPX = height;
 
         syncCardItemsWithCardSize();
+    }
+
+    public double getMpcBorderWidth() {
+        if (!isGenerating())
+            return 0D;
+
+        if (cardSize == CardSize.MPC)
+            return Default.MPC_BORDER_WIDTH.getFloat();
+
+        return 0D;
+    }
+
+    public double getMpcBorderHeight() {
+        if (!isGenerating())
+            return 0D;
+
+        if (cardSize == CardSize.MPC)
+            return Default.MPC_BORDER_WIDTH.getFloat();
+
+        return 0D;
     }
 
     /**
@@ -1825,7 +1865,7 @@ public class Model {
     public void resetArcWidthSVF()    { arcWidthSpinner.setValue((double)Default.RADIUS.getFloat()); }
     public void resetArcHeightSVF()   { arcHeightSpinner.setValue((double)Default.RADIUS.getFloat()); }
 
-    public boolean isCropCorners() { return cropCorners; }
+    public boolean isCropCorners() { return isAutoCorners() ? false : cropCorners; }
     public void setCropCorners(boolean state) { cropCorners = state; }
 
 

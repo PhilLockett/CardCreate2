@@ -56,10 +56,13 @@ public enum Default {
     FACE_PIPCENTRE_Y (10.14F+9.77F),
 
     BORDER_WIDTH (3F),
+    MPC_BORDER_WIDTH (36),
     WIDTH (380F),
+    MPC_WIDTH (750),
     MIN_WIDTH (38F),
     MAX_WIDTH (3800F),
     HEIGHT (380F * 7 / 5),
+    MPC_HEIGHT (1050),
     MIN_HEIGHT (38F * 7 / 5),
     MAX_HEIGHT (3800F * 7 / 5),
     RADIUS (10F),

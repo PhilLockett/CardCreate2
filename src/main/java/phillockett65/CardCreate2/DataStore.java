@@ -239,8 +239,10 @@ public class DataStore implements Serializable {
             model.setPokerCardSize();
         else if (cardSize == 1)
             model.setBridgeCardSize();
-        else
+        else if (cardSize == 2)
             model.setFreeCardSize();
+        else
+            model.setMpcCardSize();
     }
 
     private int getCardSize(Model model) {
@@ -248,7 +250,11 @@ public class DataStore implements Serializable {
 
         if (model.isBridgeCardSize()) return 1;
 
-        return 2;
+        if (model.isFreeCardSize()) return 2;
+
+        if (model.isMpcCardSize()) return 3;
+
+        return 0;
     }
 
 }

@@ -732,8 +732,8 @@ public class Payload {
             winX = cardWidthPX - (2*pixelsX);
             winY = cardHeightPX - (2*pixelsY);
     
-            originX = pixelsX - (width/2);
-            originY = pixelsY - (height/2);
+            originX = pixelsX - (width/2) + model.getMpcBorderWidth();
+            originY = pixelsY - (height/2) + model.getMpcBorderHeight();
         }
      }
 
@@ -779,7 +779,9 @@ public class Payload {
 
         final double cardWidthPX = model.getWidth();
         final double cardHeightPX = model.getHeight();
-    
+        final double xOffset = model.getMpcBorderWidth();
+        final double yOffset = model.getMpcBorderHeight();
+
         final double iconWidthPX = iconImage.getWidth();
         final double iconHeightPX = iconImage.getHeight();
         final boolean landscape = iconHeightPX < iconWidthPX;
@@ -802,11 +804,11 @@ public class Payload {
             posX = cardWidthPX * 0.02;
             posY = model.getArcHeightPX()/4;
         }
-        gc.drawImage(iconImage, posX, posY, width, height);
+        gc.drawImage(iconImage, posX + xOffset, posY + yOffset, width, height);
 
         posX = cardWidthPX - posX - width;
         posY = cardHeightPX - posY - height;
-        gc.drawImage(rotatedImage, posX, posY, width, height);
+        gc.drawImage(rotatedImage, posX + xOffset, posY + yOffset, width, height);
 
         return true;
     }

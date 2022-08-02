@@ -65,6 +65,7 @@ import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
 
 import phillockett65.CardCreate2.sample.CardSample;
+import phillockett65.CardCreate2.sample.Default;
 import phillockett65.CardCreate2.sample.Item;
 
 public class Controller {
@@ -442,6 +443,8 @@ public class Controller {
         if (generateTask != null && generateTask.isRunning())
             return;
 
+        model.setGenerating(true);
+
         progress = 0L;
         showProgress();
 
@@ -462,13 +465,26 @@ public class Controller {
      * images. Must be run from the Application thread.
      */
     private void takeSnapshots() {
-        final int width = (int)model.getWidth();
-        final int height = (int)model.getHeight();
+        final int width;
+        final int height;
+
+        if (!model.isMpcCardSize()) {
+            width = (int)model.getWidth();
+            height = (int)model.getHeight();
+        } else {
+            final double xOffset = model.getMpcBorderWidth();
+            final double yOffset = model.getMpcBorderHeight();
+
+            width = (int)(model.getWidth() + (xOffset * 2));
+            height = (int)(model.getHeight() + (yOffset * 2));
+        }
 
         SnapshotParameters parameters = new SnapshotParameters();
         parameters.setFill(Color.TRANSPARENT);
 
-        for (Canvas canvas : canvasses) {
+        final int count = canvasses.size();
+        for (int i = 0; i < count; ++i ) {
+            final Canvas canvas = canvasses.remove(0);
             WritableImage snapshot = new WritableImage(width, height);
             try {
                 canvas.snapshot(parameters, snapshot);
@@ -478,8 +494,6 @@ public class Controller {
 
             images.add(snapshot);
         }
-
-        canvasses.clear();
 
         ++progress;
     }
@@ -517,6 +531,8 @@ public class Controller {
      * Step 4: final clean up.
      */
     private void generationFinished() {
+        model.setGenerating(false);
+
         hideProgress();
         setStatusMessage("Output sent to: " + model.getOutputDirectory());
         images.clear();
@@ -647,6 +663,9 @@ public class Controller {
     private RadioButton freeRadioButton;
 
     @FXML
+    private RadioButton mpcRadioButton;
+
+    @FXML
     private Label widthLabel;
 
     @FXML
@@ -680,11 +699,22 @@ public class Controller {
             model.setFreeCardSize();
             sample.syncCardSize();
         }
+        else
+        if (mpcRadioButton.isSelected()) {
+            model.setMpcCardSize();
+            sample.syncCardSize();
+        }
 
+        // Control whether Card Width and Height are changeble.
         final boolean autoWidth = model.isAutoCardWidth();
         widthLabel.setDisable(autoWidth);
         widthSpinner.setDisable(autoWidth);
         widthButton.setDisable(autoWidth);
+
+        final boolean autoHeight = model.isAutoCardHeight();
+        heightLabel.setDisable(autoHeight);
+        heightSpinner.setDisable(autoHeight);
+        heightButton.setDisable(autoHeight);
     }
 
     @FXML
@@ -706,6 +736,7 @@ public class Controller {
         pokerRadioButton.setSelected(model.isPokerCardSize());
         bridgeRadioButton.setSelected(model.isBridgeCardSize());
         freeRadioButton.setSelected(model.isFreeCardSize());
+        mpcRadioButton.setSelected(model.isMpcCardSize());
     }
 
     /**
@@ -716,6 +747,7 @@ public class Controller {
         pokerRadioButton.setTooltip(new Tooltip("Maintain poker card aspect ratio"));
         bridgeRadioButton.setTooltip(new Tooltip("Maintain bridge card aspect ratio"));
         freeRadioButton.setTooltip(new Tooltip("independently set card width and height"));
+        mpcRadioButton.setTooltip(new Tooltip("Generate poker cards suitable for use at makeplayingcards.com"));
 
         widthLabel.setTooltip(new Tooltip("Card width in pixels (default: 380)"));
         heightLabel.setTooltip(new Tooltip("Card height in pixels (default: 532)"));

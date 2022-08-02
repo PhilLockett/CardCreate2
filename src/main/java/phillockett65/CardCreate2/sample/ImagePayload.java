@@ -345,7 +345,9 @@ public class ImagePayload extends Payload {
 
         final double cardWidthPX = model.getWidth();
         final double cardHeightPX = model.getHeight();
-    
+        final double xOffset = model.getMpcBorderWidth();
+        final double yOffset = model.getMpcBorderHeight();
+
         // System.out.println("drawImage()");
         final double imageWidthPX = iconImage.getWidth();
         final double imageHeightPX = iconImage.getHeight();
@@ -376,8 +378,8 @@ public class ImagePayload extends Payload {
                 }
             }
 
-            gc.drawImage(rotatedImage, pixelsX + dX, cardHeightPX/2, winX, winY);
-            gc.drawImage(iconImage, pixelsX + dX, pixelsY + dY, winX, winY);
+            gc.drawImage(rotatedImage, pixelsX + dX + xOffset, cardHeightPX/2 + yOffset, winX, winY);
+            gc.drawImage(iconImage, pixelsX + dX + xOffset, pixelsY + dY + yOffset, winX, winY);
         } else {
             // System.out.println("portrait");
 
@@ -395,7 +397,7 @@ public class ImagePayload extends Payload {
                 }
             }
 
-            gc.drawImage(iconImage, pixelsX + dX, pixelsY + dY, winX, winY);
+            gc.drawImage(iconImage, pixelsX + dX + xOffset, pixelsY + dY + yOffset, winX, winY);
         }
 
         return true;
@@ -415,7 +417,9 @@ public class ImagePayload extends Payload {
 
         final double cardWidthPX = model.getWidth();
         final double cardHeightPX = model.getHeight();
-    
+        final double xOffset = model.getMpcBorderWidth();
+        final double yOffset = model.getMpcBorderHeight();
+
         final double imageWidthPX = image.getWidth();
         final double imageHeightPX = image.getHeight();
 
@@ -443,7 +447,7 @@ public class ImagePayload extends Payload {
             winX = imageWidthPX * scaleY;
         }
 
-        gc.drawImage(image, pixelsX + dX, pixelsY + dY, winX, winY);
+        gc.drawImage(image, pixelsX + dX + xOffset, pixelsY + dY + yOffset, winX, winY);
 
         return true;
     }

@@ -266,6 +266,11 @@
                               <RadioButton fx:id="freeRadioButton" layoutX="10.0" layoutY="27.0" mnemonicParsing="false" onAction="#cardSizeRadioButtonActionPerformed" text="Free" toggleGroup="$cardSize" />
                            </children>
                         </VBox>
+                        <VBox prefHeight="200.0" prefWidth="100.0">
+                           <children>
+                              <RadioButton fx:id="mpcRadioButton" mnemonicParsing="false" onAction="#cardSizeRadioButtonActionPerformed" text="MPC" toggleGroup="$cardSize" />
+                           </children>
+                        </VBox>
                         <GridPane hgap="3.0" prefHeight="60.0" prefWidth="343.0" vgap="3.0">
                           <columnConstraints>
                             <ColumnConstraints hgrow="SOMETIMES" maxWidth="191.99998474121094" minWidth="10.0" prefWidth="188.66661071777344" />
