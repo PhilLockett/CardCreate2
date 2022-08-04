@@ -172,7 +172,7 @@
                 </Menu>
                 <Menu mnemonicParsing="false" text="Edit">
                   <items>
-                        <CheckMenuItem fx:id="editAdditionalSettingsMenuItem" mnemonicParsing="false" onAction="#editAdditionalSettingsOnAction" text="Additinal Settings...">
+                        <CheckMenuItem fx:id="editAdditionalSettingsMenuItem" mnemonicParsing="false" onAction="#editAdditionalSettingsOnAction" text="Additional Settings...">
                            <accelerator>
                               <KeyCodeCombination alt="UP" code="A" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
                            </accelerator>
