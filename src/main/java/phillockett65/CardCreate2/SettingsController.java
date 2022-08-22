@@ -78,6 +78,9 @@ public class SettingsController {
         initializeStatus();
     }
 
+    /**
+     * Synchronise all controls with the model.
+     */
     public void syncUI() {
         independentRadiiCheckBox.setSelected(model.isSetCornerRadiiIndependently());
         cropCornersCheckBox.setSelected(model.isCropCorners());

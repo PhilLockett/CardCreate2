@@ -220,7 +220,7 @@ public class Controller {
         alert.showAndWait();
     }
 
-    void openBaseDirectory() {
+    private void openBaseDirectory() {
         if (!selectBaseDirectory()) {
             if (!selectValidBaseDirectory()) {
                 // Put original base directory back.
@@ -229,11 +229,12 @@ public class Controller {
         }
     }
 
-    void loadSettings() {
-        // System.out.println("loadSettings()");
-        DataStore.readData(model);
+    /**
+     * Synchronise all controls with the model.
+     */
+    private void syncUI() {
+        // System.out.println("syncUI()");
 
-        // Update UI.
         faceChoiceBox.setValue(model.getFaceStyle());
         indexChoiceBox.setValue(model.getIndexStyle());
         pipChoiceBox.setValue(model.getPipStyle());
@@ -255,13 +256,19 @@ public class Controller {
         facePipCheckBox.setSelected(model.isDisplayFacePip());
 
         setCardItemRadioState();
+    }
 
+    private void loadSettings() {
+        // System.out.println("loadSettings()");
+        DataStore.readData(model);
+
+        syncUI();
         if (model.isSettingsWindowLaunched())
             settingsController.syncUI();
 
         setStatusMessage("Settings loaded from: " + model.getSettingsFile());
     }
-    
+
     private void saveSettings() {
         DataStore.writeData(model);
 
@@ -1285,10 +1292,11 @@ public class Controller {
             settingsStage.setOnCloseRequest(e -> Platform.exit());
 
             settingsController = fxmlLoader.getController();
+            settingsController.init(this, model, sample);
+            settingsController.syncUI();
 
             settingsStage.show();
 
-            settingsController.init(this, model, sample);
         } catch (IOException e) {
             e.printStackTrace();
             return false;
