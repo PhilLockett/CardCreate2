@@ -1261,7 +1261,15 @@ public class Controller {
         if (model.isSettingsWindowLaunched())
             return false;
 
+        model.setSettingsWindowLaunched(true);
         editAdditionalSettingsMenuItem.setSelected(true);
+
+        if (settingsController != null) {
+            settingsStage.show();
+
+            return true;
+        }
+
 
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("Settings.fxml"));
@@ -1295,10 +1303,9 @@ public class Controller {
             return false;
 
         model.setSettingsWindowLaunched(false);
-
-        settingsStage.close();
         editAdditionalSettingsMenuItem.setSelected(false);
-        settingsController = null;
+
+        settingsStage.hide();
 
         return true;
     }
