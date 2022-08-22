@@ -35,7 +35,6 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.Tooltip;
 import javafx.scene.layout.BorderPane;
-import javafx.stage.Stage;
 
 import phillockett65.CardCreate2.sample.CardSample;
 
