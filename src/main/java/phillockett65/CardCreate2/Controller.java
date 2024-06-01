@@ -76,7 +76,6 @@ public class Controller {
      * Support code for "Playing Card Generator" panel. 
      */
 
-    private Stage stage;
     private Model model;
     private CardSample sample;
 
@@ -113,7 +112,7 @@ public class Controller {
          * Initialize "Playing Card Generator" panel.
          */
 
-        sample = new CardSample(this, model, "Sample");
+        sample = new CardSample(model, "Sample");
 
         setUpImageButton(generateButton, "icon-play.png");
         setUpImageButton(previousSuitButton, "icon-up.png");
@@ -140,7 +139,6 @@ public class Controller {
      * directory (or aborts) then completes the initialization.
      */
     public void init(Stage stage) {
-        this.stage = stage;
 
         userGUI.setDisable(true);
 
@@ -151,7 +149,7 @@ public class Controller {
         }
 
         setInitialBaseDirectory();
-        model.init();
+        model.init(stage, this);
         sample.init();
         setCurrentCardItemLabelAndTooltips();
         initInputDirectoryChoiceBoxHandlers();
@@ -188,7 +186,7 @@ public class Controller {
     @FXML
     private void fileCloseOnAction() {
         sample.close();
-        stage.close();
+        model.getStage().close();
     }
 
     @FXML
@@ -402,7 +400,7 @@ public class Controller {
         DirectoryChooser choice = new DirectoryChooser();
         choice.setInitialDirectory(new File(model.getBaseDirectory()));
         choice.setTitle("Select Base Directory");
-        File directory = choice.showDialog(stage);
+        File directory = choice.showDialog(model.getStage());
 
         if (directory != null) {
             // System.out.println("Selected: " + directory.getAbsolutePath());

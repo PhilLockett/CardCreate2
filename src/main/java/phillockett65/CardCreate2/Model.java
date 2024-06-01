@@ -44,6 +44,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.stage.Stage;
 
 import phillockett65.CardCreate2.sample.Default;
 import phillockett65.CardCreate2.sample.DoublePayload;
@@ -66,6 +67,8 @@ public class Model {
     public static final int FACE_PIP_ID = 3;
     public static final int FACE_ID = 4;
 
+    private Stage stage;
+    private Controller controller;
 
     /************************************************************************
      * Support code for the Initialization of the Model.
@@ -97,8 +100,11 @@ public class Model {
     /**
      * Initialization after a base directory has been selected.
      */
-    public void init() {
+    public void init(Stage mainStage, Controller mainController) {
         // System.out.println("init()");
+
+        stage = mainStage;
+        controller = mainController;
 
         watermarkView = new ImageView();
         group.getChildren().add(watermarkView);
@@ -112,6 +118,9 @@ public class Model {
         group.getChildren().add(box);
         group.getChildren().add(handle);
     }
+
+    public Stage getStage() { return stage; }
+    public Controller getController() { return controller; }
 
     public void rebuildGroup() {
 

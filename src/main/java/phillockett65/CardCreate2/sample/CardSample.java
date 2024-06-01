@@ -37,7 +37,6 @@ import phillockett65.CardCreate2.Model;
 
 public class CardSample extends Stage {
     
-    private Controller controller;
     private Model model;
 
     private Scene scene;
@@ -63,14 +62,13 @@ public class CardSample extends Stage {
      * @param mainModel         - used to call the centralized data model.
      * @param title             - string displayed as the heading of the Stage.
      */
-    public CardSample(Controller mainController, Model mainModel, String title) {
+    public CardSample(Model mainModel, String title) {
 //		System.out.println("CardSample constructed: " + title);
 
         resizableProperty().setValue(false);
         setOnCloseRequest(e -> Platform.exit());
         initStyle(StageStyle.TRANSPARENT);
 
-        controller = mainController;
         model = mainModel;
 
         this.show();
@@ -112,7 +110,7 @@ public class CardSample extends Stage {
             }
             else {
                 model.setNextPayload();
-                controller.syncToCurrentCardItem();
+                model.getController().syncToCurrentCardItem();
             }
         });
 
@@ -147,20 +145,20 @@ public class CardSample extends Stage {
         scene.setOnKeyPressed(event -> {
             switch (event.getCode()) {
             case SHIFT:
-                controller.moveSample(true);
+                model.getController().moveSample(true);
                 break;
 
             case ALT:
-                controller.decreaseSize();
+                model.getController().decreaseSize();
                 break;
 
             case CONTROL: 
-                controller.increaseSize();
+                model.getController().increaseSize();
                 break;
 
             case TAB: 
                 model.setNextPayload();
-                controller.syncToCurrentCardItem();
+                model.getController().syncToCurrentCardItem();
                 break;
 
             case UP: 
@@ -197,7 +195,7 @@ public class CardSample extends Stage {
         });
 
         scene.setOnKeyReleased(event -> {
-            controller.release();
+            model.getController().release();
         });
 
     }
