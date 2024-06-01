@@ -19,8 +19,8 @@
  */
 
 /*
- * DataStore is a class that is serializing the settings data for saving and 
- * restoring to and from disc.
+ * DataStore is a class that serializes the settings data for saving to and 
+ * restoring from disc.
  */
 package phillockett65.CardCreate2;
 
