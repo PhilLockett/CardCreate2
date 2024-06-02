@@ -45,7 +45,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
-
+import phillockett65.CardCreate2.sample.CardSample;
 import phillockett65.CardCreate2.sample.Default;
 import phillockett65.CardCreate2.sample.DoublePayload;
 import phillockett65.CardCreate2.sample.Handle;
@@ -69,6 +69,8 @@ public class Model {
 
     private Stage stage;
     private PrimaryController controller;
+    private CardSample sample;
+
 
     /************************************************************************
      * Support code for the Initialization of the Model.
@@ -97,12 +99,19 @@ public class Model {
         initializeSettingsPanel();
     }
 
+    public void close() {
+        sample.close();
+        stage.close();
+    }
+
+
     /**
      * Initialization after a base directory has been selected.
      */
     public void init(Stage mainStage, PrimaryController mainController) {
         // System.out.println("init()");
 
+        sample = new CardSample(this, "Sample");
         stage = mainStage;
         controller = mainController;
 
@@ -117,10 +126,13 @@ public class Model {
         // Add handle to the group last so that it is displayed on top.
         group.getChildren().add(box);
         group.getChildren().add(handle);
+
+        sample.init();
     }
 
     public Stage getStage() { return stage; }
     public PrimaryController getController() { return controller; }
+    public CardSample getSample() { return sample; }
 
     public void rebuildGroup() {
 
@@ -837,6 +849,7 @@ public class Model {
         cardSize = size;
 
         syncCardItemsWithCardSize();
+        sample.syncCardSize();
     }
 
     public void setPokerCardSize() { setCardSize(CardSize.POKER); }
@@ -876,6 +889,7 @@ public class Model {
         cardWidthPX = width;
 
         syncCardItemsWithCardSize();
+        sample.syncCardSize();
     }
 
     /**
@@ -898,6 +912,7 @@ public class Model {
         cardHeightPX = height;
 
         syncCardItemsWithCardSize();
+        sample.syncCardSize();
     }
 
     public double getMpcBorderWidth() {

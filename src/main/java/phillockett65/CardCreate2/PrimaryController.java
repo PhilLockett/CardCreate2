@@ -66,7 +66,6 @@ import javafx.scene.paint.Color;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
 
-import phillockett65.CardCreate2.sample.CardSample;
 import phillockett65.CardCreate2.sample.Item;
 
 public class PrimaryController {
@@ -77,7 +76,6 @@ public class PrimaryController {
      */
 
     private Model model;
-    private CardSample sample;
 
     @FXML
     private BorderPane userGUI;
@@ -112,8 +110,6 @@ public class PrimaryController {
          * Initialize "Playing Card Generator" panel.
          */
 
-        sample = new CardSample(model, "Sample");
-
         setUpImageButton(generateButton, "icon-play.png");
         setUpImageButton(previousSuitButton, "icon-up.png");
         setUpImageButton(previousCardButton, "icon-left.png");
@@ -144,13 +140,11 @@ public class PrimaryController {
 
         if ((!model.isValidBaseDirectory()) &&
             (!selectValidBaseDirectory())) {
-            stage.close();
-            sample.close();
+            model.close();
         }
 
         setInitialBaseDirectory();
         model.init(stage, this);
-        sample.init();
         setCurrentCardItemLabelAndTooltips();
         initInputDirectoryChoiceBoxHandlers();
         setCardItemRadioState();
@@ -185,8 +179,7 @@ public class PrimaryController {
 
     @FXML
     private void fileCloseOnAction() {
-        sample.close();
-        model.getStage().close();
+        model.close();
     }
 
     @FXML
@@ -241,9 +234,9 @@ public class PrimaryController {
         syncOutputTextField();
 
         setCardSizeRadioState();
-        sample.syncCardSize();
+        model.getSample().syncCardSize();
 
-        sample.syncBackgroundColour();
+        model.getSample().syncBackgroundColour();
         colourTextField.setText(model.getBackgroundColourString());
         colourPicker.setValue(model.getBackgroundColour());
 
@@ -763,22 +756,18 @@ public class PrimaryController {
     void cardSizeRadioButtonActionPerformed(ActionEvent event) {
         if (pokerRadioButton.isSelected()) {
             model.setPokerCardSize();
-            sample.syncCardSize();
         }
         else
         if (bridgeRadioButton.isSelected()) {
             model.setBridgeCardSize();
-            sample.syncCardSize();
         }
         else
         if (freeRadioButton.isSelected()) {
             model.setFreeCardSize();
-            sample.syncCardSize();
         }
         else
         if (mpcRadioButton.isSelected()) {
             model.setMpcCardSize();
-            sample.syncCardSize();
         }
 
         // Control whether Card Width and Height are changeble.
@@ -839,12 +828,10 @@ public class PrimaryController {
 
         widthSpinner.valueProperty().addListener( (v, oldValue, newValue) -> {
             model.setWidth(newValue);
-            sample.syncCardSize();
         });
 
         heightSpinner.valueProperty().addListener( (v, oldValue, newValue) -> {
             model.setHeight(newValue);
-            sample.syncCardSize();
         });
 
     }
@@ -864,7 +851,7 @@ public class PrimaryController {
     @FXML
     void colourPickerActionPerformed(ActionEvent event) {
         model.setBackgroundColour(colourPicker.getValue());
-        sample.syncBackgroundColour();
+        model.getSample().syncBackgroundColour();
         colourTextField.setText(model.getBackgroundColourString());
     }
 
@@ -1207,7 +1194,7 @@ public class PrimaryController {
         final String name = model.getCurrentCardItemName();
         if (!name.equals("")) {
             setStatusMessage("Click on Sample to increase size of card " + name + ".");
-            sample.setResize(true);
+            model.getSample().setResize(true);
         }
     }
 
@@ -1218,7 +1205,7 @@ public class PrimaryController {
         final String name = model.getCurrentCardItemName();
         if (!name.equals("")) {
             setStatusMessage("Click on Sample to decrease size of card " + name + ".");
-            sample.setResize(true);
+            model.getSample().setResize(true);
         }
     }
 
@@ -1238,7 +1225,7 @@ public class PrimaryController {
      */
     public void release() {
         setStatusMessage("Ready.");
-        sample.setResize(false);
+        model.getSample().setResize(false);
     }
 
     private boolean launchSettingsWindow() {
@@ -1270,7 +1257,7 @@ public class PrimaryController {
             settingsStage.setOnCloseRequest(e -> Platform.exit());
 
             additionalController = fxmlLoader.getController();
-            additionalController.init(this, model, sample);
+            additionalController.init(model);
             additionalController.syncUI();
 
             settingsStage.show();

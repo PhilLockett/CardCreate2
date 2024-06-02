@@ -36,7 +36,6 @@ import javafx.scene.control.Spinner;
 import javafx.scene.control.Tooltip;
 import javafx.scene.layout.BorderPane;
 
-import phillockett65.CardCreate2.sample.CardSample;
 
 public class AdditionalController {
 
@@ -45,9 +44,7 @@ public class AdditionalController {
      * Support code for "Settings" panel. 
      */
 
-    private PrimaryController mainController;
     private Model model;
-    private CardSample sample;
 
     @FXML
     private BorderPane settingsGUI;
@@ -62,12 +59,11 @@ public class AdditionalController {
 
     /**
      * Called by Controller after the stage has been set. Is provided with
-     * fundamental references then completes the initialization.
+     * reference to model, then completes the initialization.
      */
-    public void init(PrimaryController mainController, Model model, CardSample sample) {
-        this.mainController = mainController;
+    public void init(Model model) {
         this.model = model;
-        this.sample = sample;
+
         model.setSettingsWindowLaunched(true);
 
         initializeCardCorners();
@@ -134,19 +130,19 @@ public class AdditionalController {
 
         setArcLabelsAndToolsTips(indy);
 
-        sample.syncCardSize();
+        model.getSample().syncCardSize();
     }
 
     @FXML
     void arcWidthButtonActionPerformed(ActionEvent event) {
         model.resetArcWidthSVF();
-        sample.syncCardSize();
+        model.getSample().syncCardSize();
     }
 
     @FXML
     void arcHeightButtonActionPerformed(ActionEvent event) {
         model.resetArcHeightSVF();
-        sample.syncCardSize();
+        model.getSample().syncCardSize();
     }
 
     @FXML
@@ -194,12 +190,12 @@ public class AdditionalController {
 
         arcWidthSpinner.valueProperty().addListener( (v, oldValue, newValue) -> {
             model.setArcWidth(newValue);
-            sample.syncCardSize();
+            model.getSample().syncCardSize();
         });
 
         arcHeightSpinner.valueProperty().addListener( (v, oldValue, newValue) -> {
             model.setArcHeight(newValue);
-            sample.syncCardSize();
+            model.getSample().syncCardSize();
         });
 
         cropCornersCheckBox.setSelected(model.isCropCorners());
@@ -395,7 +391,7 @@ public class AdditionalController {
 
     @FXML
     void closeSettingsButtonActionPerformed(ActionEvent event) {
-        mainController.closeSettingsWindow();
+        model.getController().closeSettingsWindow();
     }
 
 
