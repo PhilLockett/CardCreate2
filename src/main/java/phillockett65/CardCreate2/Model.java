@@ -68,7 +68,7 @@ public class Model {
     public static final int FACE_ID = 4;
 
     private Stage stage;
-    private Controller controller;
+    private PrimaryController controller;
 
     /************************************************************************
      * Support code for the Initialization of the Model.
@@ -100,7 +100,7 @@ public class Model {
     /**
      * Initialization after a base directory has been selected.
      */
-    public void init(Stage mainStage, Controller mainController) {
+    public void init(Stage mainStage, PrimaryController mainController) {
         // System.out.println("init()");
 
         stage = mainStage;
@@ -120,7 +120,7 @@ public class Model {
     }
 
     public Stage getStage() { return stage; }
-    public Controller getController() { return controller; }
+    public PrimaryController getController() { return controller; }
 
     public void rebuildGroup() {
 

@@ -58,7 +58,7 @@ public class App extends Application {
         stage.resizableProperty().setValue(false);
         stage.setScene(scene);
 
-        Controller controller = fxmlLoader.getController();
+        PrimaryController controller = fxmlLoader.getController();
 
         scene.setOnKeyPressed(event -> {
             switch (event.getCode()) {

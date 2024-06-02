@@ -19,7 +19,7 @@
  */
 
 /*
- * SettingsController is a class that is responsible for the controls of the 
+ * AdditionalController is a class that is responsible for the controls of the 
  * additional settings window.
  */
 package phillockett65.CardCreate2;
@@ -38,14 +38,14 @@ import javafx.scene.layout.BorderPane;
 
 import phillockett65.CardCreate2.sample.CardSample;
 
-public class SettingsController {
+public class AdditionalController {
 
 
     /************************************************************************
      * Support code for "Settings" panel. 
      */
 
-    private Controller mainController;
+    private PrimaryController mainController;
     private Model model;
     private CardSample sample;
 
@@ -64,7 +64,7 @@ public class SettingsController {
      * Called by Controller after the stage has been set. Is provided with
      * fundamental references then completes the initialization.
      */
-    public void init(Controller mainController, Model model, CardSample sample) {
+    public void init(PrimaryController mainController, Model model, CardSample sample) {
         this.mainController = mainController;
         this.model = model;
         this.sample = sample;

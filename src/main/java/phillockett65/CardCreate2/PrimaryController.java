@@ -19,7 +19,7 @@
  */
 
 /*
- * Controller is a class that is responsible for centralizing control. It
+ * PrimaryController is a class that is responsible for centralizing control. It
  * creates the Model and CardSample window and provides a callback mechanism.
  */
 package phillockett65.CardCreate2;
@@ -69,7 +69,7 @@ import javafx.stage.Stage;
 import phillockett65.CardCreate2.sample.CardSample;
 import phillockett65.CardCreate2.sample.Item;
 
-public class Controller {
+public class PrimaryController {
 
 
     /************************************************************************
@@ -87,7 +87,7 @@ public class Controller {
      * 
      * Responsible for creating the Model, called by the FXMLLoader().
      */
-    public Controller() {
+    public PrimaryController() {
         // System.out.println("Controller constructed.");
         model = new Model();
     }
@@ -262,7 +262,7 @@ public class Controller {
 
         syncUI();
         if (model.isSettingsWindowLaunched())
-            settingsController.syncUI();
+            additionalController.syncUI();
 
         setStatusMessage("Settings loaded from: " + model.getSettingsFile());
     }
@@ -1208,7 +1208,7 @@ public class Controller {
     @FXML
     private ProgressBar progressBar;
 
-    private SettingsController settingsController;
+    private AdditionalController additionalController;
     private Stage settingsStage;
 
     @FXML
@@ -1269,7 +1269,7 @@ public class Controller {
         model.setSettingsWindowLaunched(true);
         editAdditionalSettingsMenuItem.setSelected(true);
 
-        if (settingsController != null) {
+        if (additionalController != null) {
             settingsStage.show();
 
             return true;
@@ -1289,9 +1289,9 @@ public class Controller {
             settingsStage.setScene(scene);
             settingsStage.setOnCloseRequest(e -> Platform.exit());
 
-            settingsController = fxmlLoader.getController();
-            settingsController.init(this, model, sample);
-            settingsController.syncUI();
+            additionalController = fxmlLoader.getController();
+            additionalController.init(this, model, sample);
+            additionalController.syncUI();
 
             settingsStage.show();
 
