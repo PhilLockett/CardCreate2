@@ -1244,7 +1244,7 @@ public class PrimaryController {
 
 
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("Settings.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("Additional.fxml"));
             Parent root = fxmlLoader.load();
 
             Scene scene = new Scene(root);
