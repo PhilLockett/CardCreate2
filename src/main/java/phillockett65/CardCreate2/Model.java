@@ -833,36 +833,21 @@ public class Model {
     public boolean isAutoCardHeight() { return isMpcCardSize(); }
     public boolean isAutoCorners() { return isMpcCardSize(); }
 
-    public void setPokerCardSize() {
-        cardSize = CardSize.POKER;
+    private void setCardSize(CardSize size) {
+        cardSize = size;
 
         syncCardItemsWithCardSize();
     }
 
-    public void setBridgeCardSize() {
-        cardSize = CardSize.BRIDGE;
-
-        syncCardItemsWithCardSize();
-    }
-
-    public void setFreeCardSize() {
-        cardSize = CardSize.FREE;
-
-        syncCardItemsWithCardSize();
-    }
-
-    public void setMpcCardSize() {
-        cardSize = CardSize.MPC;
-
-        syncCardItemsWithCardSize();
-    }
+    public void setPokerCardSize() { setCardSize(CardSize.POKER); }
+    public void setBridgeCardSize() { setCardSize(CardSize.BRIDGE); }
+    public void setFreeCardSize() { setCardSize(CardSize.FREE); }
+    public void setMpcCardSize() { setCardSize(CardSize.MPC); }
 
     /**
      * @return the user set card width in pixels.
      */
-    public double getUserWidth() {
-        return cardWidthPX;
-    }
+    public double getUserWidth() { return cardWidthPX; }
 
     /**
      * @return the calculated card width in pixels for Poker and Bridge, or 
