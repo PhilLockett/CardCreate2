@@ -32,7 +32,6 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
-import phillockett65.CardCreate2.PrimaryController;
 import phillockett65.CardCreate2.Model;
 
 public class CardSample extends Stage {

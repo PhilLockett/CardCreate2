@@ -291,26 +291,6 @@ public class PrimaryController {
      * Called by Sample when the mouse changes the selected Item.
      */
     public void syncToCurrentCardItem() {
-
-        Item item = model.getCurrentItem();
-        // System.out.println("syncToCurrentCardItem(" + item + ")");
-
-        if (item == Item.INDEX) {
-            indicesRadioButton.setSelected(true);
-        }
-        else if (item == Item.CORNER_PIP) {
-            cornerPipRadioButton.setSelected(true);
-        }
-        else if (item == Item.STANDARD_PIP) {
-            standardPipRadioButton.setSelected(true);
-        }
-        else if (item == Item.FACE) {
-            faceRadioButton.setSelected(true);
-        }
-        else if (item == Item.FACE_PIP) {
-            facePipRadioButton.setSelected(true);
-        }
-
         setSelectCardItemPrompts();
         setSelectedCardItemRadioToCurrent();
     }
