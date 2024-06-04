@@ -172,7 +172,7 @@ public class MainController {
      */
     public void syncUI() {
         // System.out.println("syncUI()");
-        fileLoadMenuItem.setDisable(!model.isSettingsFileExist());
+        syncFileLoadMenuItem();
     }
 
     public void loadSettings() {
