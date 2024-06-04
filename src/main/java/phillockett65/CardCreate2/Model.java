@@ -122,6 +122,7 @@ public class Model {
         primaryController = primaryC;
         additionalController = additionalC;
 
+        // Add watermark to the group first so that it is displayed on the bottom.
         watermarkView = new ImageView();
         group.getChildren().add(watermarkView);
         
@@ -134,9 +135,20 @@ public class Model {
         group.getChildren().add(box);
         group.getChildren().add(handle);
         
-        // primaryController.init(this);
-        // additionalController.init(this);
+        primaryController.init(this);
+        additionalController.init(this);
         sample.init();
+    }
+
+    /**
+     * Synchronise all controls with the model.
+     */
+    public void syncAllUIs() {
+        // System.out.println("syncAllUIs()");
+        mainController.syncUI();
+        primaryController.syncUI();
+        additionalController.syncUI();
+        sample.syncUI();
     }
 
     public Stage getStage() { return stage; }

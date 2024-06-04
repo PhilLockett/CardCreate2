@@ -278,6 +278,12 @@ public class CardSample extends Stage {
 
     }
 
+    public void syncUI() {
+        // System.out.println("syncUI()");
+
+        syncCardSize();
+        syncBackgroundColour();
+    }
 
 
     /************************************************************************

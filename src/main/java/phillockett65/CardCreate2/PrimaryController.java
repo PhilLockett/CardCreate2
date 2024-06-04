@@ -61,7 +61,6 @@ public class PrimaryController {
      */
     public PrimaryController() {
         // System.out.println("Controller constructed.");
-        // model = new Model();
     }
 
     private void setUpImageButton(Button button, String imageFileName)
@@ -124,8 +123,10 @@ public class PrimaryController {
     /**
      * Synchronise all controls with the model.
      */
-    private void syncUI() {
+    public void syncUI() {
         // System.out.println("syncUI()");
+
+        loadButton.setDisable(!model.isSettingsFileExist());
 
         faceChoiceBox.setValue(model.getFaceStyle());
         indexChoiceBox.setValue(model.getIndexStyle());
@@ -135,9 +136,7 @@ public class PrimaryController {
         syncOutputTextField();
 
         setCardSizeRadioState();
-        model.getSample().syncCardSize();
 
-        model.getSample().syncBackgroundColour();
         colourTextField.setText(model.getBackgroundColourString());
         colourPicker.setValue(model.getBackgroundColour());
 
@@ -257,7 +256,6 @@ public class PrimaryController {
     void loadButtonActionPerformed(ActionEvent event) {
         // System.out.println("loadButtonActionPerformed()");
         model.getMainController().loadSettings();
-        syncUI();
     }
 
     @FXML

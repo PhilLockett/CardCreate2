@@ -105,8 +105,6 @@ public class MainController {
         }
 
         model.init(stage, this, primaryTabController, additionalTabController);
-        primaryTabController.init(model);
-        additionalTabController.init(model);
         initializeStatus();
     }
 
@@ -172,26 +170,24 @@ public class MainController {
     /**
      * Synchronise all controls with the model.
      */
-    private void syncUI() {
+    public void syncUI() {
         // System.out.println("syncUI()");
-
-        model.getSample().syncCardSize();
-
-        model.getSample().syncBackgroundColour();
+        fileLoadMenuItem.setDisable(!model.isSettingsFileExist());
     }
 
     public void loadSettings() {
         // System.out.println("loadSettings()");
         DataStore.readData(model);
 
-        syncUI();
-        additionalTabController.syncUI();
+        model.syncAllUIs();
 
         setStatusMessage("Settings loaded from: " + model.getSettingsFile());
     }
 
     public void saveSettings() {
         DataStore.writeData(model);
+
+        model.syncAllUIs();
 
         setStatusMessage("Settings saved as: " + model.getSettingsFile());
     }
