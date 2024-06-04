@@ -24,33 +24,14 @@
  */
 package phillockett65.CardCreate2;
 
-import javafx.application.Platform;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-
-import java.io.File;
-import java.io.IOException;
-import java.util.Optional;
-
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.SnapshotParameters;
-import javafx.scene.canvas.Canvas;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
 import javafx.scene.control.CheckBox;
-import javafx.scene.control.CheckMenuItem;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
-import javafx.scene.control.MenuItem;
-import javafx.scene.control.ProgressBar;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.TextField;
@@ -59,12 +40,7 @@ import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.image.WritableImage;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.paint.Color;
-import javafx.stage.DirectoryChooser;
-import javafx.stage.Stage;
 
 import phillockett65.CardCreate2.sample.Item;
 
@@ -77,8 +53,6 @@ public class PrimaryController {
 
     private Model model;
 
-    @FXML
-    private BorderPane userGUI;
 
     /**
      * Constructor.
@@ -87,7 +61,7 @@ public class PrimaryController {
      */
     public PrimaryController() {
         // System.out.println("Controller constructed.");
-        model = new Model();
+        // model = new Model();
     }
 
     private void setUpImageButton(Button button, String imageFileName)
@@ -115,36 +89,27 @@ public class PrimaryController {
         setUpImageButton(previousCardButton, "icon-left.png");
         setUpImageButton(nextCardButton, "icon-right.png");
         setUpImageButton(nextSuitButton, "icon-down.png");
-        setUpImageButton(settingsButton, "Windows-icon.png");
 
-        initializeMenu();
         initializeInputDirectories();
         initializeGenerate();
         initializeOutputDirectory();
         initializeSampleNavigation();
-        initializeCardSize();
-        initializeBackgroundColour();
         initializeDisplayCardItems();
         initializeSelectCardItem();
-        initializeModifySelectedCardItem();
-        initializeStatus();
     }
 
     /**
      * Called by Application after the stage has been set. Sets up the base 
      * directory (or aborts) then completes the initialization.
      */
-    public void init(Stage stage) {
+    public void init(Model model) {
+        this.model = model;
 
-        userGUI.setDisable(true);
-
-        if ((!model.isValidBaseDirectory()) &&
-            (!selectValidBaseDirectory())) {
-            model.close();
-        }
+        initializeCardSize();
+        initializeBackgroundColour();
+        initializeModifySelectedCardItem();
 
         setInitialBaseDirectory();
-        model.init(stage, this);
         setCurrentCardItemLabelAndTooltips();
         initInputDirectoryChoiceBoxHandlers();
         setCardItemRadioState();
@@ -155,70 +120,6 @@ public class PrimaryController {
     /************************************************************************
      * Support code for "Playing Card Generator" Menu. 
      */
-
-    @FXML
-    private MenuItem fileLoadMenuItem;
-
-    @FXML
-    private CheckMenuItem editAdditionalSettingsMenuItem;
-
-    @FXML
-    private void fileOpenOnAction() {
-        openBaseDirectory();
-    }
-
-    @FXML
-    private void fileLoadOnAction() {
-        loadSettings();
-    }
-
-    @FXML
-    private void fileSaveOnAction() {
-        saveSettings();
-    }
-
-    @FXML
-    private void fileCloseOnAction() {
-        model.close();
-    }
-
-    @FXML
-    private void editAdditionalSettingsOnAction() {
-        if (model.isSettingsWindowLaunched())
-            closeSettingsWindow();
-        else
-            launchSettingsWindow();
-    }
-
-
-    @FXML
-    private void helpAboutOnAction() {
-        Alert alert = new Alert(AlertType.INFORMATION);
-        alert.setTitle("About CardCreate");
-        alert.setHeaderText("CardCreate 2.0");
-        alert.setContentText("CardCreate is a prototype playing card generator.");
-
-        alert.showAndWait();
-    }
-
-    @FXML
-    private void helpHelpOnAction() {
-        Alert alert = new Alert(AlertType.INFORMATION);
-        alert.setTitle("CardCreate Help");
-        alert.setHeaderText("CardCreate User Guide Documentation");
-        alert.setContentText("A complete guide to CardCreate is given in:\n 'Card Generator User Guide.pdf'.");
-
-        alert.showAndWait();
-    }
-
-    private void openBaseDirectory() {
-        if (!selectBaseDirectory()) {
-            if (!selectValidBaseDirectory()) {
-                // Put original base directory back.
-                setBaseDirectory(model.getBaseDirectory());
-            }
-        }
-    }
 
     /**
      * Synchronise all controls with the model.
@@ -249,30 +150,6 @@ public class PrimaryController {
         setCardItemRadioState();
     }
 
-    private void loadSettings() {
-        // System.out.println("loadSettings()");
-        DataStore.readData(model);
-
-        syncUI();
-        if (model.isSettingsWindowLaunched())
-            additionalController.syncUI();
-
-        setStatusMessage("Settings loaded from: " + model.getSettingsFile());
-    }
-
-    private void saveSettings() {
-        DataStore.writeData(model);
-
-        setStatusMessage("Settings saved as: " + model.getSettingsFile());
-    }
-
-    /**
-     * Initialize menu bar.
-     */
-    private void initializeMenu() {
-        fileLoadMenuItem.setDisable(true);
-        editAdditionalSettingsMenuItem.setSelected(false);
-    }
 
 
 
@@ -349,15 +226,12 @@ public class PrimaryController {
 
         syncOutputTextField();
 
-        userGUI.setDisable(false);
+        model.getMainController().setInitialBaseDirectory();
     }
 
 
-    private boolean setBaseDirectory(String base) {
+    public boolean setBaseDirectory(String base) {
         // System.out.println("setBaseDirectory(" + base + ")");
-
-        if (!model.setBaseDirectory(base))
-            return false;
 
         baseDirectoryComboBox.setValue(model.getBaseDirectory());
         faceChoiceBox.setValue(model.getFaceStyle());
@@ -369,59 +243,27 @@ public class PrimaryController {
         return true;
     }
 
-    private boolean selectBaseDirectory() {
-        DirectoryChooser choice = new DirectoryChooser();
-        choice.setInitialDirectory(new File(model.getBaseDirectory()));
-        choice.setTitle("Select Base Directory");
-        File directory = choice.showDialog(model.getStage());
 
-        if (directory != null) {
-            // System.out.println("Selected: " + directory.getAbsolutePath());
-
-            if (setBaseDirectory(directory.getPath()))
-                return true;
-        }
-
-        return false;
-    }
-
-    private boolean selectValidBaseDirectory() {
-
-        do {
-            Alert alert = new Alert(AlertType.CONFIRMATION);
-            alert.setTitle("Do you wish to continue?");
-            alert.setHeaderText("Continue by selecting a valid directory?");
-            alert.setContentText("You need to select a valid directory that contains 'faces',\n'indices' and 'pips' directories.");
-
-            Optional<ButtonType> result = alert.showAndWait();
-
-            if (!result.isPresent() || result.get() != ButtonType.OK)
-                return false;
-
-            selectBaseDirectory();
-        } while (model.isValidBaseDirectory() == false);
-
-        return true;
-    }
 
 
     @FXML
     void baseDirectoryButtonActionPerformed(ActionEvent event) {
         // System.out.println("baseDirectoryButtonActionPerformed()");
 
-        openBaseDirectory();
+        model.getMainController().openBaseDirectory();
     }
 
     @FXML
     void loadButtonActionPerformed(ActionEvent event) {
         // System.out.println("loadButtonActionPerformed()");
-        loadSettings();
+        model.getMainController().loadSettings();
+        syncUI();
     }
 
     @FXML
     void saveButtonActionPerformed(ActionEvent event) {
         // System.out.println("saveButtonActionPerformed()");
-        saveSettings();
+        model.getMainController().saveSettings();
     }
 
     @FXML
@@ -488,131 +330,20 @@ public class PrimaryController {
     @FXML
     private Button generateButton;
 
-    private ObservableList<Canvas> canvasses;
-    private Generate generateTask;
-
-    private ObservableList<Image> images;
-    private Write writeTask;
-
-    private Long progress = 0L;
-
     @FXML
     void generateButtonActionPerformed(ActionEvent event) {
-        invokeGenerateTask();
+        model.getMainController().invokeGenerateTask();
     }
 
-    /**
-     * Step 1: use the Generate task to draw all the cards onto canvasses. 
-     * When completed the valueProperty changed() handler is called.
-     */
-    private void invokeGenerateTask() {
-
-        if (generateTask != null && generateTask.isRunning())
-            return;
-
-        model.setGenerating(true);
-
-        progress = 0L;
-        showProgress();
-
-        generateTask = new Generate(model, canvasses);
-        generateTask.valueProperty().addListener( (v, oldValue, newValue) -> {
-            progress = newValue;
-            Platform.runLater(() -> invokeSaveTask()); 
-        });
-        progressBar.progressProperty().bind(generateTask.progressProperty());
-
-        Thread th = new Thread(generateTask);
-        th.setDaemon(true);
-        th.start();
+    public void disableGenerateButton(boolean state) {
+        generateButton.setDisable(state);
     }
 
-    /**
-     * Step 2: take snapshots of all the canvasses and produce a list of 
-     * images. Must be run from the Application thread.
-     */
-    private void takeSnapshots() {
-        final int width;
-        final int height;
-
-        if (!model.isMpcCardSize()) {
-            width = (int)model.getWidth();
-            height = (int)model.getHeight();
-        } else {
-            final double xOffset = model.getMpcBorderWidth();
-            final double yOffset = model.getMpcBorderHeight();
-
-            width = (int)(model.getWidth() + (xOffset * 2));
-            height = (int)(model.getHeight() + (yOffset * 2));
-        }
-
-        SnapshotParameters parameters = new SnapshotParameters();
-        parameters.setFill(Color.TRANSPARENT);
-
-        final int count = canvasses.size();
-        for (int i = 0; i < count; ++i ) {
-            final Canvas canvas = canvasses.remove(0);
-            WritableImage snapshot = new WritableImage(width, height);
-            try {
-                canvas.snapshot(parameters, snapshot);
-            } catch (IllegalStateException e) {
-                System.out.println("takeSnapshots() - Failed to take snapshot: " + e);
-            }
-
-            images.add(snapshot);
-        }
-
-        ++progress;
-    }
-
-    /**
-     * Step 3: takeSnapshots() then use the Write task to save all the images 
-     * to disc. When completed the valueProperty changed() handler is called.
-     */
-    private void invokeSaveTask() {
-        
-        if (writeTask != null && writeTask.isRunning())
-            return;
-
-        takeSnapshots();
-
-        Image mask = null;
-        if (model.isCropCorners()) {
-            final double width = model.getWidth();
-            final double height = model.getHeight();
-            final double arcWidth = model.getArcWidthPX();
-            final double arcHeight = model.getArcHeightPX();
-            
-            mask = Utils.createMask(width, height, arcWidth, arcHeight);
-        }
-        writeTask = new Write(model, mask, progress, images);
-        writeTask.valueProperty().addListener( (v, oldValue, newValue) -> Platform.runLater(() -> generationFinished()) );
-        progressBar.progressProperty().bind(writeTask.progressProperty());
-
-        Thread th = new Thread(writeTask);
-        th.setDaemon(true);
-        th.start();
-    }
-
-    /**
-     * Step 4: final clean up.
-     */
-    private void generationFinished() {
-        model.setGenerating(false);
-
-        hideProgress();
-        setStatusMessage("Output sent to: " + model.getOutputDirectory());
-        images.clear();
-    }
-
-    /**
-     * Initialize"Generate" panel.
-     */
-    private void initializeGenerate() {
+     /**
+      * Initialize"Generate" panel.
+      */
+      private void initializeGenerate() {
         generateButton.setTooltip(new Tooltip("Generate the card images to the selected output directory"));
-
-        canvasses = FXCollections.observableArrayList();
-        images = FXCollections.observableArrayList();
     }
 
 
@@ -632,7 +363,7 @@ public class PrimaryController {
     void outputTextFieldKeyTyped(KeyEvent event) {
         // System.out.println("outputjTextFieldKeyTyped()" + event.toString());
         model.setOutputName(outputTextField.getText());
-        fileLoadMenuItem.setDisable(!model.isSettingsFileExist());
+        model.getMainController().syncFileLoadMenuItem();
         loadButton.setDisable(!model.isSettingsFileExist());
     }
 
@@ -649,7 +380,7 @@ public class PrimaryController {
 
     private void syncOutputTextField() {
         outputTextField.setText(model.getOutputName());
-        fileLoadMenuItem.setDisable(!model.isSettingsFileExist());
+        model.getMainController().syncFileLoadMenuItem();
         loadButton.setDisable(!model.isSettingsFileExist());
     }
 
@@ -1158,162 +889,6 @@ public class PrimaryController {
             model.setCurrentY(newValue);
         });
 
-    }
-
-
-
-    /************************************************************************
-     * Support code for "Status" panel. 
-     */
-
-    @FXML
-    private Label statusLabel;
-
-    @FXML
-    private Button settingsButton;
-
-    @FXML
-    private ProgressBar progressBar;
-
-    private AdditionalController additionalController;
-    private Stage settingsStage;
-
-    @FXML
-    void settingsButtonActionPerformed(ActionEvent event) {
-        launchSettingsWindow();
-    }
-
-    private void setStatusMessage(String Message) {
-        statusLabel.setText(Message);
-    }
-
-    /**
-     * Show increase size of current card item message on status line.
-     */
-    public void increaseSize() {
-        final String name = model.getCurrentCardItemName();
-        if (!name.equals("")) {
-            setStatusMessage("Click on Sample to increase size of card " + name + ".");
-            model.getSample().setResize(true);
-        }
-    }
-
-    /**
-     * Show decrease size of current card item message on status line.
-     */
-    public void decreaseSize() {
-        final String name = model.getCurrentCardItemName();
-        if (!name.equals("")) {
-            setStatusMessage("Click on Sample to decrease size of card " + name + ".");
-            model.getSample().setResize(true);
-        }
-    }
-
-    /**
-     * Show move sample message.
-     * @param sample true if call originates from Sample, false otherwise.
-     */
-    public void moveSample(boolean sample) {
-        if (sample)
-            setStatusMessage("Use cursor keys to move Sample.");
-        else
-            setStatusMessage("Switch focus to Sample then use cursor keys to move Sample.");
-    }
-
-    /**
-     * Clear status line on key release.
-     */
-    public void release() {
-        setStatusMessage("Ready.");
-        model.getSample().setResize(false);
-    }
-
-    private boolean launchSettingsWindow() {
-        // System.out.println("launchSettingsWindow() " + model.isSettingsWindowLaunched());
-        if (model.isSettingsWindowLaunched())
-            return false;
-
-        model.setSettingsWindowLaunched(true);
-        editAdditionalSettingsMenuItem.setSelected(true);
-
-        if (additionalController != null) {
-            settingsStage.show();
-
-            return true;
-        }
-
-
-        try {
-            FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("Additional.fxml"));
-            Parent root = fxmlLoader.load();
-
-            Scene scene = new Scene(root);
-            scene.getStylesheets().add(App.class.getResource("application.css").toExternalForm());
-
-            settingsStage = new Stage();
-            settingsStage.setTitle("Additional Settings");
-            settingsStage.resizableProperty().setValue(false);
-            settingsStage.setScene(scene);
-            settingsStage.setOnCloseRequest(e -> Platform.exit());
-
-            additionalController = fxmlLoader.getController();
-            additionalController.init(model);
-            additionalController.syncUI();
-
-            settingsStage.show();
-
-        } catch (IOException e) {
-            e.printStackTrace();
-            return false;
-        }
-
-        return true;
-    }
-
-    public boolean closeSettingsWindow() {
-        // System.out.println("closeSettingsWindow() " + model.isSettingsWindowLaunched());
-        if (!model.isSettingsWindowLaunched())
-            return false;
-
-        model.setSettingsWindowLaunched(false);
-        editAdditionalSettingsMenuItem.setSelected(false);
-
-        settingsStage.hide();
-
-        return true;
-    }
-
-
-    /**
-     * Show the progress bar, but also hide the status and disable the 
-     * generate button.
-     */
-    private void showProgress() {
-        generateButton.setDisable(true);
-        statusLabel.setVisible(false);
-        settingsButton.setVisible(false);
-        progressBar.setVisible(true);
-    }
-
-    /**
-     * Hide the progress bar, but also show the status and enable the generate 
-     * button.
-     */
-    private void hideProgress() {
-        generateButton.setDisable(false);
-        statusLabel.setVisible(true);
-        settingsButton.setVisible(true);
-        progressBar.setVisible(false);
-    }
-
-    /**
-     * Initialize "Status" panel.
-     */
-    private void initializeStatus() {
-        setStatusMessage("Ready.");
-        settingsButton.setTooltip(new Tooltip("Launch Additional Configuraton window"));
-
-        hideProgress();
     }
 
 }

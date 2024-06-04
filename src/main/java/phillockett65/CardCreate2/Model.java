@@ -68,7 +68,9 @@ public class Model {
     public static final int FACE_ID = 4;
 
     private Stage stage;
-    private PrimaryController controller;
+    private MainController mainController;
+    private PrimaryController primaryController;
+    private AdditionalController additionalController;
     private CardSample sample;
 
 
@@ -77,7 +79,7 @@ public class Model {
      */
 
     /**
-     * Default Constructor, called by the Controller.
+     * Default Constructor, called by the MainController.
      */
     public Model() {
         // System.out.println("Model constructed.");
@@ -108,30 +110,39 @@ public class Model {
     /**
      * Initialization after a base directory has been selected.
      */
-    public void init(Stage mainStage, PrimaryController mainController) {
+    public void init(Stage mainStage, 
+        MainController mainC,
+        PrimaryController primaryC,
+        AdditionalController additionalC) {
         // System.out.println("init()");
 
         sample = new CardSample(this, "Sample");
         stage = mainStage;
-        controller = mainController;
+        mainController = mainC;
+        primaryController = primaryC;
+        additionalController = additionalC;
 
         watermarkView = new ImageView();
         group.getChildren().add(watermarkView);
         
         setWatermark();
-
+        
         initializeCardItemPayloads();
         makeCardsDirectory();
-
+        
         // Add handle to the group last so that it is displayed on top.
         group.getChildren().add(box);
         group.getChildren().add(handle);
-
+        
+        // primaryController.init(this);
+        // additionalController.init(this);
         sample.init();
     }
 
     public Stage getStage() { return stage; }
-    public PrimaryController getController() { return controller; }
+    public MainController getMainController() { return mainController; }
+    public PrimaryController getPrimaryController() { return primaryController; }
+    public AdditionalController getAdditionalController() { return additionalController; }
     public CardSample getSample() { return sample; }
 
     public void rebuildGroup() {

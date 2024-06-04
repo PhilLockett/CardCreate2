@@ -109,7 +109,7 @@ public class CardSample extends Stage {
             }
             else {
                 model.setNextPayload();
-                model.getController().syncToCurrentCardItem();
+                model.getPrimaryController().syncToCurrentCardItem();
             }
         });
 
@@ -144,20 +144,20 @@ public class CardSample extends Stage {
         scene.setOnKeyPressed(event -> {
             switch (event.getCode()) {
             case SHIFT:
-                model.getController().moveSample(true);
+                model.getMainController().moveSample(true);
                 break;
 
             case ALT:
-                model.getController().decreaseSize();
+                model.getMainController().decreaseSize();
                 break;
 
             case CONTROL: 
-                model.getController().increaseSize();
+                model.getMainController().increaseSize();
                 break;
 
             case TAB: 
                 model.setNextPayload();
-                model.getController().syncToCurrentCardItem();
+                model.getPrimaryController().syncToCurrentCardItem();
                 break;
 
             case UP: 
@@ -194,7 +194,7 @@ public class CardSample extends Stage {
         });
 
         scene.setOnKeyReleased(event -> {
-            model.getController().release();
+            model.getMainController().release();
         });
 
     }

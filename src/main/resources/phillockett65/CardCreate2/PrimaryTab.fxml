@@ -1,0 +1,265 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.ColorPicker?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.Spinner?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.control.ToggleButton?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="518.0" prefWidth="752.0" stylesheets="@application.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="phillockett65.CardCreate2.PrimaryController">
+   <bottom>
+      <HBox prefHeight="95.0" prefWidth="752.0" spacing="26.0">
+         <children>
+            <TitledPane collapsible="false" prefHeight="155.0" prefWidth="181.0" text="Display Card Items">
+               <content>
+                  <VBox prefHeight="129.0" prefWidth="177.0" spacing="4.0">
+                     <children>
+                        <CheckBox fx:id="indicesCheckBox" mnemonicParsing="false" onAction="#indicesCheckBoxActionPerformed" selected="true" text="Display Index" />
+                        <CheckBox fx:id="cornerPipCheckBox" layoutX="21.0" layoutY="21.0" mnemonicParsing="false" onAction="#cornerPipCheckBoxActionPerformed" selected="true" text="Display Corner Pip" />
+                        <CheckBox fx:id="standardPipCheckBox" layoutX="21.0" layoutY="46.0" mnemonicParsing="false" onAction="#standardPipCheckBoxActionPerformed" selected="true" text="Display Standard Pip" />
+                        <CheckBox fx:id="facePipCheckBox" layoutX="21.0" layoutY="97.0" mnemonicParsing="false" onAction="#facePipCheckBoxActionPerformed" selected="true" text="Display Face Pip" />
+                        <CheckBox fx:id="faceCheckBox" layoutX="21.0" layoutY="71.0" mnemonicParsing="false" onAction="#faceCheckBoxActionPerformed" selected="true" text="Display Face Image" />
+                     </children>
+                  </VBox>
+               </content>
+            </TitledPane>
+            <TitledPane collapsible="false" layoutX="10.0" layoutY="10.0" prefHeight="155.0" prefWidth="184.0" text="Select Card Item to Modify">
+               <content>
+                  <VBox prefHeight="174.0" prefWidth="177.0" spacing="4.0">
+                     <children>
+                        <RadioButton fx:id="indicesRadioButton" mnemonicParsing="false" onAction="#cardItemRadioButtonActionPerformed" selected="true" text="Change Index">
+                           <toggleGroup>
+                              <ToggleGroup fx:id="cardItem" />
+                           </toggleGroup></RadioButton>
+                        <RadioButton fx:id="cornerPipRadioButton" layoutX="19.0" layoutY="19.0" mnemonicParsing="false" onAction="#cardItemRadioButtonActionPerformed" text="Change Corner Pip" toggleGroup="$cardItem" />
+                        <RadioButton fx:id="standardPipRadioButton" layoutX="19.0" layoutY="37.0" mnemonicParsing="false" onAction="#cardItemRadioButtonActionPerformed" text="Change Standard Pip" toggleGroup="$cardItem" />
+                        <RadioButton fx:id="facePipRadioButton" layoutX="19.0" layoutY="71.0" mnemonicParsing="false" onAction="#cardItemRadioButtonActionPerformed" text="Change Face Pip" toggleGroup="$cardItem" />
+                        <RadioButton fx:id="faceRadioButton" layoutX="19.0" layoutY="54.0" mnemonicParsing="false" onAction="#cardItemRadioButtonActionPerformed" text="Change Face Border" toggleGroup="$cardItem" />
+                     </children>
+                  </VBox>
+               </content>
+            </TitledPane>
+            <TitledPane collapsible="false" layoutX="10.0" layoutY="10.0" prefHeight="155.0" prefWidth="319.0" text="Modify Selected Card Item (%)">
+               <content>
+                  <VBox prefHeight="143.0" prefWidth="284.0" spacing="8.0">
+                     <children>
+                        <GridPane hgap="4.0" vgap="4.0">
+                           <columnConstraints>
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="146.0" minWidth="10.0" prefWidth="146.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="148.99998474121094" minWidth="10.0" prefWidth="87.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="96.3333740234375" minWidth="10.0" prefWidth="54.0" />
+                           </columnConstraints>
+                           <rowConstraints>
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                           </rowConstraints>
+                           <children>
+                              <Button fx:id="itemHeightButton" mnemonicParsing="false" onAction="#itemHeightButtonActionPerformed" text="Reset" GridPane.columnIndex="2" />
+                              <Button fx:id="itemCentreXButton" mnemonicParsing="false" onAction="#itemCentreXButtonActionPerformed" text="Reset" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                              <Button fx:id="itemCentreYButton" mnemonicParsing="false" onAction="#itemCentreYButtonActionPerformed" text="Reset" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                              <Spinner fx:id="itemHeightSpinner" GridPane.columnIndex="1" />
+                              <Spinner fx:id="itemCentreXSpinner" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                              <Spinner fx:id="itemCentreYSpinner" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                              <Label fx:id="itemHeightLabel" text="Index Height (%):" GridPane.halignment="RIGHT" />
+                              <Label fx:id="itemCentreXLabel" text="Index X Centre (%):" GridPane.halignment="RIGHT" GridPane.rowIndex="1" />
+                              <Label fx:id="itemCentreYLabel" text="Index Y Centre (%):" GridPane.halignment="RIGHT" GridPane.rowIndex="2" />
+                           </children>
+                        </GridPane>
+                        <HBox spacing="10.0">
+                           <children>
+                              <CheckBox fx:id="keepAspectRatioCheckBox" mnemonicParsing="false" onAction="#keepAspectRatioCheckBoxActionPerformed" selected="true" text="Keep Image Aspect Ratio" />
+                           </children>
+                        </HBox>
+                     </children>
+                  </VBox>
+               </content>
+            </TitledPane>
+         </children>
+         <padding>
+            <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+         </padding>
+      </HBox>
+   </bottom>
+   <top>
+      <HBox prefHeight="145.0" spacing="8.0">
+         <children>
+            <TitledPane animated="false" collapsible="false" prefHeight="112.0" prefWidth="605.0" text="Input Directories">
+               <content>
+                  <VBox prefHeight="200.0" prefWidth="100.0" spacing="9.0">
+                     <children>
+                        <HBox prefHeight="100.0" prefWidth="200.0" spacing="4.0">
+                           <children>
+                              <Label fx:id="baseDirectoryLabel" text="Base:" />
+                              <ComboBox fx:id="baseDirectoryComboBox" onAction="#baseDirectoryComboBoxActionPerformed" prefHeight="25.0" prefWidth="420.0" />
+                              <Button fx:id="baseDirectoryButton" mnemonicParsing="false" onAction="#baseDirectoryButtonActionPerformed" text="Browse..." />
+                              <Region HBox.hgrow="ALWAYS" />
+                              <Button fx:id="loadButton" mnemonicParsing="false" onAction="#loadButtonActionPerformed" text="Load" />
+                           </children>
+                           <padding>
+                              <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
+                           </padding>
+                        </HBox>
+                        <HBox prefHeight="100.0" prefWidth="200.0" spacing="4.0">
+                           <children>
+                              <Label fx:id="faceLabel" text="Face:" />
+                              <ChoiceBox fx:id="faceChoiceBox" prefWidth="140.0" />
+                              <Label fx:id="indexLabel" text="Index:" />
+                              <ChoiceBox fx:id="indexChoiceBox" prefWidth="140.0" />
+                              <Label fx:id="pipLabel" text="Pip:" />
+                              <ChoiceBox fx:id="pipChoiceBox" prefWidth="140.0" />
+                              <Region HBox.hgrow="ALWAYS" />
+                              <Button fx:id="saveButton" mnemonicParsing="false" onAction="#saveButtonActionPerformed" text="Save" />
+                           </children>
+                           <padding>
+                              <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
+                           </padding>
+                        </HBox>
+                     </children>
+                  </VBox>
+               </content>
+            </TitledPane>
+            <Region HBox.hgrow="ALWAYS" />
+            <TitledPane collapsible="false" prefHeight="123.0" prefWidth="115.0" text="Generate">
+               <content>
+                  <VBox alignment="CENTER">
+                     <children>
+                        <Button fx:id="generateButton" contentDisplay="GRAPHIC_ONLY" graphicTextGap="0.0" mnemonicParsing="false" onAction="#generateButtonActionPerformed" styleClass="imageButton" text="G" />
+                     </children>
+                  </VBox>
+               </content>
+            </TitledPane>
+         </children>
+         <padding>
+            <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+         </padding>
+      </HBox>
+   </top>
+   <right>
+            <TitledPane animated="false" collapsible="false" text="Sample Navigation">
+               <content>
+                  <GridPane prefHeight="164.0" prefWidth="145.0">
+                    <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                     <children>
+                        <Button fx:id="previousCardButton" contentDisplay="GRAPHIC_ONLY" graphicTextGap="0.0" mnemonicParsing="false" onAction="#previousCardButtonActionPerformed" styleClass="imageButton" text="L" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+                        <Button fx:id="nextCardButton" contentDisplay="GRAPHIC_ONLY" graphicTextGap="0.0" mnemonicParsing="false" onAction="#nextCardButtonActionPerformed" styleClass="imageButton" text="R" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+                        <Button fx:id="previousSuitButton" contentDisplay="GRAPHIC_ONLY" graphicTextGap="0.0" mnemonicParsing="false" onAction="#previousSuitButtonActionPerformed" styleClass="imageButton" text="U" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+                        <Button fx:id="nextSuitButton" contentDisplay="GRAPHIC_ONLY" graphicTextGap="0.0" mnemonicParsing="false" onAction="#nextSuitButtonActionPerformed" styleClass="imageButton" text="D" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
+                     </children>
+                  </GridPane>
+               </content>
+         <BorderPane.margin>
+            <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+         </BorderPane.margin>
+            </TitledPane>
+   </right>
+   <left>
+      <VBox prefHeight="195.0" prefWidth="580.0" spacing="8.0" BorderPane.alignment="CENTER">
+         <children>
+            <HBox spacing="8.0">
+               <children>
+                  <TitledPane animated="false" collapsible="false" text="Output Directory">
+                    <content>
+                        <HBox spacing="8.0">
+                           <padding>
+                              <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+                           </padding>
+                           <children>
+                              <TextField fx:id="outputTextField" editable="false" onKeyTyped="#outputTextFieldKeyTyped" />
+                              <ToggleButton fx:id="outputToggleButton" mnemonicParsing="false" onAction="#outputToggleButtonActionPerformed" text="Manual" />
+                           </children>
+                        </HBox>
+                    </content>
+                  </TitledPane>
+                  <Region HBox.hgrow="ALWAYS" />
+                  <TitledPane collapsible="false" text="Background Colour">
+                     <content>
+                        <HBox spacing="8.0">
+                           <children>
+                              <TextField fx:id="colourTextField" editable="false" prefHeight="25.0" prefWidth="140.0" />
+                              <ColorPicker fx:id="colourPicker" onAction="#colourPickerActionPerformed" />
+                           </children>
+                           <padding>
+                              <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+                           </padding>
+                        </HBox>
+                     </content>
+                  </TitledPane>
+               </children>
+            </HBox>
+            <TitledPane animated="false" collapsible="false" prefHeight="103.0" prefWidth="583.0" text="Card Size">
+               <content>
+                  <HBox prefHeight="78.0" prefWidth="559.0" spacing="8.0">
+                     <children>
+                        <VBox prefHeight="200.0" prefWidth="60.0" spacing="4.0">
+                           <children>
+                              <RadioButton fx:id="pokerRadioButton" mnemonicParsing="false" onAction="#cardSizeRadioButtonActionPerformed" selected="true" text="Poker">
+                                 <toggleGroup>
+                                    <ToggleGroup fx:id="cardSize" />
+                                 </toggleGroup></RadioButton>
+                              <RadioButton fx:id="bridgeRadioButton" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#cardSizeRadioButtonActionPerformed" text="Bridge" toggleGroup="$cardSize" />
+                              <RadioButton fx:id="freeRadioButton" layoutX="10.0" layoutY="27.0" mnemonicParsing="false" onAction="#cardSizeRadioButtonActionPerformed" text="Free" toggleGroup="$cardSize" />
+                           </children>
+                        </VBox>
+                        <VBox prefHeight="200.0" prefWidth="100.0">
+                           <children>
+                              <RadioButton fx:id="mpcRadioButton" mnemonicParsing="false" onAction="#cardSizeRadioButtonActionPerformed" text="MPC" toggleGroup="$cardSize" />
+                           </children>
+                        </VBox>
+                        <GridPane hgap="3.0" prefHeight="60.0" prefWidth="343.0" vgap="3.0">
+                          <columnConstraints>
+                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="191.99998474121094" minWidth="10.0" prefWidth="188.66661071777344" />
+                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="123.0" minWidth="10.0" prefWidth="87.00002034505209" />
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="86.3333740234375" minWidth="10.0" prefWidth="57.66664632161462" />
+                          </columnConstraints>
+                          <rowConstraints>
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                          </rowConstraints>
+                           <children>
+                              <Label fx:id="widthLabel" disable="true" text="Card width (pixels):" GridPane.halignment="RIGHT" />
+                              <Label fx:id="heightLabel" text="Card height (pixels):" GridPane.halignment="RIGHT" GridPane.rowIndex="1" />
+                              <Button fx:id="widthButton" disable="true" mnemonicParsing="false" onAction="#widthButtonActionPerformed" text="Reset" GridPane.columnIndex="2" />
+                              <Button fx:id="heightButton" mnemonicParsing="false" onAction="#heightButtonActionPerformed" text="Reset" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                              <Spinner fx:id="widthSpinner" disable="true" GridPane.columnIndex="1" />
+                              <Spinner fx:id="heightSpinner" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                           </children>
+                        </GridPane>
+                     </children>
+                     <padding>
+                        <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+                     </padding>
+                  </HBox>
+               </content>
+            </TitledPane>
+         </children>
+         <padding>
+            <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+         </padding>
+      </VBox>
+   </left>
+</BorderPane>

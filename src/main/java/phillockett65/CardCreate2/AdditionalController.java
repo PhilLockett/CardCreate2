@@ -71,7 +71,6 @@ public class AdditionalController {
         initializeModifySelectedCardItem();
         initializeCardItemPriority();
         initializeJokers();
-        initializeStatus();
     }
 
     /**
@@ -380,26 +379,6 @@ public class AdditionalController {
         borderlessCheckBox.setSelected(model.isBorderlessJokers());
 
         borderlessCheckBox.setTooltip(new Tooltip("Don't use borders on Joker images"));
-    }
-
-    /************************************************************************
-     * Support code for "Status" panel. 
-     */
-
-    @FXML
-    private Button closeSettingsButton;
-
-    @FXML
-    void closeSettingsButtonActionPerformed(ActionEvent event) {
-        model.getController().closeSettingsWindow();
-    }
-
-
-    /**
-     * Initialize "Status" panel.
-     */
-    private void initializeStatus() {
-        closeSettingsButton.setTooltip(new Tooltip("Close Additional Configuraton window"));
     }
 
 }
