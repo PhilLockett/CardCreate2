@@ -7,7 +7,6 @@
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.Spinner?>
 <?import javafx.scene.control.TitledPane?>
-<?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
@@ -15,187 +14,186 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane fx:id="settingsGUI" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="460.0" prefWidth="600.0" stylesheets="@application.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="phillockett65.CardCreate2.AdditionalController">
-   <top>
-      <HBox spacing="8.0" BorderPane.alignment="CENTER">
-         <padding>
-            <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
-         </padding>
-         <children>
-            <TitledPane animated="false" collapsible="false" text="Card Corners and Cropping">
-               <content>
-                  <HBox spacing="8.0">
+
+<VBox spacing="8.0" stylesheets="@application.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="phillockett65.CardCreate2.AdditionalController">
+   <children>
+      <TitledPane animated="false" collapsible="false" text="Card Corners and Cropping">
+         <content>
+            <HBox>
+               <children>
+                  <GridPane hgap="4.0" vgap="4.0">
+                    <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="229.59998779296876" minWidth="10.0" prefWidth="208.00003662109376" />
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="186.39997558593748" minWidth="10.0" prefWidth="170.3999755859375" />
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="123.0" minWidth="10.0" prefWidth="88.80002441406248" />
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="86.3333740234375" minWidth="10.0" prefWidth="52.00000000000006" />
+                    </columnConstraints>
+                    <rowConstraints>
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
                      <children>
-                        <VBox spacing="16.0">
+                        <Label fx:id="arcWidthLabel" disable="true" text="Corner Radius Arc Width (%)" GridPane.columnIndex="1" GridPane.halignment="RIGHT">
+                           <GridPane.margin>
+                              <Insets />
+                           </GridPane.margin>
+                           <padding>
+                              <Insets left="16.0" />
+                           </padding>
+                        </Label>
+                        <Label fx:id="arcHeightLabel" text="Corner Radius (%)" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="1">
+                           <GridPane.margin>
+                              <Insets />
+                           </GridPane.margin>
+                           <padding>
+                              <Insets left="16.0" />
+                           </padding>
+                        </Label>
+                        <Button fx:id="arcWidthButton" disable="true" mnemonicParsing="false" onAction="#arcWidthButtonActionPerformed" text="Reset" GridPane.columnIndex="3" />
+                        <Button fx:id="arcHeightButton" mnemonicParsing="false" onAction="#arcHeightButtonActionPerformed" text="Reset" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+                        <Spinner fx:id="arcWidthSpinner" disable="true" GridPane.columnIndex="2" />
+                        <Spinner fx:id="arcHeightSpinner" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                        <CheckBox fx:id="independentRadiiCheckBox" mnemonicParsing="false" onAction="#independentRadiiCheckBoxActionPerformed" text="Set Corner Radii Independently">
+                           <padding>
+                              <Insets right="16.0" />
+                           </padding>
+                        </CheckBox>
+                        <CheckBox fx:id="cropCornersCheckBox" mnemonicParsing="false" onAction="#cropCornersCheckBoxActionPerformed" text="Crop Image Corners" GridPane.rowIndex="1">
+                           <padding>
+                              <Insets right="16.0" />
+                           </padding>
+                        </CheckBox>
+                     </children>
+                     <HBox.margin>
+                        <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+                     </HBox.margin>
+                  </GridPane>
+               </children>
+            </HBox>
+         </content>
+         <VBox.margin>
+            <Insets />
+         </VBox.margin>
+      </TitledPane>
+      <HBox spacing="8.0">
+         <children>
+            <VBox spacing="8.0">
+               <children>
+                  <TitledPane collapsible="false" text="Modify Selected Card Item">
+                     <content>
+                        <VBox spacing="8.0">
                            <children>
-                              <CheckBox fx:id="independentRadiiCheckBox" mnemonicParsing="false" onAction="#independentRadiiCheckBoxActionPerformed" text="Set Corner Radii Independently">
+                              <CheckBox fx:id="lockXCheckBox" mnemonicParsing="false" onAction="#lockXCheckBoxActionPerformed" text="Lock X Coordinate of Index and Corner Pip Together">
                                  <VBox.margin>
                                     <Insets />
                                  </VBox.margin>
                                  <padding>
                                     <Insets right="16.0" />
-                                 </padding></CheckBox>
-                              <CheckBox fx:id="cropCornersCheckBox" mnemonicParsing="false" onAction="#cropCornersCheckBoxActionPerformed" text="Crop Image Corners">
+                                 </padding>
+                              </CheckBox>
+                              <CheckBox fx:id="lockYCheckBox" mnemonicParsing="false" onAction="#lockYCheckBoxActionPerformed" text="Lock Y Separation of Index and Corner Pip">
+                                 <VBox.margin>
+                                    <Insets />
+                                 </VBox.margin>
+                                 <padding>
+                                    <Insets right="16.0" />
+                                 </padding>
+                              </CheckBox>
+                              <CheckBox fx:id="leftHandedCheckBox" mnemonicParsing="false" onAction="#leftHandedCheckBoxActionPerformed" text="Left-Handed Index and Corner Pips">
+                                 <VBox.margin>
+                                    <Insets />
+                                 </VBox.margin>
+                                 <padding>
+                                    <Insets right="16.0" />
+                                 </padding>
+                              </CheckBox>
+                              <CheckBox fx:id="showGuideBoxCheckBox" mnemonicParsing="false" onAction="#showGuideBoxCheckBoxActionPerformed" text="Show Guide Box">
+                                 <VBox.margin>
+                                    <Insets />
+                                 </VBox.margin>
+                                 <padding>
+                                    <Insets right="16.0" top="10.0" />
+                                 </padding>
+                              </CheckBox>
+                           </children>
+                        </VBox>
+                     </content>
+                  </TitledPane>
+                  <TitledPane collapsible="false" text="Display Watermark">
+                     <content>
+                        <VBox spacing="8.0">
+                           <children>
+                              <CheckBox fx:id="courtWatermarkCheckBox" mnemonicParsing="false" onAction="#courtWatermarkCheckBoxActionPerformed" selected="true" text="Display on Court Cards">
+                                 <VBox.margin>
+                                    <Insets />
+                                 </VBox.margin>
+                                 <padding>
+                                    <Insets right="16.0" />
+                                 </padding>
+                              </CheckBox>
+                              <CheckBox fx:id="imageWatermarkCheckBox" mnemonicParsing="false" onAction="#imageWatermarkCheckBoxActionPerformed" selected="true" text="Display on Image Cards">
+                                 <VBox.margin>
+                                    <Insets />
+                                 </VBox.margin>
+                                 <padding>
+                                    <Insets right="16.0" />
+                                 </padding>
+                              </CheckBox>
+                              <CheckBox fx:id="numberWatermarkCheckBox" mnemonicParsing="false" onAction="#numberWatermarkCheckBoxActionPerformed" selected="true" text="Display on Number Cards">
+                                 <VBox.margin>
+                                    <Insets />
+                                 </VBox.margin>
                                  <padding>
                                     <Insets right="16.0" />
                                  </padding>
                               </CheckBox>
                            </children>
                         </VBox>
-                        <GridPane hgap="4.0" vgap="4.0">
-                          <columnConstraints>
-                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="170.6666259765625" minWidth="10.0" prefWidth="170.6666259765625" />
-                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="123.0" minWidth="10.0" prefWidth="88.66670735677084" />
-                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="86.3333740234375" minWidth="10.0" prefWidth="82.33333333333331" />
-                          </columnConstraints>
-                          <rowConstraints>
-                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                          </rowConstraints>
+                     </content>
+                  </TitledPane>
+               </children>
+            </VBox>
+            <VBox spacing="8.0">
+               <children>
+                  <TitledPane animated="false" collapsible="false" text="Card Item Priority">
+                    <content>
+                        <VBox spacing="8.0">
                            <children>
-                              <Label fx:id="arcWidthLabel" disable="true" text="Corner Radius Arc Width (%)" GridPane.halignment="RIGHT">
-                                 <GridPane.margin>
-                                    <Insets />
-                                 </GridPane.margin>
-                                 <padding>
-                                    <Insets left="16.0" />
-                                 </padding></Label>
-                              <Label fx:id="arcHeightLabel" text="Corner Radius (%)" GridPane.halignment="RIGHT" GridPane.rowIndex="1">
-                                 <GridPane.margin>
-                                    <Insets />
-                                 </GridPane.margin>
-                                 <padding>
-                                    <Insets left="16.0" />
-                                 </padding></Label>
-                              <Button fx:id="arcWidthButton" disable="true" mnemonicParsing="false" onAction="#arcWidthButtonActionPerformed" text="Reset" GridPane.columnIndex="2" />
-                              <Button fx:id="arcHeightButton" mnemonicParsing="false" onAction="#arcHeightButtonActionPerformed" text="Reset" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-                              <Spinner fx:id="arcWidthSpinner" disable="true" GridPane.columnIndex="1" />
-                              <Spinner fx:id="arcHeightSpinner" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                              <ListView fx:id="cardItemListView" prefHeight="121.0" prefWidth="200.0" />
+                              <HBox spacing="4.0">
+                                 <children>
+                                    <Button fx:id="upItemButton" mnemonicParsing="false" onAction="#upItemButtonActionPerformed" text="Up" />
+                                    <Button fx:id="downItemButton" mnemonicParsing="false" onAction="#downItemButtonActionPerformed" text="Down" />
+                                    <Region HBox.hgrow="ALWAYS" />
+                                    <Button fx:id="priorityResetButton" mnemonicParsing="false" onAction="#priorityResetButtonActionPerformed" text="Reset" />
+                                 </children>
+                              </HBox>
                            </children>
-                        </GridPane>
-                     </children>
-                     <padding>
-                        <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
-                     </padding>
-                  </HBox>
-               </content>
-            </TitledPane>
+                        </VBox>
+                    </content>
+                  </TitledPane>
+                  <TitledPane animated="false" collapsible="false" text="Jokers">
+                    <content>
+                        <VBox>
+                           <children>
+                              <CheckBox fx:id="borderlessCheckBox" mnemonicParsing="false" onAction="#borderlessCheckBoxActionPerformed" text="Borderless Images">
+                                 <VBox.margin>
+                                    <Insets />
+                                 </VBox.margin>
+                                 <padding>
+                                    <Insets right="16.0" />
+                                 </padding>
+                              </CheckBox>
+                           </children>
+                        </VBox>
+                    </content>
+                  </TitledPane>
+               </children>
+            </VBox>
          </children>
       </HBox>
-   </top>
-   <right>
-      <VBox spacing="8.0" BorderPane.alignment="CENTER">
-         <children>
-            <TitledPane animated="false" collapsible="false" text="Card Item Priority">
-              <content>
-                  <VBox spacing="8.0">
-                     <children>
-                        <ListView fx:id="cardItemListView" prefHeight="121.0" prefWidth="200.0" />
-                        <HBox spacing="4.0">
-                           <children>
-                              <Button fx:id="upItemButton" mnemonicParsing="false" onAction="#upItemButtonActionPerformed" text="Up" />
-                              <Button fx:id="downItemButton" mnemonicParsing="false" onAction="#downItemButtonActionPerformed" text="Down" />
-                              <Region HBox.hgrow="ALWAYS" />
-                              <Button fx:id="priorityResetButton" mnemonicParsing="false" onAction="#priorityResetButtonActionPerformed" text="Reset" />
-                           </children>
-                        </HBox>
-                     </children>
-                  </VBox>
-              </content>
-            </TitledPane>
-            <TitledPane animated="false" collapsible="false" text="Jokers">
-              <content>
-                  <VBox>
-                     <children>
-                        <CheckBox fx:id="borderlessCheckBox" mnemonicParsing="false" onAction="#borderlessCheckBoxActionPerformed" text="Borderless Images">
-                           <VBox.margin>
-                              <Insets />
-                           </VBox.margin>
-                           <padding>
-                              <Insets right="16.0" />
-                           </padding></CheckBox>
-                     </children>
-                  </VBox>
-              </content>
-            </TitledPane>
-         </children>
-         <padding>
-            <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
-         </padding>
-      </VBox>
-   </right>
-   <left>
-      <VBox spacing="8.0" BorderPane.alignment="CENTER">
-         <padding>
-            <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
-         </padding>
-         <children>
-            <TitledPane collapsible="false" text="Modify Selected Card Item">
-               <content>
-                  <VBox spacing="8.0">
-                     <children>
-                        <CheckBox fx:id="lockXCheckBox" mnemonicParsing="false" onAction="#lockXCheckBoxActionPerformed" text="Lock X Coordinate of Index and Corner Pip Together">
-                           <VBox.margin>
-                              <Insets />
-                           </VBox.margin>
-                           <padding>
-                              <Insets right="16.0" />
-                           </padding></CheckBox>
-                        <CheckBox fx:id="lockYCheckBox" mnemonicParsing="false" onAction="#lockYCheckBoxActionPerformed" text="Lock Y Separation of Index and Corner Pip">
-                           <VBox.margin>
-                              <Insets />
-                           </VBox.margin>
-                           <padding>
-                              <Insets right="16.0" />
-                           </padding></CheckBox>
-                        <CheckBox fx:id="leftHandedCheckBox" mnemonicParsing="false" onAction="#leftHandedCheckBoxActionPerformed" text="Left-Handed Index and Corner Pips">
-                           <VBox.margin>
-                              <Insets />
-                           </VBox.margin>
-                           <padding>
-                              <Insets right="16.0" />
-                           </padding></CheckBox>
-                        <CheckBox fx:id="showGuideBoxCheckBox" mnemonicParsing="false" onAction="#showGuideBoxCheckBoxActionPerformed" text="Show Guide Box">
-                           <VBox.margin>
-                              <Insets />
-                           </VBox.margin>
-                           <padding>
-                              <Insets right="16.0" top="10.0" />
-                           </padding></CheckBox>
-                     </children>
-                  </VBox>
-               </content>
-            </TitledPane>
-            <TitledPane collapsible="false" text="Display Watermark">
-               <content>
-                  <VBox spacing="8.0">
-                     <children>
-                        <CheckBox fx:id="courtWatermarkCheckBox" mnemonicParsing="false" onAction="#courtWatermarkCheckBoxActionPerformed" selected="true" text="Display on Court Cards">
-                           <VBox.margin>
-                              <Insets />
-                           </VBox.margin>
-                           <padding>
-                              <Insets right="16.0" />
-                           </padding></CheckBox>
-                        <CheckBox fx:id="imageWatermarkCheckBox" mnemonicParsing="false" onAction="#imageWatermarkCheckBoxActionPerformed" selected="true" text="Display on Image Cards">
-                           <VBox.margin>
-                              <Insets />
-                           </VBox.margin>
-                           <padding>
-                              <Insets right="16.0" />
-                           </padding></CheckBox>
-                        <CheckBox fx:id="numberWatermarkCheckBox" mnemonicParsing="false" onAction="#numberWatermarkCheckBoxActionPerformed" selected="true" text="Display on Number Cards">
-                           <VBox.margin>
-                              <Insets />
-                           </VBox.margin>
-                           <padding>
-                              <Insets right="16.0" />
-                           </padding></CheckBox>
-                     </children>
-                  </VBox>
-               </content>
-            </TitledPane>
-         </children>
-      </VBox>
-   </left>
-</BorderPane>
+   </children>
+   <padding>
+      <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+   </padding>
+</VBox>
