@@ -57,7 +57,7 @@ import phillockett65.CardCreate2.sample.QuadPayload;
 
 public class Model {
 
-    private final static String DATAFILE = "Settings.dat";
+    private final static String DATAFILE = "x_Settings.dat";
 
     private final String[] cardItems = { "Index", "Corner Pip", "Standard Pip", "Face Pip", "Face Image" };
 
