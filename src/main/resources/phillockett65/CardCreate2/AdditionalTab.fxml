@@ -14,8 +14,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-
-<VBox spacing="8.0" stylesheets="@application.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="phillockett65.CardCreate2.AdditionalController">
+<VBox spacing="4.0" stylesheets="@application.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="phillockett65.CardCreate2.AdditionalController">
    <children>
       <TitledPane animated="false" collapsible="false" text="Card Corners and Cropping">
          <content>
@@ -33,6 +32,16 @@
                       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                      <children>
+                        <CheckBox fx:id="independentRadiiCheckBox" mnemonicParsing="false" onAction="#independentRadiiCheckBoxActionPerformed" text="Set Corner Radii Independently">
+                           <padding>
+                              <Insets right="16.0" />
+                           </padding>
+                        </CheckBox>
+                        <CheckBox fx:id="cropCornersCheckBox" mnemonicParsing="false" onAction="#cropCornersCheckBoxActionPerformed" text="Crop Image Corners" GridPane.rowIndex="1">
+                           <padding>
+                              <Insets right="16.0" />
+                           </padding>
+                        </CheckBox>
                         <Label fx:id="arcWidthLabel" disable="true" text="Corner Radius Arc Width (%)" GridPane.columnIndex="1" GridPane.halignment="RIGHT">
                            <GridPane.margin>
                               <Insets />
@@ -49,23 +58,13 @@
                               <Insets left="16.0" />
                            </padding>
                         </Label>
-                        <Button fx:id="arcWidthButton" disable="true" mnemonicParsing="false" onAction="#arcWidthButtonActionPerformed" text="Reset" GridPane.columnIndex="3" />
-                        <Button fx:id="arcHeightButton" mnemonicParsing="false" onAction="#arcHeightButtonActionPerformed" text="Reset" GridPane.columnIndex="3" GridPane.rowIndex="1" />
                         <Spinner fx:id="arcWidthSpinner" disable="true" GridPane.columnIndex="2" />
                         <Spinner fx:id="arcHeightSpinner" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-                        <CheckBox fx:id="independentRadiiCheckBox" mnemonicParsing="false" onAction="#independentRadiiCheckBoxActionPerformed" text="Set Corner Radii Independently">
-                           <padding>
-                              <Insets right="16.0" />
-                           </padding>
-                        </CheckBox>
-                        <CheckBox fx:id="cropCornersCheckBox" mnemonicParsing="false" onAction="#cropCornersCheckBoxActionPerformed" text="Crop Image Corners" GridPane.rowIndex="1">
-                           <padding>
-                              <Insets right="16.0" />
-                           </padding>
-                        </CheckBox>
+                        <Button fx:id="arcWidthButton" disable="true" mnemonicParsing="false" onAction="#arcWidthButtonActionPerformed" text="Reset" GridPane.columnIndex="3" />
+                        <Button fx:id="arcHeightButton" mnemonicParsing="false" onAction="#arcHeightButtonActionPerformed" text="Reset" GridPane.columnIndex="3" GridPane.rowIndex="1" />
                      </children>
                      <HBox.margin>
-                        <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+                        <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
                      </HBox.margin>
                   </GridPane>
                </children>
@@ -75,9 +74,9 @@
             <Insets />
          </VBox.margin>
       </TitledPane>
-      <HBox spacing="8.0">
+      <HBox spacing="4.0">
          <children>
-            <VBox spacing="8.0">
+            <VBox spacing="4.0">
                <children>
                   <TitledPane collapsible="false" text="Modify Selected Card Item">
                      <content>
@@ -153,7 +152,7 @@
                   </TitledPane>
                </children>
             </VBox>
-            <VBox spacing="8.0">
+            <VBox spacing="4.0">
                <children>
                   <TitledPane animated="false" collapsible="false" text="Card Item Priority">
                     <content>
@@ -194,6 +193,6 @@
       </HBox>
    </children>
    <padding>
-      <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+      <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
    </padding>
 </VBox>

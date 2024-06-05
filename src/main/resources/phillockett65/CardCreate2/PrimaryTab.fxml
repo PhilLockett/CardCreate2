@@ -20,16 +20,15 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-
 <VBox spacing="4.0" stylesheets="@application.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="phillockett65.CardCreate2.PrimaryController">
    <children>
       <HBox spacing="4.0">
          <children>
-            <TitledPane animated="false" collapsible="false" prefHeight="120.0" prefWidth="620.0" text="Input Directories">
+            <TitledPane animated="false" collapsible="false" prefHeight="130.0" prefWidth="620.0" text="Input Directories">
                <content>
                   <VBox>
                      <children>
-                        <HBox prefHeight="100.0" prefWidth="200.0" spacing="4.0">
+                        <HBox spacing="4.0">
                            <children>
                               <Label fx:id="baseDirectoryLabel" text="Base:" />
                               <ComboBox fx:id="baseDirectoryComboBox" onAction="#baseDirectoryComboBoxActionPerformed" prefWidth="420.0" />
@@ -41,7 +40,7 @@
                               <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
                            </padding>
                         </HBox>
-                        <HBox prefHeight="100.0" prefWidth="200.0" spacing="4.0">
+                        <HBox spacing="4.0">
                            <children>
                               <Label fx:id="faceLabel" text="Face:" />
                               <ChoiceBox fx:id="faceChoiceBox" prefWidth="140.0" />
@@ -75,9 +74,9 @@
             <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
          </padding>
       </HBox>
-      <HBox prefWidth="200.0">
+      <HBox spacing="4.0">
          <children>
-            <VBox spacing="8.0">
+            <VBox spacing="4.0">
                <children>
                   <HBox spacing="4.0">
                      <children>
@@ -157,9 +156,6 @@
                      </content>
                   </TitledPane>
                </children>
-               <padding>
-                  <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
-               </padding>
             </VBox>
             <Region />
                   <TitledPane animated="false" collapsible="false" text="Sample Navigation">
@@ -183,11 +179,11 @@
                            </children>
                         </GridPane>
                      </content>
-               <padding>
-                  <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
-               </padding>
                   </TitledPane>
          </children>
+         <padding>
+            <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
+         </padding>
       </HBox>
       <HBox spacing="10.0">
          <children>
