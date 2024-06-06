@@ -149,6 +149,7 @@ public class Model {
         primaryController.syncUI();
         additionalController.syncUI();
         sample.syncUI();
+        updateDisplayForCurrentCard();
     }
 
     public Stage getStage() { return stage; }
