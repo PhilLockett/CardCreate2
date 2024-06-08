@@ -57,6 +57,11 @@ import phillockett65.CardCreate2.sample.QuadPayload;
 
 public class Model {
 
+    /************************************************************************
+     ************************************************************************
+     * Support code for the Initialization of the Model.
+     */
+
     private final static String DATAFILE = "x_Settings.dat";
 
     private final String[] cardItems = { "Index", "Corner Pip", "Standard Pip", "Face Pip", "Face Image" };
@@ -74,31 +79,16 @@ public class Model {
     private CardSample sample;
 
 
-    /************************************************************************
-     * Support code for the Initialization of the Model.
-     */
-
     /**
      * Default Constructor, called by the MainController.
      */
     public Model() {
         // System.out.println("Model constructed.");
 
-        /**
-         * Initialize "Playing Card Generator" panel.
-         */
-
-        initializeInputDirectories();
-        initializeGenerate();
-        initializeOutputDirectory();
-        initializeSampleNavigation();
-        initializeCardSize();
-        initializeBackgroundColour();
-        initializeDisplayCardItems();
-        initializeSelectCardItem();
-        initializeModifySelectedCardItem();
+        initializeMainPanel();
+        initializePrimaryTabPanel();
         initializeSample();
-        initializeSettingsPanel();
+        initializeAdditionalTabPanel();
     }
 
     public void close() {
@@ -241,6 +231,14 @@ public class Model {
     }
 
 
+
+
+    /************************************************************************
+     ************************************************************************
+     * Support code for "Main" Settings panel.
+     */
+
+
     /**
      * Short cut to update the status line message.
      * @param Message to display on the status line.
@@ -249,7 +247,19 @@ public class Model {
         getMainController().setStatusMessage(Message);
     }
 
+    /**
+     * Initialize the Main settings panel.
+     */
+    private void initializeMainPanel() {
+        // System.out.println("Main Settings panel initialized.");
+
+    }
+
+
+
+
     /************************************************************************
+     ************************************************************************
      * Support code for "Sample" panel.
      */
 
@@ -409,6 +419,30 @@ public class Model {
         buildImageBox();
     }
 
+
+
+
+    /************************************************************************
+     ************************************************************************
+     * Support code for "Primary" Settings Tab panel.
+     */
+
+    /**
+     * Initialize the Primary settings Tab panel.
+     */
+    private void initializePrimaryTabPanel() {
+        // System.out.println("Primary Settings Tab panel initialized.");
+
+        initializeInputDirectories();
+        initializeGenerate();
+        initializeOutputDirectory();
+        initializeSampleNavigation();
+        initializeCardSize();
+        initializeBackgroundColour();
+        initializeDisplayCardItems();
+        initializeSelectCardItem();
+        initializeModifySelectedCardItem();
+    }
 
 
     /************************************************************************
@@ -1810,15 +1844,17 @@ public class Model {
 
 
 
+
     /************************************************************************
-     * Support code for "Settings" panel.
+     ************************************************************************
+     * Support code for "Additional" Settings Tab panel.
      */
 
     /**
-     * Called by the controller to initialize the settings controller.
+     * Initialize the Additional settings Tab panel.
      */
-    public void initializeSettingsPanel() {
-        // System.out.println("Settings Controller initialized.");
+    private void initializeAdditionalTabPanel() {
+        // System.out.println("Additional Settings Tab panel initialized.");
 
         initializeCardCorners();
         initializeDisplayWatermark();
