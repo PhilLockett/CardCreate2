@@ -341,6 +341,10 @@ public class CardSample extends Stage {
         setResize(false);
     }
 
+    private void setResize(boolean state) {
+        resize = state;
+    }
+
 
 
     /************************************************************************
@@ -352,10 +356,6 @@ public class CardSample extends Stage {
 
         syncCardSize();
         syncBackgroundColour();
-    }
-
-    private void setResize(boolean state) {
-        resize = state;
     }
 
     /**
