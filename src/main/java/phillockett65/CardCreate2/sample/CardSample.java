@@ -75,6 +75,11 @@ public class CardSample extends Stage {
         initializeCardSample();
     }
 
+
+    /************************************************************************
+     * Support code for initialization of the "Card Sample" panel. 
+     */
+
     /**
      * Initializes the stage and adds some handlers to the scene.
      */
@@ -251,7 +256,15 @@ public class CardSample extends Stage {
      * Initialization after a base directory has been selected.
      */
     public void init() {
-        Handle handle = model.getHandle();
+
+        initializeHandleHandlers(model.getHandle());
+        initializeMainControllerHandlers(model.getStage().getScene());
+    }
+
+    /**
+     * Initializes handlers for the Card Item Handle.
+     */
+    private void initializeHandleHandlers(Handle handle) {
 
         handle.setOnMouseClicked(event -> {
             if (!resize)
@@ -283,9 +296,8 @@ public class CardSample extends Stage {
         handle.setOnMouseExited(event -> {
             scene.setCursor(Cursor.DEFAULT);
         });
-
-        initializeMainControllerHandlers(model.getStage().getScene());
     }
+
 
     /**
      * Initializes handlers for the Main Controllers scene.
