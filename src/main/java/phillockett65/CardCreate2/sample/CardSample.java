@@ -107,6 +107,37 @@ public class CardSample extends Stage {
     }
 
     /**
+     * Called on initialization to set up the blank card.
+     */
+    private void drawBlankCard() {
+        final double width = model.getWidth();
+        final double height = model.getHeight();
+        final Color color = model.getBackgroundColour();
+        card = new Rectangle(width, height, color);
+
+        card.setArcWidth(model.getArcWidthPX());
+        card.setArcHeight(model.getArcHeightPX());
+        card.setStroke(Color.BLACK);
+        card.setStrokeWidth(1);
+        model.getGroup().getChildren().add(card);
+    }
+
+    /**
+     * Initialization after a base directory has been selected.
+     */
+    public void init() {
+
+        initializeHandleHandlers(model.getHandle());
+        initializeMainControllerHandlers(model.getStage().getScene());
+    }
+
+
+
+    /************************************************************************
+     * Initialize the handlers. 
+     */
+
+    /**
      * Initializes handlers for the scene.
      */
     private void initializeCardSampleHandlers(Scene scene) {
@@ -212,54 +243,6 @@ public class CardSample extends Stage {
 
     }
 
-    private void moveUp() {
-        double pos = this.getY() - Default.STEP_COUNT.getFloat();
-        if (pos < 0)
-            pos = 0;
-        this.setY(pos);
-    }
-
-    private void moveDown() {
-        double pos = this.getY() + Default.STEP_COUNT.getFloat();
-        this.setY(pos);
-    }
-
-    private void moveLeft() {
-        double pos = this.getX() - Default.STEP_COUNT.getFloat();
-        if (pos < 0)
-            pos = 0;
-        this.setX(pos);
-    }
-
-    private void moveRight() {
-        double pos = this.getX() + Default.STEP_COUNT.getFloat();
-        this.setX(pos);
-    }
-
-    /**
-     * Called on initialization to set up the blank card.
-     */
-    private void drawBlankCard() {
-        final double width = model.getWidth();
-        final double height = model.getHeight();
-        final Color color = model.getBackgroundColour();
-        card = new Rectangle(width, height, color);
-
-        card.setArcWidth(model.getArcWidthPX());
-        card.setArcHeight(model.getArcHeightPX());
-        card.setStroke(Color.BLACK);
-        card.setStrokeWidth(1);
-        model.getGroup().getChildren().add(card);
-    }
-
-    /**
-     * Initialization after a base directory has been selected.
-     */
-    public void init() {
-
-        initializeHandleHandlers(model.getHandle());
-        initializeMainControllerHandlers(model.getStage().getScene());
-    }
 
     /**
      * Initializes handlers for the Card Item Handle.
@@ -327,6 +310,38 @@ public class CardSample extends Stage {
             release();
         });
     }
+    
+
+
+    /************************************************************************
+     * Support code for the handlers. 
+     */
+
+    private void moveUp() {
+        double pos = this.getY() - Default.STEP_COUNT.getFloat();
+        if (pos < 0)
+            pos = 0;
+        this.setY(pos);
+    }
+
+    private void moveDown() {
+        double pos = this.getY() + Default.STEP_COUNT.getFloat();
+        this.setY(pos);
+    }
+
+    private void moveLeft() {
+        double pos = this.getX() - Default.STEP_COUNT.getFloat();
+        if (pos < 0)
+            pos = 0;
+        this.setX(pos);
+    }
+
+    private void moveRight() {
+        double pos = this.getX() + Default.STEP_COUNT.getFloat();
+        this.setX(pos);
+    }
+
+
 
     /**
      * Show increase size of current card item message on status line.
