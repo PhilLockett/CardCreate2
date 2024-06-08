@@ -144,15 +144,15 @@ public class CardSample extends Stage {
         scene.setOnKeyPressed(event -> {
             switch (event.getCode()) {
             case SHIFT:
-                model.getMainController().moveSample(true);
+                moveSample(true);
                 break;
 
             case ALT:
-                model.getMainController().decreaseSize();
+                decreaseSize();
                 break;
 
             case CONTROL: 
-                model.getMainController().increaseSize();
+                increaseSize();
                 break;
 
             case TAB: 
@@ -194,7 +194,7 @@ public class CardSample extends Stage {
         });
 
         scene.setOnKeyReleased(event -> {
-            model.getMainController().release();
+            release();
         });
 
     }
@@ -276,7 +276,71 @@ public class CardSample extends Stage {
             scene.setCursor(Cursor.DEFAULT);
         });
 
+        model.getStage().getScene().setOnKeyPressed(event -> {
+            switch (event.getCode()) {
+            case SHIFT:
+                moveSample(false);
+                break;
+
+            case ALT:
+                decreaseSize();
+                break;
+
+            case CONTROL: 
+                increaseSize();
+                break;
+
+            default:
+                break;
+            }
+        });
+
+        model.getStage().getScene().setOnKeyReleased(event -> {
+            release();
+        });
     }
+
+    /**
+     * Show increase size of current card item message on status line.
+     */
+    private void increaseSize() {
+        final String name = model.getCurrentCardItemName();
+        if (!name.equals("")) {
+            model.getMainController().setStatusMessage("Click on Sample to increase size of card " + name + ".");
+            setResize(true);
+        }
+    }
+
+    /**
+     * Show decrease size of current card item message on status line.
+     */
+    private void decreaseSize() {
+        final String name = model.getCurrentCardItemName();
+        if (!name.equals("")) {
+            model.getMainController().setStatusMessage("Click on Sample to decrease size of card " + name + ".");
+            setResize(true);
+        }
+    }
+
+    /**
+     * Show move sample message.
+     * @param sample true if call originates from Sample, false otherwise.
+     */
+    private void moveSample(boolean sample) {
+        if (sample)
+            model.getMainController().setStatusMessage("Use cursor keys to move Sample.");
+        else
+            model.getMainController().setStatusMessage("Switch focus to Sample then use cursor keys to move Sample.");
+    }
+
+    /**
+     * Clear status line on key release.
+     */
+    private void release() {
+        model.getMainController().setStatusMessage("Ready.");
+        setResize(false);
+    }
+
 
 
     /************************************************************************
@@ -290,7 +354,7 @@ public class CardSample extends Stage {
         syncBackgroundColour();
     }
 
-    public void setResize(boolean state) {
+    private void setResize(boolean state) {
         resize = state;
     }
 

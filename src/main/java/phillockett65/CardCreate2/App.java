@@ -60,29 +60,6 @@ public class App extends Application {
 
         MainController controller = fxmlLoader.getController();
 
-        scene.setOnKeyPressed(event -> {
-            switch (event.getCode()) {
-            case SHIFT:
-                controller.moveSample(false);
-                break;
-
-            case ALT:
-                controller.decreaseSize();
-                break;
-
-            case CONTROL: 
-                controller.increaseSize();
-                break;
-
-            default:
-                break;
-            }
-        });
-
-        scene.setOnKeyReleased(event -> {
-            controller.release();
-        });
-
         stage.show();
 
         controller.init(stage);

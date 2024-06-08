@@ -412,47 +412,6 @@ public class MainController {
         statusLabel.setText(Message);
     }
 
-    /**
-     * Show increase size of current card item message on status line.
-     */
-    public void increaseSize() {
-        final String name = model.getCurrentCardItemName();
-        if (!name.equals("")) {
-            setStatusMessage("Click on Sample to increase size of card " + name + ".");
-            model.getSample().setResize(true);
-        }
-    }
-
-    /**
-     * Show decrease size of current card item message on status line.
-     */
-    public void decreaseSize() {
-        final String name = model.getCurrentCardItemName();
-        if (!name.equals("")) {
-            setStatusMessage("Click on Sample to decrease size of card " + name + ".");
-            model.getSample().setResize(true);
-        }
-    }
-
-    /**
-     * Show move sample message.
-     * @param sample true if call originates from Sample, false otherwise.
-     */
-    public void moveSample(boolean sample) {
-        if (sample)
-            setStatusMessage("Use cursor keys to move Sample.");
-        else
-            setStatusMessage("Switch focus to Sample then use cursor keys to move Sample.");
-    }
-
-    /**
-     * Clear status line on key release.
-     */
-    public void release() {
-        setStatusMessage("Ready.");
-        model.getSample().setResize(false);
-    }
-
 
     /**
      * Show the progress bar, but also hide the status and disable the 
