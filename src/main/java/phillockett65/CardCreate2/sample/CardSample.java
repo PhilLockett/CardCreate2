@@ -98,6 +98,14 @@ public class CardSample extends Stage {
         this.setMaxWidth(Default.MAX_WIDTH.getFloat() + dx);
         this.setMaxHeight(Default.MAX_HEIGHT.getFloat() + dy);
 
+        initializeCardSampleHandlers(scene);
+    }
+
+    /**
+     * Initializes handlers for the scene.
+     */
+    private void initializeCardSampleHandlers(Scene scene) {
+
         scene.setOnMouseClicked(event -> {
             if (event.isAltDown()) {
                 if (!event.isControlDown())
@@ -276,7 +284,15 @@ public class CardSample extends Stage {
             scene.setCursor(Cursor.DEFAULT);
         });
 
-        model.getStage().getScene().setOnKeyPressed(event -> {
+        initializeMainControllerHandlers(model.getStage().getScene());
+    }
+
+    /**
+     * Initializes handlers for the Main Controllers scene.
+     */
+    private void initializeMainControllerHandlers(Scene scene) {
+
+        scene.setOnKeyPressed(event -> {
             switch (event.getCode()) {
             case SHIFT:
                 moveSample(false);
@@ -295,7 +311,7 @@ public class CardSample extends Stage {
             }
         });
 
-        model.getStage().getScene().setOnKeyReleased(event -> {
+        scene.setOnKeyReleased(event -> {
             release();
         });
     }
