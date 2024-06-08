@@ -89,6 +89,7 @@ public class MainController {
 
         initializeMenu();
         initializeGenerate();
+        initializeStatus();
     }
 
     /**
@@ -105,7 +106,6 @@ public class MainController {
         }
 
         model.init(stage, this, primaryTabController, additionalTabController);
-        initializeStatus();
     }
 
 
