@@ -408,6 +408,10 @@ public class MainController {
     private ProgressBar progressBar;
 
 
+    /**
+     * Update the status line message.
+     * @param Message to display on the status line.
+     */
     public void setStatusMessage(String Message) {
         statusLabel.setText(Message);
     }

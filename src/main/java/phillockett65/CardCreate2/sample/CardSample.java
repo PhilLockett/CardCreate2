@@ -306,7 +306,7 @@ public class CardSample extends Stage {
     private void increaseSize() {
         final String name = model.getCurrentCardItemName();
         if (!name.equals("")) {
-            model.getMainController().setStatusMessage("Click on Sample to increase size of card " + name + ".");
+            model.setStatusMessage("Click on Sample to increase size of card " + name + ".");
             setResize(true);
         }
     }
@@ -317,7 +317,7 @@ public class CardSample extends Stage {
     private void decreaseSize() {
         final String name = model.getCurrentCardItemName();
         if (!name.equals("")) {
-            model.getMainController().setStatusMessage("Click on Sample to decrease size of card " + name + ".");
+            model.setStatusMessage("Click on Sample to decrease size of card " + name + ".");
             setResize(true);
         }
     }
@@ -328,16 +328,16 @@ public class CardSample extends Stage {
      */
     private void moveSample(boolean sample) {
         if (sample)
-            model.getMainController().setStatusMessage("Use cursor keys to move Sample.");
+            model.setStatusMessage("Use cursor keys to move Sample.");
         else
-            model.getMainController().setStatusMessage("Switch focus to Sample then use cursor keys to move Sample.");
+            model.setStatusMessage("Switch focus to Sample then use cursor keys to move Sample.");
     }
 
     /**
      * Clear status line on key release.
      */
     private void release() {
-        model.getMainController().setStatusMessage("Ready.");
+        model.setStatusMessage("Ready.");
         setResize(false);
     }
 

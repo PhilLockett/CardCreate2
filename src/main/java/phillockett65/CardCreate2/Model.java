@@ -241,6 +241,14 @@ public class Model {
     }
 
 
+    /**
+     * Short cut to update the status line message.
+     * @param Message to display on the status line.
+     */
+    public void setStatusMessage(String Message) {
+        getMainController().setStatusMessage(Message);
+    }
+
     /************************************************************************
      * Support code for "Sample" panel.
      */
