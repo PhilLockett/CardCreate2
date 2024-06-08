@@ -64,8 +64,6 @@ public class AdditionalController {
     public void init(Model model) {
         this.model = model;
 
-        model.setSettingsWindowLaunched(true);
-
         initializeCardCorners();
         initializeDisplayWatermark();
         initializeModifySelectedCardItem();

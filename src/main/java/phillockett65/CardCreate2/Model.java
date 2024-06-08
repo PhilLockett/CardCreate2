@@ -1806,11 +1806,6 @@ public class Model {
      * Support code for "Settings" panel.
      */
 
-    private boolean settingsWindowLaunched = false;
-
-    public boolean isSettingsWindowLaunched() { return settingsWindowLaunched; }
-    public void setSettingsWindowLaunched(boolean state) { settingsWindowLaunched = state; }
-
     /**
      * Called by the controller to initialize the settings controller.
      */
