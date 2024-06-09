@@ -22,7 +22,7 @@
 
 <VBox spacing="4.0" stylesheets="@application.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="phillockett65.CardCreate2.PrimaryController">
    <children>
-      <HBox spacing="4.0">
+      <HBox>
          <children>
             <TitledPane animated="false" collapsible="false" prefHeight="130.0" prefWidth="620.0" text="Input Directories">
                <content>
@@ -76,7 +76,7 @@
       </HBox>
       <HBox spacing="4.0">
          <children>
-            <VBox spacing="4.0">
+            <VBox spacing="10.0">
                <children>
                   <HBox spacing="4.0">
                      <children>
@@ -98,7 +98,7 @@
                            <content>
                               <HBox spacing="8.0">
                                  <children>
-                                    <TextField fx:id="colourTextField" editable="false" prefWidth="150.0" />
+                                    <TextField fx:id="colourTextField" editable="false" />
                                     <ColorPicker fx:id="colourPicker" onAction="#colourPickerActionPerformed" />
                                  </children>
                                  <padding>
@@ -185,7 +185,7 @@
             <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
          </padding>
       </HBox>
-      <HBox spacing="10.0">
+      <HBox spacing="14.0">
          <children>
             <TitledPane collapsible="false" prefHeight="155.0" prefWidth="185.0" text="Display Card Items">
                <content>

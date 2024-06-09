@@ -53,7 +53,7 @@ public class App extends Application {
         icons.add(new Image(getClass().getResourceAsStream("icon32.png")));
         icons.add(new Image(getClass().getResourceAsStream("icon16.png")));
 
-        stage.setTitle("Playing Card Generator 2.0");
+        stage.setTitle("Playing Card Generator 2.0.1");
         stage.setOnCloseRequest(e -> Platform.exit());
         stage.resizableProperty().setValue(false);
         stage.setScene(scene);
