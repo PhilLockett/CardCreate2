@@ -185,78 +185,85 @@
             <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
          </padding>
       </HBox>
-      <HBox spacing="14.0">
-         <children>
-            <TitledPane collapsible="false" prefHeight="155.0" prefWidth="185.0" text="Display Card Items">
-               <content>
-                  <VBox prefHeight="129.0" prefWidth="177.0" spacing="4.0">
-                     <children>
-                        <CheckBox fx:id="indicesCheckBox" mnemonicParsing="false" onAction="#indicesCheckBoxActionPerformed" selected="true" text="Display Index" />
-                        <CheckBox fx:id="cornerPipCheckBox" layoutX="21.0" layoutY="21.0" mnemonicParsing="false" onAction="#cornerPipCheckBoxActionPerformed" selected="true" text="Display Corner Pip" />
-                        <CheckBox fx:id="standardPipCheckBox" layoutX="21.0" layoutY="46.0" mnemonicParsing="false" onAction="#standardPipCheckBoxActionPerformed" selected="true" text="Display Standard Pip" />
-                        <CheckBox fx:id="facePipCheckBox" layoutX="21.0" layoutY="97.0" mnemonicParsing="false" onAction="#facePipCheckBoxActionPerformed" selected="true" text="Display Face Pip" />
-                        <CheckBox fx:id="faceCheckBox" layoutX="21.0" layoutY="71.0" mnemonicParsing="false" onAction="#faceCheckBoxActionPerformed" selected="true" text="Display Face Image" />
-                     </children>
-                  </VBox>
-               </content>
-            </TitledPane>
-            <TitledPane collapsible="false" layoutX="10.0" layoutY="10.0" prefHeight="155.0" prefWidth="185.0" text="Select Card Item to Modify">
-               <content>
-                  <VBox prefHeight="174.0" prefWidth="177.0" spacing="4.0">
-                     <children>
-                        <RadioButton fx:id="indicesRadioButton" mnemonicParsing="false" onAction="#cardItemRadioButtonActionPerformed" selected="true" text="Change Index">
-                           <toggleGroup>
-                              <ToggleGroup fx:id="cardItem" />
-                           </toggleGroup>
-                        </RadioButton>
-                        <RadioButton fx:id="cornerPipRadioButton" layoutX="19.0" layoutY="19.0" mnemonicParsing="false" onAction="#cardItemRadioButtonActionPerformed" text="Change Corner Pip" toggleGroup="$cardItem" />
-                        <RadioButton fx:id="standardPipRadioButton" layoutX="19.0" layoutY="37.0" mnemonicParsing="false" onAction="#cardItemRadioButtonActionPerformed" text="Change Standard Pip" toggleGroup="$cardItem" />
-                        <RadioButton fx:id="facePipRadioButton" layoutX="19.0" layoutY="71.0" mnemonicParsing="false" onAction="#cardItemRadioButtonActionPerformed" text="Change Face Pip" toggleGroup="$cardItem" />
-                        <RadioButton fx:id="faceRadioButton" layoutX="19.0" layoutY="54.0" mnemonicParsing="false" onAction="#cardItemRadioButtonActionPerformed" text="Change Face Border" toggleGroup="$cardItem" />
-                     </children>
-                  </VBox>
-               </content>
-            </TitledPane>
-            <TitledPane collapsible="false" layoutX="10.0" layoutY="10.0" prefHeight="155.0" prefWidth="350.0" text="Modify Selected Card Item (%)">
-               <content>
-                  <VBox prefHeight="143.0" prefWidth="284.0" spacing="8.0">
-                     <children>
-                        <GridPane hgap="4.0" vgap="4.0">
-                           <columnConstraints>
-                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="146.0" minWidth="10.0" prefWidth="146.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="148.99998474121094" minWidth="10.0" prefWidth="87.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="96.3333740234375" minWidth="10.0" prefWidth="54.0" />
-                           </columnConstraints>
-                           <rowConstraints>
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                           </rowConstraints>
+      <TitledPane collapsible="false" text="Card Item Selection and Modification">
+         <content>
+            <HBox spacing="8.0">
+               <children>
+                  <TitledPane collapsible="false" prefHeight="155.0" prefWidth="185.0" text="Select Card Items to Display">
+                     <content>
+                        <VBox prefHeight="129.0" prefWidth="177.0" spacing="4.0">
                            <children>
-                              <Button fx:id="itemHeightButton" mnemonicParsing="false" onAction="#itemHeightButtonActionPerformed" text="Reset" GridPane.columnIndex="2" />
-                              <Button fx:id="itemCentreXButton" mnemonicParsing="false" onAction="#itemCentreXButtonActionPerformed" text="Reset" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-                              <Button fx:id="itemCentreYButton" mnemonicParsing="false" onAction="#itemCentreYButtonActionPerformed" text="Reset" GridPane.columnIndex="2" GridPane.rowIndex="2" />
-                              <Spinner fx:id="itemHeightSpinner" GridPane.columnIndex="1" />
-                              <Spinner fx:id="itemCentreXSpinner" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                              <Spinner fx:id="itemCentreYSpinner" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                              <Label fx:id="itemHeightLabel" text="Index Height (%):" GridPane.halignment="RIGHT" />
-                              <Label fx:id="itemCentreXLabel" text="Index X Centre (%):" GridPane.halignment="RIGHT" GridPane.rowIndex="1" />
-                              <Label fx:id="itemCentreYLabel" text="Index Y Centre (%):" GridPane.halignment="RIGHT" GridPane.rowIndex="2" />
+                              <CheckBox fx:id="indicesCheckBox" mnemonicParsing="false" onAction="#indicesCheckBoxActionPerformed" selected="true" text="Display Index" />
+                              <CheckBox fx:id="cornerPipCheckBox" layoutX="21.0" layoutY="21.0" mnemonicParsing="false" onAction="#cornerPipCheckBoxActionPerformed" selected="true" text="Display Corner Pip" />
+                              <CheckBox fx:id="standardPipCheckBox" layoutX="21.0" layoutY="46.0" mnemonicParsing="false" onAction="#standardPipCheckBoxActionPerformed" selected="true" text="Display Standard Pip" />
+                              <CheckBox fx:id="facePipCheckBox" layoutX="21.0" layoutY="97.0" mnemonicParsing="false" onAction="#facePipCheckBoxActionPerformed" selected="true" text="Display Face Pip" />
+                              <CheckBox fx:id="faceCheckBox" layoutX="21.0" layoutY="71.0" mnemonicParsing="false" onAction="#faceCheckBoxActionPerformed" selected="true" text="Display Face Image" />
                            </children>
-                        </GridPane>
-                        <HBox spacing="10.0">
+                        </VBox>
+                     </content>
+                  </TitledPane>
+                  <TitledPane collapsible="false" layoutX="10.0" layoutY="10.0" prefHeight="155.0" prefWidth="185.0" text="Select Card Item to Modify">
+                     <content>
+                        <VBox prefHeight="174.0" prefWidth="177.0" spacing="4.0">
                            <children>
-                              <CheckBox fx:id="keepAspectRatioCheckBox" mnemonicParsing="false" onAction="#keepAspectRatioCheckBoxActionPerformed" selected="true" text="Keep Image Aspect Ratio" />
+                              <RadioButton fx:id="indicesRadioButton" mnemonicParsing="false" onAction="#cardItemRadioButtonActionPerformed" selected="true" text="Change Index">
+                                 <toggleGroup>
+                                    <ToggleGroup fx:id="cardItem" />
+                                 </toggleGroup>
+                              </RadioButton>
+                              <RadioButton fx:id="cornerPipRadioButton" layoutX="19.0" layoutY="19.0" mnemonicParsing="false" onAction="#cardItemRadioButtonActionPerformed" text="Change Corner Pip" toggleGroup="$cardItem" />
+                              <RadioButton fx:id="standardPipRadioButton" layoutX="19.0" layoutY="37.0" mnemonicParsing="false" onAction="#cardItemRadioButtonActionPerformed" text="Change Standard Pip" toggleGroup="$cardItem" />
+                              <RadioButton fx:id="facePipRadioButton" layoutX="19.0" layoutY="71.0" mnemonicParsing="false" onAction="#cardItemRadioButtonActionPerformed" text="Change Face Pip" toggleGroup="$cardItem" />
+                              <RadioButton fx:id="faceRadioButton" layoutX="19.0" layoutY="54.0" mnemonicParsing="false" onAction="#cardItemRadioButtonActionPerformed" text="Change Face Border" toggleGroup="$cardItem" />
                            </children>
-                        </HBox>
-                     </children>
-                  </VBox>
-               </content>
-            </TitledPane>
-         </children>
-         <padding>
+                        </VBox>
+                     </content>
+                  </TitledPane>
+                  <TitledPane collapsible="false" layoutX="10.0" layoutY="10.0" prefHeight="155.0" prefWidth="350.0" text="Modify Selected Card Item (%)">
+                     <content>
+                        <VBox prefHeight="143.0" prefWidth="284.0" spacing="8.0">
+                           <children>
+                              <GridPane hgap="4.0" vgap="4.0">
+                                 <columnConstraints>
+                                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="146.0" minWidth="10.0" prefWidth="146.0" />
+                                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="148.99998474121094" minWidth="10.0" prefWidth="87.0" />
+                                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="96.3333740234375" minWidth="10.0" prefWidth="54.0" />
+                                 </columnConstraints>
+                                 <rowConstraints>
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                 </rowConstraints>
+                                 <children>
+                                    <Button fx:id="itemHeightButton" mnemonicParsing="false" onAction="#itemHeightButtonActionPerformed" text="Reset" GridPane.columnIndex="2" />
+                                    <Button fx:id="itemCentreXButton" mnemonicParsing="false" onAction="#itemCentreXButtonActionPerformed" text="Reset" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                                    <Button fx:id="itemCentreYButton" mnemonicParsing="false" onAction="#itemCentreYButtonActionPerformed" text="Reset" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                                    <Spinner fx:id="itemHeightSpinner" GridPane.columnIndex="1" />
+                                    <Spinner fx:id="itemCentreXSpinner" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                    <Spinner fx:id="itemCentreYSpinner" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                    <Label fx:id="itemHeightLabel" text="Index Height (%):" GridPane.halignment="RIGHT" />
+                                    <Label fx:id="itemCentreXLabel" text="Index X Centre (%):" GridPane.halignment="RIGHT" GridPane.rowIndex="1" />
+                                    <Label fx:id="itemCentreYLabel" text="Index Y Centre (%):" GridPane.halignment="RIGHT" GridPane.rowIndex="2" />
+                                 </children>
+                              </GridPane>
+                              <HBox spacing="10.0">
+                                 <children>
+                                    <CheckBox fx:id="keepAspectRatioCheckBox" mnemonicParsing="false" onAction="#keepAspectRatioCheckBoxActionPerformed" selected="true" text="Keep Image Aspect Ratio" />
+                                 </children>
+                              </HBox>
+                           </children>
+                        </VBox>
+                     </content>
+                  </TitledPane>
+               </children>
+               <padding>
+                  <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
+               </padding>
+            </HBox>
+         </content>
+         <VBox.margin>
             <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
-         </padding>
-      </HBox>
+         </VBox.margin>
+      </TitledPane>
    </children>
 </VBox>
