@@ -103,7 +103,7 @@ public class MainController {
 
         if ((!model.isValidBaseDirectory()) &&
             (!selectValidBaseDirectory())) {
-                stage.close();
+            stage.close();
         }
 
         model.init();
@@ -161,10 +161,7 @@ public class MainController {
 
     public void openBaseDirectory() {
         if (!selectBaseDirectory()) {
-            if (!selectValidBaseDirectory()) {
-                // Put original base directory back.
-                setBaseDirectory(model.getBaseDirectory());
-            }
+            selectValidBaseDirectory();
         }
     }
 
