@@ -97,13 +97,15 @@ public class PrimaryController {
         initializeSelectCardItem();
     }
 
+    public void setModel(Model model) {
+        this.model = model;
+    }
+
     /**
      * Called by Application after the stage has been set. Sets up the base 
      * directory (or aborts) then completes the initialization.
      */
-    public void init(Model model) {
-        this.model = model;
-
+    public void init() {
         initializeCardSize();
         initializeBackgroundColour();
         initializeModifySelectedCardItem();
@@ -229,8 +231,12 @@ public class PrimaryController {
     }
 
 
-    public boolean setBaseDirectory(String base) {
-        // System.out.println("setBaseDirectory(" + base + ")");
+    /**
+     * Sync controls to the base directory.
+     * @return true.
+     */
+    public boolean setBaseDirectory() {
+        // System.out.println("setBaseDirectory()");
 
         baseDirectoryComboBox.setValue(model.getBaseDirectory());
         faceChoiceBox.setValue(model.getFaceStyle());

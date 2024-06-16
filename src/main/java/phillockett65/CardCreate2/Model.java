@@ -97,20 +97,26 @@ public class Model {
     }
 
 
-    /**
-     * Initialization after a base directory has been selected.
-     */
-    public void init(Stage mainStage, 
+    public void setControllers(Stage mainStage, 
         MainController mainC,
         PrimaryController primaryC,
         AdditionalController additionalC) {
         // System.out.println("init()");
 
-        sample = new CardSample(this, "Sample");
         stage = mainStage;
         mainController = mainC;
         primaryController = primaryC;
         additionalController = additionalC;
+
+        primaryController.setModel(this);
+        additionalController.setModel(this);
+    }
+    
+    /**
+     * Initialization after a base directory has been selected.
+     */
+    public void init() {
+        sample = new CardSample(this, "Sample");
 
         // Add watermark to the group first so that it is displayed on the bottom.
         watermarkView = new ImageView();
@@ -125,8 +131,8 @@ public class Model {
         group.getChildren().add(box);
         group.getChildren().add(handle);
         
-        primaryController.init(this);
-        additionalController.init(this);
+        primaryController.init();
+        additionalController.init();
         sample.init();
     }
 

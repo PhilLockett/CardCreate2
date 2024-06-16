@@ -99,13 +99,14 @@ public class MainController {
     public void init(Stage stage) {
 
         userGUI.setDisable(true);
+        model.setControllers(stage, this, primaryTabController, additionalTabController);
 
         if ((!model.isValidBaseDirectory()) &&
             (!selectValidBaseDirectory())) {
                 stage.close();
         }
 
-        model.init(stage, this, primaryTabController, additionalTabController);
+        model.init();
     }
 
 
@@ -215,17 +216,27 @@ public class MainController {
     }
 
 
+    /**
+     * Set the base directory in the model, if valid, update the 
+     * primaryTabController.
+     * @param base path of the directory.
+     * @return true if base is a valid base directory, false otherwise.
+     */
     private boolean setBaseDirectory(String base) {
         // System.out.println("setBaseDirectory(" + base + ")");
 
         if (!model.setBaseDirectory(base))
             return false;
 
-        primaryTabController.setBaseDirectory(base);
+        primaryTabController.setBaseDirectory();
 
         return true;
     }
 
+    /**
+     * Use a DirectoryChooser to select a valid base directory.
+     * @return true if a valid base directory is selected, false otherwise.
+     */
     private boolean selectBaseDirectory() {
         DirectoryChooser choice = new DirectoryChooser();
         choice.setInitialDirectory(new File(model.getBaseDirectory()));
@@ -242,6 +253,10 @@ public class MainController {
         return false;
     }
 
+    /**
+     * Query user if they want to select a valid base directory.
+     * @return true if a valid base directory is selected, false otherwise.
+     */
     private boolean selectValidBaseDirectory() {
 
         do {

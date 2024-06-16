@@ -57,13 +57,15 @@ public class AdditionalController {
 //		System.out.println("Controller initialized.");
     }
 
+    public void setModel(Model model) {
+        this.model = model;
+    }
+
     /**
      * Called by Controller after the stage has been set. Is provided with
      * reference to model, then completes the initialization.
      */
-    public void init(Model model) {
-        this.model = model;
-
+    public void init() {
         initializeCardCorners();
         initializeDisplayWatermark();
         initializeModifySelectedCardItem();
