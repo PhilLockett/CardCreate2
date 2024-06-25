@@ -41,8 +41,12 @@ public class CardSample extends Stage {
     private Scene scene;
     private Rectangle card;
 
+    private double x;
+    private double y;
     private double mx;
     private double my;
+    private boolean onHandle = false;
+    private boolean dragged = false;
 
     private double dx;	// Difference between the size of the stage and the size of the scene.
     private double dy;
@@ -143,6 +147,11 @@ public class CardSample extends Stage {
     private void initializeCardSampleHandlers(Scene scene) {
 
         scene.setOnMouseClicked(event -> {
+            if (dragged) {
+                dragged = false;
+                return;
+            }
+            
             if (event.isAltDown()) {
                 if (!event.isControlDown())
                     model.decCurrent();
@@ -160,6 +169,24 @@ public class CardSample extends Stage {
         scene.setOnMouseEntered(event -> {
             scale = 0D;
         });
+
+        scene.setOnMouseDragged(event -> {
+            if (onHandle)
+                return;
+
+            this.setX(event.getScreenX() - x);
+            this.setY(event.getScreenY() - y);
+            dragged = true;
+        });
+
+        scene.setOnMousePressed(event -> {
+            if (onHandle)
+                return;
+
+            x = event.getSceneX();
+            y = event.getSceneY();
+        });
+
 
         scene.setOnScroll(event -> {
             scale += event.getTextDeltaX() + event.getTextDeltaY();
@@ -274,10 +301,12 @@ public class CardSample extends Stage {
 
         handle.setOnMouseEntered(event -> {
             scene.setCursor(Cursor.OPEN_HAND);
+            onHandle = true;
         });
 
         handle.setOnMouseExited(event -> {
             scene.setCursor(Cursor.DEFAULT);
+            onHandle = false;
         });
     }
 
