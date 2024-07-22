@@ -225,9 +225,9 @@
                            <children>
                               <GridPane hgap="4.0" vgap="4.0">
                                  <columnConstraints>
-                                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="146.0" minWidth="10.0" prefWidth="146.0" />
-                                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="148.99998474121094" minWidth="10.0" prefWidth="87.0" />
-                                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="96.3333740234375" minWidth="10.0" prefWidth="54.0" />
+                                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="170.0" minWidth="10.0" prefWidth="170.0" />
+                                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="148.0" minWidth="10.0" prefWidth="91.0" />
+                                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="96.0" minWidth="10.0" prefWidth="59.0" />
                                  </columnConstraints>
                                  <rowConstraints>
                                     <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
