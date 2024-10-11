@@ -96,6 +96,14 @@ public class Model {
         stage.close();
     }
 
+    /**
+     * Called by the controller after the constructor to initialise any 
+     * objects after the controls have been initialised.
+     */
+    public void initialize() {
+        // System.out.println("Model initialized.");
+
+    }
 
     public void setControllers(Stage mainStage, 
         MainController mainC,

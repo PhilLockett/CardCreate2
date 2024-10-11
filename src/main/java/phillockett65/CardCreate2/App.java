@@ -31,6 +31,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 import java.io.IOException;
 
@@ -53,9 +54,10 @@ public class App extends Application {
         icons.add(new Image(getClass().getResourceAsStream("icon32.png")));
         icons.add(new Image(getClass().getResourceAsStream("icon16.png")));
 
-        stage.setTitle("Playing Card Generator 2.0.1");
+        stage.setTitle("Playing Card Generator 2.0.2");
         stage.setOnCloseRequest(e -> Platform.exit());
         stage.resizableProperty().setValue(false);
+        stage.initStyle(StageStyle.UNDECORATED);
         stage.setScene(scene);
 
         MainController controller = fxmlLoader.getController();

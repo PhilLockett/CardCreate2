@@ -1,8 +1,33 @@
 /* JavaFX CSS - Leave this comment until you have at least create one rule which uses -fx-Property */
 
 .root{
-    -fx-background-color: #303030;
+    -main-back-col: #303030;
+    -main-fore-col: #e8e8e8;
+    -fx-background-color: -main-back-col;
+    -fx-border-color: silver;
 }
+
+.top-bar{
+    -fx-background-color: linear-gradient(to bottom, #404040, #202020);
+}
+.top-bar:hover{
+    -fx-background-color: linear-gradient(to bottom, #606060, #404040);
+}
+
+.top-bar-icon{
+    -fx-stroke: white;
+}
+
+.top-bar-icon:hover{
+    -fx-background-color: red;
+}
+
+.heading{
+    -fx-text-fill: -main-fore-col;
+    -fx-font-weight: bold;
+    -fx-font-size: 15.5;
+}
+
 .label, .label:selected, .check-box:selected, .radio-button:selected{
     -fx-text-fill: #e8e8e8;
     -fx-font-weight: bold;

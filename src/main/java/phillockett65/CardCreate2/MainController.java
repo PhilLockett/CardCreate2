@@ -42,8 +42,13 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.image.Image;
 import javafx.scene.image.WritableImage;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Line;
+import javafx.scene.shape.StrokeLineCap;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
 
@@ -56,6 +61,7 @@ public class MainController {
      */
 
     private Model model;
+    private static final String TOPBARICON = "top-bar-icon";
 
     @FXML
     private VBox userGUI;
@@ -83,10 +89,9 @@ public class MainController {
     @FXML public void initialize() {
         // System.out.println("Controller initialized.");
 
-        /**
-         * Initialize "Playing Card Generator" panel.
-         */
+        model.initialize();
 
+        initializeTopBar();
         initializeMenu();
         initializeGenerate();
         initializeStatus();
@@ -107,12 +112,78 @@ public class MainController {
         }
 
         model.init();
+
+        headingLabel.setText(stage.getTitle());
     }
 
 
+    /************************************************************************
+     * Support code for "Top Bar" panel.
+     */
+
+    private double x = 0.0;
+    private double y = 0.0;
+
+    @FXML
+    private HBox topBar;
+
+    @FXML
+    private Label headingLabel;
+
+    @FXML
+    void topBarOnMousePressed(MouseEvent event) {
+        x = event.getSceneX();
+        y = event.getSceneY();
+    }
+
+    @FXML
+    void topBarOnMouseDragged(MouseEvent event) {
+        model.getStage().setX(event.getScreenX() - x);
+        model.getStage().setY(event.getScreenY() - y);
+    }
+ 
+ 
+    private Pane buildCancel() {
+        final double iconSize = 32.0;
+        final double cancelPadding = 0.3;
+
+        Pane cancel = new Pane();
+        cancel.setPrefWidth(iconSize);
+        cancel.setPrefHeight(iconSize);
+        cancel.getStyleClass().add(TOPBARICON);
+
+        double a = iconSize * cancelPadding;
+        double b = iconSize - a;
+        Line line1 = new Line(a, a, b, b);
+        line1.setStroke(Color.WHITE);
+        line1.setStrokeWidth(4.0);
+        line1.setStrokeLineCap(StrokeLineCap.ROUND);
+
+        Line line2 = new Line(a, b, b, a);
+        line2.setStroke(Color.WHITE);
+        line2.setStrokeWidth(4.0);
+        line2.setStrokeLineCap(StrokeLineCap.ROUND);
+
+        cancel.getChildren().addAll(line1, line2);
+
+        cancel.setOnMouseClicked(event -> {
+            model.close();
+        });
+
+        return cancel;
+    }
+
+
+    /**
+     * Initialize "Top Bar" panel.
+     */
+    private void initializeTopBar() {
+        topBar.getChildren().add(buildCancel());
+    }
+  
 
     /************************************************************************
-     * Support code for "Playing Card Generator" Menu. 
+     * Support code for Pull-down Menu structure.
      */
 
     @FXML

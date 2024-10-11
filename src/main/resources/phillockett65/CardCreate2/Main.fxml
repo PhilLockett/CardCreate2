@@ -11,12 +11,26 @@
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.input.KeyCodeCombination?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox fx:id="userGUI" stylesheets="@application.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="phillockett65.CardCreate2.MainController">
+<VBox fx:id="userGUI" stylesheets="@application.css" xmlns="http://javafx.com/javafx/null" xmlns:fx="http://javafx.com/fxml/1" fx:controller="phillockett65.CardCreate2.MainController">
    <children>
+      <HBox fx:id="topBar" onMouseDragged="#topBarOnMouseDragged" onMousePressed="#topBarOnMousePressed" prefHeight="32.0" styleClass="top-bar">
+         <children>
+            <Label fx:id="headingLabel" contentDisplay="TEXT_ONLY" styleClass="heading">
+               <HBox.margin>
+                  <Insets />
+               </HBox.margin>
+               <padding>
+                  <Insets left="10.0" top="3.0" />
+               </padding>
+            </Label>
+            <Region HBox.hgrow="ALWAYS" />
+         </children>
+      </HBox>
       <MenuBar>
         <menus>
           <Menu mnemonicParsing="false" text="File">
@@ -92,4 +106,7 @@
          </children>
       </StackPane>
    </children>
+   <padding>
+      <Insets right="1.0" />
+   </padding>
 </VBox>
