@@ -63,10 +63,12 @@ public class PrimaryController {
         // System.out.println("Controller constructed.");
     }
 
-    private void setUpImageButton(Button button, String imageFileName)
+    private void setUpImageButton(Button button, String imageFileName, double size)
     {
         Image image = new Image(getClass().getResourceAsStream(imageFileName));
         ImageView view = new ImageView(image);
+        view.setFitWidth(size);
+        view.setFitHeight(size);
 
         button.setGraphic(view);
         button.setText(null);
@@ -83,11 +85,11 @@ public class PrimaryController {
          * Initialize "Playing Card Generator" panel.
          */
 
-        setUpImageButton(generateButton, "icon-play.png");
-        setUpImageButton(previousSuitButton, "icon-up.png");
-        setUpImageButton(previousCardButton, "icon-left.png");
-        setUpImageButton(nextCardButton, "icon-right.png");
-        setUpImageButton(nextSuitButton, "icon-down.png");
+        setUpImageButton(generateButton, "icon-play.png", 60.0);
+        setUpImageButton(previousSuitButton, "icon-up.png", 48.0);
+        setUpImageButton(previousCardButton, "icon-left.png", 48.0);
+        setUpImageButton(nextCardButton, "icon-right.png", 48.0);
+        setUpImageButton(nextSuitButton, "icon-down.png", 48.0);
 
         initializeInputDirectories();
         initializeGenerate();
