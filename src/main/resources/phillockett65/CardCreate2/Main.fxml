@@ -9,6 +9,8 @@
 <?import javafx.scene.control.SeparatorMenuItem?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.input.KeyCodeCombination?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Region?>
@@ -18,15 +20,17 @@
 
 <VBox fx:id="userGUI" stylesheets="@application.css" xmlns="http://javafx.com/javafx/null" xmlns:fx="http://javafx.com/fxml/1" fx:controller="phillockett65.CardCreate2.MainController">
    <children>
-      <HBox fx:id="topBar" onMouseDragged="#topBarOnMouseDragged" onMousePressed="#topBarOnMousePressed" prefHeight="32.0" styleClass="top-bar">
+      <HBox fx:id="topBar" alignment="CENTER" onMouseDragged="#topBarOnMouseDragged" onMousePressed="#topBarOnMousePressed" prefHeight="32.0" styleClass="top-bar">
          <children>
+            <ImageView fitHeight="28.0" fitWidth="28.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@icon32.png" />
+               </image>
+            </ImageView>
             <Label fx:id="headingLabel" contentDisplay="TEXT_ONLY" styleClass="heading">
                <HBox.margin>
                   <Insets />
                </HBox.margin>
-               <padding>
-                  <Insets left="10.0" top="3.0" />
-               </padding>
             </Label>
             <Region HBox.hgrow="ALWAYS" />
          </children>

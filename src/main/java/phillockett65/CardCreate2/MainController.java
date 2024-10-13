@@ -214,7 +214,7 @@ public class MainController {
     private void helpAboutOnAction() {
         Alert alert = new Alert(AlertType.INFORMATION);
         alert.setTitle("About CardCreate");
-        alert.setHeaderText("CardCreate 2.0");
+        alert.setHeaderText(headingLabel.getText());
         alert.setContentText("CardCreate is a prototype playing card generator.");
 
         alert.showAndWait();

@@ -50,9 +50,7 @@ public class App extends Application {
         scene.getStylesheets().add(App.class.getResource("application.css").toExternalForm());
 
         ObservableList<Image> icons = stage.getIcons();
-        icons.add(new Image(getClass().getResourceAsStream("icon48.png")));
         icons.add(new Image(getClass().getResourceAsStream("icon32.png")));
-        icons.add(new Image(getClass().getResourceAsStream("icon16.png")));
 
         stage.setTitle("Playing Card Generator 2.0.2");
         stage.setOnCloseRequest(e -> Platform.exit());
