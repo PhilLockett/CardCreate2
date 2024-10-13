@@ -61,6 +61,7 @@ public class MainController {
      */
 
     private Model model;
+    private Stage stage;
     private static final String TOPBARICON = "top-bar-icon";
 
     @FXML
@@ -103,6 +104,7 @@ public class MainController {
      */
     public void init(Stage stage) {
 
+        this.stage = stage;
         userGUI.setDisable(true);
         model.setControllers(stage, this, primaryTabController, additionalTabController);
 
@@ -112,8 +114,6 @@ public class MainController {
         }
 
         model.init();
-
-        headingLabel.setText(stage.getTitle());
     }
 
 
@@ -126,9 +126,6 @@ public class MainController {
 
     @FXML
     private HBox topBar;
-
-    @FXML
-    private Label headingLabel;
 
     @FXML
     void topBarOnMousePressed(MouseEvent event) {
@@ -214,7 +211,7 @@ public class MainController {
     private void helpAboutOnAction() {
         Alert alert = new Alert(AlertType.INFORMATION);
         alert.setTitle("About CardCreate");
-        alert.setHeaderText(headingLabel.getText());
+        alert.setHeaderText(stage.getTitle());
         alert.setContentText("CardCreate is a prototype playing card generator.");
 
         alert.showAndWait();

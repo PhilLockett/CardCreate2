@@ -7,11 +7,8 @@
     -fx-border-color: silver;
 }
 
-.top-bar{
+.top-bar, .menu-bar{
     -fx-background-color: linear-gradient(to bottom, #404040, #202020);
-}
-.top-bar:hover{
-    -fx-background-color: linear-gradient(to bottom, #606060, #404040);
 }
 
 .top-bar-icon{
@@ -110,8 +107,17 @@
     -fx-font-weight: bold;
     -fx-background-radius: 12;
 }
-.context-menu, .menu-bar{
+.context-menu, .menu-item:focused{
     -fx-background-color: #9B4642;
+    -fx-text-fill: #e8e8e8;
+    -fx-font-weight: bold;
+}
+.menu-bar{
+    -fx-text-fill: #e8e8e8;
+    -fx-font-weight: bold;
+}
+.menu-button:hover, .menu-button:showing, .menu-item:hover{
+    -fx-background-color: #7B2622;
     -fx-text-fill: #e8e8e8;
     -fx-font-weight: bold;
 }

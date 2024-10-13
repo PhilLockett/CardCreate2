@@ -27,50 +27,45 @@
                   <Image url="@icon32.png" />
                </image>
             </ImageView>
-            <Label fx:id="headingLabel" contentDisplay="TEXT_ONLY" styleClass="heading">
-               <HBox.margin>
-                  <Insets />
-               </HBox.margin>
-            </Label>
+            <MenuBar>
+              <menus>
+                <Menu mnemonicParsing="false" text="File">
+                  <items>
+                        <MenuItem mnemonicParsing="false" onAction="#fileOpenOnAction" text="Open Base Directory...">
+                           <accelerator>
+                              <KeyCodeCombination alt="UP" code="O" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                           </accelerator>
+                        </MenuItem>
+                        <SeparatorMenuItem mnemonicParsing="false" />
+                        <MenuItem fx:id="fileLoadMenuItem" mnemonicParsing="false" onAction="#fileLoadOnAction" text="Load Settings">
+                           <accelerator>
+                              <KeyCodeCombination alt="UP" code="L" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                           </accelerator>
+                        </MenuItem>
+                        <MenuItem mnemonicParsing="false" onAction="#fileSaveOnAction" text="Save Settings">
+                           <accelerator>
+                              <KeyCodeCombination alt="UP" code="S" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                           </accelerator>
+                        </MenuItem>
+                        <SeparatorMenuItem mnemonicParsing="false" />
+                    <MenuItem mnemonicParsing="false" onAction="#fileCloseOnAction" text="Close">
+                           <accelerator>
+                              <KeyCodeCombination alt="UP" code="X" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                           </accelerator>
+                        </MenuItem>
+                  </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Help">
+                  <items>
+                    <MenuItem mnemonicParsing="false" onAction="#helpAboutOnAction" text="About" />
+                        <MenuItem mnemonicParsing="false" onAction="#helpHelpOnAction" text="Help" />
+                  </items>
+                </Menu>
+              </menus>
+            </MenuBar>
             <Region HBox.hgrow="ALWAYS" />
          </children>
       </HBox>
-      <MenuBar>
-        <menus>
-          <Menu mnemonicParsing="false" text="File">
-            <items>
-                  <MenuItem mnemonicParsing="false" onAction="#fileOpenOnAction" text="Open Base Directory...">
-                     <accelerator>
-                        <KeyCodeCombination alt="UP" code="O" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
-                     </accelerator>
-                  </MenuItem>
-                  <SeparatorMenuItem mnemonicParsing="false" />
-                  <MenuItem fx:id="fileLoadMenuItem" mnemonicParsing="false" onAction="#fileLoadOnAction" text="Load Settings">
-                     <accelerator>
-                        <KeyCodeCombination alt="UP" code="L" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
-                     </accelerator>
-                  </MenuItem>
-                  <MenuItem mnemonicParsing="false" onAction="#fileSaveOnAction" text="Save Settings">
-                     <accelerator>
-                        <KeyCodeCombination alt="UP" code="S" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
-                     </accelerator>
-                  </MenuItem>
-                  <SeparatorMenuItem mnemonicParsing="false" />
-              <MenuItem mnemonicParsing="false" onAction="#fileCloseOnAction" text="Close">
-                     <accelerator>
-                        <KeyCodeCombination alt="UP" code="X" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
-                     </accelerator>
-                  </MenuItem>
-            </items>
-          </Menu>
-          <Menu mnemonicParsing="false" text="Help">
-            <items>
-              <MenuItem mnemonicParsing="false" onAction="#helpAboutOnAction" text="About" />
-                  <MenuItem mnemonicParsing="false" onAction="#helpHelpOnAction" text="Help" />
-            </items>
-          </Menu>
-        </menus>
-      </MenuBar>
       <TabPane>
          <tabs>
             <Tab closable="false" text="Primary">
