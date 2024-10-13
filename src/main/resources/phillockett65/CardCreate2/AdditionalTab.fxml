@@ -22,7 +22,7 @@
                <children>
                   <GridPane hgap="4.0" prefHeight="66.0" prefWidth="648.0" vgap="4.0">
                     <columnConstraints>
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="229.59998779296876" minWidth="10.0" prefWidth="208.00003662109376" />
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="229.59998779296876" minWidth="10.0" prefWidth="208.00003662109376" />
                       <ColumnConstraints hgrow="SOMETIMES" maxWidth="241.99997558593753" minWidth="10.0" prefWidth="241.99997558593753" />
                       <ColumnConstraints hgrow="SOMETIMES" maxWidth="147.20000000000005" minWidth="10.0" prefWidth="119.60002441406255" />
                       <ColumnConstraints hgrow="SOMETIMES" maxWidth="86.3333740234375" minWidth="10.0" prefWidth="52.00000000000006" />
