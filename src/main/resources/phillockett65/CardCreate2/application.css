@@ -1,7 +1,7 @@
 /* JavaFX CSS - Leave this comment until you have at least create one rule which uses -fx-Property */
 
 .root{
-    -main-back-col: #303030;
+    -main-back-col: #383838;
     -main-fore-col: #e8e8e8;
     -fx-background-color: -main-back-col;
     -fx-border-color: silver;
@@ -35,10 +35,10 @@
 }
 
 .titled-pane{
-    -fx-text-fill: black;
+    -fx-text-fill: -main-fore-col;
 }
 .title{
-    -fx-background-color: linear-gradient(to bottom, #ffffff, #c8c8c8);
+    -fx-background-color: -main-back-col;
     -fx-font-weight: bold;
 }
 
@@ -85,17 +85,22 @@
 .tab-pane {
     -fx-tab-min-width: 8em;
 }
+.tab-header-background {
+    -fx-background-color: #202020;
+}
 .tab {
     -fx-font-weight: bold;
-    -fx-background-color: #808080;
+    -fx-background-color: #505050;
     -fx-background-radius: 12 12 0 0;
 }
 .tab:selected {
-    -fx-background-color: #303030;
+    -fx-background-color: -main-back-col;
     -fx-background-radius: 12 12 0 0;
+	-fx-border-color: -main-back-col;
+    -fx-border-radius: 12 12 0 0;
 }
 .tab-content-area {
-    -fx-background-color: #303030;
+    -fx-background-color: -main-back-col;
 }
 .tab *.tab-label {
     -fx-text-fill: #e8e8e8;
