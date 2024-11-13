@@ -61,7 +61,6 @@ public class CardSample extends Stage {
     /**
      * Constructor.
      * 
-     * @param mainController    - used to call the centralized controller.
      * @param mainModel         - used to call the centralized data model.
      * @param title             - string displayed as the heading of the Stage.
      */
@@ -74,6 +73,7 @@ public class CardSample extends Stage {
 
         model = mainModel;
 
+        this.setTitle(title);
         this.show();
         
         initializeCardSample();
