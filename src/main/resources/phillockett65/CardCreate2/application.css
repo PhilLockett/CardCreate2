@@ -138,8 +138,13 @@
     -fx-text-fill: null;
 }
 
-.progress-bar{
-    -fx-accent: #9B4642;
+.progress-bar .track{
+    -fx-background-color: -main-back-col;
+	-fx-border-color: silver;
+}
+
+.progress-bar .bar{
+    -fx-background-color: linear-gradient(to bottom, lime, green);
 }
 
 .list-view{
