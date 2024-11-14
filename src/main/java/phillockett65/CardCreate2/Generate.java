@@ -110,7 +110,7 @@ public class Generate extends Task<Long> {
         int[] priorities = model.getPriorityList();
         for (int i = priorities.length-1; i >= 0; --i) {
 
-            int priority = priorities[i];
+            final int priority = priorities[i];
 
             switch (priority) {
             case Model.INDEX_ID:

@@ -441,7 +441,10 @@ public class MainController {
             mask = Utils.createMask(width, height, arcWidth, arcHeight);
         }
         writeTask = new Write(model, mask, progress, images);
-        writeTask.valueProperty().addListener( (v, oldValue, newValue) -> Platform.runLater(() -> generationFinished()) );
+        writeTask.valueProperty().addListener( (v, oldValue, newValue) -> {
+            progress = newValue;
+            Platform.runLater(() -> generationFinished());
+        });
         progressBar.progressProperty().bind(writeTask.progressProperty());
 
         Thread th = new Thread(writeTask);
@@ -453,6 +456,7 @@ public class MainController {
      * Step 4: final clean up.
      */
     private void generationFinished() {
+        ++progress;
         model.setGenerating(false);
 
         hideProgress();
@@ -498,23 +502,27 @@ public class MainController {
 
 
     /**
-     * Show the progress bar, but also hide the status and disable the 
-     * generate button.
+     * Update the state of the progress bar, the status line and the generate 
+     * button.
      */
-    private void showProgress() {
-        primaryTabController.disableGenerateButton(true);
-        statusLabel.setVisible(false);
-        progressBar.setVisible(true);
+    private void showProgressState(boolean state) {
+        primaryTabController.disableGenerateButton(state);
+        statusLabel.setVisible(!state);
+        progressBar.setVisible(state);
     }
 
     /**
-     * Hide the progress bar, but also show the status and enable the generate 
-     * button.
+     * Show the progress bar, hide the status and disable the generate button.
+     */
+    private void showProgress() {
+        showProgressState(true);
+    }
+
+    /**
+     * Hide the progress bar, show the status and enable the generate button.
      */
     private void hideProgress() {
-        primaryTabController.disableGenerateButton(false);
-        statusLabel.setVisible(true);
-        progressBar.setVisible(false);
+        showProgressState(false);
     }
 
     /**
