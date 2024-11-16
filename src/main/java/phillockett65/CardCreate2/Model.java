@@ -702,8 +702,12 @@ public class Model {
 
     private boolean generating = false;
 
+    private CardData[] cardData;
+    private int currentIndex = 0;
+    private Image[] images;
+
     public boolean isGenerating() { return generating; }
-    public void setGenerating(boolean state) { generating = state; }
+    private void setGenerating(boolean state) { generating = state; }
 
     public final Color border = Color.GREY;
 
@@ -736,10 +740,92 @@ public class Model {
     }
 
 
+
+    private void buildCardData() {
+        cardData = new CardData[56];
+
+        final int suits = lastSuit();
+        final int cards = lastCard();
+        int id = 0;
+        for (int suit = 0; suit < suits; ++suit) {
+
+            for (int card = 0; card < cards; ++card) {
+                cardData[id] = new CardData(id, suit, card);
+
+                ++id;
+            }
+        }
+    }
+
+    private void loadCurrentPipImages() {
+        if (!currentIsJoker()) {
+            return;
+        }
+
+        final int suit = currentSuit();
+
+        images = new Image[6];
+
+        images[0] = Utils.loadImage(getStandardPipImagePath(suit));
+        images[1] = Utils.rotateImage(images[0]);
+        images[2] = Utils.loadImage(getCornerPipImagePath(suit));
+        images[3] = Utils.rotateImage(images[2]);
+        images[4] = Utils.loadImage(getFacePipImagePath(suit));
+        images[5] = Utils.rotateImage(images[4]);
+    }
+
+    public void startGenerate() {
+        // Ensure that the output directory exists.
+        makeOutputDirectory();
+        setGenerating(true);
+
+        currentIndex = 0;
+        loadCurrentPipImages();
+    }
+
+    /**
+     * Get the next card index.
+     * @return true if there is a next card, false if finished.
+     */
+    public boolean nextCardIndex() {
+        ++currentIndex;
+        if (IsFinished()) {
+            return false;
+        }
+
+        loadCurrentPipImages();
+
+        return true;
+    }
+
+    public void finishGenerate() {
+        setGenerating(false);
+    }
+
+    private boolean IsFinished() {
+        return currentIndex >= cardData.length;
+    }
+
+    private CardData currentCardData() {
+        return cardData[currentIndex];
+    }
+
+    public Image[] currentImages() { return images; }
+
+    public int currentId() { return currentCardData().getId(); }
+    public int currentSuit() { return currentCardData().getSuit(); }
+    public int currentCard() { return currentCardData().getCard(); }
+    public boolean currentIsJoker() { return currentCardData().isJoker(); }
+    public String currentOutputImagePath() { 
+        return getOutputImagePath(currentSuit(), currentCard());
+    }
+
+
     /**
      * Initialize"Generate" panel.
      */
     private void initializeGenerate() {
+        buildCardData();
     }
 
 

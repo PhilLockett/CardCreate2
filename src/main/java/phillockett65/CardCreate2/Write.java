@@ -28,7 +28,6 @@ import java.io.File;
 
 import javax.imageio.ImageIO;
 
-import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.image.Image;
@@ -44,17 +43,24 @@ public class Write extends Task<Long> {
     private final Model model;
     private final Image mask;
     private Long progress;
-    private int index;
-    private ObservableList<Image> images;
+    private Image snapshot;
 
 
-    public Write(Model model, Image mask, Long progress, ObservableList<Image> images) {
+    /**
+     * Write task constructor.
+     * 
+     * @param model containing run-time data..
+     * @param progress so far.
+     * @param mask to apply to final image, may be null.
+     * @param image to to save to disc.
+     */
+    public Write(Model model, Long progress, Image mask, Image image) {
         this.model = model;
-        this.mask = mask;
         this.progress = progress;
-        this.images = images;
-        index = 0;
+        this.mask = mask;
+        this.snapshot = image;
 
+        // Update progress bar to stop it jittering.
         updateProgress(progress, Default.GENERATE_STEPS.getInt());
     }
 
@@ -83,9 +89,8 @@ public class Write extends Task<Long> {
         return output;
     }
 
-    private boolean save(int s, int c) {
+    private boolean save() {
         boolean success = false;
-        final Image snapshot = images.get(index++);
 
         try {
             final BufferedImage image;
@@ -96,10 +101,9 @@ public class Write extends Task<Long> {
                 image = SwingFXUtils.fromFXImage(cropped, null);
             }
 
-            final String outputPath = model.getOutputImagePath(s, c);
+            final String outputPath = model.currentOutputImagePath();
 
-            ImageIO.write(image, "png", new File(outputPath));
-            success = true;
+            success = ImageIO.write(image, "png", new File(outputPath));
         } catch (Exception e) {
             System.out.println("write() - Failed saving image: " + e);
         }
@@ -114,20 +118,13 @@ public class Write extends Task<Long> {
     @Override
     protected Long call() throws Exception {
 
-        final int suits = model.lastSuit();
-        final int cards = model.lastCard();
-        for (int suit = 0; suit < suits; ++suit) {
-            if (isCancelled())
-                break;
-
-            for (int card = 0; card < cards; ++card) {
-                if (isCancelled())
-                    break;
-
-                save(suit, card);
-                updateProgress(++progress, Default.GENERATE_STEPS.getInt());
-            }
+        if (isCancelled()) {
+            return progress;
         }
+
+        save();
+
+        updateProgress(++progress, Default.GENERATE_STEPS.getInt());
 
         return progress;
     }

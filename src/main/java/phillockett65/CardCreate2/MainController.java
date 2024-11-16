@@ -25,8 +25,6 @@
 package phillockett65.CardCreate2;
 
 import javafx.application.Platform;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 
 import java.io.File;
 import java.util.Optional;
@@ -347,48 +345,22 @@ public class MainController {
      * Support code for "Generate" panel. 
      */
 
-    private ObservableList<Canvas> canvasses;
+    private Canvas currentCanvas;
     private Generate generateTask;
 
-    private ObservableList<Image> images;
+    private Image currentImage;
     private Write writeTask;
 
     private Long progress = 0L;
  
- 
-    /**
-     * Step 1: use the Generate task to draw all the cards onto canvasses. 
-     * When completed the valueProperty changed() handler is called.
-     */
-    public void invokeGenerateTask() {
- 
-        if (generateTask != null && generateTask.isRunning())
-            return;
+    private int width;
+    private int height;
+    private SnapshotParameters parameters;
+    private Image mask;
 
-        model.setGenerating(true);
+    private int defaults = 0;
 
-        progress = 0L;
-        showProgress();
-
-        generateTask = new Generate(model, canvasses);
-        generateTask.valueProperty().addListener( (v, oldValue, newValue) -> {
-            progress = newValue;
-            Platform.runLater(() -> invokeSaveTask()); 
-        });
-        progressBar.progressProperty().bind(generateTask.progressProperty());
-
-        Thread th = new Thread(generateTask);
-        th.setDaemon(true);
-        th.start();
-    }
- 
-    /**
-     * Step 2: take snapshots of all the canvasses and produce a list of 
-     * images. Must be run from the Application thread.
-     */
-    private void takeSnapshots() {
-        final int width;
-        final int height;
+    private void finaliseSize() {
 
         if (!model.isMpcCardSize()) {
             width = (int)model.getWidth();
@@ -400,37 +372,11 @@ public class MainController {
             width = (int)(model.getWidth() + (xOffset * 2));
             height = (int)(model.getHeight() + (yOffset * 2));
         }
-
-        SnapshotParameters parameters = new SnapshotParameters();
-        parameters.setFill(Color.TRANSPARENT);
-
-        final int count = canvasses.size();
-        for (int i = 0; i < count; ++i ) {
-            final Canvas canvas = canvasses.remove(0);
-            WritableImage snapshot = new WritableImage(width, height);
-            try {
-                canvas.snapshot(parameters, snapshot);
-            } catch (IllegalStateException e) {
-                System.out.println("takeSnapshots() - Failed to take snapshot: " + e);
-            }
-
-            images.add(snapshot);
-        }
-
     }
- 
-    /**
-     * Step 3: takeSnapshots() then use the Write task to save all the images 
-     * to disc. When completed the valueProperty changed() handler is called.
-     */
-    private void invokeSaveTask() {
-        
-        if (writeTask != null && writeTask.isRunning())
-            return;
 
-        takeSnapshots();
-
+    private Image getMask() {
         Image mask = null;
+
         if (model.isCropCorners()) {
             final double width = model.getWidth();
             final double height = model.getHeight();
@@ -439,10 +385,83 @@ public class MainController {
             
             mask = Utils.createMask(width, height, arcWidth, arcHeight);
         }
-        writeTask = new Write(model, mask, progress, images);
+
+        return mask;
+    }
+
+
+    public void startGeneration() {
+        if (generateTask != null && generateTask.isRunning())
+            return;
+
+        if (writeTask != null && writeTask.isRunning())
+            return;
+
+        progress = 0L;
+        showProgress();
+
+        finaliseSize();
+        mask = getMask();
+
+        model.startGenerate();
+        invokeDrawTask();
+    }
+
+    /**
+     * Step 1: use a Generate task to draw the current card onto currentCanvas.
+     * When completed the valueProperty changed() handler is called, to 
+     * invokeSaveTask().
+     */
+    private void invokeDrawTask() {
+ 
+        generateTask = new Generate(model, progress, defaults);
+        generateTask.valueProperty().addListener( (v, oldValue, newValue) -> {
+            progress = newValue;
+            currentCanvas = generateTask.getCanvas();
+            defaults = generateTask.getDefaults();
+            Platform.runLater(() -> invokeSaveTask()); 
+        });
+        progressBar.progressProperty().bind(generateTask.progressProperty());
+
+        Thread th = new Thread(generateTask);
+        th.setDaemon(true);
+        th.start();
+    }
+ 
+    /**
+     * Step 2: take a snapshot of the currentCanvas to produce currentImage.
+     * Note: must be run from the Application thread.
+     */
+    private void takeSnapshot() {
+
+        WritableImage snapshot = new WritableImage(width, height);
+        try {
+            currentCanvas.snapshot(parameters, snapshot);
+        } catch (IllegalStateException e) {
+            System.out.println("takeSnapshots() - Failed to take snapshot: " + e);
+        }
+
+        currentImage = snapshot;
+    }
+ 
+    /**
+     * Step 3: takeSnapshot() then use a Write task to save currentImage to 
+     * disc. When completed the valueProperty changed() handler is called to
+     * check if there are more cards to draw and save. If there are more cards 
+     * we invokeDrawTask() on the next card, otherwise generationFinished();
+     */
+    private void invokeSaveTask() {
+
+        takeSnapshot();
+
+        writeTask = new Write(model, progress, mask, currentImage);
         writeTask.valueProperty().addListener( (v, oldValue, newValue) -> {
             progress = newValue;
-            Platform.runLater(() -> generationFinished());
+            if (model.nextCardIndex()) {
+                Platform.runLater(() -> invokeDrawTask());
+            } else {
+                Platform.runLater(() -> generationFinished());
+            }
         });
         progressBar.progressProperty().bind(writeTask.progressProperty());
 
@@ -455,11 +474,10 @@ public class MainController {
      * Step 4: final clean up.
      */
     private void generationFinished() {
-        model.setGenerating(false);
-
+        model.finishGenerate();
         hideProgress();
+
         setStatusMessage("Output sent to: " + model.getOutputDirectory());
-        images.clear();
     }
  
 
@@ -467,8 +485,8 @@ public class MainController {
      * Initialize"Generate" panel.
     */
     private void initializeGenerate() {
-        canvasses = FXCollections.observableArrayList();
-        images = FXCollections.observableArrayList();
+        parameters = new SnapshotParameters();
+        parameters.setFill(Color.TRANSPARENT);
     }
  
 

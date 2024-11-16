@@ -23,7 +23,6 @@
  */
 package phillockett65.CardCreate2;
 
-import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -35,13 +34,32 @@ public class Generate extends Task<Long> {
 
     private final Model model;
     private Long progress;
-    private ObservableList<Canvas> canvasses;
-    private int defaults = 0;
+    private Canvas canvas;
+    private int defaults;
 
-    public Generate(Model model, ObservableList<Canvas> canvasses) {
+    /**
+     * Generate task constructor.
+     * 
+     * @param model containing run-time data..
+     * @param progress so far.
+     * @param defaults number of times no joker image file was found, used to 
+     *     vary default joker generation.
+     */
+    public Generate(Model model, Long progress, int defaults) {
         this.model = model;
-        this.canvasses = canvasses;
-        this.progress = 0L;
+        this.progress = progress;
+        this.defaults = defaults;
+
+        // Update progress bar to stop it jittering.
+        updateProgress(progress, Default.GENERATE_STEPS.getInt());
+    }
+
+    public Canvas getCanvas() {
+        return canvas;
+    }
+
+    public int getDefaults() {
+        return defaults;
     }
 
     private class CardContext {
@@ -91,13 +109,12 @@ public class Generate extends Task<Long> {
 
 
     /**
-     * Generate the indicated card to disc using the current settings.
-     * 
-     * @param suit of card to generate.
-     * @param card number of card to generate.
-     * @param images list of pip Images to use (so they are only read once).
+     * Generate the indicated card using the current settings.
      */
-    private Canvas generateCard(int suit, int card, Image[] images) {
+    private void generateCard() {
+        final int suit = model.currentSuit();
+        final int card = model.currentCard();
+        final Image[] images = model.currentImages();
 
         // Create blank card.
         CardContext cc = new CardContext();
@@ -148,18 +165,14 @@ public class Generate extends Task<Long> {
             }
         }
 
-        return cc.getCanvas();
+        canvas = cc.getCanvas();
     }
 
     /**
-     * Generate the indicated joker card to disc using the current settings.
-     * 
-     * @param suit of joker to generate.
-     * @param defaults number of times no joker image file was found, used to 
-     * vary default joker generation.
-     * @return the number of times no joker image file was found.
+     * Generate the indicated joker using the current settings.
      */
-    private Canvas generateJoker(int suit) {
+    private void generateJoker() {
+        final int suit = model.currentSuit();
 
         // Create blank card.
         CardContext cc = new CardContext();
@@ -183,7 +196,7 @@ public class Generate extends Task<Long> {
             model.drawJokerIndex(gc, indexImage, rotatedImage);
         }
 
-        return cc.getCanvas();
+        canvas = cc.getCanvas();
     }
 
 
@@ -193,41 +206,18 @@ public class Generate extends Task<Long> {
     @Override
     protected Long call() throws Exception {
 
-        // System.out.println("Generate called");
-
-        // Ensure that the output directory exists.
-        model.makeOutputDirectory();
-
-        // Generate the cards.
-        Image[] images = new Image[6];
-        final int suits = model.lastSuit();
-        final int cards = model.lastCard();
-        Canvas canvas;
-
-        for (int suit = 0; suit < suits; ++suit) {
-            if (isCancelled())
-                break;
-
-            canvas = generateJoker(suit);
-            canvasses.add(canvas);
-            updateProgress(++progress, Default.GENERATE_STEPS.getInt());
-
-            images[0] = Utils.loadImage(model.getStandardPipImagePath(suit));
-            images[1] = Utils.rotateImage(images[0]);
-            images[2] = Utils.loadImage(model.getCornerPipImagePath(suit));
-            images[3] = Utils.rotateImage(images[2]);
-            images[4] = Utils.loadImage(model.getFacePipImagePath(suit));
-            images[5] = Utils.rotateImage(images[4]);
-            for (int card = 1; card < cards; ++card) {
-                if (isCancelled())
-                    break;
-
-                canvas = generateCard(suit, card, images);
-                canvasses.add(canvas);
-                updateProgress(++progress, Default.GENERATE_STEPS.getInt());
-            }
-
+        if (isCancelled()) {
+            return progress;
         }
+        
+        // Generate the card.
+        if (model.currentIsJoker()) {
+            generateJoker();
+        } else {
+            generateCard();
+        }
+
+        updateProgress(++progress, Default.GENERATE_STEPS.getInt());
 
         return progress;
     }

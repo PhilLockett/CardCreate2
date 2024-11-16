@@ -338,7 +338,7 @@ public class PrimaryController {
 
     @FXML
     void generateButtonActionPerformed(ActionEvent event) {
-        model.getMainController().invokeGenerateTask();
+        model.getMainController().startGeneration();
     }
 
     public void disableGenerateButton(boolean state) {
