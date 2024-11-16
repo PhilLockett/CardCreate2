@@ -417,7 +417,6 @@ public class MainController {
             images.add(snapshot);
         }
 
-        ++progress;
     }
  
     /**

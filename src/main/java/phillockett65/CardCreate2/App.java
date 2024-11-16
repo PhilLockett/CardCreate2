@@ -47,7 +47,6 @@ public class App extends Application {
         Parent root = fxmlLoader.load();
 
         Scene scene = new Scene(root);
-        scene.getStylesheets().add(App.class.getResource("application.css").toExternalForm());
 
         ObservableList<Image> icons = stage.getIcons();
         icons.add(new Image(getClass().getResourceAsStream("icon32.png")));
