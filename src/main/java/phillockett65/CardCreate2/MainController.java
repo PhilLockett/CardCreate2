@@ -456,7 +456,6 @@ public class MainController {
      * Step 4: final clean up.
      */
     private void generationFinished() {
-        ++progress;
         model.setGenerating(false);
 
         hideProgress();
@@ -464,6 +463,7 @@ public class MainController {
         images.clear();
     }
  
+
     /**
      * Initialize"Generate" panel.
     */

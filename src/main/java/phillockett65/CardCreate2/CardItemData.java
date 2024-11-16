@@ -19,7 +19,7 @@
  */
 
 /*
- * ImageDat is a class that is used to serialize the image settings. 
+ * CardItemData is a class that is used to serialize the image settings. 
  */
 package phillockett65.CardCreate2;
 
