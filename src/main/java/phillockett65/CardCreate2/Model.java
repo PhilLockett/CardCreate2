@@ -702,7 +702,6 @@ public class Model {
 
     private boolean generating = false;
 
-    private CardData[] cardData;
     private int currentIndex = 0;
     private Image[] images;
 
@@ -741,29 +740,7 @@ public class Model {
 
 
 
-    private void buildCardData() {
-        cardData = new CardData[56];
-
-        final int suits = lastSuit();
-        final int cards = lastCard();
-        int id = 0;
-        for (int suit = 0; suit < suits; ++suit) {
-
-            for (int card = 0; card < cards; ++card) {
-                cardData[id] = new CardData(id, suit, card);
-
-                ++id;
-            }
-        }
-    }
-
-    private void loadCurrentPipImages() {
-        if (!currentIsJoker()) {
-            return;
-        }
-
-        final int suit = currentSuit();
-
+    private void loadPipImages(int suit) {
         images = new Image[6];
 
         images[0] = Utils.loadImage(getStandardPipImagePath(suit));
@@ -780,7 +757,6 @@ public class Model {
         setGenerating(true);
 
         currentIndex = 0;
-        loadCurrentPipImages();
     }
 
     /**
@@ -793,7 +769,11 @@ public class Model {
             return false;
         }
 
-        loadCurrentPipImages();
+        // Load the pip images ready for the standard cards.
+        if (currentIsAce()) {
+            final int suit = currentSuit();
+            loadPipImages(suit);
+        }
 
         return true;
     }
@@ -802,20 +782,15 @@ public class Model {
         setGenerating(false);
     }
 
-    private boolean IsFinished() {
-        return currentIndex >= cardData.length;
-    }
-
-    private CardData currentCardData() {
-        return cardData[currentIndex];
-    }
+    private int currentId() { return currentIndex; }
+    private boolean IsFinished() { return currentId() >= Default.DECK_COUNT.getInt(); }
 
     public Image[] currentImages() { return images; }
+    public int currentSuit() { return currentId() / Default.CARD_COUNT.getInt(); }
+    public int currentCard() { return currentId() % Default.CARD_COUNT.getInt(); }
+    public boolean currentIsJoker() { return currentCard() == 0; }
+    private boolean currentIsAce() { return currentCard() == 1; }
 
-    public int currentId() { return currentCardData().getId(); }
-    public int currentSuit() { return currentCardData().getSuit(); }
-    public int currentCard() { return currentCardData().getCard(); }
-    public boolean currentIsJoker() { return currentCardData().isJoker(); }
     public String currentOutputImagePath() { 
         return getOutputImagePath(currentSuit(), currentCard());
     }
@@ -825,7 +800,6 @@ public class Model {
      * Initialize"Generate" panel.
      */
     private void initializeGenerate() {
-        buildCardData();
     }
 
 
