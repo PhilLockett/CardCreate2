@@ -33,6 +33,7 @@ import phillockett65.CardCreate2.CardItemData;
 import phillockett65.CardCreate2.Model;
 import phillockett65.CardCreate2.Utils;
 
+
 public class Payload {
 
 
@@ -184,10 +185,10 @@ public class Payload {
     protected final Real spriteHeight;
 
 
-    public Payload(Model mainModel, Item it) {
+    public Payload(Item it) {
         // System.out.println("Payload()");
 
-        model = mainModel;
+        model = Model.getInstance();
 
         item = it;
 

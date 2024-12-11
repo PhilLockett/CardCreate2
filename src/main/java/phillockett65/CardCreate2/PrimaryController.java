@@ -44,6 +44,7 @@ import javafx.scene.input.KeyEvent;
 
 import phillockett65.CardCreate2.sample.Item;
 
+
 public class PrimaryController {
 
 
@@ -61,6 +62,7 @@ public class PrimaryController {
      */
     public PrimaryController() {
         // System.out.println("Controller constructed.");
+        model = Model.getInstance();
     }
 
     private void setUpImageButton(Button button, String imageFileName, double size)
@@ -97,10 +99,6 @@ public class PrimaryController {
         initializeSampleNavigation();
         initializeDisplayCardItems();
         initializeSelectCardItem();
-    }
-
-    public void setModel(Model model) {
-        this.model = model;
     }
 
     /**

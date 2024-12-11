@@ -24,7 +24,6 @@
  */
 package phillockett65.CardCreate2.sample;
 
-import phillockett65.CardCreate2.Model;
 
 public class DoublePayload extends Payload {
 
@@ -35,11 +34,10 @@ public class DoublePayload extends Payload {
 
     /**
      * Basic constructor.
-     * @param mainModel common model.
      * @param item card item
      */
-    public DoublePayload(Model mainModel, Item item) {
-        super(mainModel, item);
+    public DoublePayload(Item item) {
+        super(item);
 
         // Set up the image views.
         createImageViews();

@@ -28,7 +28,6 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
-import phillockett65.CardCreate2.Model;
 
 public class MultiPayload extends Payload {
 
@@ -168,8 +167,8 @@ public class MultiPayload extends Payload {
 
     private int pattern = 0;
 
-    public MultiPayload(Model mainModel) {
-        super(mainModel, Item.STANDARD_PIP);
+    public MultiPayload() {
+        super(Item.STANDARD_PIP);
 
         // Set up the image views.
         createImageViews();

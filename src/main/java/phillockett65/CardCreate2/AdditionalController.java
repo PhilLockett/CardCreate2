@@ -54,11 +54,8 @@ public class AdditionalController {
      * images on the buttons and initialises all the controls.
      */
     @FXML public void initialize() {
-//		System.out.println("Controller initialized.");
-    }
-
-    public void setModel(Model model) {
-        this.model = model;
+		// System.out.println("Controller initialized.");
+        model = Model.getInstance();
     }
 
     /**

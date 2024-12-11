@@ -30,6 +30,7 @@ import javafx.scene.image.Image;
 
 import phillockett65.CardCreate2.sample.Default;
 
+
 public class Generate extends Task<Long> {
 
     private final Model model;
@@ -40,13 +41,12 @@ public class Generate extends Task<Long> {
     /**
      * Generate task constructor.
      * 
-     * @param model containing run-time data..
      * @param progress so far.
      * @param defaults number of times no joker image file was found, used to 
      *     vary default joker generation.
      */
-    public Generate(Model model, Long progress, int defaults) {
-        this.model = model;
+    public Generate(Long progress, int defaults) {
+        model = Model.getInstance();
         this.progress = progress;
         this.defaults = defaults;
 

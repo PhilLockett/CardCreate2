@@ -55,6 +55,7 @@ import phillockett65.CardCreate2.sample.MultiPayload;
 import phillockett65.CardCreate2.sample.Payload;
 import phillockett65.CardCreate2.sample.QuadPayload;
 
+
 public class Model {
 
     /************************************************************************
@@ -72,6 +73,8 @@ public class Model {
     public static final int FACE_PIP_ID = 3;
     public static final int FACE_ID = 4;
 
+    private static Model model = new Model();
+
     private Stage stage;
     private MainController mainController;
     private PrimaryController primaryController;
@@ -79,17 +82,22 @@ public class Model {
     private CardSample sample;
 
 
-    /**
-     * Default Constructor, called by the MainController.
+    /************************************************************************
+     * Support code for the Initialization of the Model.
      */
-    public Model() {
-        // System.out.println("Model constructed.");
 
-        initializeMainPanel();
-        initializePrimaryTabPanel();
-        initializeSample();
-        initializeAdditionalTabPanel();
+    /**
+     * Private default constructor - part of the Singleton Design Pattern.
+     * Called at initialization only, constructs the single private instance.
+     */
+    private Model() {
     }
+
+    /**
+     * Singleton implementation.
+     * @return the only instance of the model.
+     */
+    public static Model getInstance() { return model; }
 
     public void close() {
         sample.close();
@@ -103,6 +111,10 @@ public class Model {
     public void initialize() {
         // System.out.println("Model initialized.");
 
+        initializeMainPanel();
+        initializePrimaryTabPanel();
+        initializeSample();
+        initializeAdditionalTabPanel();
     }
 
     public void setControllers(Stage mainStage, 
@@ -115,9 +127,6 @@ public class Model {
         mainController = mainC;
         primaryController = primaryC;
         additionalController = additionalC;
-
-        primaryController.setModel(this);
-        additionalController.setModel(this);
     }
     
     /**
@@ -1655,13 +1664,13 @@ public class Model {
     private void initializeCardItemPayloads() {
         // System.out.println("initializeCardItemPayloads()");
 
-        face        = new ImagePayload(this);
-        facePip     = new DoublePayload(this, Item.FACE_PIP);
+        face        = new ImagePayload();
+        facePip     = new DoublePayload(Item.FACE_PIP);
 
-        standardPip = new MultiPayload(this);
+        standardPip = new MultiPayload();
         
-        cornerPip   = new QuadPayload(this, Item.CORNER_PIP);
-        index       = new QuadPayload(this, Item.INDEX);
+        cornerPip   = new QuadPayload(Item.CORNER_PIP);
+        index       = new QuadPayload(Item.INDEX);
 
         // Set up payload slider used to determine next item.
         final int ITEMS = Default.CARD_ITEM_COUNT.getInt();

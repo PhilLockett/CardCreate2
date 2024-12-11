@@ -74,5 +74,6 @@ This code has the following points of interest:
   * CardCreate2 is the JavaFX version of [CardCreate](https://github.com/PhilLockett/CardCreate.git).
   * CardCreate2 is a maven project.
   * CardCreate2 is structured as an MVC project (FXML being the Video component).
+  * The Model is implemented as a basic (non thread safe) Singleton.
   * Multi stage initialization minimizes the need for null checks.
   * The user GUI was developed using SceneBuilder utilizing FXML and CSS.

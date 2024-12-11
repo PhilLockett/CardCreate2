@@ -78,7 +78,7 @@ public class MainController {
      */
     public MainController() {
         // System.out.println("Controller constructed.");
-        model = new Model();
+        model = Model.getInstance();
     }
 
     /**
@@ -241,7 +241,7 @@ public class MainController {
 
     public void loadSettings() {
         // System.out.println("loadSettings()");
-        DataStore.readData(model);
+        DataStore.readData();
 
         model.syncAllUIs();
 
@@ -249,7 +249,7 @@ public class MainController {
     }
 
     public void saveSettings() {
-        DataStore.writeData(model);
+        DataStore.writeData();
 
         model.syncAllUIs();
 
@@ -414,7 +414,7 @@ public class MainController {
      */
     private void invokeDrawTask() {
  
-        generateTask = new Generate(model, progress, defaults);
+        generateTask = new Generate(progress, defaults);
         generateTask.valueProperty().addListener( (v, oldValue, newValue) -> {
             progress = newValue;
             currentCanvas = generateTask.getCanvas();
@@ -454,7 +454,7 @@ public class MainController {
 
         takeSnapshot();
 
-        writeTask = new Write(model, progress, mask, currentImage);
+        writeTask = new Write(progress, mask, currentImage);
         writeTask.valueProperty().addListener( (v, oldValue, newValue) -> {
             progress = newValue;
             if (model.nextCardIndex()) {

@@ -29,7 +29,6 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
-import phillockett65.CardCreate2.Model;
 
 public class QuadPayload extends Payload {
 
@@ -144,8 +143,8 @@ public class QuadPayload extends Payload {
 
     private final Item item;
 
-    public QuadPayload(Model mainModel, Item it) {
-        super(mainModel, it);
+    public QuadPayload(Item it) {
+        super(it);
 
         item = it;
 

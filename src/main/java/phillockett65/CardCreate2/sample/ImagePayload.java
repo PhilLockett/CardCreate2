@@ -27,7 +27,6 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
-import phillockett65.CardCreate2.Model;
 
 public class ImagePayload extends Payload {
 
@@ -38,8 +37,8 @@ public class ImagePayload extends Payload {
 
     protected boolean keepAspectRatio = true;
 
-    public ImagePayload(Model mainModel) {
-        super(mainModel, Item.FACE);
+    public ImagePayload() {
+        super(Item.FACE);
 
         // Set up the image views.
         createImageViews();

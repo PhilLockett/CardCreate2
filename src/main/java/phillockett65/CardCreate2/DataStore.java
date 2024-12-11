@@ -34,6 +34,7 @@ import java.util.ArrayList;
 
 import javafx.scene.paint.Color;
 
+
 public class DataStore implements Serializable {
     private static final long serialVersionUID = 1L;
 
@@ -187,8 +188,9 @@ public class DataStore implements Serializable {
      * Support code for static public interface.
      */
 
-    public static boolean writeData(Model model) {
+    public static boolean writeData() {
         boolean success = false;
+        Model model = Model.getInstance();
 
         // Ensure that the output directory exists.
         model.makeOutputDirectory();
@@ -210,8 +212,9 @@ public class DataStore implements Serializable {
         return success;
     }
 
-    public static boolean readData(Model model) {
+    public static boolean readData() {
         boolean success = false;
+        Model model = Model.getInstance();
 
         ObjectInputStream objectInputStream;
         try {

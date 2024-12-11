@@ -38,6 +38,7 @@ import javafx.scene.paint.Color;
 
 import phillockett65.CardCreate2.sample.Default;
 
+
 public class Write extends Task<Long> {
 
     private final Model model;
@@ -49,13 +50,12 @@ public class Write extends Task<Long> {
     /**
      * Write task constructor.
      * 
-     * @param model containing run-time data..
      * @param progress so far.
      * @param mask to apply to final image, may be null.
      * @param image to to save to disc.
      */
-    public Write(Model model, Long progress, Image mask, Image image) {
-        this.model = model;
+    public Write(Long progress, Image mask, Image image) {
+        model = Model.getInstance();
         this.progress = progress;
         this.mask = mask;
         this.snapshot = image;
