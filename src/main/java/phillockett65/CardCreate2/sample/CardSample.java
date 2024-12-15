@@ -107,7 +107,7 @@ public class CardSample extends Stage {
         this.setMaxWidth(Default.MAX_WIDTH.getFloat() + dx);
         this.setMaxHeight(Default.MAX_HEIGHT.getFloat() + dy);
 
-        initializeCardSampleHandlers(scene);
+        initializeCardSampleHandlers();
     }
 
     /**
@@ -131,20 +131,20 @@ public class CardSample extends Stage {
      */
     public void init() {
 
-        initializeHandleHandlers(model.getHandle());
-        initializeMainControllerHandlers(model.getStage().getScene());
+        initializeHandleHandlers();
+        initializeMainControllerHandlers();
     }
 
 
 
     /************************************************************************
-     * Initialize the handlers. 
+     * Support code for initialization of the Key and Mouse handlers.
      */
 
     /**
-     * Initializes handlers for the scene.
+     * Initializes handlers for the Card Sample scene.
      */
-    private void initializeCardSampleHandlers(Scene scene) {
+    private void initializeCardSampleHandlers() {
 
         scene.setOnMouseClicked(event -> {
             if (dragged) {
@@ -274,7 +274,8 @@ public class CardSample extends Stage {
     /**
      * Initializes handlers for the Card Item Handle.
      */
-    private void initializeHandleHandlers(Handle handle) {
+    private void initializeHandleHandlers() {
+        Handle handle = model.getHandle();
 
         handle.setOnMouseClicked(event -> {
             if (!resize)
@@ -314,7 +315,8 @@ public class CardSample extends Stage {
     /**
      * Initializes handlers for the Main Controllers scene.
      */
-    private void initializeMainControllerHandlers(Scene scene) {
+    private void initializeMainControllerHandlers() {
+        Scene scene = model.getStage().getScene();
 
         scene.setOnKeyPressed(event -> {
             switch (event.getCode()) {
