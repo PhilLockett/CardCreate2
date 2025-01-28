@@ -77,3 +77,4 @@ This code has the following points of interest:
   * The Model is implemented as a basic (non thread safe) Singleton.
   * Multi stage initialization minimizes the need for null checks.
   * The user GUI was developed using SceneBuilder utilizing FXML and CSS.
+  * A `static` Debug object helps control diagnostic output.
