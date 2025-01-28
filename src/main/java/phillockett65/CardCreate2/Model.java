@@ -54,24 +54,29 @@ import phillockett65.CardCreate2.sample.Item;
 import phillockett65.CardCreate2.sample.MultiPayload;
 import phillockett65.CardCreate2.sample.Payload;
 import phillockett65.CardCreate2.sample.QuadPayload;
+import phillockett65.Debug.Debug;
 
 
 public class Model {
 
-    /************************************************************************
-     ************************************************************************
-     * Support code for the Initialization of the Model.
-     */
+    // Debug delta used to adjust the local logging level.
+    private static final int DD = 0;
 
     private final static String DATAFILE = "x_Settings.dat";
-
-    private final String[] cardItems = { "Index", "Corner Pip", "Standard Pip", "Face Pip", "Face Image" };
 
     public static final int INDEX_ID = 0;
     public static final int CORNER_PIP_ID = 1;
     public static final int STANDARD_PIP_ID = 2;
     public static final int FACE_PIP_ID = 3;
     public static final int FACE_ID = 4;
+
+
+    /************************************************************************
+     ************************************************************************
+     * Support code for the Initialization of the Model.
+     */  
+
+    private final String[] cardItems = { "Index", "Corner Pip", "Standard Pip", "Face Pip", "Face Image" };
 
     private static Model model = new Model();
 
@@ -91,6 +96,7 @@ public class Model {
      * Called at initialization only, constructs the single private instance.
      */
     private Model() {
+        Debug.trace(DD, "Model constructed.");
     }
 
     /**
@@ -109,7 +115,7 @@ public class Model {
      * objects after the controls have been initialised.
      */
     public void initialize() {
-        // System.out.println("Model initialized.");
+        Debug.trace(DD, "Model initialize()");
 
         initializeMainPanel();
         initializePrimaryTabPanel();
@@ -121,7 +127,8 @@ public class Model {
         MainController mainC,
         PrimaryController primaryC,
         AdditionalController additionalC) {
-        // System.out.println("init()");
+
+        Debug.trace(DD, "Model setControllers()");
 
         stage = mainStage;
         mainController = mainC;
@@ -133,6 +140,7 @@ public class Model {
      * Initialization after a base directory has been selected.
      */
     public void init() {
+        Debug.trace(DD, "Model init()");
         sample = new CardSample(this, "Sample");
 
         // Add watermark to the group first so that it is displayed on the bottom.
@@ -157,7 +165,8 @@ public class Model {
      * Synchronise all controls with the model.
      */
     public void syncAllUIs() {
-        // System.out.println("syncAllUIs()");
+        Debug.trace(DD, "syncAllUIs()");
+
         mainController.syncUI();
         primaryController.syncUI();
         additionalController.syncUI();
@@ -274,7 +283,7 @@ public class Model {
      * Initialize the Main settings panel.
      */
     private void initializeMainPanel() {
-        // System.out.println("Main Settings panel initialized.");
+        Debug.trace(DD, "Main Settings panel initialized.");
 
     }
 
@@ -344,7 +353,7 @@ public class Model {
 
 
     private void showImageBox() {
-        // System.out.println("showImageBox(" + display + "); keepAspectRatio = " + keepAspectRatio);
+        Debug.trace(DD, "showImageBox() : keepAspectRatio = " + keepAspectRatio);
         if (!showGuideBox) {
             box.setVisible(false);
 
@@ -454,7 +463,7 @@ public class Model {
      * Initialize the Primary settings Tab panel.
      */
     private void initializePrimaryTabPanel() {
-        // System.out.println("Primary Settings Tab panel initialized.");
+        Debug.trace(DD, "Primary Settings Tab panel initialized.");
 
         initializeInputDirectories();
         initializeGenerate();
@@ -559,7 +568,7 @@ public class Model {
      * @return
      */
     private boolean readBaseDirectoryFilePathsFromDisc() {
-        // System.out.println("readBaseDirectoryFilePathsFromDisc()");
+        Debug.trace(DD, "readBaseDirectoryFilePathsFromDisc()");
 
         // Check if PATHSFILE exists.
         File file = new File(PATHSFILE);
@@ -575,7 +584,7 @@ public class Model {
             String line;
             while ((line = br.readLine()) != null) {
                 baseList.add(line);
-                // System.out.println(line);
+                Debug.info(DD, line);
             }
             br.close();
         } catch (IOException e) {
@@ -597,10 +606,10 @@ public class Model {
      * Write the list of base directories to disc with current baseDirectory
      * first.
      * 
-     * @return
+     * @return true if list successfully saved to disc, false otherwise.
      */
     private boolean writeBaseDirectoryFilePathsToDisc() {
-        // System.out.println("writeBaseDirectoryFilePathsToDisc()");
+        Debug.trace(DD, "writeBaseDirectoryFilePathsToDisc()");
 
         try (FileWriter writer = new FileWriter(PATHSFILE); BufferedWriter bw = new BufferedWriter(writer)) {
             bw.write(baseDirectory + System.lineSeparator());
@@ -612,6 +621,9 @@ public class Model {
             bw.close();
         } catch (IOException e) {
             // e.printStackTrace();
+            Debug.critical(DD, "writeBaseDirectoryFilePathsToDisc() - Failed saving: " + e);
+
+            return false;
         }
 
         return true;
@@ -626,7 +638,7 @@ public class Model {
         styleList.clear();
         for (final File styleEntry : style.listFiles()) {
             if (styleEntry.isDirectory()) {
-                // System.out.println(directoryName + "\\" + styleEntry.getName());
+                Debug.info(DD, directoryName + "\\" + styleEntry.getName());
                 styleList.add(styleEntry.getName());
             }
         }
@@ -642,7 +654,7 @@ public class Model {
      * @return true if base is a valid base directory, false otherwise.
      */
     public boolean setBaseDirectory(String base) {
-        // System.out.println("model.setBaseDirectory(" + base + ")");
+        Debug.trace(DD, "model.setBaseDirectory(" + base + ")");
 
         if (base.equals(""))
             return false;
@@ -665,7 +677,7 @@ public class Model {
             if (fileEntry.isDirectory()) {
                 final String directoryName = directory.getPath();
                 final String item = fileEntry.getName();
-                // System.out.println(directoryName);
+                Debug.info(DD, directoryName);
                 switch (fileEntry.getName()) {
                 case "faces":
                     faces = fillDirectoryList(faceList, directoryName, item);
@@ -1034,7 +1046,7 @@ public class Model {
      * @param width value in pixels.
      */
     public void setWidth(double width) {
-        // System.out.println("setWidth(" + width + ")");
+        Debug.trace(DD, "setWidth(" + width + ")");
         cardWidthPX = width;
 
         syncCardItemsWithCardSize();
@@ -1057,7 +1069,7 @@ public class Model {
      * @param height value in pixels.
      */
     public void setHeight(double height) {
-        // System.out.println("setHeight(" + height + ")");
+        Debug.trace(DD, "setHeight(" + height + ")");
         cardHeightPX = height;
 
         syncCardItemsWithCardSize();
@@ -1324,31 +1336,31 @@ public class Model {
      */
 
     public void setCurrentCardItemToIndex() {
-        // System.out.println("setCurrentCardItemToIndex()");
+        Debug.trace(DD, "setCurrentCardItemToIndex()");
         changeCurrentCardItemAndSyncSpinners(index);
         handle.syncDisplayState(shouldIndexBeDisplayed());
     }
 
     public void setCurrentCardItemToCornerPip() {
-        // System.out.println("setCurrentCardItemToCornerPip()");
+        Debug.trace(DD, "setCurrentCardItemToCornerPip()");
         changeCurrentCardItemAndSyncSpinners(cornerPip);
         handle.syncDisplayState(shouldCornerPipBeDisplayed());
     }
 
     public void setCurrentCardItemToStandardPip() {
-        // System.out.println("setCurrentCardItemToStandardPip()");
+        Debug.trace(DD, "setCurrentCardItemToStandardPip()");
         changeCurrentCardItemAndSyncSpinners(standardPip);
         handle.syncDisplayState(shouldStandardPipBeDisplayed());
     }
 
     public void setCurrentCardItemToFace() {
-        // System.out.println("setCurrentCardItemToFace()");
+        Debug.trace(DD, "setCurrentCardItemToFace()");
         changeCurrentCardItemAndSyncSpinners(face);
         handle.syncDisplayState(shouldFaceImageBeDisplayed());
     }
 
     public void setCurrentCardItemToFacePip() {
-        // System.out.println("setCurrentCardItemToFacePip()");
+        Debug.trace(DD, "setCurrentCardItemToFacePip()");
         changeCurrentCardItemAndSyncSpinners(facePip);
         handle.syncDisplayState(shouldFacePipBeDisplayed());
     }
@@ -1662,7 +1674,7 @@ public class Model {
      * been selected.
      */
     private void initializeCardItemPayloads() {
-        // System.out.println("initializeCardItemPayloads()");
+        Debug.trace(DD, "initializeCardItemPayloads()");
 
         face        = new ImagePayload();
         facePip     = new DoublePayload(Item.FACE_PIP);
@@ -1695,7 +1707,7 @@ public class Model {
      * handle to reposition.
      */
     private void syncCardItemsWithCardSize() {
-        // System.out.println("syncCardItemsWithCardSize()");
+        Debug.trace(DD, "syncCardItemsWithCardSize()");
 
         index.syncCardSize();
         cornerPip.syncCardSize();
@@ -1802,7 +1814,7 @@ public class Model {
      * @param value as a percentage of the card height.
      */
     public void setCurrentH(double value) {
-        // System.out.println("model.setCurrentH(" + value + ");");
+        Debug.trace(DD, "model.setCurrentH(" + value + ");");
 
         current.setSize(value);
     }
@@ -1813,7 +1825,7 @@ public class Model {
      * @param value as a percentage of the card width.
      */
     public void setCurrentX(double value) {
-        // System.out.println("model.setCurrentX(" + value + "); :: " + current.getItem());
+        Debug.trace(DD, "model.setCurrentX(" + value + "); :: " + current.getItem());
 
         current.setX(value);
         if (lockX) {
@@ -1832,7 +1844,7 @@ public class Model {
      * @param value as a percentage of the card height.
      */
     public void setCurrentY(double value) {
-        // System.out.println("model.setCurrentY(" + value + "); :: " + current.getItem());
+        Debug.trace(DD, "model.setCurrentY(" + value + "); :: " + current.getItem());
 
         current.setY(value);
         if (lockY) {
@@ -1846,7 +1858,7 @@ public class Model {
     }
 
     public void setCurrentPos(double xPos, double yPos) {
-        // System.out.println("model.setCurrentPos(" + xPos + ", " + yPos + "); :: " + current.getItem());
+        Debug.trace(DD, "model.setCurrentPos(" + xPos + ", " + yPos + "); :: " + current.getItem());
 
         current.setPos(xPos, yPos);
         showImageBox();
@@ -1900,7 +1912,7 @@ public class Model {
      * Sync the Card Item spinners to the current payload.
      */
     private void syncSpinners() {
-        // System.out.println("syncSpinners() :: " + current.getItem());
+        Debug.trace(DD, "syncSpinners() :: " + current.getItem());
 
         final double h = current.getSpriteH();
         final double x = current.getSpriteX();
@@ -1937,7 +1949,7 @@ public class Model {
      * Initialize the Additional settings Tab panel.
      */
     private void initializeAdditionalTabPanel() {
-        // System.out.println("Additional Settings Tab panel initialized.");
+        Debug.trace(DD, "Additional Settings Tab panel initialized.");
 
         initializeCardCorners();
         initializeDisplayWatermark();

@@ -26,8 +26,12 @@ package phillockett65.CardCreate2.sample;
 
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import phillockett65.Debug.Debug;
 
 public class Handle extends ImageView {
+
+    // Debug delta used to adjust the local logging level.
+    private static final int DD = 0;
 
     private Image image;
 
@@ -58,7 +62,7 @@ public class Handle extends ImageView {
      * @param payload to control.
      */
     public void setPayload(Payload payload) {
-        // System.out.println("handle.setPayload(" + payload.getItem() + ");");
+        Debug.trace(DD, "handle.setPayload(" + payload.getItem() + ");");
         this.payload = payload;
 
         syncPosition();
@@ -68,7 +72,7 @@ public class Handle extends ImageView {
      * Synchronise the Display State of the handle.
      */
     public void syncDisplayState(boolean display) {
-        // System.out.println("handle.syncDisplayState(" + display + ")");
+        Debug.trace(DD, "handle.syncDisplayState(" + display + ")");
         setVisible(display);
     }
 
@@ -76,7 +80,7 @@ public class Handle extends ImageView {
      * Synchronise the position of the handle with the payload.
      */
     public void syncPosition() {
-        // System.out.println("handle.syncPosition()");
+        Debug.trace(DD, "handle.syncPosition()");
         double xPos = payload.getCentreX() - (width/2);
         double yPos = payload.getCentreY() - (height/2);
         this.setTranslateX(xPos);

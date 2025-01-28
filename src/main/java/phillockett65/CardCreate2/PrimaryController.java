@@ -43,17 +43,20 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 
 import phillockett65.CardCreate2.sample.Item;
+import phillockett65.Debug.Debug;
 
 
 public class PrimaryController {
 
-
-    /************************************************************************
-     * Support code for "Playing Card Generator" panel. 
-     */
+    // Debug delta used to adjust the local logging level.
+    private static final int DD = 0;
 
     private Model model;
 
+
+    /************************************************************************
+     * Support code for "Playing Card Generator" panel. 
+     */ 
 
     /**
      * Constructor.
@@ -61,7 +64,7 @@ public class PrimaryController {
      * Responsible for creating the Model, called by the FXMLLoader().
      */
     public PrimaryController() {
-        // System.out.println("Controller constructed.");
+        Debug.trace(DD, "PrimaryController constructed.");
         model = Model.getInstance();
     }
 
@@ -81,7 +84,7 @@ public class PrimaryController {
      * images on the buttons and initialises all the controls.
      */
     @FXML public void initialize() {
-        // System.out.println("Controller initialized.");
+        Debug.trace(DD, "PrimaryController initialize().");
 
         /**
          * Initialize "Playing Card Generator" panel.
@@ -106,6 +109,7 @@ public class PrimaryController {
      * directory (or aborts) then completes the initialization.
      */
     public void init() {
+        Debug.trace(DD, "PrimaryController init().");
         initializeCardSize();
         initializeBackgroundColour();
         initializeModifySelectedCardItem();
@@ -126,7 +130,7 @@ public class PrimaryController {
      * Synchronise all controls with the model.
      */
     public void syncUI() {
-        // System.out.println("syncUI()");
+        Debug.trace(DD, "PrimaryController syncUI().");
 
         loadButton.setDisable(!model.isSettingsFileExist());
 
@@ -211,7 +215,7 @@ public class PrimaryController {
      * selected.
      */
     private void setInitialBaseDirectory() {
-        // System.out.println("setInitialBaseDirectory(" + model.getBaseDirectory() + ")");
+        Debug.trace(DD, "setInitialBaseDirectory() : " + model.getBaseDirectory());
 
         baseDirectoryComboBox.setItems(model.getBaseList());
         baseDirectoryComboBox.setValue(model.getBaseDirectory());
@@ -236,7 +240,7 @@ public class PrimaryController {
      * @return true.
      */
     public boolean setBaseDirectory() {
-        // System.out.println("setBaseDirectory()");
+        Debug.trace(DD, "setBaseDirectory()");
 
         baseDirectoryComboBox.setValue(model.getBaseDirectory());
         faceChoiceBox.setValue(model.getFaceStyle());
@@ -253,26 +257,26 @@ public class PrimaryController {
 
     @FXML
     void baseDirectoryButtonActionPerformed(ActionEvent event) {
-        // System.out.println("baseDirectoryButtonActionPerformed()");
+        Debug.trace(DD, "baseDirectoryButtonActionPerformed()");
 
         model.getMainController().openBaseDirectory();
     }
 
     @FXML
     void loadButtonActionPerformed(ActionEvent event) {
-        // System.out.println("loadButtonActionPerformed()");
+        Debug.trace(DD, "loadButtonActionPerformed()");
         model.getMainController().loadSettings();
     }
 
     @FXML
     void saveButtonActionPerformed(ActionEvent event) {
-        // System.out.println("saveButtonActionPerformed()");
+        Debug.trace(DD, "saveButtonActionPerformed()");
         model.getMainController().saveSettings();
     }
 
     @FXML
     void baseDirectoryComboBoxActionPerformed(ActionEvent event) {
-        // System.out.println("baseDirectoryComboBoxActionPerformed()" + event.toString());
+        Debug.trace(DD, "baseDirectoryComboBoxActionPerformed() " + event.toString());
 
         if (!model.setBaseDirectory(baseDirectoryComboBox.getValue()))
             return;
@@ -365,7 +369,7 @@ public class PrimaryController {
 
     @FXML
     void outputTextFieldKeyTyped(KeyEvent event) {
-        // System.out.println("outputjTextFieldKeyTyped()" + event.toString());
+        Debug.trace(DD, "outputjTextFieldKeyTyped()" + event.toString());
         model.setOutputName(outputTextField.getText());
         model.getMainController().syncFileLoadMenuItem();
         loadButton.setDisable(!model.isSettingsFileExist());
@@ -373,7 +377,7 @@ public class PrimaryController {
 
     @FXML
     void outputToggleButtonActionPerformed(ActionEvent event) {
-        // System.out.println("outputjToggleButtonActionPerformed()" + event.toString());
+        Debug.trace(DD, "outputjToggleButtonActionPerformed()" + event.toString());
 
         final boolean manual = outputToggleButton.isSelected(); 
 
@@ -688,7 +692,7 @@ public class PrimaryController {
 
     @FXML
     void cardItemRadioButtonActionPerformed(ActionEvent event) {
-        // System.out.println("cardItemRadioButtonActionPerformed()");
+        Debug.trace(DD, "cardItemRadioButtonActionPerformed()");
 
         if (indicesRadioButton.isSelected())
             model.setCurrentCardItemToIndex();
@@ -713,7 +717,7 @@ public class PrimaryController {
      */
     private void setSelectedCardItemRadioToCurrent() {
         Item item = model.getCurrentItem();
-        // System.out.println("setSelectedCardItemRadioToCurrent(" + item + ")");
+        Debug.trace(DD, "setSelectedCardItemRadioToCurrent(" + item + ")");
 
         if (item == Item.INDEX)
             indicesRadioButton.setSelected(true);
@@ -798,7 +802,7 @@ public class PrimaryController {
      * card items being displayed.
      */
     private void setSelectCardItemPrompts() {
-        // System.out.println("setSelectCardItemPrompts()");
+        Debug.trace(DD, "setSelectCardItemPrompts()");
 
         setDisabledStateOfCurrentCardItem();
 
@@ -809,7 +813,7 @@ public class PrimaryController {
      * Fix the disable state of the "Modify Card Item" controls.
      */
     private void setDisabledStateOfCurrentCardItem() {
-        // System.out.println("setDisabledStateOfCurrentCardItem()");
+        Debug.trace(DD, "setDisabledStateOfCurrentCardItem()");
 
         boolean disabled = !model.isCurrentHeightChangable();
         itemHeightButton.setDisable(disabled);
@@ -832,7 +836,7 @@ public class PrimaryController {
      * "Modify Card Item" controls.
      */
     private void setCurrentCardItemLabelAndTooltips() {
-        // System.out.println("setCurrentCardItemLabelAndTooltips()");
+        Debug.trace(DD, "setCurrentCardItemLabelAndTooltips()");
 
         itemHeightLabel.setText(model.getCurrentHLabel());
         itemCentreXLabel.setText(model.getCurrentXLabel());
@@ -879,17 +883,17 @@ public class PrimaryController {
         itemCentreYSpinner.setValueFactory(model.getItemCentreYSVF());
 
         itemHeightSpinner.valueProperty().addListener( (v, oldValue, newValue) -> {
-            // System.out.println("itemHeightSpinner.valueProperty().Listener());");
+            Debug.trace(DD, "itemHeightSpinner.valueProperty().Listener());");
             model.setCurrentH(newValue);
         });
 
         itemCentreXSpinner.valueProperty().addListener( (v, oldValue, newValue) -> {
-            // System.out.println("itemCentreXSpinner.valueProperty().Listener());");
+            Debug.trace(DD, "itemCentreXSpinner.valueProperty().Listener());");
             model.setCurrentX(newValue);
         });
 
         itemCentreYSpinner.valueProperty().addListener( (v, oldValue, newValue) -> {
-            // System.out.println("itemCentreYSpinner.valueProperty().Listener());");
+            Debug.trace(DD, "itemCentreYSpinner.valueProperty().Listener());");
             model.setCurrentY(newValue);
         });
 

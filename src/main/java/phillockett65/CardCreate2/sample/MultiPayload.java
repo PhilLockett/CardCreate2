@@ -27,9 +27,13 @@ import javafx.scene.Group;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import phillockett65.Debug.Debug;
 
 
 public class MultiPayload extends Payload {
+
+    // Debug delta used to adjust the local logging level.
+    private static final int DD = 0;
 
 
     /************************************************************************
@@ -182,7 +186,7 @@ public class MultiPayload extends Payload {
      */
     private void initMultiImageViews() {
         setPath(Item.STANDARD_PIP);
-        // System.out.println("initMultiImageViews(" + path + ") :: number");
+        Debug.trace(DD, "initMultiImageViews(" + path + ") :: number");
 
         if (path.equals(""))
             return;
@@ -215,7 +219,7 @@ public class MultiPayload extends Payload {
      * Paint the icons associated with this payload.
      */
     private void setMultiPatterns() {
-        // System.out.println("setMultiPatterns()");
+        Debug.trace(DD, "setMultiPatterns()");
 
         if (!hasImage())
             return;
@@ -249,7 +253,7 @@ public class MultiPayload extends Payload {
      */
     public boolean syncImageFile() {
         setPath(Item.STANDARD_PIP);
-        // System.out.println("syncImageFile() :: number");
+        Debug.trace(DD, "syncImageFile() :: number");
 
         if (path.equals(""))
             return false;
@@ -269,7 +273,7 @@ public class MultiPayload extends Payload {
      * Synchronise to the current card size.
      */
     public void syncCardSize() {
-        // System.out.println("syncCardSize() :: number");
+        Debug.trace(DD, "syncCardSize() :: number");
 
         setMultiPatterns();
     }
@@ -299,7 +303,7 @@ public class MultiPayload extends Payload {
      * @param y co-ordinate as a percentage of the card height.
      */
     public void setPos(double x, double y) {
-        // System.out.println("setPos(" + x + ", " + y + ") :: " + item);
+        Debug.trace(DD, "setPos(" + x + ", " + y + ") :: ");
         boolean valid = true;
 
         if (!setSpriteCentreX(x))
@@ -328,7 +332,7 @@ public class MultiPayload extends Payload {
      * @param size as a percentage of the card height.
      */
     public void update(double x, double y, double size) {
-        // System.out.println("update(" + x + ", " + y + ", " + size + ") :: number");
+        Debug.trace(DD, "update(" + x + ", " + y + ", " + size + ") :: number");
         boolean valid = true;
 
         if (!setSpriteCentreX(x))
@@ -416,7 +420,7 @@ public class MultiPayload extends Payload {
      * @param state if true, display the icons, hide them otherwise.
      */
     public void setVisible(boolean state) {
-        // System.out.println("setVisible(" + state + ") :: " + number);
+        Debug.trace(DD, "setVisible(" + state + ") :: ");
         display = state;
 
         for (int i = 0; i < getImageCount(); ++i) {

@@ -37,8 +37,12 @@ import javafx.scene.image.WritableImage;
 import javafx.scene.paint.Color;
 
 import phillockett65.CardCreate2.sample.Default;
+import phillockett65.Debug.Debug;
 
 public class Utils {
+
+    // Debug delta used to adjust the local logging level.
+    private static final int DD = 0;
 
     /**
      * Load an image file from disc.
@@ -47,11 +51,11 @@ public class Utils {
      * @return the Image, or null if the file is not found.
      */
     public static Image loadImage(String path) {
-        // System.out.println("loadImage(" + path + ")");
+        Debug.trace(DD, "loadImage(" + path + ")");
         File file = new File(path);
 
         if (!file.exists()) {
-            // System.out.println("File does not exist!");
+            Debug.info(DD, "File does not exist!");
 
             return null;
         }

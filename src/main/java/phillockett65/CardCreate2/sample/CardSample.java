@@ -33,9 +33,13 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
 import phillockett65.CardCreate2.Model;
+import phillockett65.Debug.Debug;
 
 public class CardSample extends Stage {
-    
+
+    // Debug delta used to adjust the local logging level.
+    private static final int DD = 0;
+
     private Model model;
 
     private Scene scene;
@@ -65,7 +69,7 @@ public class CardSample extends Stage {
      * @param title             - string displayed as the heading of the Stage.
      */
     public CardSample(Model mainModel, String title) {
-//		System.out.println("CardSample constructed: " + title);
+		Debug.trace(DD, "CardSample constructed: " + title);
 
         resizableProperty().setValue(false);
         setOnCloseRequest(e -> Platform.exit());
@@ -426,7 +430,7 @@ public class CardSample extends Stage {
      */
 
     public void syncUI() {
-        // System.out.println("syncUI()");
+        Debug.trace(DD, "CardSample syncUI()");
 
         syncCardSize();
         syncBackgroundColour();

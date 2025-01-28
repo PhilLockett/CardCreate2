@@ -35,16 +35,20 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.Tooltip;
 import javafx.scene.layout.BorderPane;
+import phillockett65.Debug.Debug;
 
 
 public class AdditionalController {
+
+    // Debug delta used to adjust the local logging level.
+    private static final int DD = 0;
+
+    private Model model;
 
 
     /************************************************************************
      * Support code for "Settings" panel. 
      */
-
-    private Model model;
 
     @FXML
     private BorderPane settingsGUI;
@@ -54,7 +58,7 @@ public class AdditionalController {
      * images on the buttons and initialises all the controls.
      */
     @FXML public void initialize() {
-		// System.out.println("Controller initialized.");
+		Debug.trace(DD, "AdditionalController initialize()");
         model = Model.getInstance();
     }
 
@@ -63,6 +67,7 @@ public class AdditionalController {
      * reference to model, then completes the initialization.
      */
     public void init() {
+		Debug.trace(DD, "AdditionalController init()");
         initializeCardCorners();
         initializeDisplayWatermark();
         initializeModifySelectedCardItem();
@@ -74,6 +79,7 @@ public class AdditionalController {
      * Synchronise all controls with the model.
      */
     public void syncUI() {
+		Debug.trace(DD, "AdditionalController syncUI()");
         independentRadiiCheckBox.setSelected(model.isSetCornerRadiiIndependently());
         cropCornersCheckBox.setSelected(model.isCropCorners());
 

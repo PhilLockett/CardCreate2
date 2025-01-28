@@ -33,10 +33,14 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 import javafx.scene.paint.Color;
+import phillockett65.Debug.Debug;
 
 
 public class DataStore implements Serializable {
     private static final long serialVersionUID = 1L;
+
+    // Debug delta used to adjust the local logging level.
+    private static final int DD = 0;
 
     private String faceStyle;
     private String indexStyle;
@@ -205,8 +209,8 @@ public class DataStore implements Serializable {
             objectOutputStream.writeObject(dataStore);
             success = true;
         } catch (IOException e) {
-            e.printStackTrace();
-            System.out.println(e.getMessage());
+            // e.printStackTrace();
+            Debug.critical(DD, e.getMessage());
         }
 
         return success;
@@ -223,9 +227,9 @@ public class DataStore implements Serializable {
             DataStore dataStore = (DataStore)objectInputStream.readObject();
             success = dataStore.push(model);
         } catch (IOException e) {
-            System.out.println(e.getMessage());
+            Debug.critical(DD, e.getMessage());
         } catch (ClassNotFoundException e) {
-            System.out.println(e.getMessage());
+            Debug.critical(DD, e.getMessage());
         }
 
         return success;

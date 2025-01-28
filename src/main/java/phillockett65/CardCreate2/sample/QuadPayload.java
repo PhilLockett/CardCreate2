@@ -28,16 +28,18 @@ import javafx.scene.Group;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import phillockett65.Debug.Debug;
 
 
 public class QuadPayload extends Payload {
+
+    // Debug delta used to adjust the local logging level.
+    private static final int DD = 0;
 
 
     /************************************************************************
      * Support code for ImageView array management.
      */
-
-
 
     private ImageView[] views;
 
@@ -160,7 +162,7 @@ public class QuadPayload extends Payload {
      */
     private void initQuadImageViews() {
         setPath(item);
-        // System.out.println("initMultiImageViews(" + path + ") :: " + item);
+        Debug.trace(DD, "initMultiImageViews(" + path + ") :: " + item);
 
         if (path.equals(""))
             return;
@@ -179,7 +181,7 @@ public class QuadPayload extends Payload {
      * Paint both icons associated with this payload.
      */
     private void paintIcons() {
-        // System.out.println("paintIcon() :: " + item);
+        Debug.trace(DD, "paintIcon() :: " + item);
 
         if (!hasImage())
             return;
@@ -226,7 +228,7 @@ public class QuadPayload extends Payload {
      * Paint the icons associated with this payload.
      */
     private void setQuadPatterns() {
-        // System.out.println("setMultiPatterns()");
+        Debug.trace(DD, "setMultiPatterns()");
 
         if (!hasImage())
             return;
@@ -245,7 +247,7 @@ public class QuadPayload extends Payload {
      */
     public boolean syncImageFile() {
         setPath(item);
-        // System.out.println("syncImageFile() :: " + item);
+        Debug.trace(DD, "syncImageFile() :: " + item);
 
         if (path.equals(""))
             return false;
@@ -264,7 +266,7 @@ public class QuadPayload extends Payload {
      * Synchronise to the current left-handed state.
      */
     public void syncQuadState() {
-        // System.out.println("syncQuadState() :: " + item);
+        Debug.trace(DD, "syncQuadState() :: " + item);
 
         setQuadPatterns();
     }
@@ -274,7 +276,7 @@ public class QuadPayload extends Payload {
      * Synchronise to the current card size.
      */
     public void syncCardSize() {
-        // System.out.println("syncCardSize() :: " + item);
+        Debug.trace(DD, "syncCardSize() :: " + item);
 
         setQuadPatterns();
     }
@@ -304,7 +306,7 @@ public class QuadPayload extends Payload {
      * @param y co-ordinate as a percentage of the card height.
      */
     public void setPos(double x, double y) {
-        // System.out.println("setPos(" + x + ", " + y + ") :: " + item);
+        Debug.trace(DD, "setPos(" + x + ", " + y + ") :: " + item);
         boolean valid = true;
 
         if (!setSpriteCentreX(x))
@@ -333,7 +335,7 @@ public class QuadPayload extends Payload {
      * @param size as a percentage of the card height.
      */
     public void update(double x, double y, double size) {
-        // System.out.println("update(" + x + ", " + y + ", " + size + ") :: " + item);
+        Debug.trace(DD, "update(" + x + ", " + y + ", " + size + ") :: " + item);
         boolean valid = true;
 
         if (!setSpriteCentreX(x))
@@ -421,7 +423,7 @@ public class QuadPayload extends Payload {
      * @param state if true, display the icons, hide them otherwise.
      */
     public void setVisible(boolean state) {
-        // System.out.println("setVisible(" + state + ") :: " + number);
+        Debug.trace(DD, "setVisible(" + state + ") :: ");
         display = state;
 
         for (int i = 0; i < getImageCount(); ++i)

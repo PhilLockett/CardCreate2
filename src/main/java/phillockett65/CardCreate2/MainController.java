@@ -49,18 +49,22 @@ import javafx.scene.shape.Line;
 import javafx.scene.shape.StrokeLineCap;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
+import phillockett65.Debug.Debug;
 
 
 public class MainController {
 
-
-    /************************************************************************
-     * Support code for "Playing Card Generator" panel. 
-     */
+    // Debug delta used to adjust the local logging level.
+    private static final int DD = 0;
 
     private Model model;
     private Stage stage;
     private static final String TOPBARICON = "top-bar-icon";
+
+
+    /************************************************************************
+     * Support code for "Playing Card Generator" panel. 
+     */ 
 
     @FXML
     private VBox userGUI;
@@ -77,7 +81,7 @@ public class MainController {
      * Responsible for creating the Model, called by the FXMLLoader().
      */
     public MainController() {
-        // System.out.println("Controller constructed.");
+        Debug.trace(DD, "MainController constructed.");
         model = Model.getInstance();
     }
 
@@ -86,7 +90,7 @@ public class MainController {
      * images on the buttons and initialises all the controls.
      */
     @FXML public void initialize() {
-        // System.out.println("Controller initialized.");
+		Debug.trace(DD, "MainController initialize()");
 
         model.initialize();
 
@@ -101,6 +105,7 @@ public class MainController {
      * directory (or aborts) then completes the initialization.
      */
     public void init(Stage stage) {
+		Debug.trace(DD, "MainController init()");
 
         this.stage = stage;
         userGUI.setDisable(true);
@@ -235,12 +240,12 @@ public class MainController {
      * Synchronise all controls with the model.
      */
     public void syncUI() {
-        // System.out.println("syncUI()");
+		Debug.trace(DD, "MainController syncUI()");
         syncFileLoadMenuItem();
     }
 
     public void loadSettings() {
-        // System.out.println("loadSettings()");
+        Debug.trace(DD, "loadSettings()");
         DataStore.readData();
 
         model.syncAllUIs();
@@ -274,7 +279,7 @@ public class MainController {
      * selected.
      */
     public void setInitialBaseDirectory() {
-        // System.out.println("setInitialBaseDirectory(" + model.getBaseDirectory() + ")");
+        Debug.trace(DD, "setInitialBaseDirectory() : " + model.getBaseDirectory());
         userGUI.setDisable(false);
     }
 
@@ -286,7 +291,7 @@ public class MainController {
      * @return true if base is a valid base directory, false otherwise.
      */
     private boolean setBaseDirectory(String base) {
-        // System.out.println("setBaseDirectory(" + base + ")");
+        Debug.trace(DD, "setBaseDirectory(" + base + ")");
 
         if (!model.setBaseDirectory(base))
             return false;
@@ -307,7 +312,7 @@ public class MainController {
         File directory = choice.showDialog(model.getStage());
 
         if (directory != null) {
-            // System.out.println("Selected: " + directory.getAbsolutePath());
+            Debug.info(DD, "Selected: " + directory.getAbsolutePath());
 
             if (setBaseDirectory(directory.getPath()))
                 return true;
@@ -438,7 +443,7 @@ public class MainController {
         try {
             currentCanvas.snapshot(parameters, snapshot);
         } catch (IllegalStateException e) {
-            System.out.println("takeSnapshots() - Failed to take snapshot: " + e);
+            Debug.critical(DD, "takeSnapshots() - Failed to take snapshot: " + e);
         }
 
         currentImage = snapshot;

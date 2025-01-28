@@ -32,9 +32,13 @@ import javafx.scene.image.ImageView;
 import phillockett65.CardCreate2.CardItemData;
 import phillockett65.CardCreate2.Model;
 import phillockett65.CardCreate2.Utils;
+import phillockett65.Debug.Debug;
 
 
 public class Payload {
+
+    // Debug delta used to adjust the local logging level.
+    private static final int DD = 0;
 
 
     /************************************************************************
@@ -186,7 +190,7 @@ public class Payload {
 
 
     public Payload(Item it) {
-        // System.out.println("Payload()");
+        Debug.trace(DD, "Payload()");
 
         model = Model.getInstance();
 
@@ -207,7 +211,7 @@ public class Payload {
      */
     protected void initImageViews() {
         setPath(item);
-        // System.out.println("initImageViews(" + path + ") :: " + item);
+        Debug.trace(DD, "initImageViews(" + path + ") :: " + item);
 
         if (path.equals(""))
             return;
@@ -232,7 +236,7 @@ public class Payload {
      * @return true if the image file was found, false otherwise.
      */
     protected boolean loadNewImageFile() {
-        // System.out.println("loadNewImageFile(" + path + ")");
+        Debug.trace(DD, "loadNewImageFile(" + path + ")");
 
         image = Utils.loadImage(path);
 
@@ -250,7 +254,7 @@ public class Payload {
      */
     public boolean syncImageFile() {
         setPath(item);
-        // System.out.println("syncImageFile(" + path + ") :: " + item);
+        Debug.trace(DD, "syncImageFile(" + path + ") :: " + item);
 
         if (path.equals(""))
             return false;
@@ -269,7 +273,7 @@ public class Payload {
      * Paint both icons associated with this payload.
      */
     private void paintIcons() {
-        // System.out.println("paintIcon() :: " + item);
+        Debug.trace(DD, "paintIcon() :: " + item);
 
         if (!hasImage())
             return;
@@ -297,7 +301,7 @@ public class Payload {
      * Paint the icons associated with this payload if visible.
      */
     protected void setPatterns() {
-        // System.out.println("setPatterns() :: " + item);
+        Debug.trace(DD, "setPatterns() :: " + item);
 
         final boolean visible = isVisible();
 
@@ -312,7 +316,7 @@ public class Payload {
      * Synchronise to the current card size.
      */
     public void syncCardSize() {
-        // System.out.println("syncCardSize() :: " + item);
+        Debug.trace(DD, "syncCardSize() :: " + item);
 
         setPatterns();
     }
@@ -343,7 +347,7 @@ public class Payload {
      * @param value as a percentage of the card width.
      */
     public void setX(double value) {
-        // System.out.println("setX(" + value + ") :: " + item);
+        Debug.trace(DD, "setX(" + value + ") :: " + item);
         if (setSpriteCentreX(value))
             setPatterns();
     }
@@ -367,7 +371,7 @@ public class Payload {
      * @param value as a percentage of the card height.
      */
     public void setY(double value) {
-        // System.out.println("setY(" + value + ") :: " + item);
+        Debug.trace(DD, "setY(" + value + ") :: " + item);
         if (setSpriteCentreY(value))
             setPatterns();
     }
@@ -378,7 +382,7 @@ public class Payload {
      * @param y co-ordinate as a percentage of the card height.
      */
     public void setPos(double x, double y) {
-        // System.out.println("setPos(" + x + ", " + y + ") :: " + item);
+        Debug.trace(DD, "setPos(" + x + ", " + y + ") :: " + item);
         boolean valid = true;
 
         if (!setSpriteCentreX(x))
@@ -400,7 +404,7 @@ public class Payload {
         if (!isValidPercentage(size))
             return false;
 
-        // System.out.println("setSpriteSize(" + size + ") :: " + item);
+        Debug.trace(DD, "setSpriteSize(" + size + ") :: " + item);
 
         spriteHeight.setPercent(size);
 
@@ -412,7 +416,7 @@ public class Payload {
      * @param size as a percentage of the card height.
      */
     public void setSize(double size) {
-        // System.out.println("setSize(" + size + ") :: " + item);
+        Debug.trace(DD, "setSize(" + size + ") :: " + item);
         if (setSpriteSize(size))
             setPatterns();
     }
@@ -424,7 +428,7 @@ public class Payload {
      * @param size as a percentage of the card height.
      */
     public void update(double x, double y, double size) {
-        // System.out.println("update(" + x + ", " + y + ", " + size + ") :: " + item);
+        Debug.trace(DD, "update(" + x + ", " + y + ", " + size + ") :: " + item);
         boolean valid = true;
 
         if (!setSpriteCentreX(x))
@@ -664,7 +668,7 @@ public class Payload {
      * @return true if the image file is landscape.
      */
     public boolean isLandscape() {
-        // System.out.println("isLandscape(" + (imageHeightPX < imageWidthPX) + ") :: " + item);
+        Debug.trace(DD, "isLandscape() :: " + item);
         if (image != null)
             return image.getHeight() < image.getWidth();
 
@@ -676,7 +680,7 @@ public class Payload {
      * @param state if true, display the icons, hide them otherwise.
      */
     public void setVisible(boolean state) {
-        // System.out.println("setVisible(" + state + ") :: " + item);
+        Debug.trace(DD, "setVisible(" + state + ") :: " + item);
         display = state;
 
         getImageView(0).setVisible(display);

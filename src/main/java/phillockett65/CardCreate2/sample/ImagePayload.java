@@ -26,9 +26,13 @@ package phillockett65.CardCreate2.sample;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import phillockett65.Debug.Debug;
 
 
 public class ImagePayload extends Payload {
+
+    // Debug delta used to adjust the local logging level.
+    private static final int DD = 0;
 
 
     /************************************************************************
@@ -52,7 +56,7 @@ public class ImagePayload extends Payload {
      */
     protected void initImageViews() {
         setPath(Item.FACE);
-        // System.out.println("initImageViews(" + path + ") :: image");
+        Debug.trace(DD, "initImageViews(" + path + ") :: image");
 
         if (path.equals(""))
             return;
@@ -64,7 +68,7 @@ public class ImagePayload extends Payload {
     }
 
     private void paintImage() {
-        // System.out.println("paintImage() :: ImagePayload");
+        Debug.trace(DD, "paintImage() :: ImagePayload");
 
         if (!hasImage())
             return;
@@ -135,7 +139,7 @@ public class ImagePayload extends Payload {
      */
     public boolean syncImageFile() {
         setPath(Item.FACE);
-        // System.out.println("syncImageFile() :: image");
+        Debug.trace(DD, "syncImageFile() :: image");
 
         if (path.equals(""))
             return false;
@@ -154,7 +158,7 @@ public class ImagePayload extends Payload {
      * Synchronise to the current card size.
      */
     public void syncCardSize() {
-        // System.out.println("syncCardSize(" + item + ") :: image");
+        Debug.trace(DD, "syncCardSize() :: image");
 
         paintImage();
     }
@@ -184,7 +188,7 @@ public class ImagePayload extends Payload {
      * @param y co-ordinate as a percentage of the card height.
      */
     public void setPos(double x, double y) {
-        // System.out.println("setPos(" + x + ", " + y + ") :: " + item);
+        Debug.trace(DD, "setPos(" + x + ", " + y + ") :: ");
         boolean valid = true;
 
         if (!setSpriteCentreX(x))
@@ -213,7 +217,7 @@ public class ImagePayload extends Payload {
      * @param size as a percentage of the card height.
      */
     public void update(double x, double y, double size) {
-        // System.out.println("update(" + x + ", " + y + ", " + size + ") :: image");
+        Debug.trace(DD, "update(" + x + ", " + y + ", " + size + ") :: image");
         boolean valid = true;
 
         if (!setSpriteCentreX(x))
@@ -313,7 +317,7 @@ public class ImagePayload extends Payload {
      * @param state if true, display the icons, hide them otherwise.
      */
     public void setVisible(boolean state) {
-        // System.out.println("setVisible(" + state + ") :: face");
+        Debug.trace(DD, "setVisible(" + state + ") :: face");
         display = state;
 
         getImageView(0).setVisible(display);
@@ -347,7 +351,7 @@ public class ImagePayload extends Payload {
         final double xOffset = model.getMpcBorderWidth();
         final double yOffset = model.getMpcBorderHeight();
 
-        // System.out.println("drawImage()");
+        Debug.trace(DD, "drawImage()");
         final double imageWidthPX = iconImage.getWidth();
         final double imageHeightPX = iconImage.getHeight();
         final boolean landscape = imageHeightPX < imageWidthPX;
@@ -361,7 +365,7 @@ public class ImagePayload extends Payload {
         double dY = 0;
 
         if (landscape) {
-            // System.out.println("landscape");
+            Debug.info(DD, "landscape");
 
             winY = (cardHeightPX / 2) - pixelsY;
 
@@ -380,7 +384,7 @@ public class ImagePayload extends Payload {
             gc.drawImage(rotatedImage, pixelsX + dX + xOffset, cardHeightPX/2 + yOffset, winX, winY);
             gc.drawImage(iconImage, pixelsX + dX + xOffset, pixelsY + dY + yOffset, winX, winY);
         } else {
-            // System.out.println("portrait");
+            Debug.info(DD, "portrait");
 
             winY = cardHeightPX - (2*pixelsY);
 

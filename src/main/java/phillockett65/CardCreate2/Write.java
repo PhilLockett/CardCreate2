@@ -37,9 +37,13 @@ import javafx.scene.image.WritableImage;
 import javafx.scene.paint.Color;
 
 import phillockett65.CardCreate2.sample.Default;
+import phillockett65.Debug.Debug;
 
 
 public class Write extends Task<Long> {
+
+    // Debug delta used to adjust the local logging level.
+    private static final int DD = 0;
 
     private final Model model;
     private final Image mask;
@@ -105,7 +109,7 @@ public class Write extends Task<Long> {
 
             success = ImageIO.write(image, "png", new File(outputPath));
         } catch (Exception e) {
-            System.out.println("write() - Failed saving image: " + e);
+            Debug.critical(DD, "write() - Failed saving image: " + e);
         }
 
         return success;
